@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register | {{ parent() }}{% endblock %}
+
+{% block body %}
+    <section class="register">
+        {{ form_start(form,{'attr': {'class': 'form'}} ) }}
+            <h1 class="Lobster">Connection</h1>
+            <hr>
+            <div class="form-ligne">
+                {{ form_row( form.name,{'attr': {'placeholder': 'nom'}} ) }}
+            </div>
+            <div class="form-ligne">
+                {{ form_row( form.email,{'attr': {'placeholder': 'e-mail' }} ) }}
+            </div>
+            <div class="form-ligne">
+                {{ form_widget( form.password,{'attr': {'placeholder': 'mots de passe'}} ) }}
+            </div>
+            <div class="form-ligne">
+                {% if is_granted('ROLE_ADMIN') %}
+                
+                        {{ form_row( form.roles ) }}
+                
+                {% endif %}
+            </div>
+            <div class="form-ligne">
+                {{ form_row( form.rgpd ) }}
+            </div>
+            {{ form_row( form.imageFile ) }}
+            <hr>
+            <button class="mb-4">{{ button_label|default('Save') }}</button>
+            
+            {{ form_widget( form._token)}}
+        {{ form_end(form,{render_rest: false}) }}
+    </section>
+
+{% endblock %}

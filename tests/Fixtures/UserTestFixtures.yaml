@@ -1,0 +1,21 @@
+App\Entity\User:
+  userAdmin: 
+    email: 'clement@test.com'
+    password: "<hashPassword('123456')>"
+    name: "Clem"
+    rgpd: true
+    roles: ["ROLE_ADMIN"]
+
+
+  userEditor: 
+    email: 'editor@test.com'
+    password: "<hashPassword('123456')>"
+    name: "edit"
+    rgpd: true
+    roles: ["ROLE_EDITOR"]
+
+  user{1..5}: 
+    email (unique): user<current()>\@domain.fr
+    password: "<hashPassword('123456')>"
+    rgpd: true
+    name: "lastName()"

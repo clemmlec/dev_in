@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comment index{% endblock %}
+
+{% block body %}
+    <section class="d-flex">
+
+        {% for comment in comments | sort((a, b) => a.createdAt <= b.createdAt) %}
+        <div class="card-article demiDiv">
+        <h1 class="toptitre left bleu" >
+                    - Posté par :  {{comment.user.name}}
+                        <img 
+                            class="avatar" 
+                            src="{{ comment.user ? vich_uploader_asset(comment.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                            alt="{{comment.user.name}}"
+                        >
+
+                </h1> 
+                <h4 class="toptitre2 right bleu ">
+                    dans {{comment.article.nom}} <span class="mute">{{comment.createdAt | ago}}</span>
+                </h4>
+                <div class="iconArticle">
+                    <i class="fa-solid fa-triangle-exclamation redd">{{comment.getCommentSignalers | length}}</i>
+                    <i class="far fa-thumbs-up yellow">{{comment.getCommentLikes | length}}</i>
+                </div>
+                <p>{{comment.comment}}</p>
+                {# {{ dump(app.user) }} #}
+
+                <div  class="form-check form-switch m-2">   
+                    {# {{ dump(article.visible) }} #}
+                    <input type="checkbox" class="form-check-input" value="{{comment.id}}" role="switch" data-switch-active-comment {{comment.visible ? 'checked'}}>
+                    <label class="form-check-label" >visible</label>
+
+                </div>
+      
+            {# <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a> #}
+                    <a href="{{ path('app_comment_edit', {'id': comment.id}) }}">edit</a>
+
+            {# <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article.visible ? 'Yes' : 'No' }}</td>
+                <td>
+                    
+                </td>
+            </tr> #}
+        </div>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+            
+        
+        {% endfor %}
+    </section>
+              
+
+    <a href="{{ path('app_comment_new') }}">Create new</a>
+{% endblock %}

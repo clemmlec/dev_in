@@ -1,0 +1,67 @@
+<header>
+    <nav>
+        
+        <div class="icon_nav dropdown">
+            {# {{ dump(app.user) }} #}
+            {% if app.user %}
+            <button class="dropbtn btn-vierge">
+                <img 
+                    class="avatar" 
+                    src="{{ app.user.imageName ? vich_uploader_asset(app.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                    alt="{{app.user.name}}"
+                >
+            </button>            
+            <div class="dropdown-content">
+                <a href="{{ path('logout') }}" 
+                    class="btn btn-secondary">Deconnection <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                <a href="{{ path('app_user_profil', {'id': app.user.id}) }}" 
+                    class="btn btn-secondary">Profil <i class="fa-solid fa-user-gear"></i></a>
+            </div>
+                
+            {% else %}
+            <button class="dropbtn btn-vierge"><i class="fa-solid fa-right-to-bracket"></i>
+            </button> 
+            <div class="dropdown-content">
+                <a href="{{ path('login') }}" 
+                    class="btn btn-secondary">Se connecter <i class="fa-solid fa-user-check"></i></a>
+                <a href="{{ path('register') }}" 
+                    class="btn btn-secondary">Inscription <i class="fa-solid fa-user"></i></a>
+            </div>
+            {% endif %}
+        </div>
+    
+        <div class="nav-logo">
+            <a class="Shadows logoSite" href="{{ path('home') }}">
+                <img 
+                    class="logo" 
+                    src="{{ asset('/images/logos.png') }}" 
+                    alt="logo"
+                >
+            </a>
+            <div class="div-nav">
+                <label class="label" for="toggle">☰</label>
+                <input type="checkbox" id="toggle">
+                <div class="main_pages">
+                    <div class="left_nav">
+                        {% if app.user %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('admin_user_index') }}">admin-user</a>
+                                <a href="{{ path('app_article_index') }}">admin-article</a>
+                                <a href="{{ path('app_categorie_index') }}">admin-categorie</a>
+                                <a href="{{ path('app_comment_index') }}">admin-comment</a>
+                            {% endif %}
+                        {% endif %}
+                        {# <a href="{{ path('user_article_index') }}">Article</a> #}
+                        <a href="{{ path('app_user_index') }}">User</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+        
+      
+
+    </nav>
+</header>

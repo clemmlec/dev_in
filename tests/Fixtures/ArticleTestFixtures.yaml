@@ -1,0 +1,18 @@
+include:
+  - UserTestFixtures.yaml
+  - TagTestFixtures.yaml
+
+App\Entity\Article:
+  article{1..19}:
+    nom (unique): "Titre - <current()>"
+    description: "<sentence(10)>"
+    visible: true
+    user_id: "@userAdmin"
+    categorie_id: "@categorie_1"
+
+  articleName:
+    nom: "Article de test"
+    description: "<sentence(10)>"
+    visible: true
+    user_id: "@userEditor"
+    categorie_id: "@categorie_1"

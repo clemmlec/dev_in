@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin article{% endblock %}
+
+{% block body %}
+    <h1>Admin article</h1>
+    <section class="d-flex">
+        {% for article in articles | sort((a, b) => a.createdAt <= b.createdAt) %}
+        <div class="card-article demiDiv">
+        <h1 class="toptitre left {{article.categorieId.style}}">
+                    - Posté par :  {{article.userId.name}}
+                        <img 
+                            class="avatar" 
+                            src="{{ article.userId ? vich_uploader_asset(article.userId, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                            alt="{{article.userId.name}}"
+                        >
+
+                </h1> 
+                <h2 class="toptitre2 right {{article.categorieId.style}}">
+                    dans {{article.categorieId.nom}} <span class="mute">{{article.createdAt | ago}}</span>
+                </h2>
+                <div class="iconArticle">
+                    <i class="fa-solid fa-triangle-exclamation redd">{{article.getArticleSignalers | length}}</i>
+                    {# <i class="fa fa-star pointer yellow btn-vierge">{{article.getCommentSignalers | length}}</i> #}
+                </div>
+
+                <h1 class="title">{{article.nom}}
+                {% if  article.getNoteArticles() | length > 0 %}
+                 
+                    {# {{dump(article.getNoteArticles())}} #}
+                    {% set somme = 0 %}
+                    {% for row in article.getNoteArticles() %}
+                    {% set somme = somme + row.note
+                     %}
+                       
+                    {% endfor %}
+                     {% set somme = somme / (article.getNoteArticles()| length) %}
+                     <div class="note">
+                        {% for i in 1..10 %}
+                            {# {% if i <= somme * 2 %} #}
+                            {% if i is odd %}
+                            <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
+                            {% else %}
+                            <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
+                            {% endif %}
+                            {# {% endif %} #}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                </h1>
+                {# {{ dump(app.user) }} #}
+                <div class="d-flex-image">
+                    
+                    <div class="d-article ">
+                        
+                        <div class="description">
+                            <p>{{article.description}}</p>
+                        </div>
+                       
+                    </div>
+                    <img class="articleImagePetite" src="{{ article ? vich_uploader_asset(article, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{article.nom}}">
+                    
+                </div>
+                <div  class="form-check form-switch m-2">   
+                    {# {{ dump(article.visible) }} #}
+                    <input type="checkbox" class="form-check-input" value="{{article.id}}" role="switch" data-switch-active-article {{article.visible ? 'checked'}}>
+                    <label class="form-check-label" >visible</label>
+
+                </div>
+      
+            {# <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a> #}
+                    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+
+            {# <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article.visible ? 'Yes' : 'No' }}</td>
+                <td>
+                    
+                </td>
+            </tr> #}
+        </div>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+            
+        
+        {% endfor %}
+    </section>
+    <a href="{{ path('app_article_new') }}">Create new</a>
+{% endblock %}
