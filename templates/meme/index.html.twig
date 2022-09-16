@@ -1,45 +1,45 @@
 <section class="d-flex ">
-    {# button nouvel article #}
+    {# button nouvel meme #}
     {% if app.user %}
-        <button id="myBtn1" onclick="modal(this)">nouvel article</button>
-        <div id="modal1"  class="card-article">
-            {{ include('article/new.html.twig')}}
+        <button id="myBtn1" onclick="modal(this)">nouvel meme</button>
+        <div id="modal1"  class="card-meme">
+            {{ include('meme/new.html.twig')}}
         </div>
     {% endif %}
 
-    {# liste des articles #}
-    {% for article in articles %}
-        <div class="card-article">
-            <h1 class="toptitre left {{article.categorieId.style}}">
-            <a class="btn-vierge" href="{{ path('app_user_profil', {'id': article.userId.id}) }}">
-                - Posté par :  {{article.userId.name}}
+    {# liste des memes #}
+    {% for meme in memes %}
+        <div class="card-meme">
+            <h1 class="toptitre left {{meme.categorieId.style}}">
+            <a class="btn-vierge" href="{{ path('app_user_profil', {'id': meme.userId.id}) }}">
+                - Posté par :  {{meme.userId.name}}
                     <img 
                         class="avatar" 
-                        src="{{ article.userId.imageFile ? vich_uploader_asset(article.userId, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                        alt="{{article.userId.name}}"
+                        src="{{ meme.userId.imageFile ? vich_uploader_asset(meme.userId, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                        alt="{{meme.userId.name}}"
                     >
                 </a>
             </h1> 
-            <h2 class="toptitre2 right {{article.categorieId.style}}">
-                dans {{article.categorieId.nom}} <span class="mute">{{article.createdAt | ago}}</span>
+            <h2 class="toptitre2 right {{meme.categorieId.style}}">
+                dans {{meme.categorieId.nom}} <span class="mute">{{meme.createdAt | ago}}</span>
             </h2>
-            <div class="iconArticle">
-                <button value="{{article.id}}" class="btn-vierge red" type="button" data-signaler-article >
+            <div class="iconMeme">
+                <button value="{{meme.id}}" class="btn-vierge red" type="button" data-signaler-meme >
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </button>
                 <button 
                         type="button" 
                         class="btn-vierge " 
-                        value="{{article.id}}" 
-                        data-follow-article >
-                        {# {{ dump(article) }}
-                        {{ dump(app.user.getArticleFavoris()) }} #}
-                        {# {{ dump(article) }}
-                        {{ dump(app.user.articleFavoris) }} #}
+                        value="{{meme.id}}" 
+                        data-follow-meme >
+                        {# {{ dump(meme) }}
+                        {{ dump(app.user.getMemeFavoris()) }} #}
+                        {# {{ dump(meme) }}
+                        {{ dump(app.user.memeFavoris) }} #}
                         {% set fav = false %}
                         {% if app.user %}
-                            {% for row in app.user.articleFavoris %}
-                                {% if row.article.id == article.id %}
+                            {% for row in app.user.memeFavoris %}
+                                {% if row.meme.id == meme.id %}
                                     {% set fav = true %}
                                 {% endif %}
                             {% endfor %}
@@ -56,17 +56,17 @@
                 </button>
             </div>
 
-            <h1 class="title">{{article.nom}}
-            {% if  article.noteArticles | length > 0 %}
+            <h1 class="title">{{meme.nom}}
+            {% if  meme.noteMemes | length > 0 %}
                 
-                {# {{dump(article.getNoteArticles())}} #}
+                {# {{dump(meme.getNoteMemes())}} #}
                 {% set somme = 0 %}
-                {% for row in article.getNoteArticles() %}
+                {% for row in meme.getNoteMemes() %}
                 {% set somme = somme + row.note
                     %}
                     
                 {% endfor %}
-                    {% set somme = somme / (article.getNoteArticles()| length) %}
+                    {% set somme = somme / (meme.getNoteMemes()| length) %}
                     <div class="note">
                     {% for i in 1..10 %}
                         {# {% if i <= somme * 2 %} #}
@@ -82,18 +82,18 @@
             </h1>
             {# {{ dump(app.user) }} #}
             <div class="d-flex-image">
-                {# noter l article #}
-                {% if app.user and app.user.id != article.userId.id  %}
+                {# noter l meme #}
+                {% if app.user and app.user.id != meme.userId.id  %}
                     {% set noter = false %}
-                    {% for row in app.user.noteArticles %}
-                        {% if row.article.id == article.id %}
+                    {% for row in app.user.noteMemes %}
+                        {% if row.meme.id == meme.id %}
                         {% set noter = true %}
                         {% endif %}
                     {% endfor %}
                     {% if not noter %}
                     <div class="note">
                         {% for i in 1..5 %}
-                        <button class="btn-vierge"  value="{{i}}-{{article.id}}" data-note-article>
+                        <button class="btn-vierge"  value="{{i}}-{{meme.id}}" data-note-meme>
                                 <i class="far fa-star stars" ></i>
                         </button>
                         {% endfor %}
@@ -105,16 +105,16 @@
                     <h2>commentaires</h2>
                     {# form new comment #}
                     {% if app.user %} 
-                        {# <form action="" id="commentPost{{article.id}}"> #}
+                        {# <form action="" id="commentPost{{meme.id}}"> #}
                             <div class="comment">
-                                <input id="commentPost{{article.id}}" class="envoieCommentInput" placeholder="écrit ton commentaire">
-                                <button type="button" class="btn-vierge envoiComment" value="{{article.id}}|{{app.user.id}}" data-envoie-comment><i class="fa-solid fa-paper-plane"></i></button>
+                                <input id="commentPost{{meme.id}}" class="envoieCommentInput" placeholder="écrit ton commentaire">
+                                <button type="button" class="btn-vierge envoiComment" value="{{meme.id}}|{{app.user.id}}" data-envoie-comment><i class="fa-solid fa-paper-plane"></i></button>
                             </div>
                         {# </form> #}
                     {% endif %}
                     
-                    <div class="top" id="com{{article.id}}">
-                    {% for commen in article.comments |sort((a, b) => a.createdAt <= b.createdAt) %}
+                    <div class="top" id="com{{meme.id}}">
+                    {% for commen in meme.comments |sort((a, b) => a.createdAt <= b.createdAt) %}
                         {% if commen.visible %}
                         <div class="comment3">           
                             <div class="jaime" >
@@ -142,10 +142,10 @@
                     </div>
                 </div>
                 <div>
-                    <img class="articleImage" src="{{ article ? vich_uploader_asset(article, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{article.nom}}">
-                    <div class="d-article ">
+                    <img class="memeImage" src="{{ meme ? vich_uploader_asset(meme, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{meme.nom}}">
+                    <div class="d-meme ">
                         <div class="description">
-                            <p>{{article.description}}</p>
+                            <p>{{meme.description}}</p>
                         </div>
                     </div>
                 </div>  

@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\ArticleFavoris;
+use App\Entity\MemeFavoris;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ArticleFavoris>
+ * @extends ServiceEntityRepository<MemeFavoris>
  *
- * @method ArticleFavoris|null find($id, $lockMode = null, $lockVersion = null)
- * @method ArticleFavoris|null findOneBy(array $criteria, array $orderBy = null)
- * @method ArticleFavoris[]    findAll()
- * @method ArticleFavoris[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method MemeFavoris|null find($id, $lockMode = null, $lockVersion = null)
+ * @method MemeFavoris|null findOneBy(array $criteria, array $orderBy = null)
+ * @method MemeFavoris[]    findAll()
+ * @method MemeFavoris[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ArticleFavorisRepository extends ServiceEntityRepository
+class MemeFavorisRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ArticleFavoris::class);
+        parent::__construct($registry, MemeFavoris::class);
     }
 
-    public function add(ArticleFavoris $entity, bool $flush = false): void
+    public function add(MemeFavoris $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ArticleFavorisRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(ArticleFavoris $entity, bool $flush = false): void
+    public function remove(MemeFavoris $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ArticleFavorisRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return ArticleFavoris[] Returns an array of ArticleFavoris objects
+//     * @return MemeFavoris[] Returns an array of MemeFavoris objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ArticleFavorisRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?ArticleFavoris
+//    public function findOneBySomeField($value): ?MemeFavoris
 //    {
 //        return $this->createQueryBuilder('a')
 //            ->andWhere('a.exampleField = :val')

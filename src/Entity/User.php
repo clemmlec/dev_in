@@ -69,14 +69,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'friend', targetEntity: Follow::class, orphanRemoval: true)]
     private Collection $followers;
 
-    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Article::class)]
-    private Collection $articles;
+    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Meme::class)]
+    private Collection $memes;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ArticleFavoris::class, orphanRemoval: true)]
-    private Collection $articleFavoris;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MemeFavoris::class, orphanRemoval: true)]
+    private Collection $memeFavoris;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: NoteArticle::class, orphanRemoval: true)]
-    private Collection $noteArticles;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: NoteMeme::class, orphanRemoval: true)]
+    private Collection $noteMemes;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
@@ -87,20 +87,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CommentSignaler::class, orphanRemoval: true)]
     private Collection $commentSignalers;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ArticleSignaler::class, orphanRemoval: true)]
-    private Collection $articleSignalers;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MemeSignaler::class, orphanRemoval: true)]
+    private Collection $memeSignalers;
 
     public function __construct()
     {
         $this->followers = new ArrayCollection();
         $this->follows = new ArrayCollection();
-        $this->articles = new ArrayCollection();
-        $this->articleFavoris = new ArrayCollection();
-        $this->noteArticles = new ArrayCollection();
+        $this->memes = new ArrayCollection();
+        $this->memeFavoris = new ArrayCollection();
+        $this->noteMemes = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->commentLikes = new ArrayCollection();
         $this->commentSignalers = new ArrayCollection();
-        $this->articleSignalers = new ArrayCollection();
+        $this->memeSignalers = new ArrayCollection();
     }
 
     public function __serialize(): array
@@ -377,29 +377,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // }
 
     /**
-     * @return Collection<int, Article>
+     * @return Collection<int, Meme>
      */
-    public function getArticles(): Collection
+    public function getMemes(): Collection
     {
-        return $this->articles;
+        return $this->memes;
     }
 
-    public function addArticle(Article $article): self
+    public function addMeme(Meme $meme): self
     {
-        if (!$this->articles->contains($article)) {
-            $this->articles->add($article);
-            $article->setUserId($this);
+        if (!$this->memes->contains($meme)) {
+            $this->memes->add($meme);
+            $meme->setUserId($this);
         }
 
         return $this;
     }
 
-    public function removeArticle(Article $article): self
+    public function removeMeme(Meme $meme): self
     {
-        if ($this->articles->removeElement($article)) {
+        if ($this->memes->removeElement($meme)) {
             // set the owning side to null (unless already changed)
-            if ($article->getUserId() === $this) {
-                $article->setUserId(null);
+            if ($meme->getUserId() === $this) {
+                $meme->setUserId(null);
             }
         }
 
@@ -407,29 +407,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, ArticleFavoris>
+     * @return Collection<int, MemeFavoris>
      */
-    public function getArticleFavoris(): Collection
+    public function getMemeFavoris(): Collection
     {
-        return $this->articleFavoris;
+        return $this->memeFavoris;
     }
 
-    public function addArticleFavori(ArticleFavoris $articleFavori): self
+    public function addMemeFavori(MemeFavoris $memeFavori): self
     {
-        if (!$this->articleFavoris->contains($articleFavori)) {
-            $this->articleFavoris->add($articleFavori);
-            $articleFavori->setUser($this);
+        if (!$this->memeFavoris->contains($memeFavori)) {
+            $this->memeFavoris->add($memeFavori);
+            $memeFavori->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeArticleFavori(ArticleFavoris $articleFavori): self
+    public function removeMemeFavori(MemeFavoris $memeFavori): self
     {
-        if ($this->articleFavoris->removeElement($articleFavori)) {
+        if ($this->memeFavoris->removeElement($memeFavori)) {
             // set the owning side to null (unless already changed)
-            if ($articleFavori->getUser() === $this) {
-                $articleFavori->setUser(null);
+            if ($memeFavori->getUser() === $this) {
+                $memeFavori->setUser(null);
             }
         }
 
@@ -437,29 +437,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, NoteArticle>
+     * @return Collection<int, NoteMeme>
      */
-    public function getNoteArticles(): Collection
+    public function getNoteMemes(): Collection
     {
-        return $this->noteArticles;
+        return $this->noteMemes;
     }
 
-    public function addNoteArticle(NoteArticle $noteArticle): self
+    public function addNoteMeme(NoteMeme $noteMeme): self
     {
-        if (!$this->noteArticles->contains($noteArticle)) {
-            $this->noteArticles->add($noteArticle);
-            $noteArticle->setUser($this);
+        if (!$this->noteMemes->contains($noteMeme)) {
+            $this->noteMemes->add($noteMeme);
+            $noteMeme->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeNoteArticle(NoteArticle $noteArticle): self
+    public function removeNoteMeme(NoteMeme $noteMeme): self
     {
-        if ($this->noteArticles->removeElement($noteArticle)) {
+        if ($this->noteMemes->removeElement($noteMeme)) {
             // set the owning side to null (unless already changed)
-            if ($noteArticle->getUser() === $this) {
-                $noteArticle->setUser(null);
+            if ($noteMeme->getUser() === $this) {
+                $noteMeme->setUser(null);
             }
         }
 
@@ -557,29 +557,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, ArticleSignaler>
+     * @return Collection<int, MemeSignaler>
      */
-    public function getArticleSignalers(): Collection
+    public function getMemeSignalers(): Collection
     {
-        return $this->articleSignalers;
+        return $this->memeSignalers;
     }
 
-    public function addArticleSignaler(ArticleSignaler $articleSignaler): self
+    public function addMemeSignaler(MemeSignaler $memeSignaler): self
     {
-        if (!$this->articleSignalers->contains($articleSignaler)) {
-            $this->articleSignalers->add($articleSignaler);
-            $articleSignaler->setUser($this);
+        if (!$this->memeSignalers->contains($memeSignaler)) {
+            $this->memeSignalers->add($memeSignaler);
+            $memeSignaler->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeArticleSignaler(ArticleSignaler $articleSignaler): self
+    public function removeMemeSignaler(MemeSignaler $memeSignaler): self
     {
-        if ($this->articleSignalers->removeElement($articleSignaler)) {
+        if ($this->memeSignalers->removeElement($memeSignaler)) {
             // set the owning side to null (unless already changed)
-            if ($articleSignaler->getUser() === $this) {
-                $articleSignaler->setUser(null);
+            if ($memeSignaler->getUser() === $this) {
+                $memeSignaler->setUser(null);
             }
         }
 

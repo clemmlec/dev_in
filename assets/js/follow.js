@@ -21,12 +21,12 @@ window.onload = () => {
         }))
     }
    
-    const followArticle = document.querySelectorAll('[data-follow-article]');
-    if(followArticle){
-        followArticle.forEach((element=>{
+    const followMeme = document.querySelectorAll('[data-follow-meme]');
+    if(followMeme){
+        followMeme.forEach((element=>{
             element.addEventListener('click', () =>  {
                 let id = element.value;
-                axios.get(`/article/follow/${id}`);
+                axios.get(`/meme/follow/${id}`);
                 // console.log(element.children[0].contains("fa")); 
                 if(element.children[0].classList.contains("far")){
                     element.children[0].classList.replace('far','fa' );
@@ -38,13 +38,13 @@ window.onload = () => {
         }))
     }
 
-    const signalerArticle = document.querySelectorAll('[data-signaler-article]');
+    const signalerMeme = document.querySelectorAll('[data-signaler-meme]');
     
-    if(signalerArticle){
-        signalerArticle.forEach((element=>{
+    if(signalerMeme){
+        signalerMeme.forEach((element=>{
             element.addEventListener('click', () =>  {
                 let id = element.value;
-                axios.get(`/article/signaler/${id}`)
+                axios.get(`/meme/signaler/${id}`)
                 .then(function (reponse) {
                     console.log(reponse.data)
                     console.log(element.parentNode.parentNode)
@@ -55,7 +55,7 @@ window.onload = () => {
         }))
     }
 
-    const noter = document.querySelectorAll('[data-note-article]');
+    const noter = document.querySelectorAll('[data-note-meme]');
     
     if(noter){
         noter.forEach((element=>{
@@ -65,9 +65,9 @@ window.onload = () => {
             element.addEventListener('click', () =>  {
                 let value = element.value.split('-');
                 let note = value[0];
-                let articleId = value[1];
+                let memeId = value[1];
                 console.log(element.parentElement.childNodes , '😴');
-                axios.get(`/article/note/${note}/${articleId}`);
+                axios.get(`/meme/note/${note}/${memeId}`);
                 
                 window.setTimeout(function(){
                     element.parentNode.style.display = "none";
@@ -92,13 +92,13 @@ window.onload = () => {
         }))
     }
 
-    const articles = document.querySelectorAll('[data-switch-active-article]');
+    const memes = document.querySelectorAll('[data-switch-active-meme]');
     
-    if(articles){
-        articles.forEach((element=>{
+    if(memes){
+        memes.forEach((element=>{
             element.addEventListener('change', () =>  {
                 let id = element.value;
-                axios.get(`/admin/article/switch/${id}`);
+                axios.get(`/admin/meme/switch/${id}`);
             });
         }))
     }
@@ -125,27 +125,27 @@ window.onload = () => {
         }))
     }
     
-    const articleName = document.querySelectorAll('[data-edit-articleName]');
+    const memeName = document.querySelectorAll('[data-edit-memeName]');
     
-    if(articleName){
-        articleName.forEach((element=>{
+    if(memeName){
+        memeName.forEach((element=>{
             element.addEventListener('click', () =>  {
                 let id = element.value;
-                let name= document.getElementById('articleName').value;
+                let name= document.getElementById('memeName').value;
                 console.log(id, name)
-                axios.get(`/article/edit/name/${id}/${name}`);
+                axios.get(`/meme/edit/name/${id}/${name}`);
             });
         }))
     }
-    const articleContent = document.querySelectorAll('[data-edit-articleContent]');
+    const memeContent = document.querySelectorAll('[data-edit-memeContent]');
     
-    if(articleContent){
-        articleContent.forEach((element=>{
+    if(memeContent){
+        memeContent.forEach((element=>{
             element.addEventListener('click', () =>  {
                 let id = element.value;
-                let content= document.getElementById('articleContent').value;
+                let content= document.getElementById('memeContent').value;
                 console.log(id, content)
-                axios.get(`/article/edit/content/${id}/${content}`);
+                axios.get(`/meme/edit/content/${id}/${content}`);
             });
         }))
     }
@@ -155,24 +155,24 @@ window.onload = () => {
         newComment.forEach((element=>{
             element.addEventListener('click', () =>  {
                 // const form = document.getElementById('formpost');
-                // const image = document.getElementById('article_imageFile_file');
-                let articleId=element.value.split('|')[0];
+                // const image = document.getElementById('meme_imageFile_file');
+                let memeId=element.value.split('|')[0];
                 let userId=element.value.split('|')[1];
-                let com= document.getElementById('commentPost'+articleId).value;
+                let com= document.getElementById('commentPost'+memeId).value;
                 let mesDonnees = new FormData();
-                mesDonnees.set("article", articleId);
+                mesDonnees.set("meme", memeId);
                 mesDonnees.set("com", com);
 
-                console.log(articleId, com);
+                console.log(memeId, com);
                 axios.post(
                     '/comment/new', mesDonnees )
                 .then(function (reponse) {
                     //On traite la suite une fois la réponse obtenue 
                     // console.log(reponse, "reponse 😎");
                     // console.log(reponse.data);
-                    console.log(articleId);
+                    console.log(memeId);
                     let comment = document.getElementById("modele-comment");
-                    let top =  document.getElementById("com"+articleId);
+                    let top =  document.getElementById("com"+memeId);
                     let clone = comment.cloneNode(true);
                     console.log(clone.children[0]);
 

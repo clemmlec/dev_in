@@ -4,8 +4,8 @@
 @import "./components/formRegister.scss";
 @import "./components/vichUpload.scss";
 @import "./components/userCard.scss";
-@import "./components/articleCard.scss";
-@import "./components/nouvelArticle.scss";
+@import "./components/memeCard.scss";
+@import "./components/nouvelMeme.scss";
 @import "./components/dropdown.scss";
 @import "./components/comment.scss";
 @import "./components/swiper.scss";
@@ -176,7 +176,7 @@ a{
     .commentaire{
         min-width: 100%;
     }
-    // .card-article{
+    // .card-meme{
     //     margin-left: 0;
     //     margin-right: 0;
 

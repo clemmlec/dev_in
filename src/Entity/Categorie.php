@@ -21,12 +21,12 @@ class Categorie
     #[ORM\Column(length: 200, nullable: true)]
     private ?string $style = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorie_id', targetEntity: Article::class)]
-    private Collection $articles;
+    #[ORM\OneToMany(mappedBy: 'categorie_id', targetEntity: Meme::class)]
+    private Collection $memes;
 
     public function __construct()
     {
-        $this->articles = new ArrayCollection();
+        $this->memes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -59,29 +59,29 @@ class Categorie
     }
 
     /**
-     * @return Collection<int, Article>
+     * @return Collection<int, Meme>
      */
-    public function getArticles(): Collection
+    public function getMemes(): Collection
     {
-        return $this->articles;
+        return $this->memes;
     }
 
-    public function addArticle(Article $article): self
+    public function addMeme(Meme $meme): self
     {
-        if (!$this->articles->contains($article)) {
-            $this->articles->add($article);
-            $article->setCategorieId($this);
+        if (!$this->memes->contains($meme)) {
+            $this->memes->add($meme);
+            $meme->setCategorieId($this);
         }
 
         return $this;
     }
 
-    public function removeArticle(Article $article): self
+    public function removeMeme(Meme $meme): self
     {
-        if ($this->articles->removeElement($article)) {
+        if ($this->memes->removeElement($meme)) {
             // set the owning side to null (unless already changed)
-            if ($article->getCategorieId() === $this) {
-                $article->setCategorieId(null);
+            if ($meme->getCategorieId() === $this) {
+                $meme->setCategorieId(null);
             }
         }
 

@@ -5,7 +5,7 @@ namespace App\Controller\users;
 use App\Entity\Comment;
 use App\Entity\CommentLike;
 use App\Entity\CommentSignaler;
-use App\Repository\ArticleRepository;
+use App\Repository\MemeRepository;
 use App\Repository\CommentLikeRepository;
 use App\Repository\CommentRepository;
 use App\Repository\CommentSignalerRepository;
@@ -20,21 +20,21 @@ use Symfony\Component\Security\Core\Security;
 class CommentController extends AbstractController
 {
     #[Route('/new', name: 'app_comment_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ArticleRepository $articleRepo, CommentRepository $commentRepository, Security $security): Response
+    public function new(Request $request, MemeRepository $memeRepo, CommentRepository $commentRepository, Security $security): Response
     {
         $param = $request->request->all();
-        // dd($param ['article']);
+        // dd($param ['meme']);
         $comment = new Comment();
 
-        $article = $articleRepo->find($param['article']);
+        $meme = $memeRepo->find($param['meme']);
 
         $user = $security->getUser();
         // dd($follow);
         // dd($user, $follow);
 
-        if ($article && $user) {
+        if ($meme && $user) {
             $comment->setUser($user)
-            ->setArticle($article)
+            ->setMeme($meme)
             ->setComment($param['com']);
             $commentRepository->add($comment, true);
 
@@ -46,7 +46,7 @@ class CommentController extends AbstractController
     }
 
     #[Route('/jaime/{id}', name: 'user.comment.jaime', methods: ['GET'])]
-    public function switchVisibilityArticle(?Comment $com, Security $security, CommentRepository $comRepo, CommentLikeRepository $comLikeRepo)
+    public function switchVisibilityMeme(?Comment $com, Security $security, CommentRepository $comRepo, CommentLikeRepository $comLikeRepo)
     {
 
         $user = $security->getUser();

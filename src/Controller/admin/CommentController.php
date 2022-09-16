@@ -77,7 +77,7 @@ class CommentController extends AbstractController
     }
 
     #[Route('/switch/{id}', name: 'admin.comment.switch', methods: ['GET'])]
-    public function switchVisibilityArticle(int $id, CommentRepository $comRepo)
+    public function switchVisibilityMeme(int $id, CommentRepository $comRepo)
     {
         $com = $comRepo->find($id);
         if ($com) {

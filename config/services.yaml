@@ -29,5 +29,5 @@ services:
     App\Fixtures\Providers\RandomTag:
         tags: [{name: nelmio_alice.faker.provider}]
         
-    App\Fixtures\Providers\ArticleProvider:
+    App\Fixtures\Providers\MemeProvider:
         tags: [{name: nelmio_alice.faker.provider}]

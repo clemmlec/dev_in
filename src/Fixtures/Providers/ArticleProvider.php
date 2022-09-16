@@ -6,7 +6,7 @@ use DateTimeImmutable;
 use Faker\Factory;
 use Faker\Generator;
 
-class ArticleProvider
+class MemeProvider
 {
     public function __construct(
         private Generator $faker

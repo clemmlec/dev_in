@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Meme{% endblock %}
+
+{% block body %}
+    <h1>Meme</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ meme.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ meme.nom }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ meme.description }}</td>
+            </tr>
+            <tr>
+                <th>ImageName</th>
+                <td>{{ meme.imageName }}</td>
+            </tr>
+            <tr>
+                <th>ImageSize</th>
+                <td>{{ meme.imageSize }}</td>
+            </tr>
+            <tr>
+                <th>ImageUpdatedAt</th>
+                <td>{{ meme.imageUpdatedAt ? meme.imageUpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ meme.createdAt ? meme.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated_at</th>
+                <td>{{ meme.updatedAt ? meme.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Visible</th>
+                <td>{{ meme.visible ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_meme_index') }}">back to list</a>
+
+    <a href="{{ path('app_meme_edit', {'id': meme.id}) }}">edit</a>
+
+    {{ include('admin/meme/_delete_form.html.twig') }}
+{% endblock %}

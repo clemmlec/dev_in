@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Article;
+use App\Entity\Meme;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Article>
+ * @extends ServiceEntityRepository<Meme>
  *
- * @method Article|null find($id, $lockMode = null, $lockVersion = null)
- * @method Article|null findOneBy(array $criteria, array $orderBy = null)
- * @method Article[]    findAll()
- * @method Article[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Meme|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Meme|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Meme[]    findAll()
+ * @method Meme[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ArticleRepository extends ServiceEntityRepository
+class MemeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Article::class);
+        parent::__construct($registry, Meme::class);
     }
 
-    public function add(Article $entity, bool $flush = false): void
+    public function add(Meme $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ArticleRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Article $entity, bool $flush = false): void
+    public function remove(Meme $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -39,7 +39,7 @@ class ArticleRepository extends ServiceEntityRepository
         }
     }
 
-    public function findActiveArticle()
+    public function findActiveMeme()
     {
         return $this->createQueryBuilder('a')
             ->select('a', 'u', 'c', 'n', 'm', 'k')
@@ -47,7 +47,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->setParameter('active', true)
             ->leftjoin('a.user_id', 'u')
             ->leftjoin('a.categorie_id', 'c')
-            ->leftjoin('a.noteArticles', 'n')
+            ->leftjoin('a.noteMemes', 'n')
             ->leftjoin('a.comments', 'm')
             ->leftjoin('m.commentLikes', 'k')
             ->orderBy('a.created_at', 'DESC')
@@ -58,7 +58,7 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Article[] Returns an array of Article objects
+//     * @return Meme[] Returns an array of Meme objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -72,7 +72,7 @@ class ArticleRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Article
+//    public function findOneBySomeField($value): ?Meme
 //    {
 //        return $this->createQueryBuilder('a')
 //            ->andWhere('a.exampleField = :val')

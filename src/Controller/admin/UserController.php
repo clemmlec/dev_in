@@ -89,7 +89,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/switch/{id}', name: 'admin.user.switch', methods: ['GET'])]
-    public function switchVisibilityArticle(int $id, UserRepository $userRepo)
+    public function switchVisibilityMeme(int $id, UserRepository $userRepo)
     {
         $user = $userRepo->find($id);
         if ($user) {

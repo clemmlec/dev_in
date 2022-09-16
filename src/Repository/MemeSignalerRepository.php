@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\ArticleSignaler;
+use App\Entity\MemeSignaler;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ArticleSignaler>
+ * @extends ServiceEntityRepository<MemeSignaler>
  *
- * @method ArticleSignaler|null find($id, $lockMode = null, $lockVersion = null)
- * @method ArticleSignaler|null findOneBy(array $criteria, array $orderBy = null)
- * @method ArticleSignaler[]    findAll()
- * @method ArticleSignaler[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method MemeSignaler|null find($id, $lockMode = null, $lockVersion = null)
+ * @method MemeSignaler|null findOneBy(array $criteria, array $orderBy = null)
+ * @method MemeSignaler[]    findAll()
+ * @method MemeSignaler[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ArticleSignalerRepository extends ServiceEntityRepository
+class MemeSignalerRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ArticleSignaler::class);
+        parent::__construct($registry, MemeSignaler::class);
     }
 
-    public function add(ArticleSignaler $entity, bool $flush = false): void
+    public function add(MemeSignaler $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ArticleSignalerRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(ArticleSignaler $entity, bool $flush = false): void
+    public function remove(MemeSignaler $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ArticleSignalerRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return ArticleSignaler[] Returns an array of ArticleSignaler objects
+//     * @return MemeSignaler[] Returns an array of MemeSignaler objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ArticleSignalerRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?ArticleSignaler
+//    public function findOneBySomeField($value): ?MemeSignaler
 //    {
 //        return $this->createQueryBuilder('a')
 //            ->andWhere('a.exampleField = :val')

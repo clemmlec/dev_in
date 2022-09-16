@@ -46,12 +46,12 @@
                         {% if app.user %}
                             {% if is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('admin_user_index') }}">admin-user</a>
-                                <a href="{{ path('app_article_index') }}">admin-article</a>
+                                <a href="{{ path('app_meme_index') }}">admin-meme</a>
                                 <a href="{{ path('app_categorie_index') }}">admin-categorie</a>
                                 <a href="{{ path('app_comment_index') }}">admin-comment</a>
                             {% endif %}
                         {% endif %}
-                        {# <a href="{{ path('user_article_index') }}">Article</a> #}
+                        {# <a href="{{ path('user_meme_index') }}">Meme</a> #}
                         <a href="{{ path('app_user_index') }}">User</a>
                     </div>
                 </div>

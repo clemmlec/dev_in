@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin meme{% endblock %}
+
+{% block body %}
+    <h1>Admin meme</h1>
+    <section class="d-flex">
+        {% for meme in memes | sort((a, b) => a.createdAt <= b.createdAt) %}
+        <div class="card-meme demiDiv">
+        <h1 class="toptitre left {{meme.categorieId.style}}">
+                    - Posté par :  {{meme.userId.name}}
+                        <img 
+                            class="avatar" 
+                            src="{{ meme.userId ? vich_uploader_asset(meme.userId, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                            alt="{{meme.userId.name}}"
+                        >
+
+                </h1> 
+                <h2 class="toptitre2 right {{meme.categorieId.style}}">
+                    dans {{meme.categorieId.nom}} <span class="mute">{{meme.createdAt | ago}}</span>
+                </h2>
+                <div class="iconMeme">
+                    <i class="fa-solid fa-triangle-exclamation redd">{{meme.getMemeSignalers | length}}</i>
+                    {# <i class="fa fa-star pointer yellow btn-vierge">{{meme.getCommentSignalers | length}}</i> #}
+                </div>
+
+                <h1 class="title">{{meme.nom}}
+                {% if  meme.getNoteMemes() | length > 0 %}
+                 
+                    {# {{dump(meme.getNoteMemes())}} #}
+                    {% set somme = 0 %}
+                    {% for row in meme.getNoteMemes() %}
+                    {% set somme = somme + row.note
+                     %}
+                       
+                    {% endfor %}
+                     {% set somme = somme / (meme.getNoteMemes()| length) %}
+                     <div class="note">
+                        {% for i in 1..10 %}
+                            {# {% if i <= somme * 2 %} #}
+                            {% if i is odd %}
+                            <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
+                            {% else %}
+                            <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
+                            {% endif %}
+                            {# {% endif %} #}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                </h1>
+                {# {{ dump(app.user) }} #}
+                <div class="d-flex-image">
+                    
+                    <div class="d-meme ">
+                        
+                        <div class="description">
+                            <p>{{meme.description}}</p>
+                        </div>
+                       
+                    </div>
+                    <img class="memeImagePetite" src="{{ meme ? vich_uploader_asset(meme, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{meme.nom}}">
+                    
+                </div>
+                <div  class="form-check form-switch m-2">   
+                    {# {{ dump(meme.visible) }} #}
+                    <input type="checkbox" class="form-check-input" value="{{meme.id}}" role="switch" data-switch-active-meme {{meme.visible ? 'checked'}}>
+                    <label class="form-check-label" >visible</label>
+
+                </div>
+      
+            {# <a href="{{ path('app_meme_show', {'id': meme.id}) }}">show</a> #}
+                    <a href="{{ path('app_meme_edit', {'id': meme.id}) }}">edit</a>
+
+            {# <tr>
+                <td>{{ meme.id }}</td>
+                <td>{{ meme.visible ? 'Yes' : 'No' }}</td>
+                <td>
+                    
+                </td>
+            </tr> #}
+        </div>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+            
+        
+        {% endfor %}
+    </section>
+    <a href="{{ path('app_meme_new') }}">Create new</a>
+{% endblock %}
