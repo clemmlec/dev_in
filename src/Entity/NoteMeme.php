@@ -2,24 +2,24 @@
 
 namespace App\Entity;
 
-use App\Repository\NoteArticleRepository;
+use App\Repository\NoteMemeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: NoteArticleRepository::class)]
-class NoteArticle
+#[ORM\Entity(repositoryClass: NoteMemeRepository::class)]
+class NoteMeme
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'noteArticles')]
+    #[ORM\ManyToOne(inversedBy: 'noteMemes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'noteArticles')]
+    #[ORM\ManyToOne(inversedBy: 'noteMemes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Article $article = null;
+    private ?Meme $meme = null;
 
     #[ORM\Column]
     private ?int $note = null;
@@ -41,14 +41,14 @@ class NoteArticle
         return $this;
     }
 
-    public function getArticle(): ?Article
+    public function getMeme(): ?Meme
     {
-        return $this->article;
+        return $this->meme;
     }
 
-    public function setArticle(?Article $article): self
+    public function setMeme(?Meme $meme): self
     {
-        $this->article = $article;
+        $this->meme = $meme;
 
         return $this;
     }

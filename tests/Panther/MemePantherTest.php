@@ -6,7 +6,7 @@ use Facebook\WebDriver\WebDriverBy;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Component\Panther\PantherTestCase;
 
-class ArticlePantherTest extends PantherTestCase
+class MemePantherTest extends PantherTestCase
 {
     protected $client;
 
@@ -21,19 +21,19 @@ class ArticlePantherTest extends PantherTestCase
         $this->databaseTool->loadAliceFixture([
             \dirname(__DIR__).'/Fixtures/UserTestFixtures.yaml',
             \dirname(__DIR__).'/Fixtures/TagTestFixtures.yaml',
-            \dirname(__DIR__).'/Fixtures/ArticleTestFixtures.yaml',
+            \dirname(__DIR__).'/Fixtures/MemeTestFixtures.yaml',
         ]);
     }
 
-    public function testArticleNumberOnListePage()
+    public function testMemeNumberOnListePage()
     {
         $crawler = $this->client->request('GET', '/');
-        $this->assertCount(20, $crawler->filter('.card-article'));
+        $this->assertCount(20, $crawler->filter('.card-meme'));
     }
 
-    // public function testArticleShowMoreButton()
+    // public function testMemeShowMoreButton()
     // {
-    //     $crawler = $this->client->request('GET', '/articles');
+    //     $crawler = $this->client->request('GET', '/memes');
 
     //     $this->client->waitFor('.btn-show-more', 10);
 
@@ -46,9 +46,9 @@ class ArticlePantherTest extends PantherTestCase
     //     $this->assertCount(12, $crawler->filter('.blog-list .blog-card'));
     // }
 
-    // public function testArticleSearchTitle()
+    // public function testMemeSearchTitle()
     // {
-    //     $crawler = $this->client->request('GET', '/articles');
+    //     $crawler = $this->client->request('GET', '/memes');
 
     //     $this->client->waitFor('.form-filter', 5);
 

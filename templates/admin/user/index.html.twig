@@ -19,29 +19,29 @@
             <h2 class="toptitre2 right gris">
                 <span class="mute">inscrit {{user.createdAt | ago}}</span>
             </h2>
-            <div class="iconArticle">
+            <div class="iconMeme">
                 <i class="fa fa-star pointer yellow btn-vierge"></i>
             </div>
-            {% if user.articles %}
-                <h2>{{user.articles | length }} articles</h2>
+            {% if user.memes %}
+                <h2>{{user.memes | length }} memes</h2>
                 {% set moyenne = 0 %}
                 {% set nbVote = 0 %}
-                {% for row in user.articles %}
-                    {% for note in row.noteArticles %}
+                {% for row in user.memes %}
+                    {% for note in row.noteMemes %}
                         {% set moyenne = moyenne + note.note %}
                         {% set nbVote = nbVote +1 %}
                     {% endfor %}
                 {% endfor %}
                 {% if nbVote > 0 %}
                     {% set moyenne = moyenne / nbVote %}
-                    <h2>Moyenne articles {{ moyenne | round(2, 'floor') }}</h2>
+                    <h2>Moyenne memes {{ moyenne | round(2, 'floor') }}</h2>
                 {% endif %}
             {% endif %}
             {% if user.comments %}
                 <h2>{{user.comments | length }} commantaires</h2>
             {% endif %}
             <div  class="form-check form-switch m-2">   
-                {# {{ dump(article.visible) }} #}
+                {# {{ dump(meme.visible) }} #}
                 <input type="checkbox" class="form-check-input" value="{{user.id}}" role="switch" data-switch-active-user {{user.visible ? 'checked'}}>
                 <label class="form-check-label" >visible</label>
 

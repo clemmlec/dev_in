@@ -49,12 +49,12 @@
                     </h1>
                     <h3 class="date">inscrit {{user.createdAt | ago}}</h3>
                     <h2>{{user.followers | length}} followers</h2>
-                    {% if user.articles %}
-                        <h2>{{user.articles | length }} articles postés</h2>
+                    {% if user.memes %}
+                        <h2>{{user.memes | length }} memes postés</h2>
                         {% set moyenne = 0 %}
                         {% set nbVote = 0 %}
-                        {% for row in user.articles %}
-                            {% for note in row.noteArticles %}
+                        {% for row in user.memes %}
+                            {% for note in row.noteMemes %}
                                 {% set moyenne = moyenne + note.note %}
                                 {% set nbVote = nbVote +1 %}
                             {% endfor %}
@@ -62,7 +62,7 @@
                         <h2>{{user.comments | length }} commantaires</h2>
                         {% if nbVote > 0 %}
                             {% set moyenne = moyenne / nbVote %}
-                            <h2>Moyenne articles {{ moyenne | round(2, 'floor') }}</h2>
+                            <h2>Moyenne memes {{ moyenne | round(2, 'floor') }}</h2>
                         {% endif %}
                     {% endif %}
                     <button class="btn-vierge"><a href="{{ path('app_user_profil', {'id': user.id}) }}">voir le profil</a></button>

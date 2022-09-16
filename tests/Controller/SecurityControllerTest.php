@@ -44,9 +44,9 @@ class SecurityControllerTest extends WebTestCase
     //     $this->assertSelectorTextContains('h1', 'Se connecter', 'error -> pas le titre home sur cette page');
     // }
 
-    // public function testAdminArticleNotConnected()
+    // public function testAdminMemeNotConnected()
     // {
-    //     $this->client->request('GET', '/admin/article');
+    //     $this->client->request('GET', '/admin/meme');
     //     $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     // }
 
@@ -56,13 +56,13 @@ class SecurityControllerTest extends WebTestCase
     //     $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     // }
 
-    // public function testAdminArticleBadLoggedIn()
+    // public function testAdminMemeBadLoggedIn()
     // {
     //     $user = $this->userRepository->find(3);
 
     //     $this->client->loginUser($user);
 
-    //     $this->client->request('GET', '/admin/article');
+    //     $this->client->request('GET', '/admin/meme');
     //     $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     // }
 
@@ -76,14 +76,14 @@ class SecurityControllerTest extends WebTestCase
     //     $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     // }
 
-    // public function testAdminArticleGoodLoggedIn()
+    // public function testAdminMemeGoodLoggedIn()
     // {
     //     // $user = $this->userRepository->find(1);
     //     $userAdmin = $this->userRepository->findOneByEmail('clement@test.com');
 
     //     $this->client->loginUser($userAdmin);
 
-    //     $this->client->request('GET', '/admin/article');
+    //     $this->client->request('GET', '/admin/meme');
     //     $this->assertResponseIsSuccessful();
     // }
 
@@ -108,13 +108,13 @@ class SecurityControllerTest extends WebTestCase
     //     $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     // }
 
-    // public function testEditorArticleGoddLoggedIn()
+    // public function testEditorMemeGoddLoggedIn()
     // {
     //     $user = $this->userRepository->find(2);
 
     //     $this->client->loginUser($user);
 
-    //     $this->client->request('GET', '/admin/article');
+    //     $this->client->request('GET', '/admin/meme');
     //     $this->assertResponseIsSuccessful();
     // }
 

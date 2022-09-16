@@ -2,15 +2,15 @@
 
 namespace App\Tests\Entity;
 
-use App\Entity\Article;
-use App\Repository\ArticleRepository;
+use App\Entity\Meme;
+use App\Repository\MemeRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\UserRepository;
 use App\Tests\Utils\AssertTestTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class ArticleTest extends KernelTestCase
+class MemeTest extends KernelTestCase
 {
     use AssertTestTrait;
 
@@ -25,14 +25,14 @@ class ArticleTest extends KernelTestCase
 
     public function testRepositoryCount()
     {
-        $articles = $this->databaseTool->loadAliceFixture([
+        $memes = $this->databaseTool->loadAliceFixture([
             \dirname(__DIR__).'/Fixtures/UserTestFixtures.yaml',
             \dirname(__DIR__).'/Fixtures/TagTestFixtures.yaml',
-            \dirname(__DIR__).'/Fixtures/ArticleTestFixtures.yaml',
+            \dirname(__DIR__).'/Fixtures/MemeTestFixtures.yaml',
         ]);
 
-        $articles = self::getContainer()->get(ArticleRepository::class)->count([]);
-        $this->assertSame(20, $articles, "Il n'y a pas le bon nombre d'article");
+        $memes = self::getContainer()->get(MemeRepository::class)->count([]);
+        $this->assertSame(20, $memes, "Il n'y a pas le bon nombre d'meme");
     }
 
     public function getEntity()
@@ -40,8 +40,8 @@ class ArticleTest extends KernelTestCase
         $user = self::getContainer()->get(UserRepository::class)->find(1);
         $tag = self::getContainer()->get(CategorieRepository::class)->find(1);
 
-        return (new Article())
-            ->setNom('Article')
+        return (new Meme())
+            ->setNom('Meme')
             ->setDescription('Description de test en contenur valide')
             ->setUserId($user)
             ->setVisible(true)
@@ -49,37 +49,37 @@ class ArticleTest extends KernelTestCase
         ;
     }
 
-    public function testValideArticleEntity()
+    public function testValideMemeEntity()
     {
         $this->assertHasErrors($this->getEntity());
     }
 
-    // public function testNomUniqueTitleArticle()
+    // public function testNomUniqueTitleMeme()
     // {
-    //     $article = $this->getEntity()
+    //     $meme = $this->getEntity()
     //         ->setTitre('Titre - 1');
-    //     $this->assertHasErrors($article, 1);
+    //     $this->assertHasErrors($meme, 1);
     // }
 
-    // public function testMinTitleArticle()
+    // public function testMinTitleMeme()
     // {
-    //     $article = $this->getEntity()
+    //     $meme = $this->getEntity()
     //         ->setTitre('Ti');
-    //     $this->assertHasErrors($article, 1);
+    //     $this->assertHasErrors($meme, 1);
     // }
 
-    // public function testMaxTitleArticle()
+    // public function testMaxTitleMeme()
     // {
-    //     $article = $this->getEntity()
+    //     $meme = $this->getEntity()
     //         ->setTitre('TigjgjgjgjgjgjgjgjgjgjgjgjgjgjTigjgjgjgjgjgjgjgjgjgjgjgjgjgjTigjgjgjdgjgjgjgjgjgjgjgjgjgjgjTigjgjgjdfdfdfdffdfdfdfdfdgjgjgjgjgjgjgjgjgjgjgjetrhfkldsjfh');
-    //     $this->assertHasErrors($article, 1);
+    //     $this->assertHasErrors($meme, 1);
     // }
 
-    // public function testMinContentArticle()
+    // public function testMinContentMeme()
     // {
-    //     $article = $this->getEntity()
+    //     $meme = $this->getEntity()
     //         ->setContent('Tiefee');
-    //     $this->assertHasErrors($article, 1);
+    //     $this->assertHasErrors($meme, 1);
     // }
 
     protected function tearDown(): void

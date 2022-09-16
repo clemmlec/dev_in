@@ -8,7 +8,7 @@
 /var/
 /vendor/
 # /.env
-/public/images/articles/
+/public/images/memes/
 /public/images/users/
 ###< symfony/framework-bundle ###
 

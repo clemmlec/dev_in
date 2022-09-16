@@ -2,24 +2,24 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleSignalerRepository;
+use App\Repository\MemeFavorisRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ArticleSignalerRepository::class)]
-class ArticleSignaler
+#[ORM\Entity(repositoryClass: MemeFavorisRepository::class)]
+class MemeFavoris
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'articleSignalers')]
+    #[ORM\ManyToOne(inversedBy: 'memeFavoris')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'articleSignalers')]
+    #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Article $article = null;
+    private ?Meme $meme = null;
 
     public function getId(): ?int
     {
@@ -38,14 +38,14 @@ class ArticleSignaler
         return $this;
     }
 
-    public function getArticle(): ?Article
+    public function getMeme(): ?Meme
     {
-        return $this->article;
+        return $this->meme;
     }
 
-    public function setArticle(?Article $article): self
+    public function setMeme(?Meme $meme): self
     {
-        $this->article = $article;
+        $this->meme = $meme;
 
         return $this;
     }

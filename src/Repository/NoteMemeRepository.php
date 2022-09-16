@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\NoteArticle;
+use App\Entity\NoteMeme;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<NoteArticle>
+ * @extends ServiceEntityRepository<NoteMeme>
  *
- * @method NoteArticle|null find($id, $lockMode = null, $lockVersion = null)
- * @method NoteArticle|null findOneBy(array $criteria, array $orderBy = null)
- * @method NoteArticle[]    findAll()
- * @method NoteArticle[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method NoteMeme|null find($id, $lockMode = null, $lockVersion = null)
+ * @method NoteMeme|null findOneBy(array $criteria, array $orderBy = null)
+ * @method NoteMeme[]    findAll()
+ * @method NoteMeme[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class NoteArticleRepository extends ServiceEntityRepository
+class NoteMemeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, NoteArticle::class);
+        parent::__construct($registry, NoteMeme::class);
     }
 
-    public function add(NoteArticle $entity, bool $flush = false): void
+    public function add(NoteMeme $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class NoteArticleRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(NoteArticle $entity, bool $flush = false): void
+    public function remove(NoteMeme $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class NoteArticleRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return NoteArticle[] Returns an array of NoteArticle objects
+//     * @return NoteMeme[] Returns an array of NoteMeme objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class NoteArticleRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?NoteArticle
+//    public function findOneBySomeField($value): ?NoteMeme
 //    {
 //        return $this->createQueryBuilder('n')
 //            ->andWhere('n.exampleField = :val')

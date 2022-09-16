@@ -14,12 +14,12 @@
         {{ form_widget( form.categorie_id ) }}
         
     </div>
-    <div class="iconArticle">
+    <div class="iconMeme">
         <button 
             type="button" 
             class="btn-vierge yellow" 
             value="" 
-            data-follow-article >
+            data-follow-meme >
             <i class="fa-solid fa-star pointer yellow"></i>
         </button>
     </div>
@@ -33,7 +33,7 @@
         {{ form_widget( form.imageFile ) }}
     </div>
     <hr>
-    <button class="mb-4" data-new-article>{{ button_label|default('Save') }}</button>
+    <button class="mb-4" data-new-meme>{{ button_label|default('Save') }}</button>
     
     {{ form_widget( form._token)}}
 {{ form_end(form,{render_rest: false}) }}

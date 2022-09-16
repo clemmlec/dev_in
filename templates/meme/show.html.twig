@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 {% block title %}
-    Article | {{ parent() }}
+    Meme | {{ parent() }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -15,35 +15,35 @@
 
 {% block body %}
 <section class="d-flex">
-    <div class="card-article">
-        <h1 class="toptitre left {{article.categorieId.style}}">
-            - Posté par :  {{article.userId.name}}
+    <div class="card-meme">
+        <h1 class="toptitre left {{meme.categorieId.style}}">
+            - Posté par :  {{meme.userId.name}}
             <img 
                 class="avatar" 
-                src="{{ article.userId ? vich_uploader_asset(article.userId, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                alt="{{article.userId.name}}"
+                src="{{ meme.userId ? vich_uploader_asset(meme.userId, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                alt="{{meme.userId.name}}"
             >
         </h1> 
-        <h2 class="toptitre2 right {{article.categorieId.style}}">
-            dans {{article.categorieId.nom}} <span class="mute">{{article.createdAt | ago}}</span>
+        <h2 class="toptitre2 right {{meme.categorieId.style}}">
+            dans {{meme.categorieId.nom}} <span class="mute">{{meme.createdAt | ago}}</span>
         </h2>
-        <div class="iconArticle">
-            <button value="{{article.id}}" class="btn-vierge red" type="button" data-signaler-article >
+        <div class="iconMeme">
+            <button value="{{meme.id}}" class="btn-vierge red" type="button" data-signaler-meme >
                 <i class="fa-solid fa-triangle-exclamation"></i>
             </button>
             <button 
                 type="button" 
                 class="btn-vierge " 
-                value="{{article.id}}" 
-                data-follow-article >
-                {# {{ dump(article) }}
-                {{ dump(app.user.getArticleFavoris()) }} #}
-                {# {{ dump(article) }}
-                {{ dump(app.user.articleFavoris) }} #}
+                value="{{meme.id}}" 
+                data-follow-meme >
+                {# {{ dump(meme) }}
+                {{ dump(app.user.getMemeFavoris()) }} #}
+                {# {{ dump(meme) }}
+                {{ dump(app.user.memeFavoris) }} #}
                 {% set fav = false %}
                 {% if app.user %}
-                    {% for row in app.user.articleFavoris %}
-                        {% if row.article.id == article.id %}
+                    {% for row in app.user.memeFavoris %}
+                        {% if row.meme.id == meme.id %}
                             {% set fav = true %}
                         {% endif %}
                     {% endfor %}
@@ -61,21 +61,21 @@
         </div>
 
         <h1 class="title">
-        {% if app.user and app.user.id == article.userId.id %}
-            <input id="articleName" type="text" value="{{article.nom}}">
-            <button class="btnVierge" value="{{article.id}}" data-edit-articleName >modifier</button>
+        {% if app.user and app.user.id == meme.userId.id %}
+            <input id="memeName" type="text" value="{{meme.nom}}">
+            <button class="btnVierge" value="{{meme.id}}" data-edit-memeName >modifier</button>
         {% else %}
-            {{article.nom}}
+            {{meme.nom}}
         {% endif %}
         
-        {% if  article.getNoteArticles() | length > 0 %}
+        {% if  meme.getNoteMemes() | length > 0 %}
             
-            {# {{dump(article.getNoteArticles())}} #}
+            {# {{dump(meme.getNoteMemes())}} #}
             {% set somme = 0 %}
-            {% for row in article.getNoteArticles() %}
+            {% for row in meme.getNoteMemes() %}
                 {% set somme = somme + row.note %}
             {% endfor %}
-                {% set somme = somme / (article.getNoteArticles()| length) %}
+                {% set somme = somme / (meme.getNoteMemes()| length) %}
             <div class="note">
                 {% for i in 1..10 %}
                     {# {% if i <= somme * 2 %} #}
@@ -91,18 +91,18 @@
         </h1>
         {# {{ dump(app.user) }} #}
         <div class="d-flex-image">
-            {# noter l article #}
+            {# noter l meme #}
             {% if app.user  %}
                 {% set noter = false %}
-                {% for row in app.user.noteArticles %}
-                    {% if row.article.id == article.id %}
+                {% for row in app.user.noteMemes %}
+                    {% if row.meme.id == meme.id %}
                     {% set noter = true %}
                     {% endif %}
                 {% endfor %}
                 {% if not noter %}
                 <div class="note">
                     {% for i in 1..5 %}
-                    <button class="btn-vierge"  value="{{i}}-{{article.id}}" data-note-article>
+                    <button class="btn-vierge"  value="{{i}}-{{meme.id}}" data-note-meme>
                             <i class="far fa-star stars" ></i>
                     </button>
                     {% endfor %}
@@ -114,16 +114,16 @@
                 <h2>commentaires</h2>
                 {# form new comment #}
                 {% if app.user %} 
-                    {# <form action="" id="commentPost{{article.id}}"> #}
+                    {# <form action="" id="commentPost{{meme.id}}"> #}
                         <div class="comment">
-                            <input id="commentPost{{article.id}}" class="envoieCommentInput" placeholder="écrit ton commentaire">
-                            <button type="button" class="btn-vierge envoiComment" value="{{article.id}}|{{app.user.id}}" data-envoie-comment><i class="fa-solid fa-paper-plane"></i></button>
+                            <input id="commentPost{{meme.id}}" class="envoieCommentInput" placeholder="écrit ton commentaire">
+                            <button type="button" class="btn-vierge envoiComment" value="{{meme.id}}|{{app.user.id}}" data-envoie-comment><i class="fa-solid fa-paper-plane"></i></button>
                         </div>
                     {# </form> #}
                 {% endif %}
                 
-                <div class="top" id="com{{article.id}}">
-                {% for commen in article.comments |sort((a, b) => a.createdAt <= b.createdAt) %}
+                <div class="top" id="com{{meme.id}}">
+                {% for commen in meme.comments |sort((a, b) => a.createdAt <= b.createdAt) %}
                     {% if commen.visible %}
                     <div class="comment3">           
                         <div class="jaime" >
@@ -151,15 +151,15 @@
                 </div>
             </div>
             <div>
-                <img class="articleImage" src="{{ article ? vich_uploader_asset(article, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{article.nom}}">
-                <div class="d-article ">
+                <img class="memeImage" src="{{ meme ? vich_uploader_asset(meme, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{meme.nom}}">
+                <div class="d-meme ">
                     <div class="description">
                         
-                        {% if app.user and app.user.id == article.userId.id %}
-                            <input id="articleContent" type="text" value="{{article.description}}">
-                            <button class="btnVierge" value="{{article.id}}" data-edit-articleContent >modifier</button>
+                        {% if app.user and app.user.id == meme.userId.id %}
+                            <input id="memeContent" type="text" value="{{meme.description}}">
+                            <button class="btnVierge" value="{{meme.id}}" data-edit-memeContent >modifier</button>
                         {% else %}
-                            <p>{{article.description}}</p>
+                            <p>{{meme.description}}</p>
                         {% endif %}
                     </div>
                 </div>

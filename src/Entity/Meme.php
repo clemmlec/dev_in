@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleRepository;
+use App\Repository\MemeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,9 +10,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-#[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[ORM\Entity(repositoryClass: MemeRepository::class)]
 #[Vich\Uploadable]
-class Article
+class Meme
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -25,14 +25,14 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'articles')]
+    #[ORM\ManyToOne(inversedBy: 'memes')]
     private ?User $user_id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'articles')]
+    #[ORM\ManyToOne(inversedBy: 'memes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie_id = null;
 
-    #[Vich\UploadableField(mapping: 'article', fileNameProperty: 'imageName', size: 'imageSize')]
+    #[Vich\UploadableField(mapping: 'meme', fileNameProperty: 'imageName', size: 'imageSize')]
     private ?File $imageFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -55,20 +55,20 @@ class Article
     #[ORM\Column]
     private ?bool $visible = true;
 
-    #[ORM\OneToMany(mappedBy: 'article', targetEntity: NoteArticle::class, orphanRemoval: true)]
-    private Collection $noteArticles;
+    #[ORM\OneToMany(mappedBy: 'meme', targetEntity: NoteMeme::class, orphanRemoval: true)]
+    private Collection $noteMemes;
 
-    #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'meme', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'article', targetEntity: ArticleSignaler::class)]
-    private Collection $articleSignalers;
+    #[ORM\OneToMany(mappedBy: 'meme', targetEntity: MemeSignaler::class)]
+    private Collection $memeSignalers;
 
     public function __construct()
     {
-        $this->noteArticles = new ArrayCollection();
+        $this->noteMemes = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->articleSignalers = new ArrayCollection();
+        $this->memeSignalers = new ArrayCollection();
     }
 
     public function serialize()
@@ -243,33 +243,33 @@ class Article
     }
 
     /**
-     * @return Collection<int, NoteArticle>
+     * @return Collection<int, NoteMeme>
      */
-    public function getNoteArticles(): Collection
+    public function getNoteMemes(): Collection
     {
-        return $this->noteArticles;
+        return $this->noteMemes;
     }
-    // public function getMoyenneArticles(): array
+    // public function getMoyenneMemes(): array
     // {
-    //     return $this->noteArticles;
+    //     return $this->noteMemes;
     // }
 
-    public function addNoteArticle(NoteArticle $noteArticle): self
+    public function addNoteMeme(NoteMeme $noteMeme): self
     {
-        if (!$this->noteArticles->contains($noteArticle)) {
-            $this->noteArticles->add($noteArticle);
-            $noteArticle->setArticle($this);
+        if (!$this->noteMemes->contains($noteMeme)) {
+            $this->noteMemes->add($noteMeme);
+            $noteMeme->setMeme($this);
         }
 
         return $this;
     }
 
-    public function removeNoteArticle(NoteArticle $noteArticle): self
+    public function removeNoteMeme(NoteMeme $noteMeme): self
     {
-        if ($this->noteArticles->removeElement($noteArticle)) {
+        if ($this->noteMemes->removeElement($noteMeme)) {
             // set the owning side to null (unless already changed)
-            if ($noteArticle->getArticle() === $this) {
-                $noteArticle->setArticle(null);
+            if ($noteMeme->getMeme() === $this) {
+                $noteMeme->setMeme(null);
             }
         }
 
@@ -288,7 +288,7 @@ class Article
     {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
-            $comment->setArticle($this);
+            $comment->setMeme($this);
         }
 
         return $this;
@@ -298,8 +298,8 @@ class Article
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getArticle() === $this) {
-                $comment->setArticle(null);
+            if ($comment->getMeme() === $this) {
+                $comment->setMeme(null);
             }
         }
 
@@ -307,29 +307,29 @@ class Article
     }
 
     /**
-     * @return Collection<int, ArticleSignaler>
+     * @return Collection<int, MemeSignaler>
      */
-    public function getArticleSignalers(): Collection
+    public function getMemeSignalers(): Collection
     {
-        return $this->articleSignalers;
+        return $this->memeSignalers;
     }
 
-    public function addArticleSignaler(ArticleSignaler $articleSignaler): self
+    public function addMemeSignaler(MemeSignaler $memeSignaler): self
     {
-        if (!$this->articleSignalers->contains($articleSignaler)) {
-            $this->articleSignalers->add($articleSignaler);
-            $articleSignaler->setArticle($this);
+        if (!$this->memeSignalers->contains($memeSignaler)) {
+            $this->memeSignalers->add($memeSignaler);
+            $memeSignaler->setMeme($this);
         }
 
         return $this;
     }
 
-    public function removeArticleSignaler(ArticleSignaler $articleSignaler): self
+    public function removeMemeSignaler(MemeSignaler $memeSignaler): self
     {
-        if ($this->articleSignalers->removeElement($articleSignaler)) {
+        if ($this->memeSignalers->removeElement($memeSignaler)) {
             // set the owning side to null (unless already changed)
-            if ($articleSignaler->getArticle() === $this) {
-                $articleSignaler->setArticle(null);
+            if ($memeSignaler->getMeme() === $this) {
+                $memeSignaler->setMeme(null);
             }
         }
 

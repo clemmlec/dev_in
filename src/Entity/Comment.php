@@ -18,7 +18,7 @@ class Comment
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Article $article = null;
+    private ?Meme $meme = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
@@ -51,14 +51,14 @@ class Comment
         return $this->id;
     }
 
-    public function getArticle(): ?Article
+    public function getMeme(): ?Meme
     {
-        return $this->article;
+        return $this->meme;
     }
 
-    public function setArticle(?Article $article): self
+    public function setMeme(?Meme $meme): self
     {
-        $this->article = $article;
+        $this->meme = $meme;
 
         return $this;
     }
