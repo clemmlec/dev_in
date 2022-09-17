@@ -3,6 +3,7 @@
 namespace App\Controller\admin;
 
 use App\Entity\Meme;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,27 +58,32 @@ class MemeCrudController extends AbstractCrudController
             AssociationField::new('user_id')->hideOnForm(),
             DateTimeField::new('created_at')->hideOnForm(),
             DateTimeField::new('updated_at')->hideOnForm(),
+
+            // AssociationField::new('categorie_id')->setQueryBuilder(function (QueryBuilder $qb) {    
+            //     $qb->where('entity.visible = true');
+            // }),
+
         ];
     }
     
-    public function persistEntity(EntityManagerInterface $em, $entityInstance): void 
-    {
-        if(!$entityInstance instanceof Meme)return;
+    // public function persistEntity(EntityManagerInterface $em, $entityInstance): void 
+    // {
+    //     if(!$entityInstance instanceof Meme)return;
 
-        $entityInstance->setCreatedAt(new \DateTimeImmutable())
-            ->setUserId($this->security->getUser());
+    //     $entityInstance->setCreatedAt(new \DateTimeImmutable())
+    //         ->setUserId($this->security->getUser());
 
-        parent::persistEntity($em, $entityInstance);
-    }
+    //     parent::persistEntity($em, $entityInstance);
+    // }
 
-    public function updateEntity(EntityManagerInterface $em, $entityInstance): void
-    {
-        if(!$entityInstance instanceof Meme)return;
+    // public function updateEntity(EntityManagerInterface $em, $entityInstance): void
+    // {
+    //     if(!$entityInstance instanceof Meme)return;
 
-        $entityInstance->setUpdatedAt(new \DateTimeImmutable());
+    //     $entityInstance->setUpdatedAt(new \DateTimeImmutable());
 
-        parent::persistEntity($em, $entityInstance);
-    }
+    //     parent::persistEntity($em, $entityInstance);
+    // }
 
     public function duplicateMeme(
         EntityManagerInterface $em,
