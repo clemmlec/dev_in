@@ -110,7 +110,8 @@ a{
 .mt-5{
     margin-top: 50px;
 }
-@media all and (max-width: 491px)
+
+@media all and (max-device-width: 491px)
 {
 
     nav
@@ -164,7 +165,7 @@ a{
     }
     .site {
  
-        grid: auto-flow/ 0fr 1fr 0fr;
+        grid: auto-flow/ 0fr 4fr 0fr;
 
     }  
     .mainSite{

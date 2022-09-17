@@ -5,14 +5,20 @@ namespace App\Controller\admin;
 use App\Entity\Meme;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Response;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class MemeCrudController extends AbstractCrudController
@@ -21,6 +27,15 @@ class MemeCrudController extends AbstractCrudController
         private Security $security
     ){
 
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $duplicate = Action::new('duplicate')
+            ->linkToCrudAction('duplicateMeme');
+
+        return $actions
+            ->add(Crud::PAGE_EDIT,$duplicate);
     }
 
     public static function getEntityFqcn(): string
@@ -53,6 +68,36 @@ class MemeCrudController extends AbstractCrudController
             ->setUserId($this->security->getUser());
 
         parent::persistEntity($em, $entityInstance);
+    }
+
+    public function updateEntity(EntityManagerInterface $em, $entityInstance): void
+    {
+        if(!$entityInstance instanceof Meme)return;
+
+        $entityInstance->setUpdatedAt(new \DateTimeImmutable());
+
+        parent::persistEntity($em, $entityInstance);
+    }
+
+    public function duplicateMeme(
+        EntityManagerInterface $em,
+        AdminContext $context,
+        AdminUrlGenerator $generator
+    ): Response {
+    
+        /** @var Meme $meme */
+        $meme = $context->getEntity()->getInstance();
+
+        $duplicateMeme = clone $meme;
+
+        parent::persistEntity($em, $duplicateMeme);
+
+        $url = $generator->setController(self::class)
+            ->setAction(Action::DETAIL)
+            ->setEntityId($duplicateMeme->getId())
+            ->generateUrl();
+        
+            return $this->redirect($url);
     }
     
 }

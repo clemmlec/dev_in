@@ -15,7 +15,7 @@
                 - Posté par :  {{meme.userId.name}}
                     <img 
                         class="avatar" 
-                        src="{{ meme.userId.imageFile ? vich_uploader_asset(meme.userId, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                        src="{{ meme.userId ? vich_uploader_asset(meme.userId, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
                         alt="{{meme.userId.name}}"
                     >
                 </a>
@@ -102,7 +102,6 @@
                 {% endif %}
             
                 <div class="commentaire">
-                    <h2>commentaires</h2>
                     {# form new comment #}
                     {% if app.user %} 
                         {# <form action="" id="commentPost{{meme.id}}"> #}
@@ -145,7 +144,7 @@
                     <img class="memeImage" src="{{ meme ? vich_uploader_asset(meme, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{meme.nom}}">
                     <div class="d-meme ">
                         <div class="description">
-                            <p>{{meme.description}}</p>
+                            <p>{{meme.description | raw}}</p>
                         </div>
                     </div>
                 </div>  

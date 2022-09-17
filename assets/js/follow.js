@@ -174,8 +174,8 @@ window.onload = () => {
                     let comment = document.getElementById("modele-comment");
                     let top =  document.getElementById("com"+memeId);
                     let clone = comment.cloneNode(true);
-                    console.log(clone.children[0]);
-
+                    console.log(clone.children[0].children[0].children[1]);
+                    clone.children[0].children[0].children[1].setAttribute('data-jaime-comment',"")
                     // button
                     //console.log(clone.children[0].childNodes[1].childNodes[3]);
 
@@ -185,7 +185,7 @@ window.onload = () => {
 
                     // et lui donne un peu de contenu
                     // let newContent = document.createTextNode(com);
-                   clone.children[2].innerHTML=com;
+                    clone.children[2].innerHTML=com;
                     // // element.parentNode.document.createElement("div");
                     top.insertBefore(clone, top.firstChild);
                     // comment.remove();

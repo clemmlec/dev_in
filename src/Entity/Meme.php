@@ -29,7 +29,7 @@ class Meme
     private ?User $user_id = null;
 
     #[ORM\ManyToOne(inversedBy: 'memes')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable:true, onDelete: "SET NULL")]
     private ?Categorie $categorie_id = null;
 
     #[Vich\UploadableField(mapping: 'meme', fileNameProperty: 'imageName', size: 'imageSize')]

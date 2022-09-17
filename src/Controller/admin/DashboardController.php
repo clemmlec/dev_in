@@ -43,13 +43,14 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::section('Actions');
-        yield MenuItem::subMenu('Categorie', 'fas fa-bars')->setSubItems([
+        yield MenuItem::section('Categorie');
+        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
             MenuItem::linkToCrud('Add Categorie', 'fas fa-plus', Categorie::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Show Categorie', 'fas fa-eye', Categorie::class)
         ]);
 
-        yield MenuItem::subMenu('Meme', 'fas fa-bars')->setSubItems([
+        yield MenuItem::section('Meme');
+        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
             MenuItem::linkToCrud('Add Meme', 'fas fa-plus', Meme::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Show Meme', 'fas fa-eye', Meme::class)
         ]);
