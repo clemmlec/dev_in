@@ -2,7 +2,7 @@ vich_uploader:
     db_driver: orm
 
     mappings:
-        subject:
+        forum:
             uri_prefix: /images/forum
             upload_destination: '%kernel.project_dir%/public/images/forum'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

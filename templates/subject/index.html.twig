@@ -21,7 +21,13 @@
                 </a>
             </h1> 
             <h2 class="toptitre2 right {{subject.forum.style}}">
-                dans {{subject.forum.nom}} <span class="mute">{{subject.createdAt | ago}}</span>
+                dans {{subject.forum.nom}}
+                <img 
+                        class="avatar" 
+                        src="{{ subject.forum ? vich_uploader_asset(subject.forum, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                        alt="{{subject.forum.nom}}"
+                    >
+                <span class="mute">{{subject.createdAt | ago}}</span>
             </h2>
             <div class="iconSubject">
                 <button value="{{subject.id}}" class="btn-vierge red" type="button" data-signaler-subject >
