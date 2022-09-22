@@ -157,7 +157,7 @@ window.onload = () => {
                 // const form = document.getElementById('formpost');
                 // const image = document.getElementById('subject_imageFile_file');
                 let subjectId=element.value.split('|')[0];
-                let userId=element.value.split('|')[1];
+                let user=element.value.split('|')[1];
                 let com= document.getElementById('commentPost'+subjectId).value;
                 let mesDonnees = new FormData();
                 mesDonnees.set("subject", subjectId);

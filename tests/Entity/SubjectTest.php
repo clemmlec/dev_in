@@ -43,9 +43,9 @@ class SubjectTest extends KernelTestCase
         return (new Subject())
             ->setNom('Subject')
             ->setDescription('Description de test en contenur valide')
-            ->setUserId($user)
+            ->setUser($user)
             ->setActive(true)
-            ->setForumId($tag)
+            ->setForum($tag)
         ;
     }
 

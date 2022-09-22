@@ -22,17 +22,17 @@ class AdminSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            BeforeEntityPersistedEvent::class => ['setUserId'],
+            BeforeEntityPersistedEvent::class => ['setUser'],
         ];
     }
 
-    public function setUserId(BeforeEntityPersistedEvent $event)
+    public function setUser(BeforeEntityPersistedEvent $event)
     {
         $entityInstance = $event->getEntityInstance();
         
-        if(!$entityInstance instanceof Subject && !$entityInstance instanceof Forum) return;
+        if(!$entityInstance instanceof Subject ) return;
 
-        $entityInstance->setUserId($this->security->getUser());
+        $entityInstance->setUser($this->security->getUser());
     }
 
 }

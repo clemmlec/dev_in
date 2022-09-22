@@ -400,7 +400,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->subjects->contains($subject)) {
             $this->subjects->add($subject);
-            $subject->setUserId($this);
+            $subject->setUser($this);
         }
 
         return $this;
@@ -410,8 +410,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->subjects->removeElement($subject)) {
             // set the owning side to null (unless already changed)
-            if ($subject->getUserId() === $this) {
-                $subject->setUserId(null);
+            if ($subject->getUser() === $this) {
+                $subject->setUser(null);
             }
         }
 

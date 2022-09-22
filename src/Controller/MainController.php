@@ -27,7 +27,7 @@ class MainController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $subject->setUserId($security->getUser());
+            $subject->setUser($security->getUser());
             $subjectRepository->add($subject, true);
 
             return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);

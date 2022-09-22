@@ -6,6 +6,6 @@ App\Entity\Subject:
   subject_{1..20}:
     nom: "<words(4, true)>"
     description: "<generateLoremDesct()>"
-    user_id: "@userAdmin"
-    forums_id: "<randomElements(@forum_{1..10})>"
+    user: "@userAdmin"
+    forums: "<randomElements(@forum_{1..10})>"
     createdAt: "<generateDate()>"

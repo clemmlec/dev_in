@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\SubjectFavoris;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\SubjectRepository;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -21,7 +22,7 @@ class Subject
     #[ORM\Column(length: 100)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'subjects')]
@@ -278,13 +279,13 @@ class Subject
      */
     public function getSubjectFavoriss(): Collection
     {
-        return $this->subjectFavoriss;
+        return $this->subjectFavoris;
     }
 
     public function addSubjectFavoris(SubjectFavoris $subjectFavoris): self
     {
-        if (!$this->subjectFavoriss->contains($subjectFavoris)) {
-            $this->subjectFavoriss->add($subjectFavoris);
+        if (!$this->subjectFavoris->contains($subjectFavoris)) {
+            $this->subjectFavoris->add($subjectFavoris);
             $subjectFavoris->setSubject($this);
         }
 
@@ -293,7 +294,7 @@ class Subject
 
     public function removeSubjectFavoris(SubjectFavoris $subjectFavoris): self
     {
-        if ($this->subjectFavoriss->removeElement($subjectFavoris)) {
+        if ($this->subjectFavoris->removeElement($subjectFavoris)) {
             // set the owning side to null (unless already changed)
             if ($subjectFavoris->getSubject() === $this) {
                 $subjectFavoris->setSubject(null);

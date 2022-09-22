@@ -7,12 +7,12 @@ App\Entity\Subject:
     nom (unique): "Titre - <current()>"
     description: "<sentence(10)>"
     active: true
-    user_id: "@userAdmin"
+    user: "@userAdmin"
     forum: "@forum_1"
 
   subjectName:
     nom: "Subject de test"
     description: "<sentence(10)>"
     active: true
-    user_id: "@userEditor"
+    user: "@userEditor"
     forum: "@forum_1"

@@ -52,10 +52,8 @@ class SubjectCrudController extends AbstractCrudController
             TextField::new('nom'),
             TextEditorField::new('description'),
             BooleanField::new('active'),
-            ImageField::new('imageName')->setBasePath('images/subjects')
-                ->setUploadDir('public/images/subjects'),
             AssociationField::new('forum'),
-            AssociationField::new('user_id')->hideOnForm(),
+            AssociationField::new('user')->hideOnForm(),
             DateTimeField::new('created_at')->hideOnForm(),
             DateTimeField::new('updated_at')->hideOnForm(),
 
