@@ -45,13 +45,11 @@
                     <div class="left_nav">
                         {% if app.user %}
                             {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('admin_user_index') }}">admin-user</a>
-                                <a href="{{ path('app_meme_index') }}">admin-meme</a>
-                                <a href="{{ path('app_categorie_index') }}">admin-categorie</a>
-                                <a href="{{ path('app_comment_index') }}">admin-comment</a>
+                                <a href="{{ path('admin') }}">admin</a>
+
                             {% endif %}
                         {% endif %}
-                        {# <a href="{{ path('user_meme_index') }}">Meme</a> #}
+                        {# <a href="{{ path('user_subject_index') }}">Subject</a> #}
                         <a href="{{ path('app_user_index') }}">User</a>
                     </div>
                 </div>

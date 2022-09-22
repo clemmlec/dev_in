@@ -34,7 +34,7 @@
     </body>
         <script src="https://kit.fontawesome.com/8b5299c4a2.js" crossorigin="anonymous"></script>
 
-            {# script modal nouvel meme #}
+            {# script modal nouvel subject #}
         <script>function modal(bouton){
             var mod = document.getElementsByClassName("modal");
             
@@ -45,7 +45,7 @@
             if (currentModal.style.display == "block"){
                 currentModal.style.display = "none";
                 if(id=='modal1'){
-                    bouton.innerHTML = 'nouvel meme';
+                    bouton.innerHTML = 'nouvel subject';
                 }else if(id=='modal2'){
                     bouton.innerHTML = 'modifier le profil';
                 }else if(id=='modal3'){
@@ -63,7 +63,7 @@
                         let btnID = mod[i].id.split('l')[1];
                         let btn = document.getElementById('myBtn'+btnID);
                         if(mod[i].id=='modal1'){
-                            btn.innerHTML = 'nouvel meme';
+                            btn.innerHTML = 'nouvel subject';
                         }else if(mod[i].id=='modal2'){
                             btn.innerHTML = 'modifier le profil';
                         }else if(mod[i].id=='modal3'){

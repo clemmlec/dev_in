@@ -2,8 +2,8 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\Meme;
-use App\Entity\Categorie;
+use App\Entity\Subject;
+use App\Entity\Forum;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
@@ -30,7 +30,7 @@ class AdminSubscriber implements EventSubscriberInterface
     {
         $entityInstance = $event->getEntityInstance();
         
-        if(!$entityInstance instanceof Meme && !$entityInstance instanceof Categorie) return;
+        if(!$entityInstance instanceof Subject && !$entityInstance instanceof Forum) return;
 
         $entityInstance->setUserId($this->security->getUser());
     }
