@@ -3,8 +3,10 @@
 namespace App\Controller\admin;
 
 use App\Entity\Article;
+use App\Controller\admin\TagsCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -24,7 +26,7 @@ class ArticleCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
             TextEditorField::new('content'),
-            AssociationField::new('tags'),
+            AssociationField::new('tags')->setCrudController(TagsCrudController::class),
             AssociationField::new('user')->hideOnForm(),
             DateTimeField::new('created_at')->hideOnForm(),
             DateTimeField::new('updated_at')->hideOnForm(),

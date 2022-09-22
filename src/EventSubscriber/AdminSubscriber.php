@@ -2,8 +2,9 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\Subject;
 use App\Entity\Forum;
+use App\Entity\Article;
+use App\Entity\Subject;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
@@ -30,9 +31,10 @@ class AdminSubscriber implements EventSubscriberInterface
     {
         $entityInstance = $event->getEntityInstance();
         
-        if(!$entityInstance instanceof Subject ) return;
+        if(!$entityInstance instanceof Subject && !$entityInstance instanceof Article ) return;
 
         $entityInstance->setUser($this->security->getUser());
+        // dd($entityInstance);
     }
 
 }

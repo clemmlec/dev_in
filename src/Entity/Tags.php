@@ -18,7 +18,7 @@ class Tags
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'tags')]
+    #[ORM\ManyToMany(targetEntity: Article::class, mappedBy: 'tags')]
     private Collection $article;
 
     public function __construct()
@@ -55,6 +55,7 @@ class Tags
     {
         if (!$this->article->contains($article)) {
             $this->article->add($article);
+            $article->addArticle($this);
         }
 
         return $this;
@@ -62,10 +63,13 @@ class Tags
 
     public function removeArticle(Article $article): self
     {
-        $this->article->removeElement($article);
+        if ($this->article->removeElement($article)) {
+            $article->removeArticle($this);
+        }
 
         return $this;
     }
+
 
     public function __toString()
     {

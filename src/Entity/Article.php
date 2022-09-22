@@ -26,7 +26,7 @@ class Article
     #[ORM\ManyToOne(inversedBy: 'articles')]
     private ?User $user = null;
 
-    #[ORM\ManyToMany(targetEntity: Tags::class, mappedBy: 'article')]
+    #[ORM\ManyToMany(targetEntity: Tags::class, inversedBy: 'article')]
     private Collection $tags;
 
     #[ORM\Column]
@@ -103,7 +103,6 @@ class Article
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
-            $tag->addArticle($this);
         }
 
         return $this;
@@ -111,9 +110,7 @@ class Article
 
     public function removeTag(Tags $tag): self
     {
-        if ($this->tags->removeElement($tag)) {
-            $tag->removeArticle($this);
-        }
+        $this->tags->removeElement($tag);
 
         return $this;
     }
@@ -200,5 +197,10 @@ class Article
         }
 
         return $this;
+    }
+
+        public function __toString()
+    {
+        return $this->name;
     }
 }

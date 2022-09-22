@@ -21,7 +21,7 @@ class TagsCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
-            AssociationField::new('article'),
+            // AssociationField::new('article'),
         ];
     }
     

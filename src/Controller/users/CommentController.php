@@ -35,7 +35,7 @@ class CommentController extends AbstractController
         if ($subject && $user) {
             $comment->setUser($user)
             ->setSubject($subject)
-            ->setComment($param['com']);
+            ->setMessage($param['com']);
             $commentRepository->add($comment, true);
 
             // return new JsonResponse($comment);
