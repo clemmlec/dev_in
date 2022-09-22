@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Assert\Length;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ArticleRepository;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -17,10 +19,16 @@ class Article
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Length(
+        max: 100,
+        maxMessage: 'Le titre ne doit pas dépasser {{ limit }} caracteres'
+    )]
+    #[Assert\NotBlank]
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]

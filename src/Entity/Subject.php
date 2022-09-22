@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SubjectRepository::class)]
 class Subject
@@ -20,9 +21,15 @@ class Subject
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        max: 100,
+        maxMessage: 'Votre titre ne dois pas dépasser {{ limit }} caracteres'
+    )]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'subjects')]
