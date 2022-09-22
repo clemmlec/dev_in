@@ -43,19 +43,19 @@
         {% endif %}
         </h3>
         <h2>{{user.followers | length}} followers</h2>
-        {% if user.memes %}
-            <h2>{{user.memes | length }} memes postés</h2>
+        {% if user.subjects %}
+            <h2>{{user.subjects | length }} subjects postés</h2>
             {% set moyenne = 0 %}
             {% set nbVote = 0 %}
-            {% for row in user.memes %}
-                {% for note in row.noteMemes %}
+            {% for row in user.subjects %}
+                {% for note in row.noteSubjects %}
                     {% set moyenne = moyenne + note.note %}
                     {% set nbVote = nbVote +1 %}
                 {% endfor %}
             {% endfor %}
             {% if nbVote > 0 %}
                 {% set moyenne = moyenne / nbVote %}
-                <h2>Moyenne memes {{ moyenne | round(2, 'floor') }}</h2>
+                <h2>Moyenne subjects {{ moyenne | round(2, 'floor') }}</h2>
             {% endif %}
             <h2>{{user.comments | length }} commantaires</h2>
 
@@ -91,19 +91,19 @@
                     </h1>
                     <h3 class="date">inscrit {{follow.friend.createdAt | ago}}</h3>
                     <h2>{{follow.friend.followers | length}} followers</h2>
-                    {% if follow.friend.memes %}
-                        <h2>{{follow.friend.memes | length }} memes postés</h2>
+                    {% if follow.friend.subjects %}
+                        <h2>{{follow.friend.subjects | length }} subjects postés</h2>
                         {% set moyenne = 0 %}
                         {% set nbVote = 0 %}
-                        {% for row in follow.friend.memes %}
-                            {% for note in row.noteMemes %}
+                        {% for row in follow.friend.subjects %}
+                            {% for note in row.noteSubjects %}
                                 {% set moyenne = moyenne + note.note %}
                                 {% set nbVote = nbVote +1 %}
                             {% endfor %}
                         {% endfor %}
                         {% if nbVote > 0 %}
                             {% set moyenne = moyenne / nbVote %}
-                            <h2>Moyenne memes {{ moyenne |round(2, 'floor') }}</h2>
+                            <h2>Moyenne subjects {{ moyenne |round(2, 'floor') }}</h2>
                         {% endif %}
                     {% endif %}
                     {# <button>voir le profil</button> #}
@@ -154,19 +154,19 @@
                     </h1>
                     <h3 class="date">inscrit {{follow.user.createdAt | ago}}</h3>
                     <h2>{{follow.user.followers | length}} followers</h2>
-                    {% if follow.user.memes %}
-                        <h2>{{follow.user.memes | length }} memes postés</h2>
+                    {% if follow.user.subjects %}
+                        <h2>{{follow.user.subjects | length }} subjects postés</h2>
                         {% set moyenne = 0 %}
                         {% set nbVote = 0 %}
-                        {% for row in follow.user.memes %}
-                            {% for note in row.noteMemes %}
+                        {% for row in follow.user.subjects %}
+                            {% for note in row.noteSubjects %}
                                 {% set moyenne = moyenne + note.note %}
                                 {% set nbVote = nbVote +1 %}
                             {% endfor %}
                         {% endfor %}
                         {% if nbVote > 0 %}
                             {% set moyenne = moyenne / nbVote %}
-                            <h2>Moyenne memes {{ moyenne | round(2, 'floor') }}</h2>
+                            <h2>Moyenne subjects {{ moyenne | round(2, 'floor') }}</h2>
                         {% endif %}
                     {% endif %}
                     <button class="btn-vierge"><a href="{{ path('app_user_profil', {'id': follow.user.id}) }}">voir le profil</a></button>
@@ -181,32 +181,32 @@
         </div>
     </div>
     <hr>
-    <h1>memes postés {{user.memes | length}}</h1>
+    <h1>subjects postés {{user.subjects | length}}</h1>
     <div class="swip ">
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
                 
-                {% for meme in user.memes %}
+                {% for subject in user.subjects %}
                 <div class="swiper-slide overflow-y card">
-                    <h1 class="toptitre left {{meme.categorieId.style}}">&nbsp;{{meme.nom}}
+                    <h1 class="toptitre left {{subject.forum.style}}">&nbsp;{{subject.nom}}
                         {# {% if app.user and app.user.id == user.id %}
 
                         {% endif %} #}
                     </h1>
-                    <h2 class="toptitre2 right {{meme.categorieId.style}}">
-                        dans {{meme.categorieId.nom}} <span class="mute">{{meme.createdAt | ago}}</span>
+                    <h2 class="toptitre2 right {{subject.forum.style}}">
+                        dans {{subject.forum.nom}} <span class="mute">{{subject.createdAt | ago}}</span>
                     </h2>
                     <h3 class="title">                
-                    {% if  meme.getNoteMemes() | length > 0 %}
+                    {% if  subject.getNoteSubjects() | length > 0 %}
                     
-                        {# {{dump(meme.getNoteMemes())}} #}
+                        {# {{dump(subject.getNoteSubjects())}} #}
                         {% set somme = 0 %}
-                        {% for row in meme.getNoteMemes() %}
+                        {% for row in subject.getNoteSubjects() %}
                         {% set somme = somme + row.note
                         %}
                         
                         {% endfor %}
-                        {% set somme = somme / (meme.getNoteMemes()| length) %}
+                        {% set somme = somme / (subject.getNoteSubjects()| length) %}
                         <div class="note">
                             {% for i in 1..10 %}
                                 {# {% if i <= somme * 2 %} #}
@@ -222,18 +222,18 @@
                         <span class="muted">pas encore de note</span> 
                     {% endif %}
                     </h3>
-                    <div class="img">
-                        <img class="memeImage" src="{{ meme ? vich_uploader_asset(meme, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{meme.nom}}">
-                    </div>
+                    {# <div class="img">
+                        <img class="subjectImage" src="{{ subject ? vich_uploader_asset(subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.nom}}">
+                    </div> #}
                     <div class="description">
-                        <p>{{meme.description}}</p>
+                        <p>{{subject.description}}</p>
                     </div>
                     <ul>
-                        <li>{{meme.comments | length}} commentaires</li>
-                        <li>{{meme.noteMemes | length}} notes reçus</li>
-                        {# <li>{{meme.comments | length}} ajouter meme favoris</li> #}
+                        <li>{{subject.comments | length}} commentaires</li>
+                        <li>{{subject.noteSubjects | length}} notes reçus</li>
+                        {# <li>{{subject.comments | length}} ajouter subject favoris</li> #}
                     </ul>
-                    <button class="btn-vierge"><a href="{{ path('user_meme_show', {'id': meme.id}) }}">voir l'meme</a></button>
+                    <button class="btn-vierge"><a href="{{ path('user_subject_show', {'id': subject.id}) }}">voir l'subject</a></button>
                     
                 </div>
                 {% endfor %}
@@ -245,33 +245,33 @@
         </div>
     </div>
     <hr>
-    <h1>memes favoris {{user.memeFavoris | length}}</h1>
+    <h1>subjects favoris {{user.subjectFavoris | length}}</h1>
     <div class="swip ">
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-            {% for meme in user.memeFavoris %}
+            {% for subject in user.subjectFavoris %}
                 <div class="swiper-slide overflow-y card">
-                    <h1 class="toptitre left {{meme.meme.categorieId.style}}">&nbsp; - Posté par :  {{meme.meme.userId.name}}
+                    <h1 class="toptitre left {{subject.subject.forum.style}}">&nbsp; - Posté par :  {{subject.subject.user.name}}
                         <img 
                             class="avatarVrai" 
-                            src="{{ meme.meme.userId ? vich_uploader_asset(meme.meme.userId, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                            alt="{{meme.meme.userId.name}}"
+                            src="{{ subject.subject.user ? vich_uploader_asset(subject.subject.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                            alt="{{subject.subject.user.name}}"
                         ></h1>
-                    <h2 class="toptitre2 {{meme.meme.categorieId.style}}">{{meme.meme.nom}}</h2>
-                    <h2 class="toptitre2 right {{meme.meme.categorieId.style}}">
-                        dans {{meme.meme.categorieId.nom}} <span class="mute">{{meme.meme.createdAt | ago}}</span>
+                    <h2 class="toptitre2 {{subject.subject.forum.style}}">{{subject.subject.nom}}</h2>
+                    <h2 class="toptitre2 right {{subject.subject.forum.style}}">
+                        dans {{subject.subject.forum.nom}} <span class="mute">{{subject.subject.createdAt | ago}}</span>
                     </h2>
                     <h3 class="title">                
-                    {% if  meme.meme.getNoteMemes() | length > 0 %}
+                    {% if  subject.subject.getNoteSubjects() | length > 0 %}
                     
-                        {# {{dump(meme.getNoteMemes())}} #}
+                        {# {{dump(subject.getNoteSubjects())}} #}
                         {% set somme = 0 %}
-                        {% for row in meme.meme.getNoteMemes() %}
+                        {% for row in subject.subject.getNoteSubjects() %}
                         {% set somme = somme + row.note
                         %}
                         
                         {% endfor %}
-                        {% set somme = somme / (meme.meme.getNoteMemes()| length) %}
+                        {% set somme = somme / (subject.subject.getNoteSubjects()| length) %}
                         <div class="note">
                             {% for i in 1..10 %}
                                 {# {% if i <= somme * 2 %} #}
@@ -287,18 +287,18 @@
                         <span class="muted">pas encore de note</span> 
                     {% endif %}
                     </h3>
-                    <div class="img">
-                        <img class="memeImage" src="{{ meme.meme ? vich_uploader_asset(meme.meme, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{meme.meme.nom}}">
-                    </div>
+                    {# <div class="img">
+                        <img class="subjectImage" src="{{ subject.subject ? vich_uploader_asset(subject.subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.subject.nom}}">
+                    </div> #}
                     <div class="description">
-                        <p>{{meme.meme.description}}</p>
+                        <p>{{subject.subject.description}}</p>
                     </div>
                     <ul>
-                        <li>{{meme.meme.comments | length}} commentaires</li>
-                        <li>{{meme.meme.noteMemes | length}} notes reçus</li>
-                        {# <li>{{meme.comments | length}} ajouter meme favoris</li> #}
+                        <li>{{subject.subject.comments | length}} commentaires</li>
+                        <li>{{subject.subject.noteSubjects | length}} notes reçus</li>
+                        {# <li>{{subject.comments | length}} ajouter subject favoris</li> #}
                     </ul>
-                    <button class="btn-vierge"><a href="{{ path('user_meme_show', {'id': meme.meme.id}) }}">voir l'meme</a></button>
+                    <button class="btn-vierge"><a href="{{ path('user_subject_show', {'id': subject.subject.id}) }}">voir l'subject</a></button>
                     
                 </div>
             {% endfor %}
@@ -309,33 +309,33 @@
         </div>
     </div>
     <hr>
-    <h1>memes notés {{user.noteMemes | length}}</h1>
+    <h1>subjects notés {{user.noteSubjects | length}}</h1>
     <div class="swip ">
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-            {% for meme in user.noteMemes %}
+            {% for subject in user.noteSubjects %}
                 <div class="swiper-slide overflow-y card">
-                    <h1 class="toptitre left {{meme.meme.categorieId.style}}">&nbsp; - Posté par :  {{meme.meme.userId.name}}
+                    <h1 class="toptitre left {{subject.subject.forum.style}}">&nbsp; - Posté par :  {{subject.subject.user.name}}
                         <img 
                             class="avatarVrai" 
-                            src="{{ meme.meme.userId ? vich_uploader_asset(meme.meme.userId, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                            alt="{{meme.meme.userId.name}}"
+                            src="{{ subject.subject.user ? vich_uploader_asset(subject.subject.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                            alt="{{subject.subject.user.name}}"
                         ></h1>
-                    <h2 class="toptitre2 {{meme.meme.categorieId.style}}">{{meme.meme.nom}}</h2>
-                    <h2 class="toptitre2 right {{meme.meme.categorieId.style}}">
-                        dans {{meme.meme.categorieId.nom}} <span class="mute">{{meme.meme.createdAt | ago}}</span>
+                    <h2 class="toptitre2 {{subject.subject.forum.style}}">{{subject.subject.nom}}</h2>
+                    <h2 class="toptitre2 right {{subject.subject.forum.style}}">
+                        dans {{subject.subject.forum.nom}} <span class="mute">{{subject.subject.createdAt | ago}}</span>
                     </h2>
                     <h3 class="title">                
-                    {% if  meme.meme.getNoteMemes() | length > 0 %}
+                    {% if  subject.subject.getNoteSubjects() | length > 0 %}
                     
-                        {# {{dump(meme.getNoteMemes())}} #}
+                        {# {{dump(subject.getNoteSubjects())}} #}
                         {% set somme = 0 %}
-                        {% for row in meme.meme.getNoteMemes() %}
+                        {% for row in subject.subject.getNoteSubjects() %}
                         {% set somme = somme + row.note
                         %}
                         
                         {% endfor %}
-                        {% set somme = somme / (meme.meme.getNoteMemes()| length) %}
+                        {% set somme = somme / (subject.subject.getNoteSubjects()| length) %}
                         <div class="note">
                             {% for i in 1..10 %}
                                 {# {% if i <= somme * 2 %} #}
@@ -348,20 +348,20 @@
                             {% endfor %}
                         </div>
                     {% endif %}
-                        <span class="muted">ta note : {{meme.note}}</span> 
+                        <span class="muted">ta note : {{subject.note}}</span> 
                     </h3>
                     <div class="img">
-                        <img class="memeImage" src="{{ meme.meme ? vich_uploader_asset(meme.meme, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{meme.meme.nom}}">
+                        <img class="subjectImage" src="{{ subject.subject ? vich_uploader_asset(subject.subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.subject.nom}}">
                     </div>
                     <div class="description">
-                        <p>{{meme.meme.description}}</p>
+                        <p>{{subject.subject.description}}</p>
                     </div>
                     <ul>
-                        <li>{{meme.meme.comments | length}} commentaires</li>
-                        <li>{{meme.meme.noteMemes | length}} notes reçus</li>
-                        {# <li>{{meme.comments | length}} ajouter meme favoris</li> #}
+                        <li>{{subject.subject.comments | length}} commentaires</li>
+                        <li>{{subject.subject.noteSubjects | length}} notes reçus</li>
+                        {# <li>{{subject.comments | length}} ajouter subject favoris</li> #}
                     </ul>
-                    <button class="btn-vierge"><a href="{{ path('user_meme_show', {'id': meme.meme.id}) }}">voir l'meme</a></button>
+                    <button class="btn-vierge"><a href="{{ path('user_subject_show', {'id': subject.subject.id}) }}">voir l'subject</a></button>
                     
                 </div>
             {% endfor %}

@@ -19,7 +19,7 @@ class MainControllerTest extends WebTestCase
 
         $this->databaseTool->loadAliceFixture([
             \dirname(__DIR__).'/Fixtures/UserTestFixtures.yaml',
-            \dirname(__DIR__).'/Fixtures/MemeTestFixtures.yaml',
+            \dirname(__DIR__).'/Fixtures/SubjectTestFixtures.yaml',
         ]);
     }
 
@@ -35,11 +35,11 @@ class MainControllerTest extends WebTestCase
     //     $this->assertSelectorTextContains('h1', 'Home', 'error -> pas le titre home sur cette page');
     // }
 
-    // public function testHomePageCountain6Memes()
+    // public function testHomePageCountain6Subjects()
     // {
     //     $crawler = $this->client->request('GET', '/');
 
-    //     $this->assertCount(6, $crawler->filter('.blog-card'), 'il n\'y as pas 6 memes');
+    //     $this->assertCount(6, $crawler->filter('.blog-card'), 'il n\'y as pas 6 subjects');
     // }
 
     // protected function tearDown(): void

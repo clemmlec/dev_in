@@ -18,17 +18,17 @@ class Comment
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Meme $meme = null;
+    private ?Subject $subject = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $comment = null;
+    private ?string $message = null;
 
     #[ORM\Column]
-    private ?bool $visible = true;
+    private ?bool $active = true;
 
     #[ORM\Column]
     #[Gedmo\Timestampable(on: 'create')]
@@ -37,13 +37,13 @@ class Comment
     #[ORM\OneToMany(mappedBy: 'comment', targetEntity: CommentLike::class, orphanRemoval: true)]
     private Collection $commentLikes;
 
-    #[ORM\OneToMany(mappedBy: 'comment', targetEntity: CommentSignaler::class, orphanRemoval: true)]
-    private Collection $commentSignalers;
+    #[ORM\OneToMany(mappedBy: 'comment', targetEntity: CommentReport::class, orphanRemoval: true)]
+    private Collection $commentReports;
 
     public function __construct()
     {
         $this->commentLikes = new ArrayCollection();
-        $this->commentSignalers = new ArrayCollection();
+        $this->commentReports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,14 +51,14 @@ class Comment
         return $this->id;
     }
 
-    public function getMeme(): ?Meme
+    public function getSubject(): ?Subject
     {
-        return $this->meme;
+        return $this->subject;
     }
 
-    public function setMeme(?Meme $meme): self
+    public function setSubject(?Subject $subject): self
     {
-        $this->meme = $meme;
+        $this->subject = $subject;
 
         return $this;
     }
@@ -75,26 +75,26 @@ class Comment
         return $this;
     }
 
-    public function getComment(): ?string
+    public function getMessage(): ?string
     {
-        return $this->comment;
+        return $this->message;
     }
 
-    public function setComment(string $comment): self
+    public function setMessage(string $message): self
     {
-        $this->comment = $comment;
+        $this->message = $message;
 
         return $this;
     }
 
-    public function isVisible(): ?bool
+    public function isActive(): ?bool
     {
-        return $this->visible;
+        return $this->active;
     }
 
-    public function setVisible(bool $visible): self
+    public function setActive(bool $active): self
     {
-        $this->visible = $visible;
+        $this->active = $active;
 
         return $this;
     }
@@ -142,29 +142,29 @@ class Comment
     }
 
     /**
-     * @return Collection<int, CommentSignaler>
+     * @return Collection<int, CommentReport>
      */
-    public function getCommentSignalers(): Collection
+    public function getCommentReports(): Collection
     {
-        return $this->commentSignalers;
+        return $this->commentReports;
     }
 
-    public function addCommentSignaler(CommentSignaler $commentSignaler): self
+    public function addCommentReport(CommentReport $commentReport): self
     {
-        if (!$this->commentSignalers->contains($commentSignaler)) {
-            $this->commentSignalers->add($commentSignaler);
-            $commentSignaler->setComment($this);
+        if (!$this->commentReports->contains($commentReport)) {
+            $this->commentReports->add($commentReport);
+            $commentReport->setComment($this);
         }
 
         return $this;
     }
 
-    public function removeCommentSignaler(CommentSignaler $commentSignaler): self
+    public function removeCommentReport(CommentReport $commentReport): self
     {
-        if ($this->commentSignalers->removeElement($commentSignaler)) {
+        if ($this->commentReports->removeElement($commentReport)) {
             // set the owning side to null (unless already changed)
-            if ($commentSignaler->getComment() === $this) {
-                $commentSignaler->setComment(null);
+            if ($commentReport->getComment() === $this) {
+                $commentReport->setComment(null);
             }
         }
 

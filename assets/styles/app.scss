@@ -4,8 +4,8 @@
 @import "./components/formRegister.scss";
 @import "./components/vichUpload.scss";
 @import "./components/userCard.scss";
-@import "./components/memeCard.scss";
-@import "./components/nouvelMeme.scss";
+@import "./components/subjectCard.scss";
+@import "./components/nouvelSubject.scss";
 @import "./components/dropdown.scss";
 @import "./components/comment.scss";
 @import "./components/swiper.scss";
@@ -110,15 +110,19 @@ a{
 .mt-5{
     margin-top: 50px;
 }
-@media all and (max-width: 491px)
+
+@media all and (max-device-width: 491px)
 {
 
+    *{
+        font-size: 60px;
+    }
     nav
     {
-        height: 60px;
+        height: 160px;
     }
     .logo{
-        width: 100px;
+  
         margin-top: -15px;
     }
     nav .main_pages 
@@ -164,11 +168,11 @@ a{
     }
     .site {
  
-        grid: auto-flow/ 0fr 1fr 0fr;
+        grid: auto-flow/ 0fr 4fr 0fr;
 
     }  
     .mainSite{
-        margin-top: 55px;
+        margin-top: 155px;
     }
     // .coter{
     //     display: none;
@@ -176,7 +180,7 @@ a{
     .commentaire{
         min-width: 100%;
     }
-    // .card-meme{
+    // .card-subject{
     //     margin-left: 0;
     //     margin-right: 0;
 

@@ -4,11 +4,11 @@ namespace App\Controller\users;
 
 use App\Entity\Comment;
 use App\Entity\CommentLike;
-use App\Entity\CommentSignaler;
-use App\Repository\MemeRepository;
+use App\Entity\CommentReport;
+use App\Repository\SubjectRepository;
 use App\Repository\CommentLikeRepository;
 use App\Repository\CommentRepository;
-use App\Repository\CommentSignalerRepository;
+use App\Repository\CommentReportRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,22 +20,22 @@ use Symfony\Component\Security\Core\Security;
 class CommentController extends AbstractController
 {
     #[Route('/new', name: 'app_comment_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, MemeRepository $memeRepo, CommentRepository $commentRepository, Security $security): Response
+    public function new(Request $request, SubjectRepository $subjectRepo, CommentRepository $commentRepository, Security $security): Response
     {
         $param = $request->request->all();
-        // dd($param ['meme']);
+        // dd($param ['subject']);
         $comment = new Comment();
 
-        $meme = $memeRepo->find($param['meme']);
+        $subject = $subjectRepo->find($param['subject']);
 
         $user = $security->getUser();
         // dd($follow);
         // dd($user, $follow);
 
-        if ($meme && $user) {
+        if ($subject && $user) {
             $comment->setUser($user)
-            ->setMeme($meme)
-            ->setComment($param['com']);
+            ->setSubject($subject)
+            ->setMessage($param['com']);
             $commentRepository->add($comment, true);
 
             // return new JsonResponse($comment);
@@ -46,7 +46,7 @@ class CommentController extends AbstractController
     }
 
     #[Route('/jaime/{id}', name: 'user.comment.jaime', methods: ['GET'])]
-    public function switchVisibilityMeme(?Comment $com, Security $security, CommentRepository $comRepo, CommentLikeRepository $comLikeRepo)
+    public function switchVisibilitySubject(?Comment $com, Security $security, CommentRepository $comRepo, CommentLikeRepository $comLikeRepo)
     {
 
         $user = $security->getUser();
@@ -70,22 +70,22 @@ class CommentController extends AbstractController
     }
 
     #[Route('/signaler/{id}', name: 'user.comment.signaler', methods: ['GET'])]
-    public function signalerComment(?Comment $com, Security $security, CommentRepository $comRepo, CommentSignalerRepository $comSignalRepo)
+    public function signalerComment(?Comment $com, Security $security, CommentRepository $comRepo, CommentReportRepository $comSignalRepo)
     {
 
         $user = $security->getUser();
 
         if ($com && $user) {
-            $dejaSignaler = $comSignalRepo->findOneBy(['user' => $user, 'comment' => $com]);
-            if (!$dejaSignaler) {
-                $newSignal = new CommentSignaler();
+            $dejaReport = $comSignalRepo->findOneBy(['user' => $user, 'comment' => $com]);
+            if (!$dejaReport) {
+                $newSignal = new CommentReport();
                 $newSignal->setUser($user)
                ->setComment($com);
                 $comSignalRepo->add($newSignal, true);
 
                 return new Response('commantaire signaler', 201);
             }
-            $comSignalRepo->remove($dejaSignaler, true);
+            $comSignalRepo->remove($dejaReport, true);
 
             return new Response('signalement supprimé', 201);
         }

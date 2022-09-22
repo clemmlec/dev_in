@@ -19,31 +19,31 @@
             <h2 class="toptitre2 right gris">
                 <span class="mute">inscrit {{user.createdAt | ago}}</span>
             </h2>
-            <div class="iconMeme">
+            <div class="iconSubject">
                 <i class="fa fa-star pointer yellow btn-vierge"></i>
             </div>
-            {% if user.memes %}
-                <h2>{{user.memes | length }} memes</h2>
+            {% if user.subjects %}
+                <h2>{{user.subjects | length }} subjects</h2>
                 {% set moyenne = 0 %}
                 {% set nbVote = 0 %}
-                {% for row in user.memes %}
-                    {% for note in row.noteMemes %}
+                {% for row in user.subjects %}
+                    {% for note in row.noteSubjects %}
                         {% set moyenne = moyenne + note.note %}
                         {% set nbVote = nbVote +1 %}
                     {% endfor %}
                 {% endfor %}
                 {% if nbVote > 0 %}
                     {% set moyenne = moyenne / nbVote %}
-                    <h2>Moyenne memes {{ moyenne | round(2, 'floor') }}</h2>
+                    <h2>Moyenne subjects {{ moyenne | round(2, 'floor') }}</h2>
                 {% endif %}
             {% endif %}
             {% if user.comments %}
                 <h2>{{user.comments | length }} commantaires</h2>
             {% endif %}
             <div  class="form-check form-switch m-2">   
-                {# {{ dump(meme.visible) }} #}
-                <input type="checkbox" class="form-check-input" value="{{user.id}}" role="switch" data-switch-active-user {{user.visible ? 'checked'}}>
-                <label class="form-check-label" >visible</label>
+                {# {{ dump(subject.active) }} #}
+                <input type="checkbox" class="form-check-input" value="{{user.id}}" role="switch" data-switch-active-user {{user.active ? 'checked'}}>
+                <label class="form-check-label" >active</label>
 
             </div>
              
@@ -61,7 +61,7 @@
                     <td>{{ user.email }}</td>
                     <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                     <td>{{ user.style }}</td>
-                    <td>{{ user.visible ? 'Yes' : 'No' }}</td>
+                    <td>{{ user.active ? 'Yes' : 'No' }}</td>
                     <td>{{ user.imageName }}</td>
                     <td>{{ user.imageSize }}</td>
                     <td>{{ user.imageUpdatedAt ? user.imageUpdatedAt|date('Y-m-d H:i:s') : '' }}</td>

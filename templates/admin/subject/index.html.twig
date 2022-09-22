@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin subject{% endblock %}
+
+{% block body %}
+    <h1>Admin subject</h1>
+    <section class="d-flex">
+        {% for subject in subjects | sort((a, b) => a.createdAt <= b.createdAt) %}
+        <div class="card-subject demiDiv">
+        <h1 class="toptitre left {{subject.forum.style}}">
+                    - Posté par :  {{subject.user.name}}
+                        <img 
+                            class="avatar" 
+                            src="{{ subject.user ? vich_uploader_asset(subject.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                            alt="{{subject.user.name}}"
+                        >
+
+                </h1> 
+                <h2 class="toptitre2 right {{subject.forum.style}}">
+                    dans {{subject.forum.nom}} <span class="mute">{{subject.createdAt | ago}}</span>
+                </h2>
+                <div class="iconSubject">
+                    <i class="fa-solid fa-triangle-exclamation redd">{{subject.getSubjectReports | length}}</i>
+                    {# <i class="fa fa-star pointer yellow btn-vierge">{{subject.getCommentReports | length}}</i> #}
+                </div>
+
+                <h1 class="title">{{subject.nom}}
+                {% if  subject.getNoteSubjects() | length > 0 %}
+                 
+                    {# {{dump(subject.getNoteSubjects())}} #}
+                    {% set somme = 0 %}
+                    {% for row in subject.getNoteSubjects() %}
+                    {% set somme = somme + row.note
+                     %}
+                       
+                    {% endfor %}
+                     {% set somme = somme / (subject.getNoteSubjects()| length) %}
+                     <div class="note">
+                        {% for i in 1..10 %}
+                            {# {% if i <= somme * 2 %} #}
+                            {% if i is odd %}
+                            <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
+                            {% else %}
+                            <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
+                            {% endif %}
+                            {# {% endif %} #}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                </h1>
+                {# {{ dump(app.user) }} #}
+                <div class="d-flex-image">
+                    
+                    <div class="d-subject ">
+                        
+                        <div class="description">
+                            <p>{{subject.description}}</p>
+                        </div>
+                       
+                    </div>
+                    <img class="subjectImagePetite" src="{{ subject ? vich_uploader_asset(subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.nom}}">
+                    
+                </div>
+                <div  class="form-check form-switch m-2">   
+                    {# {{ dump(subject.active) }} #}
+                    <input type="checkbox" class="form-check-input" value="{{subject.id}}" role="switch" data-switch-active-subject {{subject.active ? 'checked'}}>
+                    <label class="form-check-label" >active</label>
+
+                </div>
+      
+            {# <a href="{{ path('app_subject_show', {'id': subject.id}) }}">show</a> #}
+                    <a href="{{ path('app_subject_edit', {'id': subject.id}) }}">edit</a>
+
+            {# <tr>
+                <td>{{ subject.id }}</td>
+                <td>{{ subject.active ? 'Yes' : 'No' }}</td>
+                <td>
+                    
+                </td>
+            </tr> #}
+        </div>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+            
+        
+        {% endfor %}
+    </section>
+    <a href="{{ path('app_subject_new') }}">Create new</a>
+{% endblock %}

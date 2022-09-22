@@ -21,12 +21,12 @@ window.onload = () => {
         }))
     }
    
-    const followMeme = document.querySelectorAll('[data-follow-meme]');
-    if(followMeme){
-        followMeme.forEach((element=>{
+    const followSubject = document.querySelectorAll('[data-follow-subject]');
+    if(followSubject){
+        followSubject.forEach((element=>{
             element.addEventListener('click', () =>  {
                 let id = element.value;
-                axios.get(`/meme/follow/${id}`);
+                axios.get(`/subject/follow/${id}`);
                 // console.log(element.children[0].contains("fa")); 
                 if(element.children[0].classList.contains("far")){
                     element.children[0].classList.replace('far','fa' );
@@ -38,13 +38,13 @@ window.onload = () => {
         }))
     }
 
-    const signalerMeme = document.querySelectorAll('[data-signaler-meme]');
+    const signalerSubject = document.querySelectorAll('[data-signaler-subject]');
     
-    if(signalerMeme){
-        signalerMeme.forEach((element=>{
+    if(signalerSubject){
+        signalerSubject.forEach((element=>{
             element.addEventListener('click', () =>  {
                 let id = element.value;
-                axios.get(`/meme/signaler/${id}`)
+                axios.get(`/subject/signaler/${id}`)
                 .then(function (reponse) {
                     console.log(reponse.data)
                     console.log(element.parentNode.parentNode)
@@ -55,7 +55,7 @@ window.onload = () => {
         }))
     }
 
-    const noter = document.querySelectorAll('[data-note-meme]');
+    const noter = document.querySelectorAll('[data-note-subject]');
     
     if(noter){
         noter.forEach((element=>{
@@ -65,9 +65,9 @@ window.onload = () => {
             element.addEventListener('click', () =>  {
                 let value = element.value.split('-');
                 let note = value[0];
-                let memeId = value[1];
+                let subjectId = value[1];
                 console.log(element.parentElement.childNodes , '😴');
-                axios.get(`/meme/note/${note}/${memeId}`);
+                axios.get(`/subject/note/${note}/${subjectId}`);
                 
                 window.setTimeout(function(){
                     element.parentNode.style.display = "none";
@@ -92,13 +92,13 @@ window.onload = () => {
         }))
     }
 
-    const memes = document.querySelectorAll('[data-switch-active-meme]');
+    const subjects = document.querySelectorAll('[data-switch-active-subject]');
     
-    if(memes){
-        memes.forEach((element=>{
+    if(subjects){
+        subjects.forEach((element=>{
             element.addEventListener('change', () =>  {
                 let id = element.value;
-                axios.get(`/admin/meme/switch/${id}`);
+                axios.get(`/admin/subject/switch/${id}`);
             });
         }))
     }
@@ -125,27 +125,27 @@ window.onload = () => {
         }))
     }
     
-    const memeName = document.querySelectorAll('[data-edit-memeName]');
+    const subjectName = document.querySelectorAll('[data-edit-subjectName]');
     
-    if(memeName){
-        memeName.forEach((element=>{
+    if(subjectName){
+        subjectName.forEach((element=>{
             element.addEventListener('click', () =>  {
                 let id = element.value;
-                let name= document.getElementById('memeName').value;
+                let name= document.getElementById('subjectName').value;
                 console.log(id, name)
-                axios.get(`/meme/edit/name/${id}/${name}`);
+                axios.get(`/subject/edit/name/${id}/${name}`);
             });
         }))
     }
-    const memeContent = document.querySelectorAll('[data-edit-memeContent]');
+    const subjectContent = document.querySelectorAll('[data-edit-subjectContent]');
     
-    if(memeContent){
-        memeContent.forEach((element=>{
+    if(subjectContent){
+        subjectContent.forEach((element=>{
             element.addEventListener('click', () =>  {
                 let id = element.value;
-                let content= document.getElementById('memeContent').value;
+                let content= document.getElementById('subjectContent').value;
                 console.log(id, content)
-                axios.get(`/meme/edit/content/${id}/${content}`);
+                axios.get(`/subject/edit/content/${id}/${content}`);
             });
         }))
     }
@@ -155,27 +155,27 @@ window.onload = () => {
         newComment.forEach((element=>{
             element.addEventListener('click', () =>  {
                 // const form = document.getElementById('formpost');
-                // const image = document.getElementById('meme_imageFile_file');
-                let memeId=element.value.split('|')[0];
-                let userId=element.value.split('|')[1];
-                let com= document.getElementById('commentPost'+memeId).value;
+                // const image = document.getElementById('subject_imageFile_file');
+                let subjectId=element.value.split('|')[0];
+                let user=element.value.split('|')[1];
+                let com= document.getElementById('commentPost'+subjectId).value;
                 let mesDonnees = new FormData();
-                mesDonnees.set("meme", memeId);
+                mesDonnees.set("subject", subjectId);
                 mesDonnees.set("com", com);
 
-                console.log(memeId, com);
+                console.log(subjectId, com);
                 axios.post(
                     '/comment/new', mesDonnees )
                 .then(function (reponse) {
                     //On traite la suite une fois la réponse obtenue 
                     // console.log(reponse, "reponse 😎");
                     // console.log(reponse.data);
-                    console.log(memeId);
+                    console.log(subjectId);
                     let comment = document.getElementById("modele-comment");
-                    let top =  document.getElementById("com"+memeId);
+                    let top =  document.getElementById("com"+subjectId);
                     let clone = comment.cloneNode(true);
-                    console.log(clone.children[0]);
-
+                    console.log(clone.children[0].children[0].children[1]);
+                    clone.children[0].children[0].children[1].setAttribute('data-jaime-comment',"")
                     // button
                     //console.log(clone.children[0].childNodes[1].childNodes[3]);
 
@@ -185,7 +185,7 @@ window.onload = () => {
 
                     // et lui donne un peu de contenu
                     // let newContent = document.createTextNode(com);
-                   clone.children[2].innerHTML=com;
+                    clone.children[2].innerHTML=com;
                     // // element.parentNode.document.createElement("div");
                     top.insertBefore(clone, top.firstChild);
                     // comment.remove();
@@ -223,10 +223,10 @@ window.onload = () => {
         }))
     }
 
-    const commentsSignaler = document.querySelectorAll('[data-signaler-comment]');
+    const commentsReport = document.querySelectorAll('[data-signaler-comment]');
     
-    if(commentsSignaler){
-        commentsSignaler.forEach((element=>{
+    if(commentsReport){
+        commentsReport.forEach((element=>{
             element.addEventListener('click', () =>  {
                 let id = element.value;
                 axios.get(`/comment/signaler/${id}`)

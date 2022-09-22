@@ -49,7 +49,7 @@ class SecurityController extends AbstractController
                     $form->get('password')->getData()
                 )
             )
-            ->setVisible(true);
+            ->setActive(true);
 
             $em->persist($user);
             $em->flush();

@@ -47,7 +47,7 @@ class UserTypeEdit extends AbstractType
                 'required' => false,
                 'expanded' => true,
             ])
-            ->add('visible', CheckboxType::class, [
+            ->add('active', CheckboxType::class, [
                 'help' => 'actif/mute',
             ])
 

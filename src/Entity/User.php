@@ -35,7 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $style = null;
 
     #[ORM\Column]
-    private ?bool $visible = true;
+    private ?bool $active = true;
 
     #[Vich\UploadableField(mapping: 'users', fileNameProperty: 'imageName', size: 'imageSize')]
     private ?File $imageFile = null;
@@ -69,14 +69,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'friend', targetEntity: Follow::class, orphanRemoval: true)]
     private Collection $followers;
 
-    #[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Meme::class)]
-    private Collection $memes;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Subject::class)]
+    private Collection $subjects;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MemeFavoris::class, orphanRemoval: true)]
-    private Collection $memeFavoris;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: SubjectFavoris::class, orphanRemoval: true)]
+    private Collection $subjectFavoris;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: NoteMeme::class, orphanRemoval: true)]
-    private Collection $noteMemes;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: NoteSubject::class, orphanRemoval: true)]
+    private Collection $noteSubjects;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
@@ -84,23 +84,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CommentLike::class, orphanRemoval: true)]
     private Collection $commentLikes;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CommentSignaler::class, orphanRemoval: true)]
-    private Collection $commentSignalers;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CommentReport::class, orphanRemoval: true)]
+    private Collection $commentReports;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MemeSignaler::class, orphanRemoval: true)]
-    private Collection $memeSignalers;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: SubjectReport::class, orphanRemoval: true)]
+    private Collection $subjectReports;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Article::class)]
+    private Collection $articles;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ArticleLiked::class, orphanRemoval: true)]
+    private Collection $articleLikeds;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ArticleSuggestion::class, orphanRemoval: true)]
+    private Collection $articleSuggestions;
 
     public function __construct()
     {
         $this->followers = new ArrayCollection();
         $this->follows = new ArrayCollection();
-        $this->memes = new ArrayCollection();
-        $this->memeFavoris = new ArrayCollection();
-        $this->noteMemes = new ArrayCollection();
+        $this->subjects = new ArrayCollection();
+        $this->subjectFavoris = new ArrayCollection();
+        $this->noteSubjects = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->commentLikes = new ArrayCollection();
-        $this->commentSignalers = new ArrayCollection();
-        $this->memeSignalers = new ArrayCollection();
+        $this->commentReports = new ArrayCollection();
+        $this->subjectReports = new ArrayCollection();
+        $this->articles = new ArrayCollection();
+        $this->articleLikeds = new ArrayCollection();
+        $this->articleSuggestions = new ArrayCollection();
     }
 
     public function __serialize(): array
@@ -111,7 +123,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             'email' => $this->email,
             'roles' => $this->roles,
             'style' => $this->style,
-            'visible' => $this->visible,
+            'active' => $this->active,
             'image_name' => $this->image_name,
             'updated_at' => $this->updated_at,
             'password' => $this->password,
@@ -126,7 +138,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $data['email'];
         $this->roles = $data['roles'];
         $this->style = $data['style'];
-        $this->visible = $data['visible'];
+        $this->active = $data['active'];
         $this->image_name = $data['image_name'];
         $this->updated_at = $data['updated_at'];
         $this->password = $data['password'];
@@ -201,14 +213,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isVisible(): ?bool
+    public function isActive(): ?bool
     {
-        return $this->visible;
+        return $this->active;
     }
 
-    public function setVisible(bool $visible): self
+    public function setActive(bool $active): self
     {
-        $this->visible = $visible;
+        $this->active = $active;
 
         return $this;
     }
@@ -377,29 +389,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // }
 
     /**
-     * @return Collection<int, Meme>
+     * @return Collection<int, Subject>
      */
-    public function getMemes(): Collection
+    public function getSubjects(): Collection
     {
-        return $this->memes;
+        return $this->subjects;
     }
 
-    public function addMeme(Meme $meme): self
+    public function addSubject(Subject $subject): self
     {
-        if (!$this->memes->contains($meme)) {
-            $this->memes->add($meme);
-            $meme->setUserId($this);
+        if (!$this->subjects->contains($subject)) {
+            $this->subjects->add($subject);
+            $subject->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeMeme(Meme $meme): self
+    public function removeSubject(Subject $subject): self
     {
-        if ($this->memes->removeElement($meme)) {
+        if ($this->subjects->removeElement($subject)) {
             // set the owning side to null (unless already changed)
-            if ($meme->getUserId() === $this) {
-                $meme->setUserId(null);
+            if ($subject->getUser() === $this) {
+                $subject->setUser(null);
             }
         }
 
@@ -407,29 +419,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, MemeFavoris>
+     * @return Collection<int, SubjectFavoris>
      */
-    public function getMemeFavoris(): Collection
+    public function getSubjectFavoris(): Collection
     {
-        return $this->memeFavoris;
+        return $this->subjectFavoris;
     }
 
-    public function addMemeFavori(MemeFavoris $memeFavori): self
+    public function addSubjectFavori(SubjectFavoris $subjectFavori): self
     {
-        if (!$this->memeFavoris->contains($memeFavori)) {
-            $this->memeFavoris->add($memeFavori);
-            $memeFavori->setUser($this);
+        if (!$this->subjectFavoris->contains($subjectFavori)) {
+            $this->subjectFavoris->add($subjectFavori);
+            $subjectFavori->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeMemeFavori(MemeFavoris $memeFavori): self
+    public function removeSubjectFavori(SubjectFavoris $subjectFavori): self
     {
-        if ($this->memeFavoris->removeElement($memeFavori)) {
+        if ($this->subjectFavoris->removeElement($subjectFavori)) {
             // set the owning side to null (unless already changed)
-            if ($memeFavori->getUser() === $this) {
-                $memeFavori->setUser(null);
+            if ($subjectFavori->getUser() === $this) {
+                $subjectFavori->setUser(null);
             }
         }
 
@@ -437,29 +449,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, NoteMeme>
+     * @return Collection<int, NoteSubject>
      */
-    public function getNoteMemes(): Collection
+    public function getNoteSubjects(): Collection
     {
-        return $this->noteMemes;
+        return $this->noteSubjects;
     }
 
-    public function addNoteMeme(NoteMeme $noteMeme): self
+    public function addNoteSubject(NoteSubject $noteSubject): self
     {
-        if (!$this->noteMemes->contains($noteMeme)) {
-            $this->noteMemes->add($noteMeme);
-            $noteMeme->setUser($this);
+        if (!$this->noteSubjects->contains($noteSubject)) {
+            $this->noteSubjects->add($noteSubject);
+            $noteSubject->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeNoteMeme(NoteMeme $noteMeme): self
+    public function removeNoteSubject(NoteSubject $noteSubject): self
     {
-        if ($this->noteMemes->removeElement($noteMeme)) {
+        if ($this->noteSubjects->removeElement($noteSubject)) {
             // set the owning side to null (unless already changed)
-            if ($noteMeme->getUser() === $this) {
-                $noteMeme->setUser(null);
+            if ($noteSubject->getUser() === $this) {
+                $noteSubject->setUser(null);
             }
         }
 
@@ -527,29 +539,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, CommentSignaler>
+     * @return Collection<int, CommentReport>
      */
-    public function getCommentSignalers(): Collection
+    public function getCommentReports(): Collection
     {
-        return $this->commentSignalers;
+        return $this->commentReports;
     }
 
-    public function addCommentSignaler(CommentSignaler $commentSignaler): self
+    public function addCommentReport(CommentReport $commentReport): self
     {
-        if (!$this->commentSignalers->contains($commentSignaler)) {
-            $this->commentSignalers->add($commentSignaler);
-            $commentSignaler->setUser($this);
+        if (!$this->commentReports->contains($commentReport)) {
+            $this->commentReports->add($commentReport);
+            $commentReport->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeCommentSignaler(CommentSignaler $commentSignaler): self
+    public function removeCommentReport(CommentReport $commentReport): self
     {
-        if ($this->commentSignalers->removeElement($commentSignaler)) {
+        if ($this->commentReports->removeElement($commentReport)) {
             // set the owning side to null (unless already changed)
-            if ($commentSignaler->getUser() === $this) {
-                $commentSignaler->setUser(null);
+            if ($commentReport->getUser() === $this) {
+                $commentReport->setUser(null);
             }
         }
 
@@ -557,32 +569,128 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, MemeSignaler>
+     * @return Collection<int, SubjectReport>
      */
-    public function getMemeSignalers(): Collection
+    public function getSubjectReports(): Collection
     {
-        return $this->memeSignalers;
+        return $this->subjectReports;
     }
 
-    public function addMemeSignaler(MemeSignaler $memeSignaler): self
+    public function addSubjectReport(SubjectReport $subjectReport): self
     {
-        if (!$this->memeSignalers->contains($memeSignaler)) {
-            $this->memeSignalers->add($memeSignaler);
-            $memeSignaler->setUser($this);
+        if (!$this->subjectReports->contains($subjectReport)) {
+            $this->subjectReports->add($subjectReport);
+            $subjectReport->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeMemeSignaler(MemeSignaler $memeSignaler): self
+    public function removeSubjectReport(SubjectReport $subjectReport): self
     {
-        if ($this->memeSignalers->removeElement($memeSignaler)) {
+        if ($this->subjectReports->removeElement($subjectReport)) {
             // set the owning side to null (unless already changed)
-            if ($memeSignaler->getUser() === $this) {
-                $memeSignaler->setUser(null);
+            if ($subjectReport->getUser() === $this) {
+                $subjectReport->setUser(null);
             }
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Article>
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+            $article->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getUser() === $this) {
+                $article->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ArticleLiked>
+     */
+    public function getArticleLikeds(): Collection
+    {
+        return $this->articleLikeds;
+    }
+
+    public function addArticleLiked(ArticleLiked $articleLiked): self
+    {
+        if (!$this->articleLikeds->contains($articleLiked)) {
+            $this->articleLikeds->add($articleLiked);
+            $articleLiked->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleLiked(ArticleLiked $articleLiked): self
+    {
+        if ($this->articleLikeds->removeElement($articleLiked)) {
+            // set the owning side to null (unless already changed)
+            if ($articleLiked->getUser() === $this) {
+                $articleLiked->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ArticleSuggestion>
+     */
+    public function getArticleSuggestions(): Collection
+    {
+        return $this->articleSuggestions;
+    }
+
+    public function addArticleSuggestion(ArticleSuggestion $articleSuggestion): self
+    {
+        if (!$this->articleSuggestions->contains($articleSuggestion)) {
+            $this->articleSuggestions->add($articleSuggestion);
+            $articleSuggestion->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleSuggestion(ArticleSuggestion $articleSuggestion): self
+    {
+        if ($this->articleSuggestions->removeElement($articleSuggestion)) {
+            // set the owning side to null (unless already changed)
+            if ($articleSuggestion->getUser() === $this) {
+                $articleSuggestion->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
+    public function __toString()
+    {
+        return $this->name;
     }
 }

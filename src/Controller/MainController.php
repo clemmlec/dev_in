@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Meme;
+use App\Entity\Subject;
 use App\Entity\Comment;
-use App\Form\MemeType;
+use App\Form\SubjectType;
 use App\Form\CommentType;
-use App\Repository\MemeRepository;
+use App\Repository\SubjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,25 +16,25 @@ use Symfony\Component\Security\Core\Security;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(Request $request, MemeRepository $memeRepository, Security $security): Response
+    public function index(Request $request, SubjectRepository $subjectRepository, Security $security): Response
     {
-        $selectMeme = $memeRepository->findActiveMeme();
+        $selectSubject = $subjectRepository->findActiveSubject();
         // $commentaire = new Comment();
         // $formCom = $this->createForm(CommentType::class, $commentaire);
 
-        $meme = new Meme();
-        $form = $this->createForm(MemeType::class, $meme);
+        $subject = new Subject();
+        $form = $this->createForm(SubjectType::class, $subject);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $meme->setUserId($security->getUser());
-            $memeRepository->add($meme, true);
+            $subject->setUser($security->getUser());
+            $subjectRepository->add($subject, true);
 
             return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('index.html.twig', [
-            'memes' => $selectMeme,
+            'subjects' => $selectSubject,
             // 'note' => $note,
 
             'form' => $form,

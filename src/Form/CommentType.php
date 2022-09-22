@@ -17,7 +17,7 @@ class CommentType extends AbstractType
                 'label' => 'commentaire',
                 'required' => true,
             ])
-            // ->add('visible', CheckboxType::class, [
+            // ->add('active', CheckboxType::class, [
             //     'help' => 'actif/mute',
             // ])
 
