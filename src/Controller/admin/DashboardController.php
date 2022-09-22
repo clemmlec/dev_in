@@ -2,12 +2,14 @@
 
 namespace App\Controller\admin;
 
-use App\Entity\Subject;
+use App\Entity\Tags;
 use App\Entity\Forum;
+use App\Entity\Article;
+use App\Entity\Subject;
+use App\Controller\admin\ForumCrudController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use App\Controller\admin\ForumCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
@@ -53,6 +55,18 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
             MenuItem::linkToCrud('Add Subject', 'fas fa-plus', Subject::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Show Subject', 'fas fa-eye', Subject::class)
+        ]);
+
+        yield MenuItem::section('Tags');
+        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+            MenuItem::linkToCrud('Add Tags', 'fas fa-plus', Tags::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show Tags', 'fas fa-eye', Tags::class)
+        ]);
+
+        yield MenuItem::section('Article');
+        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+            MenuItem::linkToCrud('Add Article', 'fas fa-plus', Article::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show Article', 'fas fa-eye', Article::class)
         ]);
 
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
