@@ -19,8 +19,6 @@ class MainController extends AbstractController
     public function index(Request $request, SubjectRepository $subjectRepository, Security $security): Response
     {
         $selectSubject = $subjectRepository->findActiveSubject();
-        // $commentaire = new Comment();
-        // $formCom = $this->createForm(CommentType::class, $commentaire);
 
         $subject = new Subject();
         $form = $this->createForm(SubjectType::class, $subject);
@@ -35,10 +33,7 @@ class MainController extends AbstractController
 
         return $this->renderForm('index.html.twig', [
             'subjects' => $selectSubject,
-            // 'note' => $note,
-
             'form' => $form,
-            // 'formCom' => $formCom,
         ]);
     }
 }

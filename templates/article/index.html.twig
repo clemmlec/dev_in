@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Page article | {{ parent()}}
+{% endblock %}
+
+{% block body %}
+
+    {% for article in articles %}
+        <hr>
+        <h1>{{article.name}}</h1>
+        <p>{{article.content | raw}}</p>
+        {% for tag in article.tags %}
+            <span>{{tag.name}}</span>
+        {% endfor %}
+        <h2>ecrit {{article.createdAt | ago}}</h2>
+    {% endfor %}
+
+{% endblock %}

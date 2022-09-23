@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\users;
+namespace App\Controller\Front;
 
 use App\Entity\Subject;
 use App\Entity\SubjectFavoris;
@@ -23,32 +23,27 @@ use Symfony\Component\Security\Core\Security;
 #[Route('/subject')]
 class SubjectController extends AbstractController
 {
-    // #[Route('/', name: 'user_subject_index', methods: ['GET', 'POST'])]
-    // public function index(Request $request, SubjectRepository $subjectRepository, Security $security ): Response
-    // {
+    #[Route('/', name: 'app_subject_index')]
+    public function index(Request $request, SubjectRepository $subjectRepository, Security $security): Response
+    {
+        $selectSubject = $subjectRepository->findActiveSubject();
 
-        //     $selectSubject = $subjectRepository->findAll();
+        $subject = new Subject();
+        $form = $this->createForm(SubjectType::class, $subject);
+        $form->handleRequest($request);
 
-        //     $subject = new Subject();
-        //     $form = $this->createForm(SubjectType::class, $subject);
-        //     $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $subject->setUser($security->getUser());
+            $subjectRepository->add($subject, true);
 
-        //     if ($form->isSubmitted() && $form->isValid()) {
+            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+        }
 
-        //         $subject->setUserId($security->getUser());
-        //         $subjectRepository->add($subject, true);
-
-        //         return $this->redirectToRoute('user_subject_index', [], Response::HTTP_SEE_OTHER);
-        //     }
-
-        //     return $this->renderForm('subject/index.html.twig', [
-        //         'subjects' => $selectSubject,
-        //         // 'note' => $note,
-
-        //         'form' => $form,
-        //     ]);
-
-    // }
+        return $this->renderForm('index.html.twig', [
+            'subjects' => $selectSubject,
+            'form' => $form,
+        ]);
+    }
 
     #[Route('/note/{note}/{subjectId}', name: 'app_subject_note', methods: ['GET'])]
     public function noteSubject(int $note, int $subjectId, SubjectRepository $subjectRepository, NoteSubjectRepository $noteRepo, Security $security)
