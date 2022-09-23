@@ -16,14 +16,13 @@ h1{
     font-size: 40px;
 }
 .mainSite{
-    background-color: rgba(242, 243, 242, 0.105);
+    // background-color: rgba(242, 243, 242, 0.105);
     margin-top: 100px;
     
 }
 body{
     background-color: rgb(67, 114, 136);
-    color: rgb(204, 255, 190);
-    background: linear-gradient(to right, #9d5e45, #79222d);
+    color: rgb(255, 239, 190);
     background: linear-gradient(to right,rgb(15, 61, 82),rgb(67, 114, 136));
     padding: 0;
     margin: 0;
@@ -67,6 +66,9 @@ body{
 .gris{
     background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.2));
 }
+.black{
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+}
 .btn-vierge{
     text-decoration: none !important;   
     outline: none;
@@ -100,7 +102,7 @@ body{
 
 a{
     text-decoration: none;
-    color: rgb(87, 0, 128);
+    color: #d37960;
 }
 .b-50{
     height: 110px;

@@ -39,6 +39,17 @@ class SubjectRepository extends ServiceEntityRepository
         }
     }
 
+    public function findRandSubject(): ?array
+    {
+        $query = $this->createQueryBuilder('a')
+            ->orderBy('RAND()')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+
+        return $query;
+    }
+
     public function findActiveSubject()
     {
         return $this->createQueryBuilder('a')

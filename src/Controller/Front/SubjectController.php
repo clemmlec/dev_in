@@ -39,7 +39,7 @@ class SubjectController extends AbstractController
             return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('index.html.twig', [
+        return $this->renderForm('subject/index.html.twig', [
             'subjects' => $selectSubject,
             'form' => $form,
         ]);

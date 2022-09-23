@@ -82,13 +82,18 @@
     .muted{
         font-size: 0.7em;
     }
+    
     .avatarVrai{
         width: 30px;
         display: inline;
         vertical-align: middle;
     }
-
 }
 .swiper-button-disabled{
     display: none !important;
+}
+.avatarVrai{
+    width: 30px;
+    display: inline;
+    vertical-align: middle;
 }

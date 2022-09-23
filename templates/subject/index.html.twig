@@ -1,3 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Page subject | {{ parent()}}
+{% endblock %}
+
+{% block body %}
+
 <section class="d-flex ">
     {# button nouvel subject #}
     {% if app.user %}
@@ -180,3 +188,5 @@
 
 
 </section>
+
+{% endblock %}

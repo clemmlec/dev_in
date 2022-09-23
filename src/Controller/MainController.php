@@ -16,24 +16,12 @@ use Symfony\Component\Security\Core\Security;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(Request $request, SubjectRepository $subjectRepository, Security $security): Response
+    public function index(SubjectRepository $subjectRepository,): Response
     {
-        $selectSubject = $subjectRepository->findActiveSubject();
-
-        $subject = new Subject();
-        $form = $this->createForm(SubjectType::class, $subject);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $subject->setUser($security->getUser());
-            $subjectRepository->add($subject, true);
-
-            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('index.html.twig', [
-            'subjects' => $selectSubject,
-            'form' => $form,
+        
+        $subjects = $subjectRepository->findRandSubject();
+        return $this->render('index.html.twig', [
+            'subjects' => $subjects,
         ]);
     }
 }

@@ -17,3 +17,4 @@ import './js/swiper.js';
 import './js/dropdown.js';
 import './js/comment.js';
 import './js/user.js';
+import './js/paralax.js';

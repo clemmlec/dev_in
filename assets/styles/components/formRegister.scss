@@ -35,9 +35,16 @@ input[type=button]:hover {
     background-color: rgba(25, 240, 175, 0.863);
 }
 button {
-    padding: 8px;
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
     cursor: pointer;
-    background-color: rgba(60, 228, 177, 0.603);
+    background: linear-gradient(120deg, rgb(170, 206, 193), rgb(31, 115, 122));
     border-radius: 5px;
 }
 
