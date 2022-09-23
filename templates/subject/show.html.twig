@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block body %}
-<section class="d-flex">
+<section class="d-flex w-80">
     <div class="card-subject">
         <h1 class="toptitre left {{subject.forum.style}}">
             - Posté par :  {{subject.user.name}}
@@ -156,8 +156,15 @@
                     <div class="description">
                         
                         {% if app.user and app.user.id == subject.user.id %}
-                            <textarea id="subjectContent" cols="30" rows="10">{{subject.description | raw}}</textarea>
-                            <button class="btnVierge" value="{{subject.id}}" data-edit-subjectContent >modifier</button>
+                        {{ form_start(form,{'attr': {'id':'formpost'}} ) }}
+                            {# <textarea id="subjectContent" cols="30" rows="10">{{subject.description | raw}}</textarea> #}
+                            <div class="form-ligne">
+                                {{ form_widget( form.description,{'attr': {'placeholder': '{{subject.description | raw}}', 'id':'subjectContent'}} ) }}
+                            </div>
+                            <button class="mb-4">{{ button_label|default('Save') }}</button>
+                            {{ form_widget( form._token)}}
+                        {{ form_end(form,{render_rest: false}) }}
+                            {# <button class="btnVierge" value="{{subject.id}}" data-edit-subjectContent >modifier</button> #}
                         {% else %}
                             <p>{{subject.description}}</p>
                         {% endif %}
