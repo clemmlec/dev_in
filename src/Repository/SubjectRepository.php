@@ -42,6 +42,8 @@ class SubjectRepository extends ServiceEntityRepository
     public function findRandSubject(): ?array
     {
         $query = $this->createQueryBuilder('a')
+            ->andWhere('a.active = :active')
+            ->setParameter('active', true)
             ->orderBy('RAND()')
             ->setMaxResults(4)
             ->getQuery()

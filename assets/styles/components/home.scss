@@ -10,7 +10,6 @@
     left: -15%;
     .header{
         padding: 50px 150px;
-        background-color:#21a6edc1;
         border-radius: 20px;
         h1{
            color: whitesmoke;
@@ -18,10 +17,17 @@
     }
 }
 .titreHome{
-  
-    margin : 35px 0;
-    background-color:#59003b;
+    text-align: center;
+    margin : 35px auto;
     padding: 30px;
     border-radius: 10px;
+    width:fit-content;
 
+}
+.btn-inscription{
+    margin: auto;
+    text-align: center;
+    a{
+        color: antiquewhite;
+    }
 }

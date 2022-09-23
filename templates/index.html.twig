@@ -7,18 +7,26 @@
 {% block body %}
 
     <div id="home">
-        <div class="header">
+        <div class="header blue">
             <h1>Dev In</h1>
-            <em>Le site des devs</em>
+            <h2><em>Le site des devs</em></h2>
         </div>
     </div>
 
     <section class="w-80">
 
-        <h2 class="titreHome">Quelques sujets aléatoires</h2>
+        <h1 class="titreHome purple">Entre dans une communauté d'entraide et de partage <br>
+            <button class="btn-inscription"><a  href="{{ path('register') }}">Incription</a></button>
+        </h1>
+
+        <p>Retrouve des <a href="{{ path('app_article_index') }}">articles sur le développement</a>  rédigé par nos administrateurs <br>
+            Ansi que des <a href="{{ path('app_subject_index') }}">sujets postés</a> pas nos adhérents
+        </p>
+        
 
         <div class="swip ">
             <div class="swiper mySwiper">
+                <h2 class="titreHome orange">Quelques sujets aléatoires postées par les adhérents</h2>
                 <div class="swiper-wrapper">
                 {% for subject in subjects %}
                     <div class="swiper-slide overflow-y card">
@@ -84,5 +92,18 @@
                 <div class="swiper-button-next"></div>
             </div>
         </div>
+
+        <h2 class="titreHome orange">Dernier article posté</h2>
+        <article class="article">
+            <hr>
+            <h1>{{article.name}}</h1>
+            <hr>
+            {% for tag in article.tags %}
+                <span class="left tag-name">{{tag.name}} <i class="fa-solid fa-tags"></i> </span>
+            {% endfor %}
+            <span class="right">ecrit {{article.createdAt | ago}}</span>
+            <div class="w-100 content">{{article.content | raw}}</div>
+            
+        </article>
     </section>
 {% endblock %}

@@ -12,6 +12,7 @@
 @import "./components/updateColor.scss";
 @import "./components/article.scss";
 @import "./components/home.scss";
+@import "./color.scss";
 h1{
     font-size: 40px;
 }
@@ -22,6 +23,7 @@ h1{
 .w-80{
     width: 70%;
     margin: auto;
+    text-align: center;
 }
 body{
     background-color: rgb(67, 114, 136);
@@ -46,32 +48,7 @@ body{
 .pointer{
     cursor: pointer;
 }
-.yellow{
-    color: yellow;
-}
-.bleu{
-    // background-color: blue;
-    background: linear-gradient(to right, rgba(58, 51, 114, 0.4), rgba(16, 13, 186, 0.6), rgba(58, 51, 114, 0.4));
-}
-.green{
-    background: linear-gradient(to right, rgba(43, 152, 35, 0.4), rgba(36, 186, 13, 0.6), rgba(43, 159, 43, 0.4));
-}
-.purple{
-    background: linear-gradient(to right, rgba(152, 35, 134, 0.4),rgba(186, 13, 183, 0.6), rgba(159, 43, 157, 0.4));
-}
-.orange{
-    background: linear-gradient(to right, rgba(251, 187, 83, 0.4),rgba(255, 171, 16, 0.6), rgba(251, 210, 96, 0.4));
-}
-.red{
-    background: linear-gradient(to right, rgba(152, 35, 35, 0.4),rgba(186, 13, 13, 0.6), rgba(159, 43, 43, 0.4));
 
-}
-.gris{
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.2));
-}
-.black{
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
-}
 .btn-vierge{
     text-decoration: none !important;   
     outline: none;
@@ -125,6 +102,9 @@ a{
 }
 .w-100 div span{
     white-space: normal !important;
+}
+p{
+    font-size: 25px;
 }
 @media all and (max-device-width: 491px)
 {
