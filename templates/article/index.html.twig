@@ -7,13 +7,17 @@
 {% block body %}
 
     {% for article in articles %}
+    <article class="article">
         <hr>
         <h1>{{article.name}}</h1>
-        <p>{{article.content | raw}}</p>
+        <hr>
         {% for tag in article.tags %}
-            <span>{{tag.name}}</span>
+            <span class="left tag-name">{{tag.name}} <i class="fa-solid fa-tags"></i> </span>
         {% endfor %}
-        <h2>ecrit {{article.createdAt | ago}}</h2>
+        <span class="right">ecrit {{article.createdAt | ago}}</span>
+        <div class="w-100 content">{{article.content | raw}}</div>
+        
+    </article>
     {% endfor %}
 
 {% endblock %}

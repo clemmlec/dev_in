@@ -10,7 +10,11 @@
 @import "./components/comment.scss";
 @import "./components/swiper.scss";
 @import "./components/updateColor.scss";
+@import "./components/article.scss";
 
+h1{
+    font-size: 40px;
+}
 .mainSite{
     background-color: rgba(242, 243, 242, 0.105);
     margin-top: 100px;
@@ -110,7 +114,13 @@ a{
 .mt-5{
     margin-top: 50px;
 }
-
+.w-100{
+    max-width: 100%;
+    white-space: normal !important;
+}
+.w-100 div span{
+    white-space: normal !important;
+}
 @media all and (max-device-width: 491px)
 {
     h1{

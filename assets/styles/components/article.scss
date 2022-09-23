@@ -1,0 +1,34 @@
+.article{
+    padding: 20px;
+    background-color: rgb(23, 22, 33);
+    text-align: center;
+    color: antiquewhite;
+    margin-bottom: 10px;
+    p, div{
+        text-align: left;
+    }
+    img{
+       display: block;
+       margin: auto;
+    }
+    .right{
+        float: right;
+    }
+    .left{
+        float:left;
+        padding: 5px;
+    }
+    .content{
+        margin-top: 100px;
+    }
+
+    .tag-name{
+        background-color: rgba(11, 9, 141, 0.734);
+        color: white;
+        padding: 5px;
+        border-radius: 5px;
+        white-space: nowrap;
+        margin: 2px;
+    }
+
+}
