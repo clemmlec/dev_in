@@ -3,6 +3,7 @@
 namespace App\Controller\admin;
 
 use App\Entity\Tags;
+use App\Entity\User;
 use App\Entity\Forum;
 use App\Entity\Article;
 use App\Entity\Subject;
@@ -67,6 +68,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
             MenuItem::linkToCrud('Add Article', 'fas fa-plus', Article::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Show Article', 'fas fa-eye', Article::class)
+        ]);
+
+        yield MenuItem::section('User');
+        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+            MenuItem::linkToCrud('Show User', 'fas fa-eye', User::class)
         ]);
 
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
