@@ -16,14 +16,12 @@
     },
     "license": "clem",
     "private": true,
-    
     "config": {
-        "commitizen":{
+        "commitizen": {
             "path": "@commitlint/cz-commitlint"
         }
     },
     "scripts": {
-        
         "dev-server": "encore dev-server",
         "dev": "encore dev",
         "watch": "encore dev --watch",
@@ -33,6 +31,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^6.1.2",
         "axios": "^0.27.2",
+        "ckeditor4": "4.19.1",
         "i": "^0.3.7",
         "swiper": "^8.3.2"
     }

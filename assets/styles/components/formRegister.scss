@@ -35,9 +35,16 @@ input[type=button]:hover {
     background-color: rgba(25, 240, 175, 0.863);
 }
 button {
-    padding: 8px;
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
     cursor: pointer;
-    background-color: rgba(60, 228, 177, 0.603);
+    background: linear-gradient(120deg, rgb(170, 206, 193), rgb(31, 115, 122));
     border-radius: 5px;
 }
 
@@ -52,7 +59,7 @@ select {
     background: linear-gradient(120deg, rgb(170, 206, 193), rgb(31, 115, 122));
     border: 4px inset;
     border-radius: 25px;
-    width: 350px;
+    width: 50%;
     box-shadow: inset 5px 5px 5px rgb(200, 199, 199),
                 inset -5px -5px 5px rgb(80, 79, 79),
                      3px 3px 5px rgba(31, 30, 30, 0.582),

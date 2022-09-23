@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Controller\users;
+namespace App\Controller\Front;
 
 use App\Entity\Subject;
 use App\Entity\SubjectFavoris;
 use App\Entity\SubjectReport;
 use App\Entity\NoteSubject;
 use App\Entity\User;
+use App\Form\Subject1Type;
 use App\Form\SubjectType;
 use App\Repository\SubjectFavorisRepository;
 use App\Repository\SubjectRepository;
@@ -23,32 +24,27 @@ use Symfony\Component\Security\Core\Security;
 #[Route('/subject')]
 class SubjectController extends AbstractController
 {
-    // #[Route('/', name: 'user_subject_index', methods: ['GET', 'POST'])]
-    // public function index(Request $request, SubjectRepository $subjectRepository, Security $security ): Response
-    // {
+    #[Route('/', name: 'app_subject_index')]
+    public function index(Request $request, SubjectRepository $subjectRepository, Security $security): Response
+    {
+        $selectSubject = $subjectRepository->findActiveSubject();
 
-        //     $selectSubject = $subjectRepository->findAll();
+        $subject = new Subject();
+        $form = $this->createForm(SubjectType::class, $subject);
+        $form->handleRequest($request);
 
-        //     $subject = new Subject();
-        //     $form = $this->createForm(SubjectType::class, $subject);
-        //     $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $subject->setUser($security->getUser());
+            $subjectRepository->add($subject, true);
 
-        //     if ($form->isSubmitted() && $form->isValid()) {
+            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+        }
 
-        //         $subject->setUserId($security->getUser());
-        //         $subjectRepository->add($subject, true);
-
-        //         return $this->redirectToRoute('user_subject_index', [], Response::HTTP_SEE_OTHER);
-        //     }
-
-        //     return $this->renderForm('subject/index.html.twig', [
-        //         'subjects' => $selectSubject,
-        //         // 'note' => $note,
-
-        //         'form' => $form,
-        //     ]);
-
-    // }
+        return $this->renderForm('subject/index.html.twig', [
+            'subjects' => $selectSubject,
+            'form' => $form,
+        ]);
+    }
 
     #[Route('/note/{note}/{subjectId}', name: 'app_subject_note', methods: ['GET'])]
     public function noteSubject(int $note, int $subjectId, SubjectRepository $subjectRepository, NoteSubjectRepository $noteRepo, Security $security)
@@ -83,58 +79,22 @@ class SubjectController extends AbstractController
 
         return new Response('note non valide', 404);
     }
-    // #[Route('/new', name: 'user_subject_new', methods: ['GET', 'POST'])]
-    // public function new(Request $request, ForumRepository $forumRepo ,SubjectRepository $subjectRepository, Security $security): Response
-    // {
-        // dd($request);
-        // $subject = new Subject();
-        // $param=$request->request->all('subject');
-        // $forum=$forumRepo->find($param['forum']);
-        // // $imageFile=$request->request->all('imageFile');
-        // dd( $request );
-
-        // $form = $this->createForm(SubjectType::class, $subject);
-        // $form->handleRequest($request);
-
-            // $subject->setUserId($security->getUser())
-                // ->setNom($param['nom'])
-                // ->setDescription($param['description'])
-                // ->setForumId($forum)
-                // ->setImageFile($imageName)
-            //    ;
-            // $subjectRepository->add($subject, true);
-        //     $subjectRepository->add($subject, true);
-            // $dejaAmis=$friendsRepo->findOneBy(array('user' => $user_id ,'friend' => $id));
-            // if(!$dejaAmis){
-                //  $newFollow->setUser($user)
-                // ->setFriend($follow);
-                // $subjectRepository->add($subject, true);
-
-            // return new JsonResponse($subject);
-                // return new Response('articl créer', 201);
-            // }else{
-
-            // }
-
-       // if ($form->isSubmitted() && $form->isValid()) {
-
-        //     $subject->setUserId($security->getUser());
-        //     $subjectRepository->add($subject, true);
-
-        //     return $this->redirectToRoute('user_subject_index', [], Response::HTTP_SEE_OTHER);
-        // }
-
-        // return $this->renderForm('subject/new.html.twig', [
-        //     'subject' => $subject,
-        //     'form' => $form,
-        // ]);
-    // }
-
-    #[Route('/{id}', name: 'user_subject_show', methods: ['GET'])]
-    public function show(Subject $subject): Response
+  
+    #[Route('/{id}', name: 'user_subject_show', methods: ['GET','POST'])]
+    public function show(?Subject $subject, Security $security, Request $request, SubjectRepository $subjectRepository ): Response
     {
-        return $this->render('subject/show.html.twig', [
+        $form = $this->createForm(Subject1Type::class, $subject);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $subject->setUser($security->getUser());
+            $subjectRepository->add($subject, true);
+
+            return $this->redirectToRoute('user_subject_show', ['id' => $subject->getId()], Response::HTTP_SEE_OTHER);
+        }
+        return $this->renderForm('subject/show.html.twig', [
             'subject' => $subject,
+            'form' => $form
         ]);
     }
 
@@ -143,7 +103,7 @@ class SubjectController extends AbstractController
     {
         $user = $security->getUser();
         $subject = $subjectRepository->find($id);
-        if ($subject->getUserId() !== $user) {
+        if ($subject->getUser() !== $user) {
             return new Response('vous n\avez pas le droit de modifier cet subject', 404);
         }
         if ($subject) {
@@ -161,7 +121,7 @@ class SubjectController extends AbstractController
     {
         $user = $security->getUser();
         $subject = $subjectRepository->find($id);
-        if ($subject->getUserId() !== $user) {
+        if ($subject->getUser() !== $user) {
             return new Response('vous n\avez pas le droit de modifier cet subject', 404);
         }
         if ($subject) {
@@ -192,14 +152,14 @@ class SubjectController extends AbstractController
         //     ]);
     // }
 
-    #[Route('/{id}', name: 'user_subject_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'user_subject_delete', methods: ['DELETE'])]
     public function delete(Request $request, Subject $subject, SubjectRepository $subjectRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$subject->getId(), $request->request->get('_token'))) {
             $subjectRepository->remove($subject, true);
         }
 
-        return $this->redirectToRoute('user_subject_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/follow/{id}', name: 'app_subject_follow', methods: ['GET'])]

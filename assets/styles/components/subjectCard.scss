@@ -58,7 +58,6 @@
         }
         .title{      
             position: relative;
-            font-size: 1.5em;
             color: rgb(37, 37, 37);
             background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
             padding: 10px 50px 10px 50px;
@@ -125,13 +124,17 @@
         }
         .deg90 {
             transform: scaleX(-1);
-            margin-left: -40px;
+            margin-left: -66px;
             
         }
         i{
             font-size: 1.2em;
             
         }
+
+        // span{
+        //     padding: 10px;
+        // }
     }
 }
 .demiDiv{

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\users;
+namespace App\Controller\Front;
 
 use App\Entity\Comment;
 use App\Entity\CommentLike;

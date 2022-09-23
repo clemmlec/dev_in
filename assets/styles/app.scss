@@ -10,23 +10,31 @@
 @import "./components/comment.scss";
 @import "./components/swiper.scss";
 @import "./components/updateColor.scss";
-
+@import "./components/article.scss";
+@import "./components/home.scss";
+@import "./color.scss";
+h1{
+    font-size: 40px;
+}
 .mainSite{
-    background-color: rgba(242, 243, 242, 0.105);
     margin-top: 100px;
     
 }
+.w-80{
+    width: 70%;
+    margin: auto;
+    text-align: center;
+}
 body{
     background-color: rgb(67, 114, 136);
-    color: rgb(204, 255, 190);
-    background: linear-gradient(to right, #9d5e45, #79222d);
+    color: rgb(255, 239, 190);
     background: linear-gradient(to right,rgb(15, 61, 82),rgb(67, 114, 136));
     padding: 0;
     margin: 0;
 }
 .site {
     display: grid;
-    grid: auto-flow/ 1fr 4fr 1fr;
+    grid: auto-flow/ 1fr;
     height: min-content;
     
 
@@ -40,29 +48,7 @@ body{
 .pointer{
     cursor: pointer;
 }
-.yellow{
-    color: yellow;
-}
-.bleu{
-    // background-color: blue;
-    background: linear-gradient(to right, rgba(58, 51, 114, 0.4), rgba(16, 13, 186, 0.6), rgba(58, 51, 114, 0.4));
-}
-.green{
-    background: linear-gradient(to right, rgba(43, 152, 35, 0.4), rgba(36, 186, 13, 0.6), rgba(43, 159, 43, 0.4));
-}
-.purple{
-    background: linear-gradient(to right, rgba(152, 35, 134, 0.4),rgba(186, 13, 183, 0.6), rgba(159, 43, 157, 0.4));
-}
-.orange{
-    background: linear-gradient(to right, rgba(251, 187, 83, 0.4),rgba(255, 171, 16, 0.6), rgba(251, 210, 96, 0.4));
-}
-.red{
-    background: linear-gradient(to right, rgba(152, 35, 35, 0.4),rgba(186, 13, 13, 0.6), rgba(159, 43, 43, 0.4));
 
-}
-.gris{
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.2));
-}
 .btn-vierge{
     text-decoration: none !important;   
     outline: none;
@@ -96,7 +82,7 @@ body{
 
 a{
     text-decoration: none;
-    color: rgb(87, 0, 128);
+    color: #d37960;
 }
 .b-50{
     height: 110px;
@@ -110,12 +96,27 @@ a{
 .mt-5{
     margin-top: 50px;
 }
-
+.w-100{
+    max-width: 100%;
+    white-space: normal !important;
+}
+.w-100 div span{
+    white-space: normal !important;
+}
+p{
+    font-size: 25px;
+}
 @media all and (max-device-width: 491px)
 {
-
-    *{
-        font-size: 60px;
+    #home{
+        width: 100%;
+        left: 0;
+    }
+    h1{
+        font-size:40px !important;
+    }
+    p, div, input, .form-ligne{
+        font-size: 30px !important;
     }
     nav
     {
@@ -138,9 +139,9 @@ a{
     
     }
     nav .main_pages a {
-       width: 100%;
-       height: 50px;
-       justify-content:left;
+        width: 100%;
+        height: 50px;
+        justify-content:left;
         margin-left: 20px;
     }
     nav .main_pages  {
@@ -166,11 +167,7 @@ a{
         display: inline;
         width: 100%;
     }
-    .site {
- 
-        grid: auto-flow/ 0fr 4fr 0fr;
 
-    }  
     .mainSite{
         margin-top: 155px;
     }
@@ -193,5 +190,8 @@ a{
     }
     .nav-logo{
         height: 50px;
+    }
+    .w-80{
+        width: 100%;
     }
 }

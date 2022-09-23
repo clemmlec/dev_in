@@ -2,37 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\Subject;
 use App\Entity\Forum;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Subject;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class Subject1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', TextType::class, [
-                'label' => 'name',
-                'required' => true,
-            ])
-            ->add('description', TextType::class, [
+
+            ->add('description', CKEditorType::class, [
                 'label' => 'content',
                 'required' => true,
             ])
             
 
-            ->add('forum', EntityType::class, [
-                'class' => Forum::class,
-                'label' => 'Forums :',
-                'expanded' => true,
-                'multiple' => false,
-                'choice_label' => 'nom',
-            ])
         ;
     }
 

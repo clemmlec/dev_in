@@ -2,43 +2,32 @@
 
 namespace App\Controller;
 
-use App\Entity\Subject;
 use App\Entity\Comment;
-use App\Form\SubjectType;
+use App\Entity\Subject;
 use App\Form\CommentType;
+use App\Form\SubjectType;
+use App\Repository\ArticleRepository;
 use App\Repository\SubjectRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(Request $request, SubjectRepository $subjectRepository, Security $security): Response
+    public function index(SubjectRepository $subjectRepository,ArticleRepository $articleRepo,Security $security): Response
     {
-        $selectSubject = $subjectRepository->findActiveSubject();
-        // $commentaire = new Comment();
-        // $formCom = $this->createForm(CommentType::class, $commentaire);
-
-        $subject = new Subject();
-        $form = $this->createForm(SubjectType::class, $subject);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $subject->setUser($security->getUser());
-            $subjectRepository->add($subject, true);
-
-            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+        $user = $security->getUser();
+        if ($user) {
+            return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()]);
         }
-
-        return $this->renderForm('index.html.twig', [
-            'subjects' => $selectSubject,
-            // 'note' => $note,
-
-            'form' => $form,
-            // 'formCom' => $formCom,
+        $subjects = $subjectRepository->findRandSubject();
+        $article = $articleRepo->findOneBy(array(), array('id' => 'desc'),1,0);
+        return $this->render('index.html.twig', [
+            'subjects' => $subjects,
+            'article' => $article
         ]);
     }
 }

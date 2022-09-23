@@ -1,0 +1,33 @@
+#home{
+    background-image: url('../../images/home2.jpg');
+    background-size: cover;
+    height: 70vh;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: 130%;
+    left: -15%;
+    .header{
+        padding: 50px 150px;
+        border-radius: 20px;
+        h1{
+           color: whitesmoke;
+        }
+    }
+}
+.titreHome{
+    text-align: center;
+    margin : 35px auto;
+    padding: 30px;
+    border-radius: 10px;
+    width:fit-content;
+
+}
+.btn-inscription{
+    margin: auto;
+    text-align: center;
+    a{
+        color: antiquewhite;
+    }
+}
