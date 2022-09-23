@@ -3,31 +3,28 @@
 namespace App\Controller\admin;
 
 use App\Entity\Subject;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\Response;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Security;
 
 class SubjectCrudController extends AbstractCrudController
 {
     public function __construct(
         private Security $security
-    ){
-
+    ) {
     }
 
     public function configureActions(Actions $actions): Actions
@@ -36,7 +33,7 @@ class SubjectCrudController extends AbstractCrudController
             ->linkToCrudAction('duplicateSubject');
 
         return $actions
-            ->add(Crud::PAGE_EDIT,$duplicate);
+            ->add(Crud::PAGE_EDIT, $duplicate);
     }
 
     public static function getEntityFqcn(): string
@@ -44,7 +41,6 @@ class SubjectCrudController extends AbstractCrudController
         return Subject::class;
     }
 
-    
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -57,14 +53,13 @@ class SubjectCrudController extends AbstractCrudController
             DateTimeField::new('created_at')->hideOnForm(),
             DateTimeField::new('updated_at')->hideOnForm(),
 
-            // AssociationField::new('forum')->setQueryBuilder(function (QueryBuilder $qb) {    
+            // AssociationField::new('forum')->setQueryBuilder(function (QueryBuilder $qb) {
             //     $qb->where('entity.active = true');
             // }),
-
         ];
     }
-    
-    // public function persistEntity(EntityManagerInterface $em, $entityInstance): void 
+
+    // public function persistEntity(EntityManagerInterface $em, $entityInstance): void
     // {
     //     if(!$entityInstance instanceof Subject)return;
 
@@ -88,7 +83,6 @@ class SubjectCrudController extends AbstractCrudController
         AdminContext $context,
         AdminUrlGenerator $generator
     ): Response {
-    
         /** @var Subject $subject */
         $subject = $context->getEntity()->getInstance();
 
@@ -100,8 +94,7 @@ class SubjectCrudController extends AbstractCrudController
             ->setAction(Action::DETAIL)
             ->setEntityId($duplicateSubject->getId())
             ->generateUrl();
-        
-            return $this->redirect($url);
+
+        return $this->redirect($url);
     }
-    
 }

@@ -44,7 +44,7 @@ class SubjectRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('a')
             ->andWhere('a.active = :active')
             ->setParameter('active', true)
-            ->orderBy('RAND()')
+            // ->orderBy('RAND()')
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();

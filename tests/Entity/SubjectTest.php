@@ -3,8 +3,8 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Subject;
-use App\Repository\SubjectRepository;
 use App\Repository\ForumRepository;
+use App\Repository\SubjectRepository;
 use App\Repository\UserRepository;
 use App\Tests\Utils\AssertTestTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;

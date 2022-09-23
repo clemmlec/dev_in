@@ -5,10 +5,10 @@ namespace App\Controller\Front;
 use App\Entity\Comment;
 use App\Entity\CommentLike;
 use App\Entity\CommentReport;
-use App\Repository\SubjectRepository;
 use App\Repository\CommentLikeRepository;
-use App\Repository\CommentRepository;
 use App\Repository\CommentReportRepository;
+use App\Repository\CommentRepository;
+use App\Repository\SubjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,7 +48,6 @@ class CommentController extends AbstractController
     #[Route('/jaime/{id}', name: 'user.comment.jaime', methods: ['GET'])]
     public function switchVisibilitySubject(?Comment $com, Security $security, CommentRepository $comRepo, CommentLikeRepository $comLikeRepo)
     {
-
         $user = $security->getUser();
 
         if ($com && $user) {
@@ -72,7 +71,6 @@ class CommentController extends AbstractController
     #[Route('/signaler/{id}', name: 'user.comment.signaler', methods: ['GET'])]
     public function signalerComment(?Comment $com, Security $security, CommentRepository $comRepo, CommentReportRepository $comSignalRepo)
     {
-
         $user = $security->getUser();
 
         if ($com && $user) {
