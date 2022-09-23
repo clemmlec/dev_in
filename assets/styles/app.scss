@@ -113,9 +113,11 @@ a{
 
 @media all and (max-device-width: 491px)
 {
-
-    *{
-        font-size: 60px;
+    h1{
+        font-size:40px !important;
+    }
+    p, div, input, .form-ligne{
+        font-size: 30px !important;
     }
     nav
     {
@@ -138,9 +140,9 @@ a{
     
     }
     nav .main_pages a {
-       width: 100%;
-       height: 50px;
-       justify-content:left;
+        width: 100%;
+        height: 50px;
+        justify-content:left;
         margin-left: 20px;
     }
     nav .main_pages  {

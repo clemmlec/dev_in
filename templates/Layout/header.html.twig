@@ -4,14 +4,14 @@
         <div class="icon_nav dropdown">
             {# {{ dump(app.user) }} #}
             {% if app.user %}
-            <button class="dropbtn btn-vierge">
+            <button id="dropbtn" class="dropbtn btn-vierge">
                 <img 
                     class="avatar" 
                     src="{{ app.user.imageName ? vich_uploader_asset(app.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
                     alt="{{app.user.name}}"
                 >
             </button>            
-            <div class="dropdown-content">
+            <div id="dropcontent" class="dropdown-content">
                 <a href="{{ path('logout') }}" 
                     class="btn btn-secondary">Deconnection <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
                 <a href="{{ path('app_user_profil', {'id': app.user.id}) }}" 
@@ -19,9 +19,9 @@
             </div>
                 
             {% else %}
-            <button class="dropbtn btn-vierge"><i class="fa-solid fa-right-to-bracket"></i>
+            <button  id="dropbtn" class="dropbtn btn-vierge"><i class="fa-solid fa-right-to-bracket"></i>
             </button> 
-            <div class="dropdown-content">
+            <div id="dropcontent" class="dropdown-content">
                 <a href="{{ path('login') }}" 
                     class="btn btn-secondary">Se connecter <i class="fa-solid fa-user-check"></i></a>
                 <a href="{{ path('register') }}" 
