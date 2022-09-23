@@ -16,9 +16,12 @@ use Symfony\Component\Security\Core\Security;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(SubjectRepository $subjectRepository,): Response
+    public function index(SubjectRepository $subjectRepository,Security $security): Response
     {
-        
+        $user = $security->getUser();
+        if ($user) {
+            return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()]);
+        }
         $subjects = $subjectRepository->findRandSubject();
         return $this->render('index.html.twig', [
             'subjects' => $subjects,

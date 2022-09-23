@@ -2,14 +2,15 @@
 
 namespace App\Form;
 
-use App\Entity\Subject;
 use App\Entity\Forum;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Subject;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class Subject1Type extends AbstractType
 {
@@ -20,7 +21,7 @@ class Subject1Type extends AbstractType
                 'label' => 'name',
                 'required' => true,
             ])
-            ->add('description', TextType::class, [
+            ->add('description', TextareaType::class, [
                 'label' => 'content',
                 'required' => true,
             ])

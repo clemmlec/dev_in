@@ -138,7 +138,7 @@ class SubjectController extends AbstractController
     {
         $user = $security->getUser();
         $subject = $subjectRepository->find($id);
-        if ($subject->getUserId() !== $user) {
+        if ($subject->getUser() !== $user) {
             return new Response('vous n\avez pas le droit de modifier cet subject', 404);
         }
         if ($subject) {
@@ -156,7 +156,7 @@ class SubjectController extends AbstractController
     {
         $user = $security->getUser();
         $subject = $subjectRepository->find($id);
-        if ($subject->getUserId() !== $user) {
+        if ($subject->getUser() !== $user) {
             return new Response('vous n\avez pas le droit de modifier cet subject', 404);
         }
         if ($subject) {

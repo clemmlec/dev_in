@@ -103,7 +103,7 @@
                 <div class="note">
                     {% for i in 1..5 %}
                     <button class="btn-vierge"  value="{{i}}-{{subject.id}}" data-note-subject>
-                            <i class="far fa-star stars" ></i>
+                        <i class="far fa-star stars" ></i>
                     </button>
                     {% endfor %}
                 </div>
@@ -139,7 +139,7 @@
                             </span>
                         </div>
                         <p class="left head"> par {{ commen.user.name }}</p>
-                        <p class="left com"> {{ commen.comment}}
+                        <p class="left com"> {{ commen.message}}
                         </p>
                         <span class="date">{{commen.createdAt | ago}}</span>
                         <hr style="margin:2px"> 
@@ -156,7 +156,7 @@
                     <div class="description">
                         
                         {% if app.user and app.user.id == subject.user.id %}
-                            <input id="subjectContent" type="text" value="{{subject.description}}">
+                            <textarea id="subjectContent" cols="30" rows="10">{{subject.description | raw}}</textarea>
                             <button class="btnVierge" value="{{subject.id}}" data-edit-subjectContent >modifier</button>
                         {% else %}
                             <p>{{subject.description}}</p>

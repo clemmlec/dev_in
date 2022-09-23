@@ -1,0 +1,27 @@
+#home{
+    background-image: url('../../images/home2.jpg');
+    background-size: cover;
+    height: 70vh;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: 130%;
+    left: -15%;
+    .header{
+        padding: 50px 150px;
+        background-color:#21a6edc1;
+        border-radius: 20px;
+        h1{
+           color: whitesmoke;
+        }
+    }
+}
+.titreHome{
+  
+    margin : 35px 0;
+    background-color:#59003b;
+    padding: 30px;
+    border-radius: 10px;
+
+}

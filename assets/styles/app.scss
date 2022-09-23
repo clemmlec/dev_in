@@ -11,14 +11,17 @@
 @import "./components/swiper.scss";
 @import "./components/updateColor.scss";
 @import "./components/article.scss";
-
+@import "./components/home.scss";
 h1{
     font-size: 40px;
 }
 .mainSite{
-    // background-color: rgba(242, 243, 242, 0.105);
     margin-top: 100px;
     
+}
+.w-80{
+    width: 70%;
+    margin: auto;
 }
 body{
     background-color: rgb(67, 114, 136);
@@ -29,7 +32,7 @@ body{
 }
 .site {
     display: grid;
-    grid: auto-flow/ 1fr 4fr 1fr;
+    grid: auto-flow/ 1fr;
     height: min-content;
     
 
@@ -125,6 +128,10 @@ a{
 }
 @media all and (max-device-width: 491px)
 {
+    #home{
+        width: 100%;
+        left: 0;
+    }
     h1{
         font-size:40px !important;
     }
@@ -180,11 +187,7 @@ a{
         display: inline;
         width: 100%;
     }
-    .site {
- 
-        grid: auto-flow/ 0fr 4fr 0fr;
 
-    }  
     .mainSite{
         margin-top: 155px;
     }
@@ -207,5 +210,8 @@ a{
     }
     .nav-logo{
         height: 50px;
+    }
+    .w-80{
+        width: 100%;
     }
 }
