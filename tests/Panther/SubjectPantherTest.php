@@ -27,7 +27,7 @@ class SubjectPantherTest extends PantherTestCase
 
     public function testSubjectNumberOnListePage()
     {
-        $crawler = $this->client->request('GET', '/');
+        $crawler = $this->client->request('GET', '/subject');
         $this->assertCount(20, $crawler->filter('.card-subject'));
     }
 
