@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use DateTimeImmutable;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ForumRepository;
-use Doctrine\Common\Collections\Collection;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ForumRepository::class)]
 #[Vich\Uploadable]
@@ -144,12 +144,12 @@ class Forum
         return $this;
     }
 
-    public function getImageUpdatedAt(): ?\DateTimeImmutable
+    public function getImageUpdatedAt(): ?DateTimeImmutable
     {
         return $this->imageUpdatedAt;
     }
 
-    public function setImageUpdatedAt(?\DateTimeImmutable $imageUpdatedAt): self
+    public function setImageUpdatedAt(?DateTimeImmutable $imageUpdatedAt): self
     {
         $this->imageUpdatedAt = $imageUpdatedAt;
 

@@ -53,7 +53,6 @@ class UserController extends AbstractController
     #[Route('/follow/{id}', name: 'app_user_follow', methods: ['GET'])]
     public function followUser(?User $follow, UserRepository $userRepository, FollowRepository $friendsRepo, Security $security)
     {
-
         $user = $security->getUser();
 
         // dd($follow);

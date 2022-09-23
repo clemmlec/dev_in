@@ -4,13 +4,12 @@ namespace App\Controller\admin;
 
 use App\Entity\Forum;
 use Doctrine\ORM\EntityManagerInterface;
-use Vich\UploaderBundle\Form\Type\VichImageType;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ForumCrudController extends AbstractCrudController
 {
@@ -19,7 +18,6 @@ class ForumCrudController extends AbstractCrudController
         return Forum::class;
     }
 
-    
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -35,7 +33,7 @@ class ForumCrudController extends AbstractCrudController
                 ->setSortable(false),
         ];
     }
-    
+
     // public function deleteEntity(EntityManagerInterface $em, $entityInstance): void
     // {
     //      if (!$entityInstance instanceof Forum) return;

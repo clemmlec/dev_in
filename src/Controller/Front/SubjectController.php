@@ -2,20 +2,18 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\NoteSubject;
 use App\Entity\Subject;
 use App\Entity\SubjectFavoris;
 use App\Entity\SubjectReport;
-use App\Entity\NoteSubject;
 use App\Entity\User;
 use App\Form\Subject1Type;
 use App\Form\SubjectType;
-use App\Repository\SubjectFavorisRepository;
-use App\Repository\SubjectRepository;
-use App\Repository\SubjectReportRepository;
-use App\Repository\ForumRepository;
 use App\Repository\NoteSubjectRepository;
+use App\Repository\SubjectFavorisRepository;
+use App\Repository\SubjectReportRepository;
+use App\Repository\SubjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -79,9 +77,9 @@ class SubjectController extends AbstractController
 
         return new Response('note non valide', 404);
     }
-  
-    #[Route('/{id}', name: 'user_subject_show', methods: ['GET','POST'])]
-    public function show(?Subject $subject, Security $security, Request $request, SubjectRepository $subjectRepository ): Response
+
+    #[Route('/{id}', name: 'user_subject_show', methods: ['GET', 'POST'])]
+    public function show(?Subject $subject, Security $security, Request $request, SubjectRepository $subjectRepository): Response
     {
         $form = $this->createForm(Subject1Type::class, $subject);
         $form->handleRequest($request);
@@ -92,9 +90,10 @@ class SubjectController extends AbstractController
 
             return $this->redirectToRoute('user_subject_show', ['id' => $subject->getId()], Response::HTTP_SEE_OTHER);
         }
+
         return $this->renderForm('subject/show.html.twig', [
             'subject' => $subject,
-            'form' => $form
+            'form' => $form,
         ]);
     }
 
@@ -191,7 +190,7 @@ class SubjectController extends AbstractController
     public function signalerSubject(?Subject $subject, Security $security, SubjectRepository $artRepo, SubjectReportRepository $artSignalRepo)
     {
         $user = $security->getUser();
-       
+
         if ($subject && $user) {
             $dejaReport = $artSignalRepo->findOneBy(['user' => $user, 'subject' => $subject]);
             if (!$dejaReport) {
