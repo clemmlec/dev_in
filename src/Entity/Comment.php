@@ -29,7 +29,7 @@ class Comment
     #[Assert\NotBlank]
     #[Assert\Length(
         max: 255,
-        maxMessage: 'Le titre ne doit pas dépasser {{ limit }} caracteres'
+        maxMessage: 'Le message ne doit pas dépasser {{ limit }} caracteres'
     )]
     private ?string $message = null;
 

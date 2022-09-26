@@ -2,24 +2,25 @@
 
 namespace App\Controller\Front;
 
+use Exception;
 use App\Entity\Comment;
 use App\Entity\CommentLike;
 use App\Entity\CommentReport;
-use App\Repository\CommentLikeRepository;
-use App\Repository\CommentReportRepository;
 use App\Repository\CommentRepository;
 use App\Repository\SubjectRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\CommentLikeRepository;
+use App\Repository\CommentReportRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/comment')]
 class CommentController extends AbstractController
 {
-    #[Route('/new', name: 'app_comment_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_comment_new', methods: [ 'POST'])]
     public function new(Request $request, SubjectRepository $subjectRepo, CommentRepository $commentRepository, Security $security): Response
     {
         $param = $request->request->all();
@@ -30,19 +31,19 @@ class CommentController extends AbstractController
 
         $user = $security->getUser();
         // dd($follow);
-        // dd($user, $follow);
 
-        if ($subject && $user) {
+        try {
             $comment->setUser($user)
             ->setSubject($subject)
             ->setMessage($param['com']);
             $commentRepository->add($comment, true);
 
             // return new JsonResponse($comment);
-            return new Response('commantaire envoyé', 201);
+           
+        } catch (Exception $e) {
+            return new Response('maximum 255 caracteres', 500);
         }
-
-        return new Response('commantaire non valide', 404);
+        return new Response('commantaire envoyé', 201);
     }
 
     #[Route('/jaime/{id}', name: 'user.comment.jaime', methods: ['GET'])]
