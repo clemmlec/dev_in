@@ -13,12 +13,19 @@
 @import "./components/article.scss";
 @import "./components/home.scss";
 @import "./color.scss";
+
+#myBtn1{
+    white-space: nowrap;
+}
 h1{
     font-size: 40px;
 }
 .mainSite{
     margin-top: 100px;
-    
+    min-height: 88vh;
+}
+.main{
+    min-height: 100vh;
 }
 .w-80{
     width: 70%;
@@ -39,6 +46,9 @@ body{
     
 
 }  
+.break{
+    word-break: break-all;
+}
 .coter{
     height: 100vh;
 }
@@ -76,10 +86,16 @@ body{
 }
 
 .alert{
-    position: fixed;
     z-index: 1000;
+    text-align: center;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 5px;
 }
-
+.alert-success{
+    color: greenyellow;
+    background-color: rgba(168, 184, 168, 0.685);
+}
 a{
     text-decoration: none;
     color: #d37960;
@@ -115,7 +131,7 @@ p{
     h1{
         font-size:40px !important;
     }
-    p, div, input, .form-ligne{
+    p, div, input, .form-ligne, button{
         font-size: 30px !important;
     }
     nav
@@ -194,4 +210,18 @@ p{
     .w-80{
         width: 100%;
     }
+
+    .form{
+        width: 90%;
+        margin: 20vh auto 20px auto;
+    }
+    .card-subject .deg90 {
+        margin-left: -49px;
+    }
+    .swiper-slide  .deg90 {
+        margin-left: -43px;
+    }
+    .swiper-slide {
+        width: 80%;
+      }
 }

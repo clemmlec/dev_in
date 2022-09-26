@@ -5,28 +5,37 @@
 {% block body %}
     <section class="register">
         {{ form_start(form,{'attr': {'class': 'form'}} ) }}
-            <h1 class="Lobster">Connection</h1>
+            <h1 class="Lobster">Inscription</h1>
             <hr>
             <div class="form-ligne">
-                {{ form_row( form.name,{'attr': {'placeholder': 'nom'}} ) }}
+                {{ form_label(form.name) }} 
+                {{ form_widget( form.name,{'attr': {'placeholder': 'nom'}} ) }}
+                <span class="color-red"> {{ form_errors(form.name) }}</span>
             </div>
             <div class="form-ligne">
-                {{ form_row( form.email,{'attr': {'placeholder': 'e-mail' }} ) }}
+                {{ form_label(form.email) }} 
+                {{ form_widget( form.email,{'attr': {'placeholder': 'e-mail' }} ) }}
+                <span class="color-red">{{ form_errors(form.email) }}</span>
             </div>
             <div class="form-ligne">
                 {{ form_widget( form.password,{'attr': {'placeholder': 'mots de passe'}} ) }}
+                <span class="color-red">{{ form_errors(form.password.first) }}</span>
+                {# <span class="color-red">{{ form_errors(form.password.second) }}</span> #}
             </div>
-            <div class="form-ligne">
+            {# <div class="form-ligne">
                 {% if is_granted('ROLE_ADMIN') %}
                 
                         {{ form_row( form.roles ) }}
                 
                 {% endif %}
-            </div>
+            </div> #}
             <div class="form-ligne">
                 {{ form_row( form.rgpd ) }}
+                <span class="color-red">{{ form_errors(form.rgpd) }}</span>
             </div>
+            <div class="form-ligne">
             {{ form_row( form.imageFile ) }}
+            </div>
             <hr>
             <button class="mb-4">{{ button_label|default('Save') }}</button>
             

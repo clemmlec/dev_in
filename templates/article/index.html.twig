@@ -15,7 +15,7 @@
             <span class="left tag-name">{{tag.name}} <i class="fa-solid fa-tags"></i> </span>
         {% endfor %}
         <span class="right">ecrit {{article.createdAt | ago}}</span>
-        <div class="w-100 content">{{article.content | raw}}</div>
+        <div class="w-100 content">{{article.content | raw }}</div>
         
     </article>
     {% endfor %}

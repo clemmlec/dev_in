@@ -35,7 +35,8 @@ class SubjectController extends AbstractController
             $subject->setUser($security->getUser());
             $subjectRepository->add($subject, true);
 
-            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Sujet créer avec success');
+            return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('subject/index.html.twig', [

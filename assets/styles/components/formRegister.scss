@@ -1,5 +1,4 @@
 .register {
-    height: 100%;
     color: rgb(70, 69, 69);
     text-align: center;
     font-family: 'Righteous', cursive;
@@ -10,6 +9,20 @@
 }
 label {
     cursor: pointer;
+    text-align: left;
+    margin-right: 20px;
+    margin-left: 5px;
+}
+.form-ligne{
+    justify-content: center;
+    text-align: left;
+}
+
+input{
+    text-align: left;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
 
 input[type=text],
@@ -18,17 +31,19 @@ input[type=password] {
     cursor: text;
     background-color: rgb(181, 207, 199);
     border-radius: 5px;
-    margin-bottom: 5px;
+    height: 50px;
+    width: 80%;
+    display: block;
 }
 input[type=checkbox],
 input[type=radio] {
     cursor: pointer;
     background-color: rgb(181, 207, 199);
     border-radius: 5px;
+    height: 20px;
 }
 input[type=button] {
     cursor: pointer;
-    background-color: rgba(60, 228, 177, 0.603);
     border-radius: 5px;
 }
 input[type=button]:hover {
@@ -44,7 +59,7 @@ button {
     text-shadow: 1px 1px 1px #000;
     border-radius: 10px;
     cursor: pointer;
-    background: linear-gradient(120deg, rgb(170, 206, 193), rgb(31, 115, 122));
+    background: linear-gradient(120deg, rgb(170, 185, 206), rgb(26, 66, 84));
     border-radius: 5px;
 }
 
@@ -54,12 +69,14 @@ select {
     border-radius: 5px;
 }
 .form {
+    text-align: center;
     margin: 20px auto 20px auto;
     background-color: rgb(166, 218, 200);
-    background: linear-gradient(120deg, rgb(170, 206, 193), rgb(31, 115, 122));
+    // background: linear-gradient(120deg, rgb(170, 206, 193), rgb(31, 115, 122));
+    background: linear-gradient(120deg, rgb(170, 193, 206), rgb(31, 81, 122));
     border: 4px inset;
     border-radius: 25px;
-    width: 50%;
+    // width: 50%;
     box-shadow: inset 5px 5px 5px rgb(200, 199, 199),
                 inset -5px -5px 5px rgb(80, 79, 79),
                      3px 3px 5px rgba(31, 30, 30, 0.582),

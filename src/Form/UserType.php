@@ -4,17 +4,18 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class UserType extends AbstractType
 {
@@ -22,7 +23,7 @@ class UserType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'name',
+                'label' => 'Nom',
                 'required' => true,
             ])
             ->add('email', EmailType::class, [
@@ -35,28 +36,34 @@ class UserType extends AbstractType
                     'attr' => ['autocomplete' => 'new-password'],
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Please enter a password',
+                            'message' => 'Entrer un mots de passe s\'il vous plait',
                         ]),
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
-                            // max length allowed by Symfony for security reasons
-                            'max' => 4096,
-                        ]),
+                        // new Length([
+                        //     'min' => 6,
+                        //     'minMessage' => 'Votre mots de passe doit faire minimum {{ limit }} characteres',
+                        //     // max length allowed by Symfony for security reasons
+                        //     'max' => 4096,
+                            
+                        // ]),
+                        new Regex('/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/',
+                        'Votre mot de passe doit comporter au moins 6 caractères, 
+                        une lettre majuscule, une lettre miniscule 
+                        et 1 chiffre sans espace blanc'),
+                        
                     ],
-                    'label' => 'password',
+                    'label' => 'Mots de passe',
                 ],
                 'second_options' => [
                     'attr' => ['autocomplete' => 'new-password'],
-                    'label' => 'Repeat Password',
+                    'label' => 'Repeter le mots de passe',
                 ],
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'Les mots de passe doivent être identiques.',
                 // Instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
             ])
             ->add('rgpd', CheckboxType::class, [
-                'help' => 'J\'accepte la politique de confidentialité',
+                'label' => 'J\'accepte la politique de confidentialité',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez accepter les parametre de confidentialité',
@@ -90,7 +97,7 @@ class UserType extends AbstractType
             ])
 
             ->add('imageFile', VichImageType::class, [
-                'label' => 'Image File :',
+                'label' => 'Avatar :',
                 'required' => false,
                 'image_uri' => true,
                 'download_uri' => false,

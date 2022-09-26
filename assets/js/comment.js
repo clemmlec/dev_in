@@ -33,7 +33,9 @@ if(newComment){
                 })
                 .catch(function (erreur) {
                     //On traite ici les erreurs éventuellement survenues
-                    console.log(erreur);
+                    document.getElementById('commentPost'+subjectId).value="";
+                    document.getElementById('commentPost'+subjectId).placeholder = erreur.response.data;
+                    console.log(erreur.response.data , '👼');
                 });
             }else{
                 document.getElementById('commentPost'+subjectId).placeholder = "Votre commentaire est vide"
