@@ -166,7 +166,7 @@
                         {{ form_end(form,{render_rest: false}) }}
                             {# <button class="btnVierge" value="{{subject.id}}" data-edit-subjectContent >modifier</button> #}
                         {% else %}
-                            <p>{{subject.description}}</p>
+                            <p>{{subject.description | raw}}</p>
                         {% endif %}
                     </div>
                 </div>
