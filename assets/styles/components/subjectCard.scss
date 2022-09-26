@@ -1,9 +1,4 @@
-.d-flex{
-    display: flex;
-    flex-wrap: wrap;
-    padding: 20px;
-    justify-content: center;
-    
+
     .card-subject{
         
         width: 100%;
@@ -64,6 +59,8 @@
             background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(85, 85, 85, 0.6), rgba(255, 255, 255, 0));
             padding: 10px 50px 10px 50px;
             margin-top: 0;
+            word-break: break-all;
+
         }
         .left{
             text-align: left;
@@ -110,8 +107,13 @@
             // .w300{
             //     width: 200px;
             // }
-            .description, .comment{
-                max-width: 500px;
+            // .description, .comment{
+            //     max-width: 500px;
+            // }
+            .left{
+                text-align: left;
+                white-space: normal !important;
+                max-width: 100%;
             }
         }
         .top{
@@ -138,7 +140,7 @@
         //     padding: 10px;
         // }
     }
-}
+
 .demiDiv{
     height: fit-content;
     max-width: 350px;

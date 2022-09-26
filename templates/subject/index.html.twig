@@ -6,7 +6,7 @@
 
 {% block body %}
 
-<section class="d-flex">
+<section class="">
     <div class="w-80">
         {# button nouvel subject #}
         {% if app.user %}
@@ -157,9 +157,9 @@
                     </div>
                     <div>
                         {# <img class="subjectImage" src="{{ subject ? vich_uploader_asset(subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.nom}}"> #}
-                        <div class="d-subject ">
-                            <div class="description">
-                                <p>{{subject.description | raw}}</p>
+                        <div class="d-subject">
+                            <div class="w-100 description">
+                                <div class="left">{{subject.description | raw}}</div>
                             </div>
                         </div>
                     </div>  
