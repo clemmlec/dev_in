@@ -15,18 +15,20 @@
         
     </head>
     <body>
-        {% include "Layout/header.html.twig" %}
+        <div class="main">
+            {% include "Layout/header.html.twig" %}
 
-            <main class="site">
-                <section class="mainSite">
-                {% include "Layout/flash.html.twig" %}
-                {% block body %}
-            
-                {% endblock %}
-                </section>
-            </main>
+                <main class="site">
+                    <section class="mainSite">
+                    {% include "Layout/flash.html.twig" %}
+                    {% block body %}
+                
+                    {% endblock %}
+                    </section>
+                </main>
 
-        {% include "Layout/footer.html.twig" %}
+            {% include "Layout/footer.html.twig" %}
+        </div>
     </body>
         <script src="https://kit.fontawesome.com/8b5299c4a2.js" crossorigin="anonymous"></script>
 
