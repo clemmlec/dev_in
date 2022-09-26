@@ -10,12 +10,12 @@
     <div class="w-80">
         {# button nouvel subject #}
         {% if app.user %}
-            <button id="myBtn1" onclick="modal(this)">nouvel subject</button>
+            <span class="color-red">{{ form_errors(form.nom) }}</span>
+            <button id="myBtn1" onclick="modal(this)">nouveau subject</button>
             <div id="modal1"  class="card-subject">
                 {{ include('subject/new.html.twig')}}
             </div>
         {% endif %}
-
         {# liste des subjects #}
         {% for subject in subjects %}
             <div class="card-subject">
@@ -39,7 +39,7 @@
                     <span class="mute">{{subject.createdAt | ago}}</span>
                 </h2>
                 <div class="iconSubject">
-                    <button value="{{subject.id}}" class="btn-vierge red" type="button" data-signaler-subject >
+                    <button value="{{subject.id}}" class="btn-vierge color-red" type="button" data-signaler-subject >
                         <i class="fa-solid fa-triangle-exclamation"></i>
                     </button>
                     <button 

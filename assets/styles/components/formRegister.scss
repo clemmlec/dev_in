@@ -10,7 +10,8 @@
 label {
     cursor: pointer;
     text-align: left;
-    margin-left: 20px;
+    margin-right: 20px;
+    margin-left: 5px;
 }
 .form-ligne{
     justify-content: center;
@@ -19,9 +20,7 @@ label {
 
 input{
     text-align: left;
-    display: block;
     margin: auto;
-    width: 80%;
     margin-top: 10px;
     margin-bottom: 30px;
 }
@@ -33,6 +32,8 @@ input[type=password] {
     background-color: rgb(181, 207, 199);
     border-radius: 5px;
     height: 50px;
+    width: 80%;
+    display: block;
 }
 input[type=checkbox],
 input[type=radio] {
@@ -43,7 +44,6 @@ input[type=radio] {
 }
 input[type=button] {
     cursor: pointer;
-    background-color: rgba(60, 228, 177, 0.603);
     border-radius: 5px;
 }
 input[type=button]:hover {
@@ -59,7 +59,7 @@ button {
     text-shadow: 1px 1px 1px #000;
     border-radius: 10px;
     cursor: pointer;
-    background: linear-gradient(120deg, rgb(170, 206, 193), rgb(31, 115, 122));
+    background: linear-gradient(120deg, rgb(170, 185, 206), rgb(26, 66, 84));
     border-radius: 5px;
 }
 

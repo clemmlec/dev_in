@@ -13,6 +13,10 @@
 @import "./components/article.scss";
 @import "./components/home.scss";
 @import "./color.scss";
+
+#myBtn1{
+    white-space: nowrap;
+}
 h1{
     font-size: 40px;
 }
@@ -79,10 +83,16 @@ body{
 }
 
 .alert{
-    position: fixed;
     z-index: 1000;
+    text-align: center;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 5px;
 }
-
+.alert-success{
+    color: greenyellow;
+    background-color: rgba(168, 184, 168, 0.685);
+}
 a{
     text-decoration: none;
     color: #d37960;
