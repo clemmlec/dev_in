@@ -3,13 +3,14 @@
     flex-wrap: wrap;
     padding: 20px;
     justify-content: center;
+    
     .card-subject{
         
         width: 100%;
         // max-height: 90vh;
         position: relative;
         /* z-index: 1; */
-        background: linear-gradient(to right bottom, rgba(98, 98, 98,0.7), rgba(0,0,0,0.7));
+        background: linear-gradient(to right bottom, rgba(16, 30, 49, 0.7), rgba(0,0,0,0.7));
 
         color: white;
        
@@ -27,6 +28,7 @@
         align-items: center;
         height: max-content;
         padding: 0px;
+        overflow-x: hidden;
         // margin: 15px;
         .toptitre{
     

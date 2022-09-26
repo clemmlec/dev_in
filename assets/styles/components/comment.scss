@@ -6,7 +6,7 @@
   }
 
 .commentaire{
-    min-width: 400px;
+    width: 85%;
     // position: relative;
 
     margin: 0;
@@ -21,7 +21,7 @@
             margin: 0;
             width: inherit;
             height: inherit;
-            background-color: aliceblue;
+            background-color: rgb(4, 56, 100);
         }
         .envoieCommentInput{
             text-decoration: none;
