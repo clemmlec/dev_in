@@ -6,7 +6,7 @@
 
 {% block body %}
 
-<section class="">
+
     <div class="w-80">
         {# button nouvel subject #}
         {% if app.user %}
@@ -16,10 +16,15 @@
                 {{ include('subject/new.html.twig')}}
             </div>
         {% endif %}
+       </div>
+
         {# liste des subjects #}
-        {% for subject in subjects %}
-            {{ include('Components/_subject.html.twig')}}
-        {% endfor %}
+        <section class="d-flex w-100">
+            {% for subject in subjects %}
+                {{ include('Components/_subject.html.twig')}}
+            {% endfor %}
+        </section>
+        
 
         {# clone commentaire #}
         <div class="comment3 modele" id="modele-comment">           
@@ -37,7 +42,6 @@
             <hr style="margin:2px"> 
         </div>
 
-    </div>
-</section>
+ 
 
 {% endblock %}
