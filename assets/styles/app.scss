@@ -12,10 +12,15 @@
 @import "./components/updateColor.scss";
 @import "./components/article.scss";
 @import "./components/home.scss";
+@import "./components/pagination.scss";
 @import "./color.scss";
 
 #myBtn1{
     white-space: nowrap;
+}
+.suggest{
+    position: relative;
+    z-index: 200;
 }
 h1{
     font-size: 40px;
@@ -103,9 +108,7 @@ a{
 .b-50{
     height: 110px;
 }
-.cent{
-    width: 100%;
-}
+
 .inline{
     height: 50px;
 }

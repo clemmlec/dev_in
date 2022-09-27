@@ -8,7 +8,10 @@
 .commentaire{
     width: 85%;
     // position: relative;
-
+    .suggest{
+        display: none;
+        background-color: black;
+    }
     margin: 0;
     .comment{
         position: relative;

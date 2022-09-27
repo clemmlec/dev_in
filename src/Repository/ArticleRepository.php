@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Article;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Filter\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Article>
@@ -16,7 +19,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ArticleRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        private ManagerRegistry $registry,
+        private PaginatorInterface $paginator
+        )
     {
         parent::__construct($registry, Article::class);
     }
@@ -39,20 +45,38 @@ class ArticleRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Article[] Returns an array of Article objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+
+    public function findArticle(SearchData $search): PaginationInterface
+    {
+        $query = $this->createQueryBuilder('a')
+            ->select('a','t')
+            ->leftjoin('a.tags', 't')
+            ->orderBy('a.createdAt', 'DESC');
+
+            return $this->paginator->paginate(
+                $query->getQuery(),
+                $search->getPage(),
+                5
+            );
+        ;
+        // dd($queryBuilder);
+    }
+
+   /**
+    * @return Article[] Returns an array of Article with same tags
+    */
+   public function findArticleWithSameTags($tags): array
+   {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.tags', 't')
+            ->andWhere('t.id IN (:tags)')
+            ->setParameter('tags', $tags)
+            ->orderBy('a.createdAt', 'ASC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+   }
 
 //    public function findOneBySomeField($value): ?Article
 //    {

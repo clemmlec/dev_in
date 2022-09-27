@@ -1,42 +1,33 @@
 
-    <section class="d-flex">
+    <section id="btnProfil">
         <button id="myBtn2" class="inline" onclick="modal(this)">modifier le profil</button>
         <button id="myBtn3" class="inline" onclick="modal(this)">couleur de profil</button>
-
+ </section>
+<section >
         <div class="register cent modal" id="modal2">
-            {{ form_start(form,{'attr': {'class': 'form '}}) }}
+            {{ form_start(form,{'attr': {'class': 'form large'}}) }}
                 <h1 class="Lobster">Modifier le profil</h1>
                 <hr>
                 <div class="form-ligne">
-                    {{ form_widget( form.name,{'attr': {'placeholder': 'nom'}} ) }}
+                    {{ form_row( form.name,{'attr': {'placeholder': 'nom'}} ) }}
+                
+
+                    {{ form_row( form.imageFile ) }}
                 </div>
-                {# <div class="form-ligne">
-                    {{ form_widget( form.email,{'attr': {'placeholder': 'e-mail' }} ) }}
-                </div> #}
-                <div class="form-ligne">
-                    {% if is_granted('ROLE_ADMIN') %}
-                    
-                        {{ form_row( form.roles ) }}
-                    
-                    {% endif %}
-                </div>
-                {# <div class="form-list">
-                    {{ form_row( form.style ) }}
-                </div> #}
-                {{ form_widget( form.imageFile ) }}
                 <hr>
                 <button class="mb-4">{{ button_label|default('Save') }}</button>
                 
                 {{ form_widget( form._token)}}
             {{ form_end(form,{render_rest: false}) }}
         </div>
-        <div class="couleur cent modal" id="modal3">
-            <section class="section color bgGris">
+
+        <div class="couleur modal" id="modal3">
+            <section class="color">
                 <h2>Personalisations couleurs</h2>
                 <hr>
                 <div class="coupe2">
                     <!-- formulaire couleur -->
-                        <div class="section bgGris">
+                        <div class="bgGris">
                             <h4>direction du dégradé
                                 <button class="dire green" onclick="direct('left bottom',this)" type="button"><i style="transform:rotate(-45deg);" class="fa-solid fa-arrow-right"></i></button>
                                 <button class="dire" onclick="direct('left',this)" type="button"><i class="fa-solid fa-arrow-right"></i></button>
@@ -94,7 +85,9 @@
                 </div>
             </section>
         </div>
-    </section>
+</section>
+
+   
 
  <script>
     direction="left bottom";
@@ -209,7 +202,7 @@
             profilCard.style.background= "linear-gradient( to "+direction+", "+ color1 +", "+ color2+")";
            // "10px 20px 30px blue"; 
             if(r.style.backgroundColor){
-                r.style.backgroundColor ="0px 0px 5px "+r.style.backgroundColor+", 0px 0px 25px "+e.style.backgroundColor+", inset 0px 4px 15px "+r.style.backgroundColor;
+                profilCard.style.boxShadow ="0px 0px 5px "+r.style.backgroundColor+", 0px 0px 25px "+e.style.backgroundColor+", inset 0px 4px 15px "+r.style.backgroundColor;
             }
             if(e.style.backgroundColor){
                 profilCard.style.border=" solid 2px "+ e.style.backgroundColor;

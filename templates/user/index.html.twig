@@ -2,7 +2,14 @@
 {% block title %}
     All users | {{ parent() }}
 {% endblock %}
-
+{% block meta %} 
+    <meta name="description" 
+        content="Tous nos utilisateurs adhérents qui permettent à Dev In d'être aussi performant dans l'entraide entre devs" 
+    /> 
+    <meta name="robots" 
+        content="index,follow" 
+    /> 
+{% endblock %}
 {% block stylesheets %}
     {{ encore_entry_link_tags('app') }}
     {{ parent()}}

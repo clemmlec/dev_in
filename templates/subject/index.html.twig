@@ -1,12 +1,19 @@
 {% extends "base.html.twig" %}
-
+{% block meta %} 
+    <meta name="description" 
+        content="Tous les sujets postés par notre communautés de developpeur pour avancer plus vite en programmation, Dev In, le site de l'entraide" 
+    /> 
+    <meta name="robots" 
+        content="index,follow" 
+    /> 
+{% endblock %}
 {% block title %}
     Page subject | {{ parent()}}
 {% endblock %}
 
 {% block body %}
 
-<section class="">
+
     <div class="w-80">
         {# button nouvel subject #}
         {% if app.user %}
@@ -16,160 +23,25 @@
                 {{ include('subject/new.html.twig')}}
             </div>
         {% endif %}
+       
+
         {# liste des subjects #}
-        {% for subject in subjects %}
-            <div class="card-subject">
-                <h2 class="toptitre left {{subject.forum.style}}">
-                <a class="btn-vierge" href="{{ path('app_user_profil', {'id': subject.user.id}) }}">
-                    - Posté par :  {{subject.user.name}}
-                        <img 
-                            class="avatar" 
-                            src="{{ subject.user ? vich_uploader_asset(subject.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                            alt="{{subject.user.name}}"
-                        >
-                    </a>
-                </h2> 
-                <h2 class="toptitre2 right {{subject.forum.style}}">
-                    dans {{subject.forum.nom}}
-                    <img 
-                            class="avatar" 
-                            src="{{ subject.forum ? vich_uploader_asset(subject.forum, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                            alt="{{subject.forum.nom}}"
-                        >
-                    <span class="mute">{{subject.createdAt | ago}}</span>
-                </h2>
-                <div class="iconSubject">
-                    <button value="{{subject.id}}" class="btn-vierge color-red" type="button" data-signaler-subject >
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                    </button>
-                    <button 
-                            type="button" 
-                            class="btn-vierge " 
-                            value="{{subject.id}}" 
-                            data-follow-subject >
-                            {# {{ dump(subject) }}
-                            {{ dump(app.user.getSubjectFavoris()) }} #}
-                            {# {{ dump(subject) }}
-                            {{ dump(app.user.subjectFavoris) }} #}
-                            {% set fav = false %}
-                            {% if app.user %}
-                                {% for row in app.user.subjectFavoris %}
-                                    {% if row.subject.id == subject.id %}
-                                        {% set fav = true %}
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}
-                            
-                            {% if fav %}
-                                <i class="fa fa-star pointer yellow"></i>
-                            {% else %}
-                                <i class="far fa-star pointer yellow"></i>
-                                
-                            {% endif %}
-                            
-                            
-                    </button>
-                </div>
-
-                <h1 class="title">{{subject.nom}}
-                {% if  subject.noteSubjects | length > 0 %}
-                    
-                    {# {{dump(subject.getNoteSubjects())}} #}
-                    {% set somme = 0 %}
-                    {% for row in subject.getNoteSubjects() %}
-                    {% set somme = somme + row.note
-                        %}
-                        
-                    {% endfor %}
-                        {% set somme = somme / (subject.getNoteSubjects()| length) %}
-                        <div class="note">
-                        {% for i in 1..10 %}
-                            {# {% if i <= somme * 2 %} #}
-                            {% if i is odd %}
-                            <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                            {% else %}
-                            <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                            {% endif %}
-                            {# {% endif %} #}
-                        {% endfor %}
-                    </div>
-                {% endif %}
-                </h1>
-                {# {{ dump(app.user) }} #}
-                <div class="d-flex-image">
-                    {# noter l subject #}
-                    {% if app.user and app.user.id != subject.user.id  %}
-                        {% set noter = false %}
-                        {% for row in app.user.noteSubjects %}
-                            {% if row.subject.id == subject.id %}
-                            {% set noter = true %}
-                            {% endif %}
-                        {% endfor %}
-                        {% if not noter %}
-                        <div class="note">
-                            {% for i in 1..5 %}
-                            <button class="btn-vierge"  value="{{i}}-{{subject.id}}" data-note-subject>
-                                    <i class="far fa-star stars" ></i>
-                            </button>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                    {% endif %}
-                
-                    <div class="commentaire">
-                        {# form new comment #}
-                        {% if app.user %} 
-                            {# <form action="" id="commentPost{{subject.id}}"> #}
-                                <div class="comment">
-                                    <input id="commentPost{{subject.id}}" class="envoieCommentInput" placeholder="écrit ton commentaire">
-                                    <button type="button" class="btn-vierge envoiComment" value="{{subject.id}}|{{app.user.id}}" data-envoie-comment><i class="fa-solid fa-paper-plane"></i></button>
-                                </div>
-                            {# </form> #}
-                        {% endif %}
-                        
-                        <div class="top" id="com{{subject.id}}">
-                        {% for commen in subject.comments |sort((a, b) => a.createdAt <= b.createdAt) %}
-                            {% if commen.active %}
-                            <div class="comment3">           
-                                <div class="jaime" >
-                                    <span class="floatRight">
-                                        <button value="{{commen.id}}" class="btn-vierge red" type="button" data-signaler-comment >
-                                            <i class="fa-solid fa-triangle-exclamation"></i>
-                                        </button>
-
-                                        <span id="like{{commen.id}}">({{commen.commentLikes | length }})</span> 
-                                        <button value="{{commen.id}}" class="btn-vierge jaimee" type="button" data-jaime-comment >
-                                            <i class="far fa-thumbs-up"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                                <p class="left head"> par {{ commen.user.name }}</p>
-                                <p class="left com"> {{ commen.message}}
-                                </p>
-                                <span class="date">{{commen.createdAt | ago}}</span>
-                                <hr style="margin:2px"> 
-                            </div>
-                            {% endif %}
-                        {% else %}
-                            <p>pas encore de commantaires</p>
-                        {% endfor %}
-                        </div>
-                    </div>
-                    <div>
-                        {# <img class="subjectImage" src="{{ subject ? vich_uploader_asset(subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.nom}}"> #}
-                        <div class="d-subject">
-                            <div class="w-100 description">
-                                <div class="left">{{subject.description | raw}}</div>
-                            </div>
-                        </div>
-                    </div>  
-                </div>
-                
-        
+        <section class="d-flex w-100">
+            <div>
+                {{ subjects.getTotalItemCount }}
+                {{ subjects.getTotalItemCount > 1 ? 'subjects' : 'subject'}}
             </div>
-            
-
-        {% endfor %}
+            {{ knp_pagination_render(subjects) }}
+            {% for subject in subjects %}
+                {{ include('Components/_subject.html.twig')}}
+            {% endfor %}
+            {{ knp_pagination_render(subjects) }}
+            <div>
+                {{ subjects.getTotalItemCount }}
+                {{ subjects.getTotalItemCount > 1 ? 'subjects' : 'subject'}}
+            </div>
+        </section>
+        
 
         {# clone commentaire #}
         <div class="comment3 modele" id="modele-comment">           
@@ -186,8 +58,7 @@
             <span class="date">à l'instant</span>
             <hr style="margin:2px"> 
         </div>
-
     </div>
-</section>
+ 
 
 {% endblock %}

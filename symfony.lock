@@ -80,6 +80,9 @@
             "./config/packages/fos_ckeditor.yaml"
         ]
     },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.9.0"
+    },
     "knplabs/knp-time-bundle": {
         "version": "v1.19.0"
     },

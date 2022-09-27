@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    Article | {{ parent() }}
+{% endblock %}
+{% block meta %} 
+    <meta name="description" 
+        content="Article ' {{article.name}} ' posté sur Dev In" 
+    /> 
+    <meta name="robots" 
+        content="index,follow"
+    /> 
+{% endblock %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+    {{ parent()}}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {{ parent()}}
+{% endblock %}
+
+{% block body %}
+<section class="w-80">
+    {% include "Components/_article.html.twig"  with { couper: "" } %}
+</section>
+
+<div class="swip">
+    <div class="swiper mySwiper">
+        <h2 class="titreHome purple">Les derniers articles avec les mêmes tags</h2>
+        <div class="swiper-wrapper">
+        {% for article in articles %}
+            <div class="swiper-slide overflow-y articleCard">
+                {% include "Components/_article.html.twig" with { couper: 'couper' } %}
+            </div>
+        {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+</div>
+{% endblock %}

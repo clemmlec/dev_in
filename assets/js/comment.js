@@ -74,11 +74,29 @@ if(commentsReport){
     commentsReport.forEach((element=>{
         element.addEventListener('click', () =>  {
             let id = element.value;
-            axios.get(`/comment/signaler/${id}`)
+            let div = document.getElementById('suggest'+id);
+            console.log(div);
+            if(div.style.display != 'block') {
+                div.style.display = 'block';
+            }else{
+                div.style.display = 'none';
+            }
+            
+        });
+    }))
+}
+
+const submitSuggestArticle = document.querySelectorAll('[data-submit-signaler-comment]');
+if(submitSuggestArticle){
+    submitSuggestArticle.forEach((element=>{
+        element.addEventListener('click', () =>  {
+            let id = element.value;
+            let message = document.getElementById('suggest'+id).childNodes[1].value;
+            console.log(message);
+            axios.get(`/comment/signaler/${id}/${message}`)
             .then(function (reponse) {
-                console.log(reponse.data)
-                console.log(element.parentNode.parentNode.parentElement)
-                element.parentNode.parentNode.parentElement.style.display ="none"
+                document.getElementById('suggest'+id).style.display ="none"
+                document.getElementById('comment'+id).style.display ="none"
             });
         });
     }))

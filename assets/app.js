@@ -18,3 +18,4 @@ import './js/dropdown.js';
 import './js/comment.js';
 import './js/user.js';
 import './js/paralax.js';
+import './js/article.js';

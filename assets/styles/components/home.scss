@@ -1,10 +1,12 @@
 #home{
     background-image: url('../../images/home2.jpg');
     background-size: cover;
+    background-position: center;
     height: 70vh;
     display: flex;
     position: relative;
     justify-content: center;
+    text-align: center;
     align-items: center;
     width: 130%;
     left: -15%;

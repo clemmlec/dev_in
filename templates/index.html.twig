@@ -3,89 +3,45 @@
 {% block title %}
     Page d'accueil | {{ parent()}}
 {% endblock %}
-
+{% block meta %} 
+    <meta name="description" 
+        content="Le site d'entraide entre developpeur, dans une idée de partage et de progression en toute solidarité ." 
+    /> 
+    <meta name="robots" 
+        content="index,follow" 
+    /> 
+{% endblock %}
 {% block body %}
 
     <div id="home">
         <div class="header bleu">
             <h1>Dev In</h1>
-            <h2><em>Le site des devs</em></h2>
+            <h2><em>Entre dans une communauté <br> d'entraide et de partage</em></h2>
+            {% if app.user %}
+            {% else %}
+                <button class="btn-inscription"><a  href="{{ path('register') }}">Incription</a></button>
+            {% endif %}
         </div>
     </div>
 
     <section class="w-80">
 
-        <h1 class="titreHome purple">Entre dans une communauté d'entraide et de partage <br>
-            <button class="btn-inscription"><a  href="{{ path('register') }}">Incription</a></button>
-        </h1>
-
         <p>Retrouve des <a href="{{ path('app_article_index') }}">articles sur le développement</a>  rédigé par nos administrateurs <br>
             Ansi que des <a href="{{ path('app_subject_index') }}">sujets postés</a> pas nos adhérents
         </p>
+
+        
+        <h2 class="titreHome purple">Dernier article posté</h2>
+        {% include "Components/_article.html.twig" with { couper: "couper" } %}
         
 
-        <div class="swip ">
+        <div class="swip">
             <div class="swiper mySwiper">
-                <h2 class="titreHome orange">Les derniers sujets postées par les adhérents</h2>
+                <h2 class="titreHome purple">Les derniers sujets postées par les adhérents</h2>
                 <div class="swiper-wrapper">
                 {% for subject in subjects %}
                     <div class="swiper-slide overflow-y card">
-                        <h3 class="toptitre left {{subject.forum.style}}">&nbsp;
-                            <button class="btn-vierge">
-                                <a class="btn-vierge" href="{{ path('app_user_profil', {'id': subject.user.id}) }}">
-                                    - Posté par :  {{subject.user.name}}
-                                    <img 
-                                        class="avatarVrai" 
-                                        src="{{subject.user ? vich_uploader_asset(subject.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                                        alt="{{subject.user.name}}"
-                                    >
-                                </a>
-                            </button>
-                        </h3>
-                        <h3 class="toptitre2 right {{subject.forum.style}}">
-                            dans {{subject.forum.nom}} <span class="mute">{{subject.createdAt | ago}}</span>
-                        </h3>
-                        <h1 class="toptitre2 {{subject.forum.style}}">{{subject.nom}}</h1>
-
-                        <h3 class="title">                
-                        {% if  subject.getNoteSubjects() | length > 0 %}
-                        
-                            {# {{dump(subject.getNoteSubjects())}} #}
-                            {% set somme = 0 %}
-                            {% for row in subject.getNoteSubjects() %}
-                            {% set somme = somme + row.note
-                            %}
-                            
-                            {% endfor %}
-                            {% set somme = somme / (subject.getNoteSubjects()| length) %}
-                            <div class="note">
-                                {% for i in 1..10 %}
-                                    {# {% if i <= somme * 2 %} #}
-                                    {% if i is odd %}
-                                    <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                                    {% else %}
-                                    <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                                    {% endif %}
-                                    {# {% endif %} #}
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <span class="muted">pas encore de note</span> 
-                        {% endif %}
-                        </h3>
-                        {# <div class="img">
-                            <img class="subjectImage" src="{{ subject.subject ? vich_uploader_asset(subject.subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.subject.nom}}">
-                        </div> #}
-                        <div class="description">
-                            {{subject.description | raw }}
-                        </div>
-                        <ul>
-                            <li>{{subject.comments | length}} commentaires</li>
-                            <li>{{subject.noteSubjects | length}} notes reçus</li>
-                            {# <li>{{subject.comments | length}} ajouter subject favoris</li> #}
-                        </ul>
-                        <button class="btn-vierge"><a href="{{ path('user_subject_show', {'id': subject.id}) }}">voir l'subject</a></button>
-                        
+                        {{ include('Components/_subjectSwiper.html.twig' )}}   
                     </div>
                 {% endfor %}
                 </div>
@@ -95,17 +51,6 @@
             </div>
         </div>
 
-        <h2 class="titreHome orange">Dernier article posté</h2>
-        {# <article class="article">
-            <hr>
-            <h1>{{article.name}}</h1>
-            <hr>
-            {% for tag in article.tags %}
-                <span class="left tag-name">{{tag.name}} <i class="fa-solid fa-tags"></i> </span>
-            {% endfor %}
-            <span class="right">ecrit {{article.createdAt | ago}}</span>
-            <div class="w-100 content">{{article.content | raw}}</div>
-            
-        </article> #}
     </section>
 {% endblock %}
+

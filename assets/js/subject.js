@@ -22,16 +22,34 @@ if(signalerSubject){
     signalerSubject.forEach((element=>{
         element.addEventListener('click', () =>  {
             let id = element.value;
-            axios.get(`/subject/signaler/${id}`)
-            .then(function (reponse) {
-                console.log(reponse.data)
-                console.log(element.parentNode.parentNode)
-                element.parentNode.parentNode.style.display ="none"
+            let div = document.getElementById('suggestSubject'+id);
+            console.log(div);
+            if(div.style.display != 'block') {
+                div.style.display = 'block';
+            }else{
+                div.style.display = 'none';
+            }
+            
+        });
+    }))
+}
 
+const submitSuggestSubject = document.querySelectorAll('[data-submit-signaler-subject]');
+if(submitSuggestSubject){
+    submitSuggestSubject.forEach((element=>{
+        element.addEventListener('click', () =>  {
+            let id = element.value;
+            let message = document.getElementById('suggestSubject'+id).childNodes[1].value;
+            console.log(message);
+            axios.get(`/subject/signaler/${id}/${message}`)
+            .then(function (reponse) {
+                document.getElementById('suggestSubject'+id).style.display ="none"
+                document.getElementById('subject'+id).style.display ="none"
             });
         });
     }))
 }
+
 
 const noter = document.querySelectorAll('[data-note-subject]');
 

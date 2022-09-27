@@ -71,6 +71,7 @@ select {
 .form {
     text-align: center;
     margin: 20px auto 20px auto;
+    padding: 20px;
     background-color: rgb(166, 218, 200);
     // background: linear-gradient(120deg, rgb(170, 206, 193), rgb(31, 115, 122));
     background: linear-gradient(120deg, rgb(170, 193, 206), rgb(31, 81, 122));
@@ -97,6 +98,7 @@ select {
                  15px -15px rgb(198, 228, 180);
     transform: skewY(-5deg);
     margin-top: 25px;
+    margin-bottom: 25px;
 }
 .Righteous {
     font-family: 'Righteous', cursive;

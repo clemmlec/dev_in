@@ -69,24 +69,21 @@ class CommentController extends AbstractController
         return new Response('commentaire non trouvé', 404);
     }
 
-    #[Route('/signaler/{id}', name: 'user.comment.signaler', methods: ['GET'])]
-    public function signalerComment(?Comment $com, Security $security, CommentRepository $comRepo, CommentReportRepository $comSignalRepo)
+    #[Route('/signaler/{id}/{message}', name: 'user.comment.signaler', methods: ['GET'])]
+    public function signalerComment(?Comment $com,String $message, Security $security, CommentRepository $comRepo, CommentReportRepository $comSignalRepo)
     {
         $user = $security->getUser();
 
         if ($com && $user) {
-            $dejaReport = $comSignalRepo->findOneBy(['user' => $user, 'comment' => $com]);
-            if (!$dejaReport) {
-                $newSignal = new CommentReport();
-                $newSignal->setUser($user)
-               ->setComment($com);
-                $comSignalRepo->add($newSignal, true);
+        
+            $newSignal = new CommentReport();
+            $newSignal->setUser($user)
+            ->setComment($com)
+            ->setMessage($message);
+            $comSignalRepo->add($newSignal, true);
 
-                return new Response('commantaire signaler', 201);
-            }
-            $comSignalRepo->remove($dejaReport, true);
+            return new Response('commantaire signaler', 201);
 
-            return new Response('signalement supprimé', 201);
         }
 
         return new Response('commentaire non trouvé', 404);

@@ -50,6 +50,7 @@ class SubjectCrudController extends AbstractCrudController
             BooleanField::new('active'),
             AssociationField::new('forum'),
             AssociationField::new('user')->hideOnForm(),
+            AssociationField::new('subjectReports')->hideOnForm(),
             DateTimeField::new('created_at')->hideOnForm(),
             DateTimeField::new('updated_at')->hideOnForm(),
 
