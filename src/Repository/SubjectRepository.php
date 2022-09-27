@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Subject;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Filter\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Subject>
@@ -16,7 +19,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class SubjectRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        private ManagerRegistry $registry,
+        private PaginatorInterface $paginator 
+    )
     {
         parent::__construct($registry, Subject::class);
     }
@@ -52,9 +58,9 @@ class SubjectRepository extends ServiceEntityRepository
         return $query;
     }
 
-    public function findActiveSubject()
+    public function findActiveSubject(SearchData $search): PaginationInterface
     {
-        return $this->createQueryBuilder('a')
+        $query = $this->createQueryBuilder('a')
             ->select('a', 'u', 'c', 'n', 'm', 'k')
             ->andWhere('a.active = :active')
             ->setParameter('active', true)
@@ -63,13 +69,19 @@ class SubjectRepository extends ServiceEntityRepository
             ->leftjoin('a.noteSubjects', 'n')
             ->leftjoin('a.comments', 'm')
             ->leftjoin('m.commentLikes', 'k')
-            ->orderBy('a.created_at', 'DESC')
-            ->getQuery()
-            ->getResult()
+            ->orderBy('a.created_at', 'DESC');
+
+            return $this->paginator->paginate(
+                $query->getQuery(),
+                $search->getPage(),
+                5
+            );
         ;
         // dd($queryBuilder);
     }
 
+
+    
 //    /**
 //     * @return Subject[] Returns an array of Subject objects
 //     */

@@ -2,22 +2,23 @@
 
 namespace App\Controller\Front;
 
-use App\Entity\NoteSubject;
-use App\Entity\Subject;
-use App\Entity\SubjectFavoris;
-use App\Entity\SubjectReport;
 use App\Entity\User;
-use App\Form\Subject1Type;
+use App\Entity\Subject;
 use App\Form\SubjectType;
-use App\Repository\NoteSubjectRepository;
-use App\Repository\SubjectFavorisRepository;
-use App\Repository\SubjectReportRepository;
+use App\Filter\SearchData;
+use App\Form\Subject1Type;
+use App\Entity\NoteSubject;
+use App\Entity\SubjectReport;
+use App\Entity\SubjectFavoris;
 use App\Repository\SubjectRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\NoteSubjectRepository;
+use App\Repository\SubjectReportRepository;
+use App\Repository\SubjectFavorisRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/subject')]
 class SubjectController extends AbstractController
@@ -25,7 +26,10 @@ class SubjectController extends AbstractController
     #[Route('/', name: 'app_subject_index')]
     public function index(Request $request, SubjectRepository $subjectRepository, Security $security): Response
     {
-        $selectSubject = $subjectRepository->findActiveSubject();
+        $data = new SearchData();
+        $data->setPage($request->get('page', 1));
+        
+        $selectSubject = $subjectRepository->findActiveSubject($data);
 
         $subject = new Subject();
         $form = $this->createForm(SubjectType::class, $subject);

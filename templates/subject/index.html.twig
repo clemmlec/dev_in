@@ -4,7 +4,7 @@
         content="Tous les sujets postés par notre communautés de developpeur pour avancer plus vite en programmation, Dev In, le site de l'entraide" 
     /> 
     <meta name="robots" 
-        content="index,follow" /> 
+        content="index,follow" 
     /> 
 {% endblock %}
 {% block title %}
@@ -23,13 +23,23 @@
                 {{ include('subject/new.html.twig')}}
             </div>
         {% endif %}
-       </div>
+       
 
         {# liste des subjects #}
         <section class="d-flex w-100">
+            <div>
+                {{ subjects.getTotalItemCount }}
+                {{ subjects.getTotalItemCount > 1 ? 'subjects' : 'subject'}}
+            </div>
+            {{ knp_pagination_render(subjects) }}
             {% for subject in subjects %}
                 {{ include('Components/_subject.html.twig')}}
             {% endfor %}
+            {{ knp_pagination_render(subjects) }}
+            <div>
+                {{ subjects.getTotalItemCount }}
+                {{ subjects.getTotalItemCount > 1 ? 'subjects' : 'subject'}}
+            </div>
         </section>
         
 
@@ -48,7 +58,7 @@
             <span class="date">à l'instant</span>
             <hr style="margin:2px"> 
         </div>
-
+    </div>
  
 
 {% endblock %}
