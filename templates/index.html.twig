@@ -10,7 +10,10 @@
         <div class="header bleu">
             <h1>Dev In</h1>
             <h2><em>Entre dans une communauté <br> d'entraide et de partage</em></h2>
-            <button class="btn-inscription"><a  href="{{ path('register') }}">Incription</a></button>
+            {% if app.user %}
+            {% else %}
+                <button class="btn-inscription"><a  href="{{ path('register') }}">Incription</a></button>
+            {% endif %}
         </div>
     </div>
 
@@ -22,19 +25,7 @@
 
         
         <h2 class="titreHome purple">Dernier article posté</h2>
-        <article class="article couper">
-            <hr>
-            <h1>{{article.name}}</h1>
-            <hr>
-            {% for tag in article.tags %}
-                <span class="left tag-name">{{tag.name}} <i class="fa-solid fa-tags"></i> </span>
-            {% endfor %}
-            <span class="right">ecrit {{article.createdAt | ago}}</span>
-            <div class="w-100 content couper">{{article.content | raw}}</div>
-            <div class="footer">
-                <button class="btn-vierge bleu"><a href="{{ path('article_show', {'id': article.id}) }}">voir plus</a></button>
-            </div>
-        </article>
+        {% include "Components/_article.html.twig" with { couper: "couper" } %}
         
 
         <div class="swip">
@@ -97,7 +88,7 @@
                             <li>{{subject.noteSubjects | length}} notes reçus</li>
                             {# <li>{{subject.comments | length}} ajouter subject favoris</li> #}
                         </ul>
-                        <button class="btn-vierge"><a href="{{ path('user_subject_show', {'id': subject.id}) }}">voir l'subject</a></button>
+                        <button class="btn-vierge"><a href="{{ path('user_subject_show', {'id': subject.id}) }}">voir le sujet</a></button>
                         
                     </div>
                 {% endfor %}

@@ -15,17 +15,7 @@
 
 {% block body %}
 <section class="w-80">
-    <article class="article">
-        <hr>
-        <h1>{{article.name}}</h1>
-        <hr>
-        {% for tag in article.tags %}
-            <span class="left tag-name">{{tag.name}} <i class="fa-solid fa-tags"></i> </span>
-        {% endfor %}
-        <span class="right">ecrit {{article.createdAt | ago}}</span>
-        <div class="w-100 content">{{article.content | raw }}</div>
-        
-    </article>
+    {% include "Components/_article.html.twig"  with { couper: "" } %}
 </section>
 
 <div class="swip">
@@ -34,19 +24,7 @@
         <div class="swiper-wrapper">
         {% for article in articles %}
             <div class="swiper-slide overflow-y articleCard">
-                <article class="article couper">
-                    <hr>
-                    <h1>{{article.name}}</h1>
-                    <hr>
-                    {% for tag in article.tags %}
-                        <span class="left tag-name">{{tag.name}} <i class="fa-solid fa-tags"></i> </span>
-                    {% endfor %}
-                    <span class="right">ecrit {{article.createdAt | ago}}</span>
-                    <div class="w-100 content couper">{{article.content | raw}}</div>
-                    <div class="footer">
-                        <button class="btn-vierge bleu"><a href="{{ path('article_show', {'id': article.id}) }}">voir plus</a></button>
-                    </div>
-                </article>
+                {% include "Components/_article.html.twig" with { couper: 'couper' } %}
             </div>
         {% endfor %}
         </div>

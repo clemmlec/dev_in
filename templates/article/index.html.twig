@@ -6,18 +6,9 @@
 
 {% block body %}
 <section class="w-80">
+    
     {% for article in articles %}
-    <article class="article">
-        <hr>
-        <h1>{{article.name}}</h1>
-        <hr>
-        {% for tag in article.tags %}
-            <span class="left tag-name">{{tag.name}} <i class="fa-solid fa-tags"></i> </span>
-        {% endfor %}
-        <span class="right">ecrit {{article.createdAt | ago}}</span>
-        <div class="w-100 content">{{article.content | raw }}</div>
-        
-    </article>
+        {% include "Components/_article.html.twig" with { couper: "" } %}
     {% endfor %}
 </section>
 {% endblock %}

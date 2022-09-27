@@ -2,7 +2,10 @@
     display: flex;
     flex-wrap: wrap-reverse;
     padding: 10px;
-    justify-content: center;
+    justify-content: space-between;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
 }
 .card{
     min-width: 300px;
@@ -37,6 +40,9 @@
         margin: 0;
     
     }
+    h1{
+        overflow-x: hidden;
+    }
     .toptitre2{
         position: relative;
         top: 0px;
@@ -66,7 +72,7 @@
     }
     
 }
-   
+
 
 .user-subjects{
     border: 2px solid black;
