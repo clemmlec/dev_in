@@ -3,6 +3,7 @@
 namespace App\Controller\Front;
 
 use App\Entity\Article;
+use App\Filter\SearchData;
 use App\Entity\ArticleLiked;
 use App\Entity\ArticleSuggestion;
 use App\Repository\ArticleRepository;
@@ -20,7 +21,11 @@ class ArticleController extends AbstractController
     #[Route('/', name: 'app_article_index')]
     public function index(Request $request, ArticleRepository $articleRepository): Response
     {
-        $selectArticle = $articleRepository->findAll();
+
+        $data = new SearchData();
+        $data->setPage($request->get('page', 1));
+        
+        $selectArticle = $articleRepository->findArticle($data);
 
         return $this->render('article/index.html.twig', [
             'articles' => $selectArticle,

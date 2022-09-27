@@ -1,4 +1,4 @@
-<div class="card-subject">
+<div class="card-subject" id="subject{{subject.id}}">
     <h2 class="toptitre left {{subject.forum.style}}">
     <a class="btn-vierge" href="{{ path('app_user_profil', {'id': subject.user.id}) }}">
         - Posté par :  {{subject.user.name}}
@@ -49,6 +49,10 @@
                 
                 
         </button>
+        <div class="suggest" id="suggestSubject{{subject.id}}">
+            <input class="plus grande" type="text" placeholder="Un probleme ?">
+            <button value="{{subject.id}}" class="btn-vierge bleu" data-submit-signaler-subject >envoyer</button>
+        </div>
     </div>
 
     <h1 class="title">{{subject.nom}}
@@ -110,7 +114,7 @@
             <div class="top" id="com{{subject.id}}">
             {% for commen in subject.comments |sort((a, b) => a.createdAt <= b.createdAt) %}
                 {% if commen.active %}
-                <div class="comment3">           
+                <div class="comment3" id="comment{{commen.id}}">           
                     <div class="jaime" >
                         <span class="floatRight">
                             <button value="{{commen.id}}" class="btn-vierge red" type="button" data-signaler-comment >
@@ -122,6 +126,10 @@
                                 <i class="far fa-thumbs-up"></i>
                             </button>
                         </span>
+                        <div class="suggest" id="suggest{{commen.id}}">
+                            <input class="plus grande" type="text" placeholder="Un probleme ?">
+                            <button value="{{commen.id}}" class="btn-vierge bleu" data-submit-signaler-comment >envoyer</button>
+                        </div>
                     </div>
                     <p class="left head"> par {{ commen.user.name }}</p>
                     <p class="left com"> {{ commen.message}}

@@ -191,24 +191,21 @@ class SubjectController extends AbstractController
         return new Response('demande de favoris non valide', 404);
     }
 
-    #[Route('/signaler/{id}', name: 'user.subject.signaler', methods: ['GET'])]
-    public function signalerSubject(?Subject $subject, Security $security, SubjectRepository $artRepo, SubjectReportRepository $artSignalRepo)
+    #[Route('/signaler/{id}/{message}', name: 'user.subject.signaler', methods: ['GET'])]
+    public function signalerSubject(?Subject $subject,String $message, Security $security, SubjectRepository $artRepo, SubjectReportRepository $artSignalRepo)
     {
         $user = $security->getUser();
 
         if ($subject && $user) {
-            $dejaReport = $artSignalRepo->findOneBy(['user' => $user, 'subject' => $subject]);
-            if (!$dejaReport) {
-                $newSignal = new SubjectReport();
-                $newSignal->setUser($user)
-               ->setSubject($subject);
-                $artSignalRepo->add($newSignal, true);
+        
+            $newSignal = new SubjectReport();
+            $newSignal->setUser($user)
+                ->setSubject($subject)
+                ->setMessage($message);
+            $artSignalRepo->add($newSignal, true);
 
-                return new Response('subject signaler', 201);
-            }
-            $artSignalRepo->remove($dejaReport, true);
-
-            return new Response('subject dé signaler', 201);
+            return new Response('subject signaler', 201);
+        
         }
 
         return new Response('subject non trouvé', 404);

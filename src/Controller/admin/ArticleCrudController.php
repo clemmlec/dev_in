@@ -34,6 +34,7 @@ class ArticleCrudController extends AbstractCrudController
             TextEditorField::new('content')->setFormType(CKEditorType::class),
             AssociationField::new('tags')->setCrudController(TagsCrudController::class),
             AssociationField::new('user')->hideOnForm(),
+            AssociationField::new('articleSuggestions'),
             DateTimeField::new('created_at')->hideOnForm(),
             DateTimeField::new('updated_at')->hideOnForm(),
 
