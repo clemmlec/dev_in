@@ -14,10 +14,10 @@ class MainController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(SubjectRepository $subjectRepository, ArticleRepository $articleRepo, Security $security): Response
     {
-        $user = $security->getUser();
-        if ($user) {
-            return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()]);
-        }
+        // $user = $security->getUser();
+        // if ($user) {
+        //     return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()]);
+        // }
         $subjects = $subjectRepository->findRandSubject();
         $article = $articleRepo->findOneBy([], ['id' => 'desc'], 1, 0);
 

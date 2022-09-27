@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    Article | {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+    {{ parent()}}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {{ parent()}}
+{% endblock %}
+
+{% block body %}
+<section class="w-80">
+    <article class="article">
+        <hr>
+        <h1>{{article.name}}</h1>
+        <hr>
+        {% for tag in article.tags %}
+            <span class="left tag-name">{{tag.name}} <i class="fa-solid fa-tags"></i> </span>
+        {% endfor %}
+        <span class="right">ecrit {{article.createdAt | ago}}</span>
+        <div class="w-100 content">{{article.content | raw }}</div>
+        
+    </article>
+</section>
+
+<div class="swip">
+    <div class="swiper mySwiper">
+        <h2 class="titreHome purple">Les derniers articles avec les mêmes tags</h2>
+        <div class="swiper-wrapper">
+        {% for article in articles %}
+            <div class="swiper-slide overflow-y articleCard">
+                <article class="article couper">
+                    <hr>
+                    <h1>{{article.name}}</h1>
+                    <hr>
+                    {% for tag in article.tags %}
+                        <span class="left tag-name">{{tag.name}} <i class="fa-solid fa-tags"></i> </span>
+                    {% endfor %}
+                    <span class="right">ecrit {{article.createdAt | ago}}</span>
+                    <div class="w-100 content couper">{{article.content | raw}}</div>
+                    <div class="footer">
+                        <button class="btn-vierge bleu"><a href="{{ path('article_show', {'id': article.id}) }}">voir plus</a></button>
+                    </div>
+                </article>
+            </div>
+        {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+</div>
+{% endblock %}
