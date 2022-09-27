@@ -2,7 +2,14 @@
 {% block title %}
     profil | {{ parent() }}
 {% endblock %}
-
+{% block meta %} 
+    <meta name="description" 
+        content="La page de profil de {{user.name}} sue Dev In, le site d'entraide entre devs" 
+    /> 
+    <meta name="robots" 
+        content="index,follow" 
+    /> 
+{% endblock %}
 {% block stylesheets %}
     {{ encore_entry_link_tags('app') }}
     {{ parent()}}

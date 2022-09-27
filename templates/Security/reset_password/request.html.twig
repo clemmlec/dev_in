@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Reset your password{% endblock %}
-
+{% block meta %} 
+    <meta name="description" 
+        content="Dev In" 
+    /> 
+    <meta name="robots" 
+        content="noindex,nofollow"
+    /> 
+{% endblock %}
 {% block body %}
     {% for flash_error in app.flashes('reset_password_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>

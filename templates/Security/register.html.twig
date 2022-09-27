@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Register | {{ parent() }}{% endblock %}
-
+{% block meta %} 
+    <meta name="description" 
+        content="Inscrit toi sur Dev In, le site d'entre aide entre devs pour progresser plus vite en programmation." 
+    /> 
+    <meta name="robots" 
+        content="index,follow"
+    /> 
+{% endblock %}
 {% block body %}
     <section class="register">
         {{ form_start(form,{'attr': {'class': 'form'}} ) }}

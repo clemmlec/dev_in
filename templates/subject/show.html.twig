@@ -2,7 +2,14 @@
 {% block title %}
     Subject | {{ parent() }}
 {% endblock %}
-
+{% block meta %} 
+    <meta name="description" 
+        content="Le sujet {{subject.nom}} posté par {{subject.user.name}} sur Dev In, le site de l'entraide entre devs." 
+    /> 
+    <meta name="robots" 
+        content="index,follow"
+    /> 
+{% endblock %}
 {% block stylesheets %}
     {{ encore_entry_link_tags('app') }}
     {{ parent()}}

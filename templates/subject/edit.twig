@@ -2,7 +2,14 @@
 {% block title %}
     Subject | {{ parent() }}
 {% endblock %}
-
+{% block meta %} 
+    <meta name="description" 
+        content="Page d'édition des sujets" 
+    /> 
+    <meta name="robots" 
+        content="noindex, nofollow"
+    /> 
+{% endblock %}
 {% block stylesheets %}
     {{ encore_entry_link_tags('app') }}
     {{ parent()}}

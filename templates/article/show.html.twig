@@ -2,7 +2,14 @@
 {% block title %}
     Article | {{ parent() }}
 {% endblock %}
-
+{% block meta %} 
+    <meta name="description" 
+        content="Article ' {{article.name}} ' posté sur Dev In" 
+    /> 
+    <meta name="robots" 
+        content="index,follow"
+    /> 
+{% endblock %}
 {% block stylesheets %}
     {{ encore_entry_link_tags('app') }}
     {{ parent()}}

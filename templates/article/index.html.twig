@@ -3,7 +3,14 @@
 {% block title %}
     Page article | {{ parent()}}
 {% endblock %}
-
+{% block meta %} 
+    <meta name="description" 
+        content="Tous nos articles sur le développement pour progresser plus vite en programmation grâce à une communautée solidaire et bienveillante." 
+    /> 
+    <meta name="robots" 
+        content="index,follow"
+    /> 
+{% endblock %}
 {% block body %}
 <section class="w-80">
     
