@@ -193,59 +193,11 @@
         <div class="swip ">
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    
                     {% for subject in user.subjects %}
-                    <div class="swiper-slide overflow-y card">
-                        <h1 class="toptitre left {{subject.forum.style}}">&nbsp;{{subject.nom}}
-                            {# {% if app.user and app.user.id == user.id %}
-
-                            {% endif %} #}
-                        </h1>
-                        <h2 class="toptitre2 right {{subject.forum.style}}">
-                            dans {{subject.forum.nom}} <span class="mute">{{subject.createdAt | ago}}</span>
-                        </h2>
-                        <h3 class="title">                
-                        {% if  subject.getNoteSubjects() | length > 0 %}
-                        
-                            {# {{dump(subject.getNoteSubjects())}} #}
-                            {% set somme = 0 %}
-                            {% for row in subject.getNoteSubjects() %}
-                            {% set somme = somme + row.note
-                            %}
-                            
-                            {% endfor %}
-                            {% set somme = somme / (subject.getNoteSubjects()| length) %}
-                            <div class="note">
-                                {% for i in 1..10 %}
-                                    {# {% if i <= somme * 2 %} #}
-                                    {% if i is odd %}
-                                    <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                                    {% else %}
-                                    <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                                    {% endif %}
-                                    {# {% endif %} #}
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <span class="muted">pas encore de note</span> 
-                        {% endif %}
-                        </h3>
-                        {# <div class="img">
-                            <img class="subjectImage" src="{{ subject ? vich_uploader_asset(subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.nom}}">
-                        </div> #}
-                        <div class="description">
-                            <p>{{subject.description | raw}}</p>
+                        <div class="swiper-slide overflow-y card">
+                            {% include "Components/_subjectSwiper.html.twig" with { subject: subject} %}
                         </div>
-                        <ul>
-                            <li>{{subject.comments | length}} commentaires</li>
-                            <li>{{subject.noteSubjects | length}} notes reçus</li>
-                            {# <li>{{subject.comments | length}} ajouter subject favoris</li> #}
-                        </ul>
-                        <button class="btn-vierge"><a href="{{ path('user_subject_show', {'id': subject.id}) }}">voir l'subject</a></button>
-                        
-                    </div>
                     {% endfor %}
-                    
                 </div>
                 <div class="swiper-pagination"></div>
                 <div class="swiper-button-prev"></div>
@@ -262,55 +214,7 @@
                 <div class="swiper-wrapper">
                 {% for subject in user.subjectFavoris %}
                     <div class="swiper-slide overflow-y card">
-                        <h1 class="toptitre left {{subject.subject.forum.style}}">&nbsp; - Posté par :  {{subject.subject.user.name}}
-                            <img 
-                                class="avatarVrai" 
-                                src="{{ subject.subject.user ? vich_uploader_asset(subject.subject.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                                alt="{{subject.subject.user.name}}"
-                            ></h1>
-                        <h2 class="toptitre2 {{subject.subject.forum.style}}">{{subject.subject.nom}}</h2>
-                        <h2 class="toptitre2 right {{subject.subject.forum.style}}">
-                            dans {{subject.subject.forum.nom}} <span class="mute">{{subject.subject.createdAt | ago}}</span>
-                        </h2>
-                        <h3 class="title">                
-                        {% if  subject.subject.getNoteSubjects() | length > 0 %}
-                        
-                            {# {{dump(subject.getNoteSubjects())}} #}
-                            {% set somme = 0 %}
-                            {% for row in subject.subject.getNoteSubjects() %}
-                            {% set somme = somme + row.note
-                            %}
-                            
-                            {% endfor %}
-                            {% set somme = somme / (subject.subject.getNoteSubjects()| length) %}
-                            <div class="note">
-                                {% for i in 1..10 %}
-                                    {# {% if i <= somme * 2 %} #}
-                                    {% if i is odd %}
-                                    <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                                    {% else %}
-                                    <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                                    {% endif %}
-                                    {# {% endif %} #}
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <span class="muted">pas encore de note</span> 
-                        {% endif %}
-                        </h3>
-                        {# <div class="img">
-                            <img class="subjectImage" src="{{ subject.subject ? vich_uploader_asset(subject.subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.subject.nom}}">
-                        </div> #}
-                        <div class="description">
-                            <p>{{subject.subject.description | raw}}</p>
-                        </div>
-                        <ul>
-                            <li>{{subject.subject.comments | length}} commentaires</li>
-                            <li>{{subject.subject.noteSubjects | length}} notes reçus</li>
-                            {# <li>{{subject.comments | length}} ajouter subject favoris</li> #}
-                        </ul>
-                        <button class="btn-vierge"><a href="{{ path('user_subject_show', {'id': subject.subject.id}) }}">voir l'subject</a></button>
-                        
+                        {% include "Components/_subjectSwiper.html.twig" with { subject: subject.subject} %}
                     </div>
                 {% endfor %}
                 </div>
@@ -329,54 +233,7 @@
                 <div class="swiper-wrapper">
                 {% for subject in user.noteSubjects %}
                     <div class="swiper-slide overflow-y card">
-                        <h1 class="toptitre left {{subject.subject.forum.style}}">&nbsp; - Posté par :  {{subject.subject.user.name}}
-                            <img 
-                                class="avatarVrai" 
-                                src="{{ subject.subject.user ? vich_uploader_asset(subject.subject.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                                alt="{{subject.subject.user.name}}"
-                            ></h1>
-                        <h2 class="toptitre2 {{subject.subject.forum.style}}">{{subject.subject.nom}}</h2>
-                        <h2 class="toptitre2 right {{subject.subject.forum.style}}">
-                            dans {{subject.subject.forum.nom}} <span class="mute">{{subject.subject.createdAt | ago}}</span>
-                        </h2>
-                        <h3 class="title">                
-                        {% if  subject.subject.getNoteSubjects() | length > 0 %}
-                        
-                            {# {{dump(subject.getNoteSubjects())}} #}
-                            {% set somme = 0 %}
-                            {% for row in subject.subject.getNoteSubjects() %}
-                            {% set somme = somme + row.note
-                            %}
-                            
-                            {% endfor %}
-                            {% set somme = somme / (subject.subject.getNoteSubjects()| length) %}
-                            <div class="note">
-                                {% for i in 1..10 %}
-                                    {# {% if i <= somme * 2 %} #}
-                                    {% if i is odd %}
-                                    <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                                    {% else %}
-                                    <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                                    {% endif %}
-                                    {# {% endif %} #}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                            <span class="muted">ta note : {{subject.note}}</span> 
-                        </h3>
-                        {# <div class="img">
-                            <img class="subjectImage" src="{{ subject.subject ? vich_uploader_asset(subject.subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.subject.nom}}">
-                        </div> #}
-                        <div class="description">
-                            <p>{{subject.subject.description | raw}}</p>
-                        </div>
-                        <ul>
-                            <li>{{subject.subject.comments | length}} commentaires</li>
-                            <li>{{subject.subject.noteSubjects | length}} notes reçus</li>
-                            {# <li>{{subject.comments | length}} ajouter subject favoris</li> #}
-                        </ul>
-                        <button class="btn-vierge"><a href="{{ path('user_subject_show', {'id': subject.subject.id}) }}">voir l'subject</a></button>
-                        
+                        {% include "Components/_subjectSwiper.html.twig" with { subject: subject.subject} %}
                     </div>
                 {% endfor %}
                 </div>
