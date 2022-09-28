@@ -20,6 +20,7 @@ class MainControllerTest extends WebTestCase
         $this->databaseTool->loadAliceFixture([
             \dirname(__DIR__).'/Fixtures/UserTestFixtures.yaml',
             \dirname(__DIR__).'/Fixtures/SubjectTestFixtures.yaml',
+            \dirname(__DIR__).'/Fixtures/ArticleTestFixtures.yaml',
         ]);
     }
 
