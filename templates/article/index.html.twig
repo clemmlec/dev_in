@@ -16,8 +16,9 @@
 
     {{ form_start(form, { 'attr' : { 'class' : 'form js-filter-form'} }) }}
         {{ form_row(form.query) }}
+
         {# <button class="btn-vierge" type="submit">Rechercher</button> #}
-    {{ form_end(form) }}
+    {{ form_end(form, {'render_rest': false }) }}
 
     <div class="js-filter-count">
         {% include "Components/filter/_count.html.twig" %}

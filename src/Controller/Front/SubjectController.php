@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Entity\User;
 use App\Entity\Subject;
+use App\Form\SearchType;
 use App\Form\SubjectType;
 use App\Filter\SearchData;
 use App\Form\Subject1Type;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/subject')]
@@ -28,8 +30,26 @@ class SubjectController extends AbstractController
     {
         $data = new SearchData();
         $data->setPage($request->get('page', 1));
-        
+
+        $forms = $this->createForm(SearchType::class, $data);
+        $forms->handleRequest($request);
+
         $selectSubject = $subjectRepository->findActiveSubject($data);
+
+        if($request->get('ajax')){
+            return new JsonResponse([
+                'content' => $this->renderView('Components/_subjects.html.twig' , [
+                    'subjects' => $selectSubject,
+                ]),
+                'pagination' => $this->renderView('Components/filter/_paginationSubject.html.twig' , [
+                    'subjects' => $selectSubject,
+                ]),
+                'count' => $this->renderView('Components/filter/_countSubject.html.twig' , [
+                    'subjects' => $selectSubject,
+                ]),
+                'pages' => ceil($selectSubject->getTotalItemCount() / $selectSubject->getItemNumberPerPage())
+            ]);
+        }
 
         $subject = new Subject();
         $form = $this->createForm(SubjectType::class, $subject);
@@ -46,6 +66,7 @@ class SubjectController extends AbstractController
         return $this->renderForm('subject/index.html.twig', [
             'subjects' => $selectSubject,
             'form' => $form,
+            'forms' => $forms,
         ]);
     }
 

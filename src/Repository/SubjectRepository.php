@@ -71,6 +71,11 @@ class SubjectRepository extends ServiceEntityRepository
             ->leftjoin('a.comments', 'm')
             ->leftjoin('m.commentLikes', 'k')
             ;
+
+            if(!empty($search->getForum())){
+                $query->andWhere('c.id IN (:cat)')
+                ->setParameter('cat', $search->getForum());
+            }
         // dd($query->getQuery()->getResult());
             return $this->paginator->paginate(
                 $query->getQuery(),

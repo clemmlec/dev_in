@@ -52,9 +52,13 @@ export default class Filter {
             this.pagination.addEventListener('click', linkClickListener);
         };
 
-        this.form.querySelector('input[type="text"]')
-            .addEventListener('keyup', debounce(this.loadForm.bind(this),500));
+        this.form.querySelectorAll('input[type="checkbox"]').forEach(input => {
+            input.addEventListener('change', debounce(this.loadForm.bind(this), 500));
+        });
 
+        this.form.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('keyup', debounce(this.loadForm.bind(this),500));
+        });
 
     }
 

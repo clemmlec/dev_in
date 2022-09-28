@@ -2,6 +2,8 @@
 
 namespace App\Form;
 
+use App\Entity\Tags;
+use App\Entity\Forum;
 use App\Filter\SearchData;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
@@ -21,6 +23,17 @@ class SearchType extends AbstractType
                 'attr' => [
                     'placeholder' => 'rechercher par nom',
                 ],
+            ])
+            ->add('forum', EntityType::class, [
+                'class' => Forum::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('a');
+                },
+                'label' => false,
+                'required' => false,
+                'choice_label' => 'nom',
+                'expanded' => true,
+                'multiple' => true,
             ]);
     }
 

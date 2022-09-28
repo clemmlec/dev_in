@@ -5,6 +5,7 @@ class SearchData
 {
     private ?int $page = 1;
     private ?string $query = '';
+    private ?array $forum = [];
 
     /**
      * Get the value of page
@@ -46,4 +47,23 @@ class SearchData
         return $this;
     }
 
+    /**
+     * Get the value of categories.
+     */
+    public function getForum()
+    {
+        return $this->forum;
+    }
+
+    /**
+     * Set the value of categories.
+     *
+     * @return self
+     */
+    public function setForum($forum)
+    {
+        $this->forum = $forum;
+
+        return $this;
+    }
 }
