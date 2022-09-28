@@ -19,3 +19,6 @@ import './js/comment.js';
 import './js/user.js';
 import './js/paralax.js';
 import './js/article.js';
+
+import Filter from './js/filter';
+new Filter(document.querySelector('.js-filter'));

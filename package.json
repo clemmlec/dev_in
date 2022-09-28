@@ -30,9 +30,11 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^6.1.2",
+        "@popperjs/core": "^2.11.6",
         "axios": "^0.27.2",
         "ckeditor4": "4.19.1",
         "i": "^0.3.7",
+        "lodash": "^4.17.21",
         "swiper": "^8.3.2"
     }
 }

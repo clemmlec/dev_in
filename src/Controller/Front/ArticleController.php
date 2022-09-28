@@ -3,6 +3,7 @@
 namespace App\Controller\Front;
 
 use App\Entity\Article;
+use App\Form\SearchType;
 use App\Filter\SearchData;
 use App\Entity\ArticleLiked;
 use App\Entity\ArticleSuggestion;
@@ -13,6 +14,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\ArticleSuggestionRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/article')]
@@ -24,11 +26,30 @@ class ArticleController extends AbstractController
 
         $data = new SearchData();
         $data->setPage($request->get('page', 1));
+
+        $form = $this->createForm(SearchType::class, $data);
+        $form->handleRequest($request);
         
         $selectArticle = $articleRepository->findArticle($data);
 
-        return $this->render('article/index.html.twig', [
+        if($request->get('ajax')){
+            return new JsonResponse([
+                'content' => $this->renderView('Components/_articles.html.twig' , [
+                    'articles' => $selectArticle,
+                ]),
+                'pagination' => $this->renderView('Components/filter/_pagination.html.twig' , [
+                    'articles' => $selectArticle,
+                ]),
+                'count' => $this->renderView('Components/filter/_count.html.twig' , [
+                    'articles' => $selectArticle,
+                ]),
+                'pages' => ceil($selectArticle->getTotalItemCount() / $selectArticle->getItemNumberPerPage())
+            ]);
+        }
+
+        return $this->renderForm('article/index.html.twig', [
             'articles' => $selectArticle,
+            'form' => $form
         ]);
     }
 

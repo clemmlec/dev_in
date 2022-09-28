@@ -34,7 +34,7 @@ class ArticleCrudController extends AbstractCrudController
             TextEditorField::new('content')->setFormType(CKEditorType::class),
             AssociationField::new('tags')->setCrudController(TagsCrudController::class),
             AssociationField::new('user')->hideOnForm(),
-            AssociationField::new('articleSuggestions')->setSortable(true),
+            AssociationField::new('articleSuggestions')->hideOnForm()->setSortable(true),
             DateTimeField::new('created_at')->hideOnForm()->setSortable(true),
             DateTimeField::new('updated_at')->hideOnForm()->setSortable(true),
 

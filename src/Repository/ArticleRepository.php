@@ -51,13 +51,20 @@ class ArticleRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('a')
             ->select('a','t')
             ->leftjoin('a.tags', 't')
-            ->orderBy('a.createdAt', 'DESC');
+            ->orderBy('a.createdAt', 'DESC')
+        ;
 
-            return $this->paginator->paginate(
-                $query->getQuery(),
-                $search->getPage(),
-                5
-            );
+        if(!empty($search->getQuery())){
+            $query->andWhere('a.content LIKE :name')
+                ->setParameter('name', "%{$search->getQuery()}%")
+            ;
+        }
+
+        return $this->paginator->paginate(
+            $query->getQuery(),
+            $search->getPage(),
+            5
+        );
         ;
         // dd($queryBuilder);
     }
