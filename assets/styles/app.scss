@@ -15,7 +15,9 @@
 @import "./components/pagination.scss";
 @import "./color.scss";
 
-
+#profilCard{
+    margin-top: 100px;
+}
 #myBtn1{
     white-space: nowrap;
 }
@@ -37,6 +39,12 @@ h1{
     width: 70%;
     margin: auto;
     text-align: center;
+}
+.w-80Left{
+    width: 70%;
+    margin: auto;
+    text-align: left;
+    color: azure;
 }
 body{
     background-color: rgb(67, 114, 136);

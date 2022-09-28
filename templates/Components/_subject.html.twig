@@ -1,7 +1,7 @@
 <div class="card-subject" id="subject{{subject.id}}">
     <h2 class="toptitre left {{subject.forum.style}}">
     <a class="btn-vierge" href="{{ path('app_user_profil', {'id': subject.user.id}) }}">
-        - Posté par :  {{subject.user.name}}
+        - Posté par :  {{subject.user.name | slice(0,10)}}
             <img 
                 class="avatar" 
                 src="{{ subject.user ? vich_uploader_asset(subject.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
