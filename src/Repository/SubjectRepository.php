@@ -63,14 +63,15 @@ class SubjectRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('a')
             ->select('a', 'u', 'c', 'n', 'm', 'k')
             ->andWhere('a.active = :active')
+            ->orderBy('a.created_at', 'DESC')
             ->setParameter('active', true)
             ->leftjoin('a.user', 'u')
             ->leftjoin('a.forum', 'c')
             ->leftjoin('a.noteSubjects', 'n')
             ->leftjoin('a.comments', 'm')
             ->leftjoin('m.commentLikes', 'k')
-            ->orderBy('a.created_at', 'DESC');
-
+            ;
+        // dd($query->getQuery()->getResult());
             return $this->paginator->paginate(
                 $query->getQuery(),
                 $search->getPage(),

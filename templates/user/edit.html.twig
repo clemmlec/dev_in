@@ -25,10 +25,10 @@
             <section class="color">
                 <h2>Personalisations couleurs</h2>
                 <hr>
-                <div class="coupe2">
+                <div class="coupe2 d-flex">
                     <!-- formulaire couleur -->
-                        <div class="bgGris">
-                            <h4>direction du dégradé
+                        <div class="outils">
+                            <h4>direction du dégradé <br>
                                 <button class="dire green" onclick="direct('left bottom',this)" type="button"><i style="transform:rotate(-45deg);" class="fa-solid fa-arrow-right"></i></button>
                                 <button class="dire" onclick="direct('left',this)" type="button"><i class="fa-solid fa-arrow-right"></i></button>
                                 <button class="dire" onclick="direct('left top',this)" type="button"><i style="transform:rotate(45deg);" class="fa-solid fa-arrow-right"></i></button>
@@ -55,15 +55,11 @@
                             </h4>
                             <input type="hidden" name="color4" id="4">
                             <hr>
-
-                            
-                            {# <input type="button" onclick="test()" name="color" value="test">
-                            <hr> #}
                         </div>
                     <!-- formulaire couleur -->
 
                     <!-- panel de couleur -->
-                        <div class="  sectionColor bgGris">
+                        <div class="sectionColor">
                             {% set bleu = 0 %}
                             {% set rouge = 0 %}
                             {% set vert = 0 %}
@@ -74,14 +70,15 @@
                             <div onclick="envoieCouleur(this)"  class="carre jeu" style="background-color:rgb({{rouge}},{{vert}},{{bleu}})"></div>
 
                             {% endfor %}
-                            
-                        </div>
-                        <div class="button">
-                            <button type="button" onclick="changeCouleur()">reload color</button>
-                            <button id="go" type="button" data-style-user >valider ces couleurs</button>
+
                         </div>
 
+
                     <!-- panel de couleur -->
+                </div>
+                <div class="button">
+                    <button type="button" onclick="changeCouleur()">reload color</button>
+                    <button id="go" type="button" data-style-user >valider ces couleurs</button>
                 </div>
             </section>
         </div>
@@ -198,6 +195,10 @@
             color1=transparence(a);
             color2=transparence(z);
             
+           btn0.style.background = color1;
+           btn1.style.background = color2;
+           btn2.style.background = e.style.backgroundColor;
+           btn3.style.background = r.style.backgroundColor;
             
             profilCard.style.background= "linear-gradient( to "+direction+", "+ color1 +", "+ color2+")";
            // "10px 20px 30px blue"; 
