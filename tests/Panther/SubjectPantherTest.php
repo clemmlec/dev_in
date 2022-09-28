@@ -22,13 +22,16 @@ class SubjectPantherTest extends PantherTestCase
             \dirname(__DIR__).'/Fixtures/UserTestFixtures.yaml',
             \dirname(__DIR__).'/Fixtures/TagTestFixtures.yaml',
             \dirname(__DIR__).'/Fixtures/SubjectTestFixtures.yaml',
+            \dirname(__DIR__).'/Fixtures/TagsTestFixtures.yaml',
+            \dirname(__DIR__).'/Fixtures/ArticleTestFixtures.yaml',
+
         ]);
     }
 
     public function testSubjectNumberOnListePage()
     {
         $crawler = $this->client->request('GET', '/subject');
-        $this->assertCount(20, $crawler->filter('.card-subject'));
+        $this->assertCount(5, $crawler->filter('.card-subject'));
     }
 
     // public function testSubjectShowMoreButton()

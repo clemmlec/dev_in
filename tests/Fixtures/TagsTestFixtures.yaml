@@ -1,0 +1,4 @@
+App\Entity\Tags:
+  tags_{1..10}:
+    name (unique): "<randomTag()>"
+    
