@@ -204,9 +204,22 @@ p{
     // }
     .d-flex{
         padding: 10px;
+        display: inline;
     }
     .sectionColor{
-        max-width: 250px !important;
+        max-width: 90% !important;
+
+    }
+    .carre{
+        width: 50px !important;
+        height: 50px !important;
+    }
+    .outils{
+        max-width: 90% !important;
+    }
+    #btnProfil{
+        top: 250px !important;
+        right: 20% !important;
     }
     .nav-logo{
         height: 50px;
