@@ -59,6 +59,7 @@ class FollowRepository extends ServiceEntityRepository
     public function findAllFollowers($id): array
     {
         return $this->createQueryBuilder('f')
+            ->select('f')
             ->andWhere('f.friend = :val')
             ->setParameter('val', $id)
             ->orderBy('f.id', 'DESC')

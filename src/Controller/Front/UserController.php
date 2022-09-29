@@ -4,6 +4,8 @@ namespace App\Controller\Front;
 
 use App\Entity\User;
 use App\Entity\Follow;
+use App\Form\SearchType;
+use App\Filter\SearchData;
 use App\Form\UserTypeEdit;
 use App\Repository\UserRepository;
 use App\Repository\FollowRepository;
@@ -12,16 +14,40 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/user')]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Request $request,): Response
     {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findUsers(),
+        $data = new SearchData();
+        $data->setPage($request->get('page', 1));
+
+        $forms = $this->createForm(SearchType::class, $data);
+        $forms->handleRequest($request);
+
+        $users = $userRepository->findUsers($data);
+       
+        if($request->get('ajax')){
+            return new JsonResponse([
+                'content' => $this->renderView('Components/_users.html.twig' , [
+                    'users' => $users,
+                ]),
+                'pagination' => $this->renderView('Components/filter/_paginationUser.html.twig' , [
+                    'users' => $users,
+                ]),
+                'count' => $this->renderView('Components/filter/_countUser.html.twig' , [
+                    'users' => $users,
+                ]),
+                'pages' => ceil($users->getTotalItemCount() / $users->getItemNumberPerPage())
+            ]);
+        }
+        return $this->renderForm('user/index.html.twig', [
+            'users' => $users,
+            'forms' => $forms
         ]);
     }
 
