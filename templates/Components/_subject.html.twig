@@ -18,15 +18,19 @@
             >
         <span class="mute">{{subject.createdAt | ago}}</span>
     </h2>
-    <div class="iconSubject">
-        <button value="{{subject.id}}" class="btn-vierge color-red" type="button" data-signaler-subject >
+    <div class="iconSubject" {{ stimulus_controller('subject') }}>
+        <button {{ stimulus_action('subject', 'report') }}
+                value="{{subject.id}}" 
+                class="btn-vierge color-red" 
+                type="button" 
+                >
             <i class="fa-solid fa-triangle-exclamation"></i>
         </button>
-        <button 
+        <button {{ stimulus_action('subject', 'follows') }}
                 type="button" 
                 class="btn-vierge " 
                 value="{{subject.id}}" 
-                data-follow-subject >
+                >
                 {# {{ dump(subject) }}
                 {{ dump(app.user.getSubjectFavoris()) }} #}
                 {# {{ dump(subject) }}
@@ -51,7 +55,10 @@
         </button>
         <div class="suggest" id="suggestSubject{{subject.id}}">
             <input class="plus grande" type="text" placeholder="Un probleme ?">
-            <button value="{{subject.id}}" class="btn-vierge bleu" data-submit-signaler-subject >envoyer</button>
+            <button {{ stimulus_action('subject', 'submitReport') }}
+                    value="{{subject.id}}" 
+                    class="btn-vierge bleu" 
+                    >envoyer</button>
         </div>
     </div>
 
@@ -90,9 +97,13 @@
                 {% endif %}
             {% endfor %}
             {% if not noter %}
-            <div class="note">
+            <div {{ stimulus_controller('subject') }}
+                class="note">
                 {% for i in 1..5 %}
-                <button class="btn-vierge"  value="{{i}}-{{subject.id}}" data-note-subject>
+                <button 
+                    {{ stimulus_action('subject', 'noter') }}
+                    class="btn-vierge"  
+                    value="{{i}}-{{subject.id}}" >
                         <i class="far fa-star stars" ></i>
                 </button>
                 {% endfor %}
