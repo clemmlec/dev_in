@@ -24,7 +24,7 @@
     border-radius: 5px;
 }
 #profilCard{
-    margin-top: 100px;
+    margin: 100px auto 0 auto;
 }
 #myBtn1{
     white-space: nowrap;
@@ -142,6 +142,9 @@ a{
 p{
     font-size: 25px;
 }
+.reverse{
+    flex-direction: row-reverse;
+}
 @media all and (max-device-width: 491px)
 {
     #home{
@@ -247,6 +250,10 @@ p{
     .form{
         width: 90%;
         margin: 20vh auto 20px auto;
+    }
+    .formEdit{
+        margin: 20px auto 20px auto !important;
+
     }
     .card-subject .deg90 {
         margin-left: -49px;
