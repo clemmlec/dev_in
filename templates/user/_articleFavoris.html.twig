@@ -1,0 +1,31 @@
+{% extends "user/profil.html.twig" %}
+
+{% block title %}
+    Articles favoris | {{ parent()}}
+{% endblock %}
+{% block meta %} 
+    <meta name="description" 
+        content="Le site d'entraide entre developpeur, dans une idée de partage et de progression en toute solidarité ." 
+    /> 
+    <meta name="robots" 
+        content="index,follow" 
+    /> 
+{% endblock %}
+{% block mainProfil %}
+    <hr>
+    <h1>articles likés {{user.articleLikeds | length}}</h1>
+    <div class="swip ">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+            {% for article in user.getArticleLikeds %}
+                <div class="swiper-slide overflow-y articleCard">
+                    {% include "Components/_article.html.twig" with { couper: 'couper' , article: article.article} %}
+                </div>
+            {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>    
+{% endblock %}

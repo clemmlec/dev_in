@@ -2,16 +2,17 @@
 
 namespace App\Controller\Front;
 
-use App\Entity\Follow;
 use App\Entity\User;
+use App\Entity\Follow;
 use App\Form\UserTypeEdit;
-use App\Repository\FollowRepository;
 use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\FollowRepository;
+use App\Repository\SubjectRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -21,6 +22,136 @@ class UserController extends AbstractController
     {
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findUsers(),
+        ]);
+    }
+
+    #[Route('/followed', name: 'app_user_followed', methods: ['GET'])]
+    public function followed(FollowRepository $followRepository, Security $security, Request $request): Response
+    {   
+        $user = $security->getUser();
+
+        $form = $this->createForm(UserTypeEdit::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->add($user, true);
+
+            return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/_followed.html.twig', [
+            'followed' => $followRepository->findAllFollowed($security->getUser()->getId()),
+            'user' => $user,
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/followers', name: 'app_user_followers', methods: ['GET'])]
+    public function followers(FollowRepository $followRepository, Security $security, Request $request): Response
+    {   
+        $user = $security->getUser();
+
+        $form = $this->createForm(UserTypeEdit::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->add($user, true);
+
+            return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/_followers.html.twig', [
+            'followers' => $followRepository->findAllFollowers($security->getUser()->getId()),
+            'user' => $user,
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/sujet-favoris', name: 'app_user_subject-favoris', methods: ['GET'])]
+    public function sujetFavoris(UserRepository $userRepo,Security $security, Request $request): Response
+    {   
+        $user = $security->getUser();
+
+        $form = $this->createForm(UserTypeEdit::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->add($user, true);
+
+            return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/_subjectFavoris.html.twig', [
+            'user' => $user,
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/sujet-noter', name: 'app_user_subject-noter', methods: ['GET'])]
+    public function sujetNoter(UserRepository $userRepo,Security $security, Request $request): Response
+    {   
+        $user = $security->getUser();
+
+        $form = $this->createForm(UserTypeEdit::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->add($user, true);
+
+            return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/_subjectNoter.html.twig', [
+            'user' => $user,
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/article-favoris', name: 'app_user_article-favoris', methods: ['GET'])]
+    public function articleFavoris(UserRepository $userRepo,Security $security, Request $request): Response
+    {   
+        $user = $security->getUser();
+
+        $form = $this->createForm(UserTypeEdit::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->add($user, true);
+
+            return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/_articleFavoris.html.twig', [
+            'user' => $user,
+            'form' => $form
+        ]);
+    }
+
+
+    #[Route('/sujet', name: 'app_user_subject', methods: ['GET'])]
+    public function sujet(SubjectRepository $subjectRepository, Security $security, Request $request): Response
+    {   
+        $user = $security->getUser();
+
+        $form = $this->createForm(UserTypeEdit::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository->add($user, true);
+
+            return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/_subjectPosted.html.twig', [
+            'subjects' => $subjectRepository->findAllSubjectPosted($security->getUser()->getId()),
+            'user' => $user,
+            'form' => $form
         ]);
     }
 

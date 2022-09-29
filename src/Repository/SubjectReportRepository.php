@@ -38,7 +38,7 @@ class SubjectReportRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    
 //    /**
 //     * @return SubjectReport[] Returns an array of SubjectReport objects
 //     */

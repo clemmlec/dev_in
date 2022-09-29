@@ -1,0 +1,70 @@
+{% extends "user/profil.html.twig" %}
+
+{% block title %}
+    Abonnements | {{ parent()}}
+{% endblock %}
+{% block meta %} 
+    <meta name="description" 
+        content="Le site d'entraide entre developpeur, dans une idée de partage et de progression en toute solidarité ." 
+    /> 
+    <meta name="robots" 
+        content="index,follow" 
+    /> 
+{% endblock %}
+{% block mainProfil %}
+
+    <hr>
+    <h1>abonnements {{user.follows | length}}</h1>
+    <div class="swip ">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                
+                {% for follow in followed %}
+                <div class="swiper-slide card" style="{{follow.friend.style}}">
+                    <h3 class="toptitre photo b-50 gris">
+                        <img class="avatar" src="{{ follow.friend.imageName ? vich_uploader_asset(follow.friend, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{follow.friend.name}}">
+                    </h3>
+                    <h1>{{follow.friend.name}}
+                        {% if app.user and app.user.id == user.id %}
+                            <button type="button" class="btn-vierge yellow" value="{{follow.friend.id}}" data-follow-user >
+                            
+                                <i class="fa fa-user pointer yellow"></i>
+                            
+                            </button>
+                        {% endif %}
+                    </h1>
+                    <h3 class="date">inscrit {{follow.friend.createdAt | ago}}</h3>
+                    <h2>{{follow.friend.followers | length}} followers</h2>
+                    {% if follow.friend.subjects %}
+                        <h2>{{follow.friend.subjects | length }} subjects postés</h2>
+                        {% set moyenne = 0 %}
+                        {% set nbVote = 0 %}
+                        {% for row in follow.friend.subjects %}
+                            {% for note in row.noteSubjects %}
+                                {% set moyenne = moyenne + note.note %}
+                                {% set nbVote = nbVote +1 %}
+                            {% endfor %}
+                        {% endfor %}
+                        {% if nbVote > 0 %}
+                            {% set moyenne = moyenne / nbVote %}
+                            <h2>Moyenne subjects {{ moyenne |round(2, 'floor') }}</h2>
+                        {% endif %}
+                    {% endif %}
+                    {# <button>voir le profil</button> #}
+                    <button  class="btn-vierge" ><a href="{{ path('app_user_profil', {'id': follow.friend.id}) }}">voir le profil</a></button>
+                </div>
+                {% endfor %}
+                
+            </div>
+
+            <!-- If we need navigation buttons -->
+            <div class="swiper-pagination"></div>
+
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>     
+
+
+{% endblock %}
+

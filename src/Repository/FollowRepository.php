@@ -39,20 +39,33 @@ class FollowRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Follow[] Returns an array of Follow objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('f.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return Follow[] Returns an array of Follow objects
+    */
+   public function findAllFollowed($id): array
+   {
+       return $this->createQueryBuilder('f')
+           ->andWhere('f.user = :val')
+           ->setParameter('val', $id)
+           ->orderBy('f.id', 'DESC')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+      /**
+    * @return Follow[] Returns an array of Follow objects
+    */
+    public function findAllFollowers($id): array
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.friend = :val')
+            ->setParameter('val', $id)
+            ->orderBy('f.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Follow
 //    {
