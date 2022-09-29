@@ -25,13 +25,14 @@ class UserController extends AbstractController
     }
 
     #[Route('/profil/{id}', name: 'app_user_profil', methods: ['GET', 'POST'])]
-    public function profil(Request $request, User $user, Security $security, UserRepository $userRepository): Response
+    public function profil(Request $request, ?User $user, Security $security, UserRepository $userRepository): Response
     {
-        // if ($user != $security->getUser()){
+        if (!$user instanceof User  || $user == null){
 
-        //     $this->addFlash('error', 'probleme d\'authentification');
-        //     return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
-        // }
+            $this->addFlash('error', 'probleme d\'authentification');
+            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+        }
+        
         $userCollection = $userRepository->findOneById($user->getId());
 
         $form = $this->createForm(UserTypeEdit::class, $user);

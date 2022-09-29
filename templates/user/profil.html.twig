@@ -269,6 +269,14 @@
             </div>
         </div>    
     {% endif %}
-
+    <button class="btn-vierge red" data-delete-compte>Supprimer mon compte</button>
+    <div id="alertDelete">
+        <h3>Vous êtes sur le point de supprimer votre compte</h3>
+        <p>Toutes vos données seront supprimées de manieres irémediable <br>
+            Etes vous sur de vouloir supprimer votre compte de manière definitive ?
+        </p>
+        <button class="btn-vierge red" data-delete> <a href=" {{path('delete')}}"> Oui je veux supprimer mon compte</a></button>
+        <button class="btn-vierge green" data-retour>Non je veux garder mon compte</button>
+    </div>
 </section>
 {% endblock %}

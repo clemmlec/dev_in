@@ -1,11 +1,11 @@
 <h3 class="toptitre left {{subject.forum.style}}">&nbsp;
     <button class="btn-vierge">
-        <a class="btn-vierge" href="{{ path('app_user_profil', {'id': subject.user.id}) }}">
-            - Posté par :  {{subject.user.name}}
+        <a class="btn-vierge" href="{{ subject.user ? path('app_user_profil', {'id': subject.user.id }) : "" }}">
+            - Posté par :   {{subject.user ? subject.user.name | slice(0,10) : "utilisateur supprimé"}}
             <img 
                 class="avatarVrai" 
                 src="{{subject.user ? vich_uploader_asset(subject.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                alt="{{subject.user.name}}"
+                alt="{{ subject.user ? subject.user.name : 'utilisateur supprimé' }}"
             >
         </a>
     </button>

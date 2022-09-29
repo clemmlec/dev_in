@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -61,6 +62,18 @@ class SecurityController extends AbstractController
         return $this->renderForm('Security/register.html.twig', [
             'form' => $form,
         ]);
+    }
+
+    #[Route('/delete', name: 'delete')]
+    public function delete(Security $security, UserRepository $userRepo): Response
+    {
+        $user = $security->getUser();
+        $this->container->get('security.token_storage')->setToken(null);
+
+        $userRepo->remove($user,true);
+        $this->addFlash('success', 'Votre compte utilisateur a bien été supprimé !'); 
+
+        return $this->redirectToRoute('home');
     }
 
     // #[Route('/edit/{id}', name: 'app_user_edit', methods: ['GET', 'POST'])]

@@ -15,6 +15,14 @@
 @import "./components/pagination.scss";
 @import "./color.scss";
 
+#alertDelete{
+    display: none;
+    width: fit-content;
+    background-color: #0b0420ca;
+    margin: auto;
+    padding: 10px;
+    border-radius: 5px;
+}
 #profilCard{
     margin-top: 100px;
 }
