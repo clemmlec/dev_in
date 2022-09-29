@@ -2,25 +2,25 @@
 
 namespace App\Controller\Front;
 
-use Exception;
 use App\Entity\Comment;
 use App\Entity\CommentLike;
 use App\Entity\CommentReport;
-use App\Repository\CommentRepository;
-use App\Repository\SubjectRepository;
 use App\Repository\CommentLikeRepository;
 use App\Repository\CommentReportRepository;
+use App\Repository\CommentRepository;
+use App\Repository\SubjectRepository;
+use Exception;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/comment')]
 class CommentController extends AbstractController
 {
-    #[Route('/new', name: 'app_comment_new', methods: [ 'POST'])]
+    #[Route('/new', name: 'app_comment_new', methods: ['POST'])]
     public function new(Request $request, SubjectRepository $subjectRepo, CommentRepository $commentRepository, Security $security): Response
     {
         $param = $request->request->all();
@@ -39,10 +39,10 @@ class CommentController extends AbstractController
             $commentRepository->add($comment, true);
 
             // return new JsonResponse($comment);
-           
         } catch (Exception $e) {
             return new Response('maximum 255 caracteres', 500);
         }
+
         return new Response('commantaire envoyé', 201);
     }
 
@@ -70,12 +70,11 @@ class CommentController extends AbstractController
     }
 
     #[Route('/signaler/{id}/{message}', name: 'user.comment.signaler', methods: ['GET'])]
-    public function signalerComment(?Comment $com,String $message, Security $security, CommentRepository $comRepo, CommentReportRepository $comSignalRepo)
+    public function signalerComment(?Comment $com, string $message, Security $security, CommentRepository $comRepo, CommentReportRepository $comSignalRepo)
     {
         $user = $security->getUser();
 
         if ($com && $user) {
-        
             $newSignal = new CommentReport();
             $newSignal->setUser($user)
             ->setComment($com)
@@ -83,7 +82,6 @@ class CommentController extends AbstractController
             $comSignalRepo->add($newSignal, true);
 
             return new Response('commantaire signaler', 201);
-
         }
 
         return new Response('commentaire non trouvé', 404);

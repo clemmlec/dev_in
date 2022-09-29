@@ -12,9 +12,13 @@
 {% endblock %}
 
 {% block body %}
+    <div class="w-80 js-filter">
 
-
-    <div class="w-80">
+        {{ form_start(forms, { 'attr' : { 'class' : 'form js-filter-form'} }) }}
+            {{ form_row(forms.forum) }}
+            {# <button class="btn-vierge" type="submit">Rechercher</button> #}
+        {{ form_end(forms, {'render_rest': false }) }}
+        
         {# button nouvel subject #}
         {% if app.user %}
             <span class="color-red">{{ form_errors(form.nom) }}</span>
@@ -24,22 +28,22 @@
             </div>
         {% endif %}
        
-
+        <section class="w-100">
         {# liste des subjects #}
-        <section class="d-flex w-100">
-            <div>
-                {{ subjects.getTotalItemCount }}
-                {{ subjects.getTotalItemCount > 1 ? 'subjects' : 'subject'}}
+            <div class="js-filter-count">
+                {% include "Components/filter/_countSubject.html.twig" %}
             </div>
-            {{ knp_pagination_render(subjects) }}
-            {% for subject in subjects %}
-                {{ include('Components/_subject.html.twig')}}
-            {% endfor %}
-            {{ knp_pagination_render(subjects) }}
-            <div>
-                {{ subjects.getTotalItemCount }}
-                {{ subjects.getTotalItemCount > 1 ? 'subjects' : 'subject'}}
+
+            <div class="js-filter-content">
+                {% include "Components/_subjects.html.twig" %}
             </div>
+
+            <div class="d-flex  js-filter-pagination">
+                {% include "Components/filter/_paginationSubject.html.twig" %}
+            </div>
+        
+            
+
         </section>
         
 

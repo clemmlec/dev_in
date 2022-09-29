@@ -63,6 +63,18 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    #[Route('/delete', name: 'delete')]
+    public function delete(Security $security, UserRepository $userRepo): Response
+    {
+        $user = $security->getUser();
+        $this->container->get('security.token_storage')->setToken(null);
+
+        $userRepo->remove($user, true);
+        $this->addFlash('success', 'Votre compte utilisateur a bien été supprimé !');
+
+        return $this->redirectToRoute('home');
+    }
+
     // #[Route('/edit/{id}', name: 'app_user_edit', methods: ['GET', 'POST'])]
     // public function edit(Request $request, User $user, UserRepository $userRepository, Security $security): Response
     // {

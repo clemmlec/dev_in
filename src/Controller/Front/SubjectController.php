@@ -2,23 +2,25 @@
 
 namespace App\Controller\Front;
 
-use App\Entity\User;
-use App\Entity\Subject;
-use App\Form\SubjectType;
-use App\Filter\SearchData;
-use App\Form\Subject1Type;
 use App\Entity\NoteSubject;
-use App\Entity\SubjectReport;
+use App\Entity\Subject;
 use App\Entity\SubjectFavoris;
-use App\Repository\SubjectRepository;
+use App\Entity\SubjectReport;
+use App\Entity\User;
+use App\Filter\SearchData;
+use App\Form\SearchType;
+use App\Form\Subject1Type;
+use App\Form\SubjectType;
 use App\Repository\NoteSubjectRepository;
-use App\Repository\SubjectReportRepository;
 use App\Repository\SubjectFavorisRepository;
+use App\Repository\SubjectReportRepository;
+use App\Repository\SubjectRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/subject')]
 class SubjectController extends AbstractController
@@ -28,8 +30,26 @@ class SubjectController extends AbstractController
     {
         $data = new SearchData();
         $data->setPage($request->get('page', 1));
-        
+
+        $forms = $this->createForm(SearchType::class, $data);
+        $forms->handleRequest($request);
+
         $selectSubject = $subjectRepository->findActiveSubject($data);
+
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('Components/_subjects.html.twig', [
+                    'subjects' => $selectSubject,
+                ]),
+                'pagination' => $this->renderView('Components/filter/_paginationSubject.html.twig', [
+                    'subjects' => $selectSubject,
+                ]),
+                'count' => $this->renderView('Components/filter/_countSubject.html.twig', [
+                    'subjects' => $selectSubject,
+                ]),
+                'pages' => ceil($selectSubject->getTotalItemCount() / $selectSubject->getItemNumberPerPage()),
+            ]);
+        }
 
         $subject = new Subject();
         $form = $this->createForm(SubjectType::class, $subject);
@@ -40,12 +60,14 @@ class SubjectController extends AbstractController
             $subjectRepository->add($subject, true);
 
             $this->addFlash('success', 'Sujet créer avec success');
+
             return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('subject/index.html.twig', [
             'subjects' => $selectSubject,
             'form' => $form,
+            'forms' => $forms,
         ]);
     }
 
@@ -192,12 +214,11 @@ class SubjectController extends AbstractController
     }
 
     #[Route('/signaler/{id}/{message}', name: 'user.subject.signaler', methods: ['GET'])]
-    public function signalerSubject(?Subject $subject,String $message, Security $security, SubjectRepository $artRepo, SubjectReportRepository $artSignalRepo)
+    public function signalerSubject(?Subject $subject, string $message, Security $security, SubjectRepository $artRepo, SubjectReportRepository $artSignalRepo)
     {
         $user = $security->getUser();
 
         if ($subject && $user) {
-        
             $newSignal = new SubjectReport();
             $newSignal->setUser($user)
                 ->setSubject($subject)
@@ -205,7 +226,6 @@ class SubjectController extends AbstractController
             $artSignalRepo->add($newSignal, true);
 
             return new Response('subject signaler', 201);
-        
         }
 
         return new Response('subject non trouvé', 404);

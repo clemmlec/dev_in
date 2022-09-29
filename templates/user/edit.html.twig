@@ -1,90 +1,84 @@
 
-    <section id="btnProfil">
-        <button id="myBtn2" class="inline" onclick="modal(this)">modifier le profil</button>
-        <button id="myBtn3" class="inline" onclick="modal(this)">couleur de profil</button>
- </section>
+
 <section >
-        <div class="register cent modal" id="modal2">
-            {{ form_start(form,{'attr': {'class': 'form large'}}) }}
-                <h1 class="Lobster">Modifier le profil</h1>
-                <hr>
-                <div class="form-ligne">
-                    {{ form_row( form.name,{'attr': {'placeholder': 'nom'}} ) }}
-                
+    <div class="register cent modal" id="modal2">
+        {{ form_start(form,{'attr': {'class': 'form large formEdit'}}) }}
+            <h1 class="Lobster">Modifier le profil</h1>
+            <hr>
+            <div class="form-ligne">
+                {{ form_row( form.name,{'attr': {'placeholder': 'nom'}} ) }}
+            
 
-                    {{ form_row( form.imageFile ) }}
-                </div>
-                <hr>
-                <button class="mb-4">{{ button_label|default('Save') }}</button>
-                
-                {{ form_widget( form._token)}}
-            {{ form_end(form,{render_rest: false}) }}
-        </div>
+                {{ form_row( form.imageFile ) }}
+            </div>
+            <hr>
+            <button class="mb-4">{{ button_label|default('Save') }}</button>
+            
+            {{ form_widget( form._token)}}
+        {{ form_end(form,{render_rest: false}) }}
+    </div>
 
-        <div class="couleur modal" id="modal3">
-            <section class="color">
-                <h2>Personalisations couleurs</h2>
-                <hr>
-                <div class="coupe2">
-                    <!-- formulaire couleur -->
-                        <div class="bgGris">
-                            <h4>direction du dégradé
-                                <button class="dire green" onclick="direct('left bottom',this)" type="button"><i style="transform:rotate(-45deg);" class="fa-solid fa-arrow-right"></i></button>
-                                <button class="dire" onclick="direct('left',this)" type="button"><i class="fa-solid fa-arrow-right"></i></button>
-                                <button class="dire" onclick="direct('left top',this)" type="button"><i style="transform:rotate(45deg);" class="fa-solid fa-arrow-right"></i></button>
-                                <button class="dire" onclick="direct('top',this)" type="button"><i class="fa-solid fa-arrow-down"></i></button>
-                            </h4>
-                            <hr>
+    <div class="couleur modal" id="modal3">
+        <section class="color">
+            <h2>Personalisations couleurs</h2>
+            <hr>
+            <div class="coupe2 d-flex">
+                <!-- formulaire couleur -->
+                    <div class="outils">
+                        <h4>direction du dégradé <br>
+                            <button class="dire green" onclick="direct('left bottom',this)" type="button"><i style="transform:rotate(-45deg);" class="fa-solid fa-arrow-right"></i></button>
+                            <button class="dire" onclick="direct('left',this)" type="button"><i class="fa-solid fa-arrow-right"></i></button>
+                            <button class="dire" onclick="direct('left top',this)" type="button"><i style="transform:rotate(45deg);" class="fa-solid fa-arrow-right"></i></button>
+                            <button class="dire" onclick="direct('top',this)" type="button"><i class="fa-solid fa-arrow-down"></i></button>
+                        </h4>
+                        <hr>
 
-                            <h4>couleur du dégradé
-                                <button id="btn0" onclick="changeClick(0)" class="carreForm greenColor">1</button>
-                                <button id="btn1" onclick="changeClick(1)" class="carreForm">2</button>
-                            </h4>
-                            <input type="hidden" name="color1" id="1">
-                            <input type="hidden" name="color2" id="2">
-                            <hr>
-                            
-                            <h4>couleur de la bordure
-                                <button id="btn2" onclick="changeClick(2)" class="carreForm">3</button>
-                            </h4>
-                            <input type="hidden" name="color3" id="3">
-                            <hr>
+                        <h4>couleur du dégradé
+                            <button id="btn0" onclick="changeClick(0)" class="carreForm greenColor">1</button>
+                            <button id="btn1" onclick="changeClick(1)" class="carreForm">2</button>
+                        </h4>
+                        <input type="hidden" name="color1" id="1">
+                        <input type="hidden" name="color2" id="2">
+                        <hr>
+                        
+                        <h4>couleur de la bordure
+                            <button id="btn2" onclick="changeClick(2)" class="carreForm">3</button>
+                        </h4>
+                        <input type="hidden" name="color3" id="3">
+                        <hr>
 
-                            <h4>couleur de l'ombre
-                                <button id="btn3" onclick="changeClick(3)" class="carreForm">4</button>
-                            </h4>
-                            <input type="hidden" name="color4" id="4">
-                            <hr>
+                        <h4>couleur de l'ombre
+                            <button id="btn3" onclick="changeClick(3)" class="carreForm">4</button>
+                        </h4>
+                        <input type="hidden" name="color4" id="4">
+                        <hr>
+                    </div>
+                <!-- formulaire couleur -->
 
-                            
-                            {# <input type="button" onclick="test()" name="color" value="test">
-                            <hr> #}
-                        </div>
-                    <!-- formulaire couleur -->
+                <!-- panel de couleur -->
+                    <div class="sectionColor">
+                        {% set bleu = 0 %}
+                        {% set rouge = 0 %}
+                        {% set vert = 0 %}
+                        {% for i in 0..53 %}
+                        {% set bleu=random(1,255) %}
+                        {% set rouge=random(1,255) %}
+                        {% set vert=random(1,255) %}
+                        <div onclick="envoieCouleur(this)"  class="carre jeu" style="background-color:rgb({{rouge}},{{vert}},{{bleu}})"></div>
 
-                    <!-- panel de couleur -->
-                        <div class="  sectionColor bgGris">
-                            {% set bleu = 0 %}
-                            {% set rouge = 0 %}
-                            {% set vert = 0 %}
-                            {% for i in 0..53 %}
-                            {% set bleu=random(1,255) %}
-                            {% set rouge=random(1,255) %}
-                            {% set vert=random(1,255) %}
-                            <div onclick="envoieCouleur(this)"  class="carre jeu" style="background-color:rgb({{rouge}},{{vert}},{{bleu}})"></div>
+                        {% endfor %}
 
-                            {% endfor %}
-                            
-                        </div>
-                        <div class="button">
-                            <button type="button" onclick="changeCouleur()">reload color</button>
-                            <button id="go" type="button" data-style-user >valider ces couleurs</button>
-                        </div>
+                    </div>
 
-                    <!-- panel de couleur -->
-                </div>
-            </section>
-        </div>
+
+                <!-- panel de couleur -->
+            </div>
+            <div class="button">
+                <button type="button" onclick="changeCouleur()">reload color</button>
+                <button id="go" type="button" data-style-user >valider ces couleurs</button>
+            </div>
+        </section>
+    </div>
 </section>
 
    
@@ -198,6 +192,10 @@
             color1=transparence(a);
             color2=transparence(z);
             
+           btn0.style.background = color1;
+           btn1.style.background = color2;
+           btn2.style.background = e.style.backgroundColor;
+           btn3.style.background = r.style.backgroundColor;
             
             profilCard.style.background= "linear-gradient( to "+direction+", "+ color1 +", "+ color2+")";
            // "10px 20px 30px blue"; 

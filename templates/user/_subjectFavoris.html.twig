@@ -1,0 +1,31 @@
+{% extends "user/profil.html.twig" %}
+
+{% block title %}
+    Sujets favoris | {{ parent()}}
+{% endblock %}
+{% block meta %} 
+    <meta name="description" 
+        content="Le site d'entraide entre developpeur, dans une idée de partage et de progression en toute solidarité ." 
+    /> 
+    <meta name="robots" 
+        content="index,follow" 
+    /> 
+{% endblock %}
+{% block mainProfil %}
+    <hr>
+    <h1>subjects favoris {{user.subjectFavoris | length}}</h1>
+    <div class="swip ">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+            {% for subject in user.subjectFavoris %}
+                <div class="swiper-slide overflow-y card">
+                    {% include "Components/_subjectSwiper.html.twig" with { subject: subject.subject} %}
+                </div>
+            {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>    
+{% endblock %}

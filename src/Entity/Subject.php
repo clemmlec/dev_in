@@ -31,6 +31,7 @@ class Subject
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'subjects')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'subjects')]

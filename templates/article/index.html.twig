@@ -12,19 +12,26 @@
     /> 
 {% endblock %}
 {% block body %}
-<section class="w-80">
-    <div class="d-flex">
-        {{ knp_pagination_render(articles) }}
-        {{ articles.getTotalItemCount }}
-        {{ articles.getTotalItemCount > 1 ? 'articles' : 'article'}}
+<section class="w-80 js-filter">
+
+    {{ form_start(form, { 'attr' : { 'class' : 'form js-filter-form formEdit'} }) }}
+        {{ form_row(form.query) }}
+
+        {# <button class="btn-vierge" type="submit">Rechercher</button> #}
+    {{ form_end(form, {'render_rest': false }) }}
+
+    <div class="js-filter-count">
+        {% include "Components/filter/_count.html.twig" %}
     </div>
-    {% for article in articles %}
-        {% include "Components/_article.html.twig" with { couper: "" } %}
-    {% endfor %}
-    <div class="d-flex">
-        {{ knp_pagination_render(articles) }}
-        {{ articles.getTotalItemCount }}
-        {{ articles.getTotalItemCount > 1 ? 'articles' : 'article'}}
+
+    <div class="js-filter-content">
+        {% include "Components/_articles.html.twig" %}
     </div>
+
+    <div class="d-flex  js-filter-pagination">
+        {% include "Components/filter/_pagination.html.twig" %}
+    </div>
+
+
 </section>
 {% endblock %}

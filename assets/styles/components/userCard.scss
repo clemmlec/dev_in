@@ -1,6 +1,6 @@
 .d-flex{
     display: flex;
-    flex-wrap: wrap-reverse;
+    flex-wrap: wrap;
     padding: 10px;
     justify-content: space-between;
     display: -webkit-flex;
@@ -17,7 +17,6 @@
     
     font-family: arial;
     
-    margin: auto 25px auto 25px ;
     border: solid 2px rgb(114, 114, 114);
     /* padding: 20px; */
     border-radius: 20px;
@@ -29,7 +28,8 @@
     align-items: center;
     height: max-content;
     padding: 5px;
-    margin: 15px;
+    margin:  50px auto 20px auto;
+
     .toptitre{
 
         position: relative;
@@ -88,7 +88,7 @@
 }
 
 .avatar{
-    width: 30px;
+    width: 50px;
     border-radius: 50%;
 }
 li{

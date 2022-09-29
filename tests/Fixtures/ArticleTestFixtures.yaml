@@ -8,7 +8,7 @@ App\Entity\Article:
     content: "<sentence(10)>"
     user: "@userAdmin"
     # tags: "@tags_1"
-
+    tags: "<randomElements(@tags_{1..10},3)>"
   # subjectName:
   #   nom: "Subject de test"
   #   description: "<sentence(10)>"

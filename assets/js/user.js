@@ -30,3 +30,34 @@ if(styleUser){
         });
     }))
 }
+
+const deleteUser = document.querySelectorAll('[data-delete-compte]');
+if(deleteUser){
+    deleteUser.forEach((element=>{
+        element.addEventListener('click', () =>  {
+            alertDelete.style.display = 'block';
+        
+        });
+    }))
+}
+
+// const deleteGood = document.querySelectorAll('[data-delete]');
+// if(deleteGood){
+//     deleteGood.forEach((element=>{
+//         element.addEventListener('click', () =>  {
+    
+//             axios.delete(`/delete`);
+ 
+//         });
+//     }))
+// }
+
+const retour = document.querySelectorAll('[data-retour]');
+if(retour){
+    retour.forEach((element=>{
+        element.addEventListener('click', () =>  {
+            alertDelete.style.display = 'none';
+        });
+    }))
+}
+
