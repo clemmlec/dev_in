@@ -3,14 +3,12 @@
 namespace App\Controller\admin;
 
 use App\Entity\Comment;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class CommentCrudController extends AbstractCrudController
 {
@@ -19,7 +17,6 @@ class CommentCrudController extends AbstractCrudController
         return Comment::class;
     }
 
-    
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -31,7 +28,7 @@ class CommentCrudController extends AbstractCrudController
             AssociationField::new('commentReports')->setSortable(true),
         ];
     }
-    
+
     // public function configureFilters(Filters $filters): Filters
     // {
     //     return $filters

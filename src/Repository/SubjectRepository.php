@@ -4,10 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Subject;
 use App\Filter\SearchData;
-use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\PaginatorInterface;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Subject>
@@ -21,9 +21,8 @@ class SubjectRepository extends ServiceEntityRepository
 {
     public function __construct(
         private ManagerRegistry $registry,
-        private PaginatorInterface $paginator 
-    )
-    {
+        private PaginatorInterface $paginator
+    ) {
         parent::__construct($registry, Subject::class);
     }
 
@@ -70,19 +69,19 @@ class SubjectRepository extends ServiceEntityRepository
             ->leftjoin('a.noteSubjects', 'n')
             ->leftjoin('a.comments', 'm')
             ->leftjoin('m.commentLikes', 'k')
-            ;
-
-            if(!empty($search->getForum())){
-                $query->andWhere('c.id IN (:cat)')
-                ->setParameter('cat', $search->getForum());
-            }
-        // dd($query->getQuery()->getResult());
-            return $this->paginator->paginate(
-                $query->getQuery(),
-                $search->getPage(),
-                5
-            );
         ;
+
+        if (!empty($search->getForum())) {
+            $query->andWhere('c.id IN (:cat)')
+            ->setParameter('cat', $search->getForum());
+        }
+        // dd($query->getQuery()->getResult());
+        return $this->paginator->paginate(
+            $query->getQuery(),
+            $search->getPage(),
+            5
+        );
+
         // dd($queryBuilder);
     }
 

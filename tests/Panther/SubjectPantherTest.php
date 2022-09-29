@@ -24,7 +24,6 @@ class SubjectPantherTest extends PantherTestCase
             \dirname(__DIR__).'/Fixtures/SubjectTestFixtures.yaml',
             \dirname(__DIR__).'/Fixtures/TagsTestFixtures.yaml',
             \dirname(__DIR__).'/Fixtures/ArticleTestFixtures.yaml',
-
         ]);
     }
 

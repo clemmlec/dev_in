@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -70,8 +69,8 @@ class SecurityController extends AbstractController
         $user = $security->getUser();
         $this->container->get('security.token_storage')->setToken(null);
 
-        $userRepo->remove($user,true);
-        $this->addFlash('success', 'Votre compte utilisateur a bien été supprimé !'); 
+        $userRepo->remove($user, true);
+        $this->addFlash('success', 'Votre compte utilisateur a bien été supprimé !');
 
         return $this->redirectToRoute('home');
     }

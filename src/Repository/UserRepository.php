@@ -4,10 +4,10 @@ namespace App\Repository;
 
 use App\Entity\User;
 use App\Filter\SearchData;
-use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\PaginatorInterface;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -21,9 +21,8 @@ class UserRepository extends ServiceEntityRepository
 {
     public function __construct(
         private ManagerRegistry $registry,
-        private PaginatorInterface $paginator 
-        )
-    {
+        private PaginatorInterface $paginator
+        ) {
         parent::__construct($registry, User::class);
     }
 
@@ -55,9 +54,9 @@ class UserRepository extends ServiceEntityRepository
             ->leftjoin('u.subjects', 'a')
             ->leftjoin('a.noteSubjects', 'n')
             ->leftjoin('u.comments', 'c')
-            
+
         ;
-        if(!empty($search->getQuery())){
+        if (!empty($search->getQuery())) {
             $query->andWhere('u.name LIKE :name')
                 ->setParameter('name', "%{$search->getQuery()}%")
             ;

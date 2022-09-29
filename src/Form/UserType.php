@@ -4,18 +4,18 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Vich\UploaderBundle\Form\Type\VichImageType;
-use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class UserType extends AbstractType
 {
@@ -43,13 +43,12 @@ class UserType extends AbstractType
                         //     'minMessage' => 'Votre mots de passe doit faire minimum {{ limit }} characteres',
                         //     // max length allowed by Symfony for security reasons
                         //     'max' => 4096,
-                            
+
                         // ]),
                         new Regex('/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/',
-                        'Votre mot de passe doit comporter au moins 6 caractères, 
-                        une lettre majuscule, une lettre miniscule 
+                            'Votre mot de passe doit comporter au moins 6 caractères,
+                        une lettre majuscule, une lettre miniscule
                         et 1 chiffre sans espace blanc'),
-                        
                     ],
                     'label' => 'Mots de passe',
                 ],
@@ -66,7 +65,7 @@ class UserType extends AbstractType
                 'label' => 'J\'accepte la politique de confidentialité',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez accepter les parametre de confidentialité',
+                            'message' => 'Veuillez accepter les parametre de confidentialité',
                     ]),
                 ],
             ])

@@ -53,9 +53,9 @@ class FollowRepository extends ServiceEntityRepository
        ;
    }
 
-      /**
-    * @return Follow[] Returns an array of Follow objects
-    */
+    /**
+     * @return Follow[] Returns an array of Follow objects
+     */
     public function findAllFollowers($id): array
     {
         return $this->createQueryBuilder('f')

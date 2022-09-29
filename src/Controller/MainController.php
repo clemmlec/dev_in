@@ -30,7 +30,6 @@ class MainController extends AbstractController
     #[Route('/mentionslegal', name: 'mentionslegal')]
     public function mentionslegal(): Response
     {
-
         return $this->render('mentionslegal.html.twig');
     }
 }

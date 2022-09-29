@@ -3,10 +3,10 @@
 namespace App\Controller\admin;
 
 use App\Entity\CommentReport;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class CommentReportCrudController extends AbstractCrudController
 {
@@ -15,7 +15,6 @@ class CommentReportCrudController extends AbstractCrudController
         return CommentReport::class;
     }
 
-    
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -25,5 +24,4 @@ class CommentReportCrudController extends AbstractCrudController
             AssociationField::new('comment'),
         ];
     }
-    
 }
