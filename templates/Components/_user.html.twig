@@ -5,7 +5,12 @@
         </h3>
         <h1>{{user.name | slice(0,10)}}
             {% if app.user and user.id != app.user.id %}
-            <button type="button" class="btn-vierge yellow" value="{{user.id}}" data-follow-user >
+            <button {{ stimulus_controller('user') }}
+                type="button" 
+                class="btn-vierge yellow" 
+                value="{{user.id}}"
+                {{ stimulus_action('user', 'follows') }} 
+                >
                 {% set fav = false %}
                 {% if app.user %}
                     {% for row in app.user.follows %}

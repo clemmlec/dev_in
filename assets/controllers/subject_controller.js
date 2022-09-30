@@ -13,7 +13,10 @@ export default class extends Controller {
     connect() {
     }    
     follows(event) {
-        let elem = event.target
+        let elem = event.target;
+        if (event.target.type == "button" ){
+            elem = event.target.childNodes[1]
+        }
         let button = elem.parentNode
         let id = button.value;
         axios.get(`/subject/follow/${id}`);
@@ -24,7 +27,10 @@ export default class extends Controller {
         }
     }
     report(event) {
-        let elem = event.target
+        let elem = event.target;
+        if (event.target.type == "button" ){
+            elem = event.target.childNodes[1]
+        }
         let button = elem.parentNode
         let id = button.value;
         let div = document.getElementById('suggestSubject'+id);
@@ -48,13 +54,17 @@ export default class extends Controller {
     }
 
     noter(event){
-        let element = event.target
-        console.log(elem)
-        let elem = element.parentNode
+        let elem = event.target
+        // console.log(elem)
+        if (elem.type != "button" ){
+            console.log("merde")
+            elem = event.target.parentNode
+        }
+        // console.log(elem)
         let value = elem.value.split('-');
         let note = value[0];
         let subjectId = value[1];
-        console.log(elem.parentElement.childNodes , '😴');
+        // console.log(elem.parentElement.childNodes , '😴');
         axios.get(`/subject/note/${note}/${subjectId}`);
         
         window.setTimeout(function(){
