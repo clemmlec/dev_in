@@ -1,6 +1,6 @@
-{% extends "base.html.twig" %}
+{% extends "base.html.twig"  %}
 {% block title %}
-    profil | {{ parent() }}
+    profil {{user.name}} | {{ parent() }}
 {% endblock %}
 {% block meta %} 
     <meta name="description" 
@@ -21,68 +21,98 @@
 {% endblock %}
 
 {% block body %}
+<section class="w-100 d-flex">
+        <h1 class="break">Page de profil</h1>
+        {% if app.user and app.user.id == user.id %}
+            <section id="btnProfil">
+                <button id="myBtn2" class="btnProfil1" onclick="modal(this)">modifier le profil</button>
+                <button id="myBtn3" class="btnProfil1" onclick="modal(this)">couleur de profil</button>
+                <button id="myBtn4" class="btnProfil1" onclick="modal(this)">infos</button>
+            </section>
+        {% endif %}
+</section>
 <section class="w-80">
-    <h1 class="break">Profil de {{user.name}}</h1>
     <section class="d-flex reverse">
-    {% if app.user and app.user.id == user.id %}
-        <section id="btnProfil">
-            <button id="myBtn2" class="" onclick="modal(this)">modifier le profil</button>
-            <button id="myBtn3" class="" onclick="modal(this)">couleur de profil</button>
-        </section>
-                
-        {% include "user/edit.html.twig" %}  
-     
-    {% endif %}
 
-    <div id="profilCard" class="swiper-slide card mt-5" style="{{user.style}}">
-        <h3 class="toptitre photo b-50 gris">
-            <img class="avatar" src="{{ user.imageName ? vich_uploader_asset(user, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{user.name}}">
-        </h3>
-        <h3 class="date">inscrit {{user.createdAt | ago}}
-        {% if app.user and app.user.id != user.id %}
-            <button type="button" class="btn-vierge yellow" value="{{user.id}}" data-follow-user >
-                {% set fav = false %}
-                
-                {% for row in app.user.getFollows %}
-            
-                    {% if row.friend.id == user.id %}
-                        {% set fav = true %}
-                    {% endif %}
-                {% endfor %}
-                {% if fav %}
-                    <i class="fa fa-user pointer yellow"></i>
-                {% else %}
-                    <i class="far fa-user pointer yellow"></i>
+        
+        {% if app.user and app.user.id == user.id %}
                     
-                {% endif %}
-
-            </button>
+            {% include "user/edit.html.twig" %}  
+            <div class="couleur modal" id="modal4">
+                <section class="card mt-5">
+                
+                    <h1 class="break">Profil de {{user.name}}</h1>
+                    {% if user.subjects | length == 0 %}
+                    
+                        <h1>Viens poster tes idées </h1>
+                        <p> dans <a href="{{ path('app_subject_index') }}">Sujet</a> </p>
+                
+                    {% elseif user.noteSubjects | length == 0 %}
+        
+                        <h1>Pour noter un sujet</h1>
+                        <p>Clique sur une étoile correspondante à ta note situé en bas du sujet</p>
+                    
+                    {% else %}
+                        <h1>Content de te revoir</h1>
+                    {% endif %}
+                </section>
+            </div>
+        {% else %}
+            <div class="couleur modal" id="modal4">
+                <section class="card mt-5">
+                    <h1 class="break">Profil de {{user.name}}</h1>
+                    
+                </section>
+            </div>
         {% endif %}
-        </h3>
-        <h2>{{user.followers | length}} followers</h2>
-        {% if user.subjects %}
-            <h2>{{user.subjects | length }} subjects postés</h2>
-            {% set moyenne = 0 %}
-            {% set nbVote = 0 %}
-            {% for row in user.subjects %}
-                {% for note in row.noteSubjects %}
-                    {% set moyenne = moyenne + note.note %}
-                    {% set nbVote = nbVote +1 %}
-                {% endfor %}
-            {% endfor %}
-            {% if nbVote > 0 %}
-                {% set moyenne = moyenne / nbVote %}
-                <h2>Moyenne subjects {{ moyenne | round(2, 'floor') }}</h2>
+    
+        <div id="profilCard" class="swiper-slide card mt-5" style="{{user.style}}">
+            <h3 class="toptitre photo b-50 gris">
+                <img class="avatar" src="{{ user.imageName ? vich_uploader_asset(user, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{user.name}}">
+            </h3>
+            <h3 class="date">inscrit {{user.createdAt | ago}}
+            {% if app.user and app.user.id != user.id %}
+                <button type="button" class="btn-vierge yellow" value="{{user.id}}" data-follow-user >
+                    {% set fav = false %}
+                    
+                    {% for row in app.user.getFollows %}
+                
+                        {% if row.friend.id == user.id %}
+                            {% set fav = true %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if fav %}
+                        <i class="fa fa-user pointer yellow"></i>
+                    {% else %}
+                        <i class="far fa-user pointer yellow"></i>
+                    {% endif %}
+
+                </button>
             {% endif %}
-            <h2>{{user.comments | length }} commantaires</h2>
+            </h3>
+            <h2>{{user.followers | length}} followers</h2>
+            {% if user.subjects %}
+                <h2>{{user.subjects | length }} subjects postés</h2>
+                {% set moyenne = 0 %}
+                {% set nbVote = 0 %}
+                {% for row in user.subjects %}
+                    {% for note in row.noteSubjects %}
+                        {% set moyenne = moyenne + note.note %}
+                        {% set nbVote = nbVote +1 %}
+                    {% endfor %}
+                {% endfor %}
+                {% if nbVote > 0 %}
+                    {% set moyenne = moyenne / nbVote %}
+                    <h2>Moyenne subjects {{ moyenne | round(2, 'floor') }}</h2>
+                {% endif %}
+                <h2>{{user.comments | length }} commantaires</h2>
 
-        {% endif %}
-        {# <button class="btn-vierge"><a href="{{ path('app_user_profil', {'id': follow.user.id}) }}">voir le profil</a></button> #}
-        {# <a href="bb">dfgff sdg s sg </a> #}
-    </div>
-
-
+            {% endif %}
+            {# <button class="btn-vierge"><a href="{{ path('app_user_profil', {'id': follow.user.id}) }}">voir le profil</a></button> #}
+            {# <a href="bb">dfgff sdg s sg </a> #}
+        </div>
     </section>
+
     <section id="includeProfil">
     
         {% if user.follows | length > 0 %}

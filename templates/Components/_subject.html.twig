@@ -108,29 +108,7 @@
     {# {{ dump(app.user) }} #}
     <div class="d-flex-image">
         {# noter l subject #}
-        {% if app.user and subject.user and app.user.id != subject.user.id  %}
-            {% set noter = false %}
-            {% for row in app.user.noteSubjects %}
-                {% if row.subject.id == subject.id %}
-                {% set noter = true %}
-                {% endif %}
-            {% endfor %}
-            {% if not noter %}
-            <div {{ stimulus_controller('subject') }}
-                class="note">
-                {% for i in 1..5 %}
-                <button 
-                    {{ stimulus_action('subject', 'noter') }}
-                    class="btn-vierge"  
-                    value="{{i}}-{{subject.id}}" 
-                    type="button"
-                    >
-                        <i class="far fa-star stars" ></i>
-                </button>
-                {% endfor %}
-            </div>
-            {% endif %}
-        {% endif %}
+
         <div>
             {# <img class="subjectImage" src="{{ subject ? vich_uploader_asset(subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.nom}}"> #}
             <div class="d-subject">
@@ -225,6 +203,29 @@
             </div>
         </div>
 
+        {% if ( app.user and subject.user and app.user.id != subject.user.id ) or subject.user== null %}
+            {% set noter = false %}
+            {% for row in app.user.noteSubjects %}
+                {% if row.subject.id == subject.id %}
+                {% set noter = true %}
+                {% endif %}
+            {% endfor %}
+            {% if not noter %}
+            <div {{ stimulus_controller('subject') }}
+                class="note">
+                {% for i in 1..5 %}
+                <button 
+                    {{ stimulus_action('subject', 'noter') }}
+                    class="btn-vierge"  
+                    value="{{i}}-{{subject.id}}" 
+                    type="button"
+                    >
+                        <i class="far fa-star stars" ></i>
+                </button>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endif %}
     </div>
     
 

@@ -11,7 +11,7 @@ import './styles/app.scss';
 // start the Stimulus application
 
 import './js/collapse.js';
-import './js/modal.js';
+// import './js/modal.js';
 import './js/swiper.js';
 import './js/dropdown.js';
 import './js/user.js';
