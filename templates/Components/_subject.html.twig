@@ -60,32 +60,51 @@
                     class="btn-vierge bleu" 
                     >envoyer</button>
         </div>
-    </div>
-
-    <h1 class="title">{{subject.nom}}
-    {% if  subject.noteSubjects | length > 0 %}
         
-        {# {{dump(subject.getNoteSubjects())}} #}
-        {% set somme = 0 %}
-        {% for row in subject.getNoteSubjects() %}
-        {% set somme = somme + row.note
-            %}
-            
-        {% endfor %}
-            {% set somme = somme / (subject.getNoteSubjects()| length) %}
-            <div class="note">
-            {% for i in 1..10 %}
-                {# {% if i <= somme * 2 %} #}
-                {% if i is odd %}
-                <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                {% else %}
-                <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                {% endif %}
-                {# {% endif %} #}
-            {% endfor %}
+        {% if app.user and subject.user and app.user.id == subject.user.id %}
+            <button
+                value="{{subject.id}}" 
+                class="btn-vierge" 
+                type="button" 
+                >
+            <a href="{{ path('user_subject_edit', {'id': subject.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+        </button>
+        {% endif %}
+    </div>
+    <div>
+        {# {% if app.user and app.user.id == subject.user.id %}
+        <button data-btnEdit-subjectName value="{{subject.id}}">Modifer le titre</button>
+        <div class="suggest" id="editSubject{{subject.id}}">
+            <input id="subjectName" type="text" value="{{subject.nom}}">
+            <button class="btnVierge" value="{{subject.id}}" data-edit-subjectName >modifier</button>
         </div>
-    {% endif %}
-    </h1>
+        {% endif %} #}
+
+        <h1 class="title"><span>{{subject.nom}}</span>
+        {% if  subject.noteSubjects | length > 0 %}
+            
+            {# {{dump(subject.getNoteSubjects())}} #}
+            {% set somme = 0 %}
+            {% for row in subject.getNoteSubjects() %}
+            {% set somme = somme + row.note
+                %}
+                
+            {% endfor %}
+                {% set somme = somme / (subject.getNoteSubjects()| length) %}
+                <div class="note">
+                {% for i in 1..10 %}
+                    {# {% if i <= somme * 2 %} #}
+                    {% if i is odd %}
+                    <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
+                    {% else %}
+                    <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
+                    {% endif %}
+                    {# {% endif %} #}
+                {% endfor %}
+            </div>
+        {% endif %}
+        </h1>
+    </div>
     {# {{ dump(app.user) }} #}
     <div class="d-flex-image">
         {# noter l subject #}
@@ -150,7 +169,7 @@
                         <span class="floatRight">
                             <button 
                                 value="{{commen.id}}" 
-                                class="btn-vierge red" 
+                                class="btn-vierge color-red" 
                                 type="button" 
                                 {{ stimulus_action('comment', 'report') }}
                                 >
@@ -163,7 +182,21 @@
                                 type="button" 
                                 {{ stimulus_action('comment', 'follows') }}
                                 >
-                                <i class="far fa-thumbs-up"></i>
+                                {% set fav = false %}
+                                {% if app.user %}
+                                    {% for row in app.user.commentLikes %}
+                                        {% if row.comment.id == commen.id %}
+                                            {% set fav = true %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                
+                                {% if fav %}
+                                    <i class="fa-solid fa-thumbs-up yellow"></i>
+                                {% else %}
+                                    <i class="far fa-thumbs-up yellow"></i>
+                                {% endif %}
+                                
                                 <span id="like{{commen.id}}">({{commen.commentLikes | length }})</span> 
 
                             </button>
@@ -177,6 +210,7 @@
                                 {{ stimulus_action('comment', 'submitReport') }} 
                                 >envoyer</button>
                         </div>
+
                     </div>
                     <p class="left head"> par {{ commen.user.name }}</p>
                     <p class="left com"> {{ commen.message}}

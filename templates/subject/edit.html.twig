@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    Subject | {{ parent() }}
+{% endblock %}
+{% block meta %} 
+    <meta name="description" 
+        content="Page d'édition des sujets" 
+    /> 
+    <meta name="robots" 
+        content="noindex, nofollow"
+    /> 
+{% endblock %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+    {{ parent()}}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {{ parent()}}
+{% endblock %}
+
+{% block body %}
+<section class="d-flex w-80">
+    {{ form_start(form,{'attr': {'class': 'form'}} ) }}
+
+        {{ form_row( form.nom ) }}
+        {{ form_row( form.description ) }}
+
+        <button class="mb-4">{{ button_label|default('modifier') }}</button>
+          {{form_widget(form._token)}}
+    {{ form_end(form,{render_rest: false}) }}
+</section>
+{% endblock %}
