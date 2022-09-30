@@ -31,9 +31,22 @@
         </p>
 
         
-        <h2 class="titreHome purple">Dernier article posté</h2>
-        {% include "Components/_article.html.twig" with { couper: "couper" } %}
-        
+        <h2 class="titreHome purple">Derniers articles postés</h2>
+        {# {% include "Components/_article.html.twig" with { couper: "couper" } %} #}
+        <div class="swip ">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                {% for article in articles %}
+                    <div class="swiper-slide overflow-y articleCard">
+                        {% include "Components/_article.html.twig" with { couper: 'couper'} %}
+                    </div>
+                {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>    
 
         <div class="swip">
             <div class="swiper mySwiper">

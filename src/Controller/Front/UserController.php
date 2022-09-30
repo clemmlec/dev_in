@@ -66,9 +66,10 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
-
+        $followed =$followRepository->findAllFollowed($security->getUser()->getId());
+      
         return $this->renderForm('user/_followed.html.twig', [
-            'followed' => $followRepository->findAllFollowed($security->getUser()->getId()),
+            'follow' => $followed,
             'user' => $user,
             'form' => $form,
         ]);
@@ -89,8 +90,10 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
+        $follower =$followRepository->findAllFollowers($security->getUser()->getId());
+
         return $this->renderForm('user/_followers.html.twig', [
-            'followers' => $followRepository->findAllFollowers($security->getUser()->getId()),
+            'follow' => $follower,
             'user' => $user,
             'form' => $form,
         ]);

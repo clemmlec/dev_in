@@ -4,7 +4,7 @@
 {% endblock %}
 {% block meta %} 
     <meta name="description" 
-        content="Le sujet {{subject.nom}} posté par {{subject.user.name}} sur Dev In, le site de l'entraide entre devs." 
+        content="Le sujet {{subject.nom}} posté par {{subject.user ? subject.user.name : "ancien utilisateur"}} sur Dev In, le site de l'entraide entre devs." 
     /> 
     <meta name="robots" 
         content="index,follow"
@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block body %}
-<section class="d-flex w-100">
+<section class="d-flex w-80">
     {{ include('Components/_subject.html.twig')}}   
     
     {# clone commentaire #}

@@ -1,0 +1,9 @@
+{% for user in follow %}
+{% if follower == false %}
+     {% set user = user.friend %}
+{% else %}
+     {% set user = user.user %}
+{% endif %}
+
+     {{ include('Components/_user.html.twig')}}
+{% endfor %}

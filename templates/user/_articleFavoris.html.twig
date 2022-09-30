@@ -14,18 +14,13 @@
 {% block mainProfil %}
     <hr>
     <h1>articles likés {{user.articleLikeds | length}}</h1>
-    <div class="swip ">
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-            {% for article in user.getArticleLikeds %}
-                <div class="swiper-slide overflow-y articleCard">
-                    {% include "Components/_article.html.twig" with { couper: 'couper' , article: article.article} %}
-                </div>
-            {% endfor %}
+    <div class="d-flex ">
+
+        {% for article in user.getArticleLikeds %}
+            <div class="swiper-slide overflow-y articleCard">
+                {% include "Components/_article.html.twig" with { couper: 'couper' , article: article.article} %}
             </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
+        {% endfor %}
+
     </div>    
 {% endblock %}
