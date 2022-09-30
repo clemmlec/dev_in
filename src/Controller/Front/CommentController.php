@@ -42,8 +42,11 @@ class CommentController extends AbstractController
         } catch (Exception $e) {
             return new Response('maximum 255 caracteres', 500);
         }
-
-        return new Response('commantaire envoyé', 201);
+        $id = $commentRepository->findLastProducts();
+        
+       
+        return new Response( strval($id[0]->getId())
+        , 201);
     }
 
     #[Route('/jaime/{id}', name: 'user.comment.jaime', methods: ['GET'])]

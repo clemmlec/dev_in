@@ -6,13 +6,13 @@
   }
 
 .commentaire{
-    width: 85%;
+    width: 95%;
     // position: relative;
     .suggest{
         display: none;
         background-color: black;
     }
-    margin: 0;
+    margin: 0 auto 0 auto;
     .comment{
         position: relative;
         z-index: 4;

@@ -51,19 +51,40 @@
         <div 
             class="comment3 modele" 
             id="modele-comment">           
-            <div class="jaime" >
+            <div class="jaime"
+                {{ stimulus_controller('comment') }}
+                >
                 <span class="floatRight">
-                    <span  id="note0">(0)</span> 
                     <button 
-                        id="j0" 
-                        data_note="0/"
+                        value="" 
+                        class="btn-vierge red" 
+                        type="button" 
+                        {{ stimulus_action('comment', 'report') }}
+                        >
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </button>
+
+                    <button 
+                        value="" 
                         class="btn-vierge jaimee" 
                         type="button" 
-                        name="jaime" 
+                        {{ stimulus_action('comment', 'follows') }}
                         >
-                        <i data_id="0" class="far fa-thumbs-up"></i>
+                        <i class="far fa-thumbs-up"></i>
+                        <span id="like">(0)</span> 
+
                     </button>
+
                 </span>
+                <div class="suggest" id="suggest">
+                    <input class="plus grande" type="text" placeholder="Un probleme ?">
+                    <button 
+                        value="" 
+                        class="btn-vierge bleu" 
+                        {{ stimulus_action('comment', 'submitReport') }} 
+                        >envoyer</button>
+                </div>
+                
             </div>
             <p class="left head"> par {{ app.user ? app.user.name }}</p>
             <p class="left com">0</p>

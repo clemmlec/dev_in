@@ -22,10 +22,10 @@ class CommentCrudController extends AbstractCrudController
         return [
             IdField::new('id'),
             TextField::new('message'),
-            AssociationField::new('user'),
-            AssociationField::new('subject'),
+            AssociationField::new('user')->hideOnForm(),
+            AssociationField::new('subject')->hideOnForm(),
             BooleanField::new('active'),
-            AssociationField::new('commentReports')->setSortable(true),
+            AssociationField::new('commentReports')->setSortable(true)->hideOnForm(),
         ];
     }
 

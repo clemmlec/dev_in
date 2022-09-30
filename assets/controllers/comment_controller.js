@@ -35,13 +35,19 @@ export default class extends Controller {
                 let comment = document.getElementById("modele-comment");
                 let top =  document.getElementById("com"+subjectId);
                 let clone = comment.cloneNode(true);
-                // console.log(clone.children[0].children[0].children[1]);
-                // clone.children[0].children[0].children[1].setAttribute('data-action',"comment#follows")
+                // console.log(clone);
+                clone.children[0].children[0].children[1].value = reponse.data;
+                clone.children[0].children[0].children[0].value = reponse.data;
+                clone.children[0].children[0].children[1].children[1].setAttribute('id', 'like'+reponse.data)
+                clone.children[0].children[1].setAttribute('id', 'suggest'+reponse.data)
+                clone.setAttribute('id', 'comment'+reponse.data)
+                clone.children[0].children[1].children[1].value= reponse.data;
                 clone.classList.remove('modele');
 
                 clone.children[2].innerHTML=com;
 
                 top.insertBefore(clone, top.firstChild);
+                // console.log(reponse.data , '🎅🤶')
             })
             .catch(function (erreur) {
                 //On traite ici les erreurs éventuellement survenues
@@ -97,7 +103,8 @@ export default class extends Controller {
         let element = event.target
         let id = element.value;
         let message = document.getElementById('suggest'+id).childNodes[1].value;
-        // console.log(message);
+        // console.log(document.getElementById('suggest'+id).children);
+        console.log(message);
         axios.get(`/comment/signaler/${id}/${message}`)
         .then(function (reponse) {
             document.getElementById('suggest'+id).style.display ="none"

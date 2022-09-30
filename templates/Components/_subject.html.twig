@@ -112,7 +112,14 @@
             </div>
             {% endif %}
         {% endif %}
-    
+        <div>
+            {# <img class="subjectImage" src="{{ subject ? vich_uploader_asset(subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.nom}}"> #}
+            <div class="d-subject">
+                <div class="w-100 description">
+                    <div class="left">{{subject.description | raw}}</div>
+                </div>
+            </div>
+        </div>  
         <div class="commentaire">
             {# form new comment #}
             {% if app.user %} 
@@ -150,8 +157,6 @@
                                 <i class="fa-solid fa-triangle-exclamation"></i>
                             </button>
 
-                            <span id="like{{commen.id}}">({{commen.commentLikes | length }})</span> 
-
                             <button 
                                 value="{{commen.id}}" 
                                 class="btn-vierge jaimee" 
@@ -159,7 +164,10 @@
                                 {{ stimulus_action('comment', 'follows') }}
                                 >
                                 <i class="far fa-thumbs-up"></i>
+                                <span id="like{{commen.id}}">({{commen.commentLikes | length }})</span> 
+
                             </button>
+
                         </span>
                         <div class="suggest" id="suggest{{commen.id}}">
                             <input class="plus grande" type="text" placeholder="Un probleme ?">
@@ -182,14 +190,7 @@
             {% endfor %}
             </div>
         </div>
-        <div>
-            {# <img class="subjectImage" src="{{ subject ? vich_uploader_asset(subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.nom}}"> #}
-            <div class="d-subject">
-                <div class="w-100 description">
-                    <div class="left">{{subject.description | raw}}</div>
-                </div>
-            </div>
-        </div>  
+
     </div>
     
 
