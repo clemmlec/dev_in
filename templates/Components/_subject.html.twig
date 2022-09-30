@@ -103,7 +103,9 @@
                 <button 
                     {{ stimulus_action('subject', 'noter') }}
                     class="btn-vierge"  
-                    value="{{i}}-{{subject.id}}" >
+                    value="{{i}}-{{subject.id}}" 
+                    type="button"
+                    >
                         <i class="far fa-star stars" ></i>
                 </button>
                 {% endfor %}
@@ -115,31 +117,57 @@
             {# form new comment #}
             {% if app.user %} 
                 {# <form action="" id="commentPost{{subject.id}}"> #}
-                    <div class="comment">
+                    <div class="comment"  
+                    {{ stimulus_controller('comment') }}
+                    >
                         <input id="commentPost{{subject.id}}" class="envoieCommentInput" placeholder="écrit ton commentaire">
-                        <button type="button" class="btn-vierge envoiComment" value="{{subject.id}}|{{app.user.id}}" data-envoie-comment><i class="fa-solid fa-paper-plane"></i></button>
+                        <button 
+                            type="button" 
+                            class="btn-vierge envoiComment" 
+                            value="{{subject.id}}|{{app.user.id}}" 
+                            {{ stimulus_action('comment', 'newComment') }}
+                            ><i class="fa-solid fa-paper-plane"></i>
+                        </button>
                     </div>
                 {# </form> #}
             {% endif %}
             
             <div class="top" id="com{{subject.id}}">
             {% for commen in subject.comments |sort((a, b) => a.createdAt <= b.createdAt) %}
-                {% if commen.active %}
-                <div class="comment3" id="comment{{commen.id}}">           
+                {% if commen.active %}     
+                <div {{ stimulus_controller('comment') }}
+                    class="comment3" 
+                    id="comment{{commen.id}}"
+                    >           
                     <div class="jaime" >
                         <span class="floatRight">
-                            <button value="{{commen.id}}" class="btn-vierge red" type="button" data-signaler-comment >
+                            <button 
+                                value="{{commen.id}}" 
+                                class="btn-vierge red" 
+                                type="button" 
+                                {{ stimulus_action('comment', 'report') }}
+                                >
                                 <i class="fa-solid fa-triangle-exclamation"></i>
                             </button>
 
                             <span id="like{{commen.id}}">({{commen.commentLikes | length }})</span> 
-                            <button value="{{commen.id}}" class="btn-vierge jaimee" type="button" data-jaime-comment >
+
+                            <button 
+                                value="{{commen.id}}" 
+                                class="btn-vierge jaimee" 
+                                type="button" 
+                                {{ stimulus_action('comment', 'follows') }}
+                                >
                                 <i class="far fa-thumbs-up"></i>
                             </button>
                         </span>
                         <div class="suggest" id="suggest{{commen.id}}">
                             <input class="plus grande" type="text" placeholder="Un probleme ?">
-                            <button value="{{commen.id}}" class="btn-vierge bleu" data-submit-signaler-comment >envoyer</button>
+                            <button 
+                                value="{{commen.id}}" 
+                                class="btn-vierge bleu" 
+                                {{ stimulus_action('comment', 'submitReport') }} 
+                                >envoyer</button>
                         </div>
                     </div>
                     <p class="left head"> par {{ commen.user.name }}</p>

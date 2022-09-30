@@ -3,38 +3,49 @@
         <hr>
         <h1>{{article.name}}</h1>
         <hr>
-        <div class="iconArticle">
-            <button value="{{article.id}}" class="btn-vierge color-red" type="button" data-suggest-article >
+        <div class="iconArticle"  {{ stimulus_controller('article') }}>
+            <button
+                value="{{article.id}}" 
+                class="btn-vierge color-red" 
+                type="button" 
+                {{ stimulus_action('article', 'report') }} 
+                >
                 <i class="fa-solid fa-clipboard-question"></i>
             </button>
             <button 
-                    type="button" 
-                    class="btn-vierge " 
-                    value="{{article.id}}" 
-                    data-liked-article >
-                    {# {{ dump(article) }}
-                    {{ dump(app.user.getarticleFavoris()) }} #}
-                    {# {{ dump(article) }}
-                    {{ dump(app.user.articleFavoris) }} #}
-                    {% set fav = false %}
-                    {% if app.user %}
-                        {% for row in app.user.articleLikeds %}
-                            {% if row.article.id == article.id %}
-                                {% set fav = true %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
+                type="button" 
+                class="btn-vierge " 
+                value="{{article.id}}" 
+                {{ stimulus_action('article', 'follows') }} 
+                >
+                {# {{ dump(article) }}
+                {{ dump(app.user.getarticleFavoris()) }} #}
+                {# {{ dump(article) }}
+                {{ dump(app.user.articleFavoris) }} #}
+                {% set fav = false %}
+                {% if app.user %}
+                    {% for row in app.user.articleLikeds %}
+                        {% if row.article.id == article.id %}
+                            {% set fav = true %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                
+                {% if fav %}
+                    <i class="fa fa-star pointer yellow"></i>
+                {% else %}
+                    <i class="far fa-star pointer yellow"></i>
                     
-                    {% if fav %}
-                        <i class="fa fa-star pointer yellow"></i>
-                    {% else %}
-                        <i class="far fa-star pointer yellow"></i>
-                        
-                    {% endif %}
+                {% endif %}
             </button>
              <div class="suggest" id="suggest{{article.id}}">
                 <input class="plus grande" type="text" placeholder="Une suggestion ?">
-                <button value="{{article.id}}" class="btn-vierge bleu" data-submit-suggest-article >envoyer</button>
+                <button 
+                    value="{{article.id}}" 
+                    class="btn-vierge bleu" 
+                    {{ stimulus_action('article', 'submitReport') }} 
+                    >envoyer
+                </button>
             </div>
             
         </div>

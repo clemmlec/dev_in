@@ -15,10 +15,9 @@ import './js/collapse.js';
 import './js/modal.js';
 import './js/swiper.js';
 import './js/dropdown.js';
-import './js/comment.js';
+// import './js/comment.js';
 import './js/user.js';
 import './js/paralax.js';
-import './js/article.js';
 import './bootstrap.js';
 
 import Filter from './js/filter';
