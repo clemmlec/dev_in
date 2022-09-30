@@ -68,5 +68,21 @@
         <span class="date">à l'instant</span>
         <hr style="margin:2px"> 
     </div>
+
+    <div class="swip">
+            <div class="swiper mySwiper">
+                <h2 class="titreHome purple">Les derniers sujets de la même catégories</h2>
+                <div class="swiper-wrapper">
+                {% for subject in subjects %}
+                    <div class="swiper-slide overflow-y card">
+                        {{ include('Components/_subjectSwiper.html.twig' )}}   
+                    </div>
+                {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
 </section>
 {% endblock %}

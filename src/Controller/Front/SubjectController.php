@@ -109,19 +109,11 @@ class SubjectController extends AbstractController
     #[Route('/{id}', name: 'user_subject_show', methods: ['GET', 'POST'])]
     public function show(?Subject $subject, Security $security, Request $request, SubjectRepository $subjectRepository): Response
     {
-        // $form = $this->createForm(Subject1Type::class, $subject);
-        // $form->handleRequest($request);
-
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $subject->setUser($security->getUser());
-        //     $subjectRepository->add($subject, true);
-
-        //     return $this->redirectToRoute('user_subject_show', ['id' => $subject->getId()], Response::HTTP_SEE_OTHER);
-        // }
+        $subjects = $subjectRepository->findArticleWithSameForum($subject->getForum());
 
         return $this->renderForm('subject/show.html.twig', [
             'subject' => $subject,
-            // 'form' => $form,
+           'subjects' => $subjects,
         ]);
     }
 

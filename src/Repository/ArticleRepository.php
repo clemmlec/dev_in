@@ -91,7 +91,7 @@ class ArticleRepository extends ServiceEntityRepository
            ->leftJoin('a.tags', 't')
            ->andWhere('t.id IN (:tags)')
            ->setParameter('tags', $tags)
-           ->orderBy('a.createdAt', 'ASC')
+           ->orderBy('a.createdAt', 'DESC')
            ->setMaxResults(5)
            ->getQuery()
            ->getResult()
