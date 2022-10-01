@@ -121,7 +121,7 @@ body{
 }
 a{
     text-decoration: none;
-    color: #d37960;
+    color: #b03595
 }
 .b-50{
     height: 110px;
@@ -148,6 +148,10 @@ p{
 }
 @media all and (max-device-width: 491px)
 {
+
+    .commentaire .comment .envoieCommentInput {
+        font-size: 30px;
+    }
     #home{
         width: 100%;
         left: 0;
