@@ -50,6 +50,9 @@ export default class extends Controller {
                 clone.children[2].innerHTML=com;
 
                 top.insertBefore(clone, top.firstChild);
+                document.getElementById('commentPost'+subjectId).value=""
+                document.getElementById('commentPost'+subjectId).style.height="50px"
+                // console.log(document.getElementById('commentPost'+subjectId).value);
                 // console.log(reponse.data , '🎅🤶')
             })
             .catch(function (erreur) {
