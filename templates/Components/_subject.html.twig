@@ -128,7 +128,8 @@
                     <div class="comment"  
                     {{ stimulus_controller('comment') }}
                     >
-                        <input id="commentPost{{subject.id}}" class="envoieCommentInput" placeholder="écrit ton commentaire">
+                    <textarea id="commentPost{{subject.id}}" class="envoieCommentInput"  name="" id="" cols="10" rows="3"></textarea>
+                        {# <input id="commentPost{{subject.id}}" class="envoieCommentInput" placeholder="écrit ton commentaire"> #}
                         <button 
                             type="button" 
                             class="btn-vierge envoiComment" 
@@ -198,7 +199,7 @@
 
                     </div>
                     <p class="left head"> par {{ commen.user.name }}</p>
-                    <p class="left com"> {{ commen.message}}
+                    <p class="left com"> {{ commen.message | nl2br | raw }}
                     </p>
                     <span class="date">{{commen.createdAt | ago}}</span>
                     <hr style="margin:2px"> 

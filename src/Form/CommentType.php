@@ -13,10 +13,10 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('comment', TextType::class, [
-                'label' => 'commentaire',
-                'required' => true,
-            ])
+            // ->add('comment', TextType::class, [
+            //     'label' => 'commentaire',
+            //     'required' => true,
+            // ])
             // ->add('active', CheckboxType::class, [
             //     'help' => 'actif/mute',
             // ])
