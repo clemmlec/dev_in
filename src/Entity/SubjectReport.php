@@ -64,4 +64,9 @@ class SubjectReport
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->message;
+    }
 }

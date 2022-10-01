@@ -3,14 +3,15 @@
 namespace App\Controller\admin;
 
 use App\Entity\Article;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class ArticleCrudController extends AbstractCrudController
 {
@@ -34,7 +35,7 @@ class ArticleCrudController extends AbstractCrudController
             TextEditorField::new('content')->setFormType(CKEditorType::class),
             AssociationField::new('tags')->setCrudController(TagsCrudController::class),
             AssociationField::new('user')->hideOnForm(),
-            AssociationField::new('articleSuggestions')->hideOnForm()->setSortable(true),
+            ArrayField::new('articleSuggestions')->hideOnForm()->setSortable(false),
             DateTimeField::new('created_at')->hideOnForm()->setSortable(true),
             DateTimeField::new('updated_at')->hideOnForm()->setSortable(true),
 
