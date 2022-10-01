@@ -3,12 +3,13 @@
 namespace App\Controller\admin;
 
 use App\Entity\Comment;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class CommentCrudController extends AbstractCrudController
 {
@@ -22,10 +23,10 @@ class CommentCrudController extends AbstractCrudController
         return [
             IdField::new('id'),
             TextField::new('message'),
-            AssociationField::new('user'),
-            AssociationField::new('subject'),
+            AssociationField::new('user')->hideOnForm(),
+            AssociationField::new('subject')->hideOnForm(),
+            ArrayField::new('commentReports')->setSortable(false)->hideOnForm(),
             BooleanField::new('active'),
-            AssociationField::new('commentReports')->setSortable(true),
         ];
     }
 

@@ -4,7 +4,7 @@
 {% endblock %}
 {% block meta %} 
     <meta name="description" 
-        content="Le sujet {{subject.nom}} posté par {{subject.user.name}} sur Dev In, le site de l'entraide entre devs." 
+        content="Le sujet {{subject.nom}} posté par {{subject.user ? subject.user.name : "ancien utilisateur"}} sur Dev In, le site de l'entraide entre devs." 
     /> 
     <meta name="robots" 
         content="index,follow"
@@ -21,7 +21,68 @@
 {% endblock %}
 
 {% block body %}
-<section class="d-flex w-100">
+<section class="d-flex w-80">
     {{ include('Components/_subject.html.twig')}}   
+    
+    {# clone commentaire #}
+    <div 
+        class="comment3 modele" 
+        id="modele-comment">           
+        <div class="jaime"
+            {{ stimulus_controller('comment') }}
+            >
+            <span class="floatRight">
+                <button 
+                    value="" 
+                    class="btn-vierge color-red" 
+                    type="button" 
+                    {{ stimulus_action('comment', 'report') }}
+                    >
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </button>
+
+                <button 
+                    value="" 
+                    class="btn-vierge jaimee" 
+                    type="button" 
+                    {{ stimulus_action('comment', 'follows') }}
+                    >
+                    <i class="far fa-thumbs-up yellow"></i>
+                    <span id="like">(0)</span> 
+
+                </button>
+
+            </span>
+            <div class="suggest" id="suggest">
+                <input class="plus grande" type="text" placeholder="Un probleme ?">
+                <button 
+                    value="" 
+                    class="btn-vierge bleu" 
+                    {{ stimulus_action('comment', 'submitReport') }} 
+                    >envoyer</button>
+            </div>
+            
+        </div>
+        <p class="left head"> par {{ app.user ? app.user.name }}</p>
+        <p class="left com">0</p>
+        <span class="date">à l'instant</span>
+        <hr style="margin:2px"> 
+    </div>
+
+    <div class="swip">
+        <div class="swiper mySwiper">
+            <h2 class="titreHome purple">Les derniers sujets de la même catégories</h2>
+            <div class="swiper-wrapper">
+            {% for subject in subjects %}
+                <div class="swiper-slide overflow-y card">
+                    {{ include('Components/_subjectSwiper.html.twig' )}}   
+                </div>
+            {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
 </section>
 {% endblock %}

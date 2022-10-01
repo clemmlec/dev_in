@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Follow;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Follow>
@@ -16,7 +16,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class FollowRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        ManagerRegistry $registry,
+        )
     {
         parent::__construct($registry, Follow::class);
     }
@@ -53,6 +55,23 @@ class FollowRepository extends ServiceEntityRepository
        ;
    }
 
+//    public function findAllGreaterThanPrice(int $id): array
+//    {
+//     $conn = $this->getEntityManager()->getConnection();
+
+//     $sql = '
+//         SELECT f.friend_id, u.* FROM follow f
+//         INNER JOIN user u ON f.user_id = u.id
+//         WHERE f.user_id = :id
+//         ORDER BY f.id DESC
+//         ';
+//     $stmt = $conn->prepare($sql);
+//     $resultSet = $stmt->executeQuery(['id' => $id]);
+
+//     // returns an array of arrays (i.e. a raw data set)
+//     return $resultSet->fetchAllAssociative();
+//    }
+
     /**
      * @return Follow[] Returns an array of Follow objects
      */
@@ -68,6 +87,7 @@ class FollowRepository extends ServiceEntityRepository
         ;
     }
 
+    
 //    public function findOneBySomeField($value): ?Follow
 //    {
 //        return $this->createQueryBuilder('f')

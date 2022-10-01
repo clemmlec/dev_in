@@ -43,10 +43,13 @@ export default class extends Controller {
     }
     submitReport(event) {
         let elem = event.target
+        if (event.target.type != "button" ){
+            elem = event.target.parentNode
+        }
+
         let id = elem.value;
 
-        let message = document.getElementById('suggest'+id).childNodes[1].value;
-        // console.log(message);
+        let message = document.getElementById('suggest'+id).childNodes[1].childNodes[1].value;
         axios.get(`/article/suggest/${id}/${message}`)
             .then(function (reponse) {
                 document.getElementById('suggest'+id).style.display ="none"

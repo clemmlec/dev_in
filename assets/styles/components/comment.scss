@@ -6,13 +6,16 @@
   }
 
 .commentaire{
-    width: 85%;
+    width: 95%;
     // position: relative;
     .suggest{
         display: none;
-        background-color: black;
     }
-    margin: 0;
+    .suggestGrid{
+        top: 0 !important;
+        right: 10px !important;
+    }
+    margin: 0 auto 0 auto;
     .comment{
         position: relative;
         z-index: 4;
@@ -55,7 +58,8 @@
         .comment3{
 
             position: relative;
-            max-height: 350px !important;
+            // max-height: 350px !important;
+            // overflow-y: scroll;
             max-width: inherit;
             margin: auto;
 
@@ -96,11 +100,15 @@
                 margin-left: 3px;
                 font-size: 0.9em;
                 padding-bottom: 20px;
+                word-break: break-all;
+                word-wrap: break-word;
+                max-width: inherit;
+
               
             }
             .date{
                 position: absolute;
-                bottom: 5px;
+                top: 40px;
                 right: 0;
                 font-size: 0.8em;
                 opacity: 0.5;

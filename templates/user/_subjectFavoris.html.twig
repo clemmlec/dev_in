@@ -14,18 +14,11 @@
 {% block mainProfil %}
     <hr>
     <h1>subjects favoris {{user.subjectFavoris | length}}</h1>
-    <div class="swip ">
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-            {% for subject in user.subjectFavoris %}
-                <div class="swiper-slide overflow-y card">
-                    {% include "Components/_subjectSwiper.html.twig" with { subject: subject.subject} %}
-                </div>
-            {% endfor %}
+    <div class="d-flex">
+        {% for subject in user.subjectFavoris %}
+            <div class="swiper-slide overflow-y card">
+                {% include "Components/_subjectSwiper.html.twig" with { subject: subject.subject} %}
             </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
-    </div>    
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -18,7 +18,7 @@ class SubjectFavoris
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'subjectFavoris')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Subject $subject = null;
 
     public function getId(): ?int

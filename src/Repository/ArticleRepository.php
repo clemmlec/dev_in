@@ -67,6 +67,21 @@ class ArticleRepository extends ServiceEntityRepository
         // dd($queryBuilder);
     }
 
+    
+   /**
+    * @return Article[] Returns an array of Article with same tags
+    */
+    public function findLastArticles(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.createdAt', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
    /**
     * @return Article[] Returns an array of Article with same tags
     */
@@ -76,7 +91,7 @@ class ArticleRepository extends ServiceEntityRepository
            ->leftJoin('a.tags', 't')
            ->andWhere('t.id IN (:tags)')
            ->setParameter('tags', $tags)
-           ->orderBy('a.createdAt', 'ASC')
+           ->orderBy('a.createdAt', 'DESC')
            ->setMaxResults(5)
            ->getQuery()
            ->getResult()

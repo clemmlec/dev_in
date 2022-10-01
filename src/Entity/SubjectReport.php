@@ -18,7 +18,7 @@ class SubjectReport
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'subjectReports')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?Subject $subject = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -63,5 +63,10 @@ class SubjectReport
         $this->message = $message;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->message;
     }
 }

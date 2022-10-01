@@ -39,6 +39,11 @@ class CommentRepository extends ServiceEntityRepository
         }
     }
 
+    public function findLastProducts()
+    {
+        return $this->findBy([], ['createdAt' => 'DESC']);
+    }
+
 //    /**
 //     * @return Comment[] Returns an array of Comment objects
 //     */

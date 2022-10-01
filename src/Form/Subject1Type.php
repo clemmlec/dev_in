@@ -3,10 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Subject;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class Subject1Type extends AbstractType
 {
@@ -14,8 +15,12 @@ class Subject1Type extends AbstractType
     {
         $builder
 
+            ->add('nom', TextType::class, [
+                'label' => 'titre',
+                'required' => true,
+            ])
             ->add('description', CKEditorType::class, [
-                'label' => 'content',
+                'label' => 'description',
                 'required' => true,
             ])
 

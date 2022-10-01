@@ -19,11 +19,11 @@ class MainController extends AbstractController
         //     return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()]);
         // }
         $subjects = $subjectRepository->findRandSubject();
-        $article = $articleRepo->findOneBy([], ['id' => 'desc'], 1, 0);
+        $articles = $articleRepo->findLastArticles();
 
         return $this->render('index.html.twig', [
             'subjects' => $subjects,
-            'article' => $article,
+            'articles' => $articles,
         ]);
     }
 

@@ -15,9 +15,9 @@
         // border: solid 2px rgb(114, 114, 114);
         /* padding: 20px; */
         border-radius: 5px;
-        box-shadow: 0 0 5px rgb(231, 231, 231),
-            0 0 25px rgb(102, 102, 102),
-            inset 0 4px 15px rgb(0, 0, 0);
+        box-shadow: 0 0 5px rgba(231, 231, 231, 0.402),
+            0 0 25px rgba(102, 102, 102, 0.44),
+            inset 0 4px 15px rgba(0, 0, 0, 0.359);
         text-align: center;
         justify-content: center;
         align-items: center;
@@ -28,7 +28,13 @@
         
         .suggest{
             display: none;
-            background-color: black;
+
+        }
+        .rightFloat{
+            float: right;
+        }
+        .suggestGrid{
+            top: 0 !important;
         }
         .toptitre{
     
@@ -76,7 +82,9 @@
         .right{
             text-align: right;
         }
-
+        img{
+            max-width: 100%;
+        }
         .avatar{
             width: 30px;
             vertical-align: middle;
@@ -96,8 +104,8 @@
             
         }
         .d-flex-image{
-            display: flex;
-            flex-wrap: wrap-reverse;
+            // display: flex;
+            // flex-wrap: wrap-reverse;
             padding: 10px;
             justify-content: space-evenly;
             text-align: center;

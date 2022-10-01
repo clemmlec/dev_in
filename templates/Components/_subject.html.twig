@@ -19,16 +19,9 @@
         <span class="mute">{{subject.createdAt | ago}}</span>
     </h2>
     <div class="iconSubject" {{ stimulus_controller('subject') }}>
-        <button {{ stimulus_action('subject', 'report') }}
-                value="{{subject.id}}" 
-                class="btn-vierge color-red" 
-                type="button" 
-                >
-            <i class="fa-solid fa-triangle-exclamation"></i>
-        </button>
         <button {{ stimulus_action('subject', 'follows') }}
                 type="button" 
-                class="btn-vierge " 
+                class="btn-vierge rightFloat" 
                 value="{{subject.id}}" 
                 >
                 {# {{ dump(subject) }}
@@ -53,43 +46,185 @@
                 
                 
         </button>
+                <button {{ stimulus_action('subject', 'report') }}
+                value="{{subject.id}}" 
+                class="btn-vierge color-red rightFloat" 
+                type="button" 
+                >
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </button>
         <div class="suggest" id="suggestSubject{{subject.id}}">
-            <input class="plus grande" type="text" placeholder="Un probleme ?">
-            <button {{ stimulus_action('subject', 'submitReport') }}
+            <div class="suggestGrid">
+                <input class="plus grande envoieSuggestInput" type="text" placeholder="Un probleme ?">
+                <button {{ stimulus_action('subject', 'submitReport') }}
                     value="{{subject.id}}" 
-                    class="btn-vierge bleu" 
-                    >envoyer</button>
+                    class="btn-vierge bleu envoiSuggest" 
+                    type="button"
+                    ><i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
         </div>
-    </div>
-
-    <h1 class="title">{{subject.nom}}
-    {% if  subject.noteSubjects | length > 0 %}
         
-        {# {{dump(subject.getNoteSubjects())}} #}
-        {% set somme = 0 %}
-        {% for row in subject.getNoteSubjects() %}
-        {% set somme = somme + row.note
-            %}
-            
-        {% endfor %}
-            {% set somme = somme / (subject.getNoteSubjects()| length) %}
-            <div class="note">
-            {% for i in 1..10 %}
-                {# {% if i <= somme * 2 %} #}
-                {% if i is odd %}
-                <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                {% else %}
-                <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                {% endif %}
-                {# {% endif %} #}
-            {% endfor %}
+        {% if app.user and subject.user and app.user.id == subject.user.id %}
+            <button
+                value="{{subject.id}}" 
+                class="btn-vierge" 
+                type="button" 
+                >
+            <a href="{{ path('user_subject_edit', {'id': subject.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+        </button>
+        {% endif %}
+    </div>
+    <div>
+        {# {% if app.user and app.user.id == subject.user.id %}
+        <button data-btnEdit-subjectName value="{{subject.id}}">Modifer le titre</button>
+        <div class="suggest" id="editSubject{{subject.id}}">
+            <input id="subjectName" type="text" value="{{subject.nom}}">
+            <button class="btnVierge" value="{{subject.id}}" data-edit-subjectName >modifier</button>
         </div>
-    {% endif %}
-    </h1>
+        {% endif %} #}
+
+        <h1 class="title"><span>{{subject.nom}}</span>
+        {% if  subject.noteSubjects | length > 0 %}
+            
+            {# {{dump(subject.getNoteSubjects())}} #}
+            {% set somme = 0 %}
+            {% for row in subject.getNoteSubjects() %}
+            {% set somme = somme + row.note
+                %}
+                
+            {% endfor %}
+                {% set somme = somme / (subject.getNoteSubjects()| length) %}
+                <div class="note">
+                {% for i in 1..10 %}
+                    {# {% if i <= somme * 2 %} #}
+                    {% if i is odd %}
+                    <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
+                    {% else %}
+                    <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
+                    {% endif %}
+                    {# {% endif %} #}
+                {% endfor %}
+            </div>
+        {% endif %}
+        </h1>
+    </div>
     {# {{ dump(app.user) }} #}
     <div class="d-flex-image">
         {# noter l subject #}
-        {% if app.user and subject.user and app.user.id != subject.user.id  %}
+
+        <div>
+            {# <img class="subjectImage" src="{{ subject ? vich_uploader_asset(subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.nom}}"> #}
+            <div class="d-subject">
+                <div class="w-100 description">
+                    <div class="left">{{subject.description | raw}}</div>
+                </div>
+            </div>
+        </div>  
+        <div class="commentaire">
+            {# form new comment #}
+            {% if app.user %} 
+                {# <form action="" id="commentPost{{subject.id}}"> #}
+                    <div class="comment"  
+                    {{ stimulus_controller('comment') }}
+                    >
+                    <textarea id="commentPost{{subject.id}}" class="envoieCommentInput "  name="" id="" cols="1" rows="3"></textarea>
+                        {# <input id="commentPost{{subject.id}}" class="envoieCommentInput" placeholder="écrit ton commentaire"> #}
+                        <button 
+                            type="button" 
+                            class="btn-vierge envoiComment" 
+                            value="{{subject.id}}|{{app.user.id}}"
+                            {{ stimulus_action('comment', 'newComment') }}
+                            ><i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                {# </form> #}
+            {% endif %}
+            
+            <div class="top" id="com{{subject.id}}">
+            {% for commen in subject.comments |sort((a, b) => a.createdAt <= b.createdAt) %}
+                {% if commen.active %}     
+                <div {{ stimulus_controller('comment') }}
+                    class="comment3" 
+                    id="comment{{commen.id}}"
+                    >           
+                    <div class="jaime" >
+                        <span class="floatRight">
+                            <button 
+                                value="{{commen.id}}" 
+                                class="btn-vierge jaimee rightFloat" 
+                                type="button" 
+                                {{ stimulus_action('comment', 'follows') }}
+                                >
+                                {% set fav = false %}
+                                {% if app.user %}
+                                    {% for row in app.user.commentLikes %}
+                                        {% if row.comment.id == commen.id %}
+                                            {% set fav = true %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                
+                                {% if fav %}
+                                    <i class="fa-solid fa-thumbs-up yellow"></i>
+                                {% else %}
+                                    <i class="far fa-thumbs-up yellow"></i>
+                                {% endif %}
+                                
+                                <span id="like{{commen.id}}">({{commen.commentLikes | length }})</span> 
+
+                            </button>
+                            <button 
+                                value="{{commen.id}}" 
+                                class="btn-vierge color-red rightFloat" 
+                                type="button" 
+                                {{ stimulus_action('comment', 'report') }}
+                                >
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </button>
+                            {% if app.user and app.user.id == commen.user.id %}
+                                <button 
+                                    value="{{commen.id}}"
+                                    class="btn-vierge rightFloat" 
+                                    {{ stimulus_action('comment', 'delete') }}
+                                >
+                                    <i class="fa-solid fa-trash-can"></i>
+                                    
+                                </button>
+                            {% endif %}
+                        </span>
+                        <div class="suggest" id="suggest{{commen.id}}">
+                            <div class="suggestGrid">
+                                <input class="plus grande envoieSuggestInput" type="text" placeholder="Un probleme ?">
+                                <button 
+                                    value="{{commen.id}}" 
+                                    class="btn-vierge bleu envoiSuggest" 
+                                    {{ stimulus_action('comment', 'submitReport') }} 
+                                    type="button" 
+                                    ><i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <span class="date">{{commen.createdAt | ago}}</span>
+                    <p class="left head"> par {{ commen.user.name }}</p>
+                    <p class="left com"> {{ commen.message | nl2br | raw }}
+                    </p>
+                    
+                    <hr style="margin:2px"> 
+                </div>
+                {% endif %}
+            {% else %}
+                <p>pas encore de commantaires</p>
+            {% endfor %}
+            </div>
+        </div>
+
+        {% if ( app.user and subject.user and app.user.id != subject.user.id ) or subject.user== null %}
+        {% if  app.user %}
+            
+        
             {% set noter = false %}
             {% for row in app.user.noteSubjects %}
                 {% if row.subject.id == subject.id %}
@@ -112,84 +247,7 @@
             </div>
             {% endif %}
         {% endif %}
-    
-        <div class="commentaire">
-            {# form new comment #}
-            {% if app.user %} 
-                {# <form action="" id="commentPost{{subject.id}}"> #}
-                    <div class="comment"  
-                    {{ stimulus_controller('comment') }}
-                    >
-                        <input id="commentPost{{subject.id}}" class="envoieCommentInput" placeholder="écrit ton commentaire">
-                        <button 
-                            type="button" 
-                            class="btn-vierge envoiComment" 
-                            value="{{subject.id}}|{{app.user.id}}" 
-                            {{ stimulus_action('comment', 'newComment') }}
-                            ><i class="fa-solid fa-paper-plane"></i>
-                        </button>
-                    </div>
-                {# </form> #}
-            {% endif %}
-            
-            <div class="top" id="com{{subject.id}}">
-            {% for commen in subject.comments |sort((a, b) => a.createdAt <= b.createdAt) %}
-                {% if commen.active %}     
-                <div {{ stimulus_controller('comment') }}
-                    class="comment3" 
-                    id="comment{{commen.id}}"
-                    >           
-                    <div class="jaime" >
-                        <span class="floatRight">
-                            <button 
-                                value="{{commen.id}}" 
-                                class="btn-vierge red" 
-                                type="button" 
-                                {{ stimulus_action('comment', 'report') }}
-                                >
-                                <i class="fa-solid fa-triangle-exclamation"></i>
-                            </button>
-
-                            <span id="like{{commen.id}}">({{commen.commentLikes | length }})</span> 
-
-                            <button 
-                                value="{{commen.id}}" 
-                                class="btn-vierge jaimee" 
-                                type="button" 
-                                {{ stimulus_action('comment', 'follows') }}
-                                >
-                                <i class="far fa-thumbs-up"></i>
-                            </button>
-                        </span>
-                        <div class="suggest" id="suggest{{commen.id}}">
-                            <input class="plus grande" type="text" placeholder="Un probleme ?">
-                            <button 
-                                value="{{commen.id}}" 
-                                class="btn-vierge bleu" 
-                                {{ stimulus_action('comment', 'submitReport') }} 
-                                >envoyer</button>
-                        </div>
-                    </div>
-                    <p class="left head"> par {{ commen.user.name }}</p>
-                    <p class="left com"> {{ commen.message}}
-                    </p>
-                    <span class="date">{{commen.createdAt | ago}}</span>
-                    <hr style="margin:2px"> 
-                </div>
-                {% endif %}
-            {% else %}
-                <p>pas encore de commantaires</p>
-            {% endfor %}
-            </div>
-        </div>
-        <div>
-            {# <img class="subjectImage" src="{{ subject ? vich_uploader_asset(subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.nom}}"> #}
-            <div class="d-subject">
-                <div class="w-100 description">
-                    <div class="left">{{subject.description | raw}}</div>
-                </div>
-            </div>
-        </div>  
+        {% endif %}
     </div>
     
 

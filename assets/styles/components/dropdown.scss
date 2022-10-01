@@ -8,20 +8,22 @@
     display: none;
     position: absolute;
     right: 0px;
-    background-color: #f9f9f9;
-    min-width: 160px;
+    background: #0b0420;
+    color: aliceblue;
+    min-width: 250px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    white-space: nowrap;
   }
   
   .dropdown-content a {
-    color: black;
+    color: rgb(255, 255, 255);
     padding: 12px 16px;
     text-decoration: none;
     display: block;
   }
   
-  .dropdown-content a:hover {background-color: #f1f1f1}
+  .dropdown-content a:hover {background-color: #004182}
   
   .dropdown:hover .dropdown-content {
     display: block;

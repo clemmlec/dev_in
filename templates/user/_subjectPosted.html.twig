@@ -14,19 +14,12 @@
 {% block mainProfil %}
     <hr>
     <h1>subjects postés {{user.subjects | length}}</h1>
-    <div class="swip ">
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                {% for subject in subjects %}
-                    <div class="swiper-slide overflow-y card">
-                        {% include "Components/_subjectSwiper.html.twig" with { subject: subject} %}
-                    </div>
-                {% endfor %}
+    <div class="d-flex">
+        {% for subject in subjects %}
+            <div class="swiper-slide overflow-y card">
+                {% include "Components/_subjectSwiper.html.twig" with { subject: subject} %}
             </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
+        {% endfor %}
     </div>    
 
 {% endblock %}

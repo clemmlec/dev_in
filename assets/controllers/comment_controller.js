@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 import axios from 'axios';
+
 /*
  * This is an example Stimulus controller!
  *
@@ -22,6 +23,8 @@ export default class extends Controller {
         let subjectId=element.value.split('|')[0];
         let user=element.value.split('|')[1];
         let com= document.getElementById('commentPost'+subjectId).value;
+        console.log(com);
+        
         let mesDonnees = new FormData();
         mesDonnees.set("subject", subjectId);
         mesDonnees.set("com", com);
@@ -35,13 +38,19 @@ export default class extends Controller {
                 let comment = document.getElementById("modele-comment");
                 let top =  document.getElementById("com"+subjectId);
                 let clone = comment.cloneNode(true);
-                // console.log(clone.children[0].children[0].children[1]);
-                // clone.children[0].children[0].children[1].setAttribute('data-action',"comment#follows")
+                // console.log(clone);
+                clone.children[0].children[0].children[1].value = reponse.data;
+                clone.children[0].children[0].children[0].value = reponse.data;
+                clone.children[0].children[0].children[1].children[1].setAttribute('id', 'like'+reponse.data)
+                clone.children[0].children[1].setAttribute('id', 'suggest'+reponse.data)
+                clone.setAttribute('id', 'comment'+reponse.data)
+                clone.children[0].children[1].children[1].value= reponse.data;
                 clone.classList.remove('modele');
 
                 clone.children[2].innerHTML=com;
 
                 top.insertBefore(clone, top.firstChild);
+                // console.log(reponse.data , '🎅🤶')
             })
             .catch(function (erreur) {
                 //On traite ici les erreurs éventuellement survenues
@@ -95,13 +104,34 @@ export default class extends Controller {
     }
     submitReport(event) {
         let element = event.target
+        if (event.target.type != "button" ){
+            element = event.target.parentNode
+        }
         let id = element.value;
-        let message = document.getElementById('suggest'+id).childNodes[1].value;
-        // console.log(message);
+        let message = document.getElementById('suggest'+id).childNodes[1].childNodes[1].value;
+        // console.log(document.getElementById('suggest'+id).children);
+        console.log(message);
         axios.get(`/comment/signaler/${id}/${message}`)
         .then(function (reponse) {
             document.getElementById('suggest'+id).style.display ="none"
             document.getElementById('comment'+id).style.display ="none"
+        });
+    }
+
+    delete(event) {
+        let element = event.target
+        if (event.target.type != "button" ){
+            element = event.target.parentNode
+        }
+        let id = element.value;
+        // console.log(document.getElementById('suggest'+id).children);
+        axios.delete(`/comment/delete/${id}`)
+        .catch(function(error){
+            console.log(error)
+        })
+        .then(function (reponse) {
+            document.getElementById('comment'+id).style.display ="none"
+            console.log(reponse)
         });
     }
    

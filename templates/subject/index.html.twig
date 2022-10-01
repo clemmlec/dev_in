@@ -13,8 +13,14 @@
 
 {% block body %}
     <div class="w-80 js-filter">
-
-        {{ form_start(forms, { 'attr' : { 'class' : 'form js-filter-form'} }) }}
+        
+        {{ form_start(forms, { 'attr' : { 'class' : 'formSearch js-filter-form'} }) }}
+        <div class="loader">
+            <div class="js-loading" role="status" aria-hidden="true" style="display: none">
+                <span class=""><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>
+            </div>
+        </div>
+            <h1>Filter par catégories</h1>
             {{ form_row(forms.forum) }}
             {# <button class="btn-vierge" type="submit">Rechercher</button> #}
         {{ form_end(forms, {'render_rest': false }) }}
@@ -51,19 +57,40 @@
         <div 
             class="comment3 modele" 
             id="modele-comment">           
-            <div class="jaime" >
+            <div class="jaime"
+                {{ stimulus_controller('comment') }}
+                >
                 <span class="floatRight">
-                    <span  id="note0">(0)</span> 
                     <button 
-                        id="j0" 
-                        data_note="0/"
+                        value="" 
+                        class="btn-vierge color-red" 
+                        type="button" 
+                        {{ stimulus_action('comment', 'report') }}
+                        >
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </button>
+
+                    <button 
+                        value="" 
                         class="btn-vierge jaimee" 
                         type="button" 
-                        name="jaime" 
+                        {{ stimulus_action('comment', 'follows') }}
                         >
-                        <i data_id="0" class="far fa-thumbs-up"></i>
+                        <i class="far fa-thumbs-up yellow"></i>
+                        <span id="like">(0)</span> 
+
                     </button>
+
                 </span>
+                <div class="suggest" id="suggest">
+                    <input class="plus grande" type="text" placeholder="Un probleme ?">
+                    <button 
+                        value="" 
+                        class="btn-vierge bleu" 
+                        {{ stimulus_action('comment', 'submitReport') }} 
+                        >envoyer</button>
+                </div>
+                
             </div>
             <p class="left head"> par {{ app.user ? app.user.name }}</p>
             <p class="left com">0</p>

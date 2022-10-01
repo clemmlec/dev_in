@@ -55,6 +55,11 @@ class ArticleController extends AbstractController
         #[Route('/{id}', name: 'article_show', methods: ['GET', 'POST'])]
     public function show(?Article $article, ArticleRepository $articleRepository): Response
     {
+        if(!$article instanceof Article) {
+            $this->addFlash('error', 'Nous ne trouvons pas l\'article demandé');
+
+            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+        }
         $articles = $articleRepository->findArticleWithSameTags($article->getTags());
 
         return $this->renderForm('article/show.html.twig', [
@@ -64,14 +69,19 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/liked/{id}', name: 'app_article_liked', methods: ['GET'])]
-    public function likedArticle(?Article $article, ArticleLikedRepository $articleFavRepo, ArticleRepository $articleRepo, Security $security)
+    public function likedArticle(?Article $article, ArticleLikedRepository $articleFavRepo, ArticleRepository $articleRepo, Security $security): Response
     {
         $articleFav = new ArticleLiked();
         $follow = $articleRepo->find($article);
 
         $user = $security->getUser();
+        if(!$user) {
+            $this->addFlash('error', 'Veuillez vous connecter pour liker un article');
 
-        if ($follow && $user) {
+            return new Response('authentification requise', 403);
+        }
+
+        if ($follow) {
             $dejaAmis = $articleFavRepo->findOneBy(['user' => $user, 'article' => $article]);
             if (!$dejaAmis) {
                 $articleFav->setUser($user)
@@ -89,11 +99,15 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/suggest/{id}/{message}', name: 'user.article.suggest', methods: ['GET'])]
-    public function signalerarticle(?Article $article, string $message, Security $security, ArticleRepository $artRepo, ArticleSuggestionRepository $artSignalRepo)
+    public function signalerarticle(?Article $article, string $message, Security $security, ArticleRepository $artRepo, ArticleSuggestionRepository $artSignalRepo): Response
     {
         $user = $security->getUser();
+        if(!$user) {
+            $this->addFlash('error', 'Veuillez vous connecter pour liker un article');
 
-        if ($article && $user) {
+            return new Response('authentification requise', 403);
+        }
+        if ($article) {
             $newSignal = new ArticleSuggestion();
             $newSignal->setUser($user)
             ->setarticle($article)

@@ -1,4 +1,4 @@
-{% for user in users %}
+
     <div class="swiper-slide card" style="{{user.style}}">
         <h3 class="toptitre photo b-50 gris">
             <img class="avatar" src="{{ user.imageName ? vich_uploader_asset(user, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{user.name}}">
@@ -52,4 +52,3 @@
         <button class="btn-vierge"><a href="{{ path('app_user_profil', {'id': user.id}) }}">voir le profil</a></button>
         {# <a href="bb">dfgff sdg s sg </a> #}
     </div>
-{% endfor %}

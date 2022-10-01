@@ -121,7 +121,8 @@ body{
 }
 a{
     text-decoration: none;
-    color: #d37960;
+    color: #9d58a9;
+    font-weight: bolder;
 }
 .b-50{
     height: 110px;
@@ -146,8 +147,18 @@ p{
 .reverse{
     flex-direction: row-reverse;
 }
+.btnTrash{
+    font-size: 1.5em;
+    float: right;
+    margin-right: 30px;
+    margin-top: 70px;
+}
 @media all and (max-device-width: 491px)
 {
+
+    .commentaire .comment .envoieCommentInput {
+        font-size: 30px;
+    }
     #home{
         width: 100%;
         left: 0;
@@ -239,13 +250,24 @@ p{
     }
     #btnProfil{
         top: 250px !important;
-        right: 20% !important;
+  
     }
     .nav-logo{
         height: 50px;
     }
     .w-80{
         width: 100%;
+    }
+    .head{
+        height: 50px;
+    }
+    .avatar{
+        position: relative;
+        width: 100px;
+        top: 50px;
+    }
+    .dropdown-content{
+        top: 120px;
     }
 
     .form{

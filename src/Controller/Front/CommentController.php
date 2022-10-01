@@ -42,8 +42,11 @@ class CommentController extends AbstractController
         } catch (Exception $e) {
             return new Response('maximum 255 caracteres', 500);
         }
-
-        return new Response('commantaire envoyé', 201);
+        $id = $commentRepository->findLastProducts();
+        
+       
+        return new Response( strval($id[0]->getId())
+        , 201);
     }
 
     #[Route('/jaime/{id}', name: 'user.comment.jaime', methods: ['GET'])]
@@ -85,5 +88,23 @@ class CommentController extends AbstractController
         }
 
         return new Response('commentaire non trouvé', 404);
+    }
+
+    #[Route('/delete/{id}', name: 'user_comment_delete', methods: ['DELETE'])]
+    public function delete( ?Comment $comment, Security $security, Request $request, CommentRepository $commentRepository): Response
+    {
+        $user = $security->getUser();
+        
+        if ($comment->getUser() !== $user) {
+            return new Response('vous n\avez pas les droits pour supprimer ce commantaire', 404);
+        }
+
+        try {
+            $commentRepository->remove($comment, true);
+        } catch (\Throwable $th) {
+            return new Response('commantaire non supprimé', 403);
+        }
+   
+        return new Response('commantaire supprimé', 201);
     }
 }

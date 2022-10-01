@@ -42,9 +42,14 @@ export default class extends Controller {
     }
     submitReport(event) {
         let elem = event.target
-        let id = elem.value;
+        if (event.target.type != "button" ){
+            elem = event.target.parentNode
+        }
 
-        let message = document.getElementById('suggestSubject'+id).childNodes[1].value;
+        let id = elem.value;
+        console.log(id);
+
+        let message = document.getElementById('suggestSubject'+id).childNodes[1].childNodes[1].value;
         console.log(message);
         axios.get(`/subject/signaler/${id}/${message}`)
         .then(function (reponse) {

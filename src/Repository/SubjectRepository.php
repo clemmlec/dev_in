@@ -99,6 +99,38 @@ class SubjectRepository extends ServiceEntityRepository
        ;
    }
 
+      /**
+    * @return Subject[] Returns an array of Subject with same tags
+    */
+    public function findArticleWithSameForum($forum): array
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.forum', 't')
+            ->andWhere('t.id = :forum')
+            ->setParameter('forum', $forum)
+            ->orderBy('a.created_at', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    //       /**
+    // * @return Subject[] Returns an array of Subject with same tags
+    // */
+    // public function findGreatSubjects($id): array
+    // {
+    //     return $this->createQueryBuilder('a')
+    //         ->where('a.user = :id')
+    //         ->setParameter('id', $id)
+    //         ->orderBy('a.created_at', 'DESC')
+    //         ->setMaxResults(5)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
+    
+
 //    public function findOneBySomeField($value): ?Subject
 //    {
 //        return $this->createQueryBuilder('a')
