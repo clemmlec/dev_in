@@ -27,6 +27,8 @@
     }
     .right{
         float: right;
+        position: relative;
+        z-index: 10000;
     }
     .left{
         float:left;

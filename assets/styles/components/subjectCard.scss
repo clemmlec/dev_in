@@ -32,6 +32,8 @@
         }
         .rightFloat{
             float: right;
+            position: relative;
+            z-index: 10000;
         }
         .suggestGrid{
             top: 0 !important;

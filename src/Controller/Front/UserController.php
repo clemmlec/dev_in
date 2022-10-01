@@ -56,7 +56,7 @@ class UserController extends AbstractController
     public function followed(UserRepository $userRepository, FollowRepository $followRepository, Security $security, Request $request): Response
     {
         $user = $security->getUser();
-
+        
         $form = $this->createForm(UserTypeEdit::class, $user);
 
         $form->handleRequest($request);
