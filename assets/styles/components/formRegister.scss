@@ -68,6 +68,31 @@ select {
     background-color: rgb(181, 207, 199);
     border-radius: 5px;
 }
+.formEdit{
+    position: relative;
+    .loader{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2000;
+        height: inherit;
+        
+    }
+
+    &.is-loading::before{
+        content:"";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin-left:9.5%;
+        width: 81%;
+        background-color: rgba(240, 248, 255, 0.452);
+        z-index: 3;
+    }
+}
 .formSearch{
     padding: 5px;
     background-color: black !important;
@@ -76,6 +101,28 @@ select {
     box-shadow: 0 0 5px rgba(68, 68, 68, 0.402),
         0 0 25px rgba(8, 8, 8, 0.44),
         inset 0 4px 15px rgba(48, 48, 48, 0.359);
+    position: relative;
+
+    .loader{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2000;
+        height: inherit;
+        width: inherit;
+    }
+
+    &.is-loading::before{
+        content:"";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(240, 248, 255, 0.452);
+        z-index: 3;
+    }
 }
 .form {
     text-align: center;

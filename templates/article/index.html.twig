@@ -15,6 +15,11 @@
 <section class="w-80 js-filter">
 
     {{ form_start(form, { 'attr' : { 'class' : 'js-filter-form formEdit'} }) }}
+        <div class="loader">
+            <div class="js-loading" role="status" aria-hidden="true" style="display: none">
+                <span class=""><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>
+            </div>
+        </div>
         {{ form_row(form.query, { 'attr' : { 'class' : 'formSearch', 'placeholder' : 'Rechercher dans l\'article' } }) }}
 
         {# <button class="btn-vierge" type="submit">Rechercher</button> #}
