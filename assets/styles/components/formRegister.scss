@@ -68,6 +68,12 @@ select {
     background-color: rgb(181, 207, 199);
     border-radius: 5px;
 }
+.height100{
+    .cke_contents{
+        height: 100vh !important;
+    } 
+}
+
 .formEdit{
     position: relative;
     .loader{

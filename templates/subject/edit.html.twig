@@ -22,10 +22,10 @@
 
 {% block body %}
 <section class="d-flex w-80">
-    {{ form_start(form,{'attr': {'class': 'form'}} ) }}
+    {{ form_start(form,{'attr': {'class': 'form height100'}} ) }}
 
         {{ form_row( form.nom ) }}
-        {{ form_row( form.description ) }}
+        {{ form_row( form.description) }}
 
         <button class="mb-4">{{ button_label|default('modifier') }}</button>
           {{form_widget(form._token)}}

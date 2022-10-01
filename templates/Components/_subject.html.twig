@@ -128,7 +128,7 @@
                     <div class="comment"  
                     {{ stimulus_controller('comment') }}
                     >
-                    <textarea id="commentPost{{subject.id}}" class="envoieCommentInput"  name="" id="" cols="1" rows="3"></textarea>
+                    <textarea id="commentPost{{subject.id}}" class="envoieCommentInput "  name="" id="" cols="1" rows="3"></textarea>
                         {# <input id="commentPost{{subject.id}}" class="envoieCommentInput" placeholder="écrit ton commentaire"> #}
                         <button 
                             type="button" 
@@ -198,10 +198,11 @@
                         </div>
 
                     </div>
+                    <span class="date">{{commen.createdAt | ago}}</span>
                     <p class="left head"> par {{ commen.user.name }}</p>
                     <p class="left com"> {{ commen.message | nl2br | raw }}
                     </p>
-                    <span class="date">{{commen.createdAt | ago}}</span>
+                    
                     <hr style="margin:2px"> 
                 </div>
                 {% endif %}
@@ -212,6 +213,9 @@
         </div>
 
         {% if ( app.user and subject.user and app.user.id != subject.user.id ) or subject.user== null %}
+        {% if  app.user %}
+            
+        
             {% set noter = false %}
             {% for row in app.user.noteSubjects %}
                 {% if row.subject.id == subject.id %}
@@ -233,6 +237,7 @@
                 {% endfor %}
             </div>
             {% endif %}
+        {% endif %}
         {% endif %}
     </div>
     

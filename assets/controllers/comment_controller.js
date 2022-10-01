@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 import axios from 'axios';
+
 /*
  * This is an example Stimulus controller!
  *
@@ -22,6 +23,8 @@ export default class extends Controller {
         let subjectId=element.value.split('|')[0];
         let user=element.value.split('|')[1];
         let com= document.getElementById('commentPost'+subjectId).value;
+        console.log(com);
+        
         let mesDonnees = new FormData();
         mesDonnees.set("subject", subjectId);
         mesDonnees.set("com", com);

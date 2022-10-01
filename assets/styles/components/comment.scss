@@ -58,7 +58,8 @@
         .comment3{
 
             position: relative;
-            max-height: 350px !important;
+            // max-height: 350px !important;
+            // overflow-y: scroll;
             max-width: inherit;
             margin: auto;
 
@@ -107,7 +108,7 @@
             }
             .date{
                 position: absolute;
-                bottom: 5px;
+                top: 40px;
                 right: 0;
                 font-size: 0.8em;
                 opacity: 0.5;
