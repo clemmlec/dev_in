@@ -47,8 +47,9 @@ export default class extends Controller {
         }
 
         let id = elem.value;
+        console.log(id);
 
-        let message = document.getElementById('suggestSubject'+id).childNodes[1].value;
+        let message = document.getElementById('suggestSubject'+id).childNodes[1].childNodes[1].value;
         console.log(message);
         axios.get(`/subject/signaler/${id}/${message}`)
         .then(function (reponse) {

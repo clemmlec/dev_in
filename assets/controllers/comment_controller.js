@@ -105,7 +105,7 @@ export default class extends Controller {
             element = event.target.parentNode
         }
         let id = element.value;
-        let message = document.getElementById('suggest'+id).childNodes[1].value;
+        let message = document.getElementById('suggest'+id).childNodes[1].childNodes[1].value;
         // console.log(document.getElementById('suggest'+id).children);
         console.log(message);
         axios.get(`/comment/signaler/${id}/${message}`)

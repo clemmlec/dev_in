@@ -32,6 +32,9 @@
 
         
         <h2 class="titreHome purple">Derniers articles postés</h2>
+    </section>
+
+    <section class="w-100">
         {# {% include "Components/_article.html.twig" with { couper: "couper" } %} #}
         <div class="swip ">
             <div class="swiper mySwiper">
@@ -48,7 +51,6 @@
             </div>
         </div>    
 
-        <div class="swip">
             <div class="swiper mySwiper">
                 <h2 class="titreHome purple">Les derniers sujets postées par les adhérents</h2>
                 <div class="swiper-wrapper">
@@ -62,7 +64,7 @@
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
             </div>
-        </div>
+     
 
     </section>
 {% endblock %}
