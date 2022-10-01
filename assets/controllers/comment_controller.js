@@ -117,5 +117,22 @@ export default class extends Controller {
             document.getElementById('comment'+id).style.display ="none"
         });
     }
+
+    delete(event) {
+        let element = event.target
+        if (event.target.type != "button" ){
+            element = event.target.parentNode
+        }
+        let id = element.value;
+        // console.log(document.getElementById('suggest'+id).children);
+        axios.delete(`/comment/delete/${id}`)
+        .catch(function(error){
+            console.log(error)
+        })
+        .then(function (reponse) {
+            document.getElementById('comment'+id).style.display ="none"
+            console.log(reponse)
+        });
+    }
    
 }

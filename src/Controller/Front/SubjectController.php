@@ -184,13 +184,19 @@ class SubjectController extends AbstractController
         //     ]);
     // }
 
-    #[Route('/{id}', name: 'user_subject_delete', methods: ['DELETE'])]
-    public function delete(Request $request, Subject $subject, SubjectRepository $subjectRepository): Response
+    #[Route('/delete/{id}', name: 'user_subject_delete', methods: ['POST'])]
+    public function delete( ?Subject $subject, Request $request, SubjectRepository $subjectRepository): Response
     {
+        
         if ($this->isCsrfTokenValid('delete'.$subject->getId(), $request->request->get('_token'))) {
             $subjectRepository->remove($subject, true);
+        }else{
+            $this->addFlash('error', 'Vous n\'etes pas autorisé à supprimer ce sujet');
+            return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
         }
 
+
+        $this->addFlash('success', 'Sujet supprimé avec success');
         return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
     }
 

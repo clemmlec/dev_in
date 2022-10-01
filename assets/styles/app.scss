@@ -147,6 +147,12 @@ p{
 .reverse{
     flex-direction: row-reverse;
 }
+.btnTrash{
+    font-size: 1.5em;
+    float: right;
+    margin-right: 30px;
+    margin-top: 70px;
+}
 @media all and (max-device-width: 491px)
 {
 
