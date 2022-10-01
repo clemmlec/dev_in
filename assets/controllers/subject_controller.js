@@ -42,6 +42,10 @@ export default class extends Controller {
     }
     submitReport(event) {
         let elem = event.target
+        if (event.target.type != "button" ){
+            elem = event.target.parentNode
+        }
+
         let id = elem.value;
 
         let message = document.getElementById('suggestSubject'+id).childNodes[1].value;

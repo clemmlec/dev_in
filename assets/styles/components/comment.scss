@@ -10,7 +10,10 @@
     // position: relative;
     .suggest{
         display: none;
-        background-color: black;
+    }
+    .suggestGrid{
+        top: 0 !important;
+        right: 10px !important;
     }
     margin: 0 auto 0 auto;
     .comment{

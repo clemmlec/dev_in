@@ -91,7 +91,7 @@ class UserController extends AbstractController
         }
 
         $follower =$followRepository->findAllFollowers($security->getUser()->getId());
-
+        
         return $this->renderForm('user/_followers.html.twig', [
             'follow' => $follower,
             'user' => $user,

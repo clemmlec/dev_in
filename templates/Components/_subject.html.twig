@@ -19,16 +19,9 @@
         <span class="mute">{{subject.createdAt | ago}}</span>
     </h2>
     <div class="iconSubject" {{ stimulus_controller('subject') }}>
-        <button {{ stimulus_action('subject', 'report') }}
-                value="{{subject.id}}" 
-                class="btn-vierge color-red" 
-                type="button" 
-                >
-            <i class="fa-solid fa-triangle-exclamation"></i>
-        </button>
         <button {{ stimulus_action('subject', 'follows') }}
                 type="button" 
-                class="btn-vierge " 
+                class="btn-vierge rightFloat" 
                 value="{{subject.id}}" 
                 >
                 {# {{ dump(subject) }}
@@ -53,12 +46,23 @@
                 
                 
         </button>
+                <button {{ stimulus_action('subject', 'report') }}
+                value="{{subject.id}}" 
+                class="btn-vierge color-red rightFloat" 
+                type="button" 
+                >
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </button>
         <div class="suggest" id="suggestSubject{{subject.id}}">
-            <input class="plus grande" type="text" placeholder="Un probleme ?">
-            <button {{ stimulus_action('subject', 'submitReport') }}
+            <div class="suggestGrid">
+                <input class="plus grande envoieSuggestInput" type="text" placeholder="Un probleme ?">
+                <button {{ stimulus_action('subject', 'submitReport') }}
                     value="{{subject.id}}" 
-                    class="btn-vierge bleu" 
-                    >envoyer</button>
+                    class="btn-vierge bleu envoiSuggest" 
+                    type="button"
+                    ><i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
         </div>
         
         {% if app.user and subject.user and app.user.id == subject.user.id %}
@@ -128,7 +132,7 @@
                         <button 
                             type="button" 
                             class="btn-vierge envoiComment" 
-                            value="{{subject.id}}|{{app.user.id}}" 
+                            value="{{subject.id}}|{{app.user.id}}"
                             {{ stimulus_action('comment', 'newComment') }}
                             ><i class="fa-solid fa-paper-plane"></i>
                         </button>
@@ -145,18 +149,10 @@
                     >           
                     <div class="jaime" >
                         <span class="floatRight">
+                           
                             <button 
                                 value="{{commen.id}}" 
-                                class="btn-vierge color-red" 
-                                type="button" 
-                                {{ stimulus_action('comment', 'report') }}
-                                >
-                                <i class="fa-solid fa-triangle-exclamation"></i>
-                            </button>
-
-                            <button 
-                                value="{{commen.id}}" 
-                                class="btn-vierge jaimee" 
+                                class="btn-vierge jaimee rightFloat" 
                                 type="button" 
                                 {{ stimulus_action('comment', 'follows') }}
                                 >
@@ -178,15 +174,26 @@
                                 <span id="like{{commen.id}}">({{commen.commentLikes | length }})</span> 
 
                             </button>
-
-                        </span>
-                        <div class="suggest" id="suggest{{commen.id}}">
-                            <input class="plus grande" type="text" placeholder="Un probleme ?">
                             <button 
                                 value="{{commen.id}}" 
-                                class="btn-vierge bleu" 
-                                {{ stimulus_action('comment', 'submitReport') }} 
-                                >envoyer</button>
+                                class="btn-vierge color-red rightFloat" 
+                                type="button" 
+                                {{ stimulus_action('comment', 'report') }}
+                                >
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </button>
+                        </span>
+                        <div class="suggest" id="suggest{{commen.id}}">
+                            <div class="suggestGrid">
+                                <input class="plus grande envoieSuggestInput" type="text" placeholder="Un probleme ?">
+                                <button 
+                                    value="{{commen.id}}" 
+                                    class="btn-vierge bleu envoiSuggest" 
+                                    {{ stimulus_action('comment', 'submitReport') }} 
+                                    type="button" 
+                                    ><i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </div>
                         </div>
 
                     </div>
