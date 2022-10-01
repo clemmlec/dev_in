@@ -112,16 +112,20 @@ body{
     z-index: 1000;
     text-align: center;
     margin: 10px auto;
-    padding: 10px;
+    padding:10px 0 ;
     border-radius: 5px;
 }
 .alert-success{
     color: greenyellow;
     background-color: rgba(168, 184, 168, 0.685);
 }
+.alert-danger{
+    color: rgb(143, 0, 0);
+    background-color: rgba(168, 145, 145, 0.685);
+}
 a{
     text-decoration: none;
-    color: #9d58a9;
+    color: #cfe621;
     font-weight: bolder;
 }
 .b-50{

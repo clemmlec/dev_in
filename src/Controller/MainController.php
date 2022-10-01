@@ -18,7 +18,7 @@ class MainController extends AbstractController
         // if ($user) {
         //     return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()]);
         // }
-        $subjects = $subjectRepository->findRandSubject();
+        $subjects = $subjectRepository->findLastSubject();
         $articles = $articleRepo->findLastArticles();
 
         return $this->render('index.html.twig', [

@@ -44,11 +44,12 @@ class SubjectRepository extends ServiceEntityRepository
         }
     }
 
-    public function findRandSubject(): ?array
+    public function findLastSubject(): ?array
     {
         $query = $this->createQueryBuilder('a')
             ->andWhere('a.active = :active')
             ->setParameter('active', true)
+            ->orderBy('a.created_at', 'DESC')
             // ->orderBy('RAND()')
             ->setMaxResults(4)
             ->getQuery()
