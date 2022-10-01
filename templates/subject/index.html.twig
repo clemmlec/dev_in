@@ -14,7 +14,8 @@
 {% block body %}
     <div class="w-80 js-filter">
 
-        {{ form_start(forms, { 'attr' : { 'class' : 'form js-filter-form'} }) }}
+        {{ form_start(forms, { 'attr' : { 'class' : 'formSearch js-filter-form'} }) }}
+            <h1>Filter par catégories</h1>
             {{ form_row(forms.forum) }}
             {# <button class="btn-vierge" type="submit">Rechercher</button> #}
         {{ form_end(forms, {'render_rest': false }) }}

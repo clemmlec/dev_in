@@ -24,8 +24,8 @@
     {# {{ dump(users) }} #}
         
     <div class="js-filter w-80">
-        {{ form_start(forms, { 'attr' : { 'class' : 'form js-filter-form'} }) }}
-            {{ form_row(forms.query) }}
+        {{ form_start(forms, { 'attr' : { 'class' : ' js-filter-form'} }) }}
+            {{ form_row(forms.query, { 'attr' : { 'class' : 'formSearch'} }) }}
             {# <button class="btn-vierge" type="submit">Rechercher</button> #}
         {{ form_end(forms, {'render_rest': false }) }}
         <div class="js-filter-count">

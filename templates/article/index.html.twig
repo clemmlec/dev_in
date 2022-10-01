@@ -14,8 +14,8 @@
 {% block body %}
 <section class="w-80 js-filter">
 
-    {{ form_start(form, { 'attr' : { 'class' : 'form js-filter-form formEdit'} }) }}
-        {{ form_row(form.query) }}
+    {{ form_start(form, { 'attr' : { 'class' : 'js-filter-form formEdit'} }) }}
+        {{ form_row(form.query, { 'attr' : { 'class' : 'formSearch', 'placeholder' : 'Rechercher dans l\'article' } }) }}
 
         {# <button class="btn-vierge" type="submit">Rechercher</button> #}
     {{ form_end(form, {'render_rest': false }) }}

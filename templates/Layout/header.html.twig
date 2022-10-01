@@ -12,10 +12,10 @@
                 >
             </button>            
             <div id="dropcontent" class="dropdown-content">
-                <a href="{{ path('logout') }}" 
-                    class="btn btn-secondary">Deconnection <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
                 <a href="{{ path('app_user_profil', {'id': app.user.id}) }}" 
                     class="btn btn-secondary">Profil <i class="fa-solid fa-user-gear"></i></a>
+                <a href="{{ path('logout') }}" 
+                    class="btn btn-secondary">Deconnection <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
             </div>
                 
             {% else %}
