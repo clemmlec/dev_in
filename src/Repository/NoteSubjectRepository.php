@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Filter\SearchData;
 use App\Entity\NoteSubject;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<NoteSubject>
@@ -16,7 +19,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class NoteSubjectRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        ManagerRegistry $registry,
+        private PaginatorInterface $paginator
+        )
     {
         parent::__construct($registry, NoteSubject::class);
     }
@@ -39,20 +45,30 @@ class NoteSubjectRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return NoteSubject[] Returns an array of NoteSubject objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('n.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return NoteSubject[] Returns an array of NoteSubject objects
+    */
+   public function getSubjectNoter($id,SearchData $search): PaginationInterface
+   {
+        $query = $this->createQueryBuilder('n')
+            ->select('n', 'u', 'c')
+            ->andWhere('n.user = :val')
+            ->setParameter('val', $id)
+            ->leftjoin('n.subject', 'u')
+            ->leftjoin('u.forum', 'c')
+            ->orderBy('n.id', 'DESC')
+        ;
+        if (!empty($search->getForum())) {
+            $query->andWhere('c.id IN (:cat)')
+            ->setParameter('cat', $search->getForum());
+        }
+
+        return $this->paginator->paginate(
+            $query->getQuery(),
+            $search->getPage(),
+            5
+        );
+   }
 
 //    public function findOneBySomeField($value): ?NoteSubject
 //    {

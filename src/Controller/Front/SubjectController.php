@@ -90,7 +90,7 @@ class SubjectController extends AbstractController
         }
         if ($subject && $user) {
             $dejaNoter = $noteRepo->findOneBy(['user' => $user, 'subject' => $subjectId]);
-            $isUserSubject = $subjectRepository->findOneBy(['user' => $user]);
+            $isUserSubject = $subjectRepository->findOneBy(['user' => $user,'id' => $subjectId]);
             if (!$dejaNoter && !$isUserSubject ) {
                 $newNote->setUser($user)
                 ->setSubject($subject)
@@ -100,8 +100,8 @@ class SubjectController extends AbstractController
 
                 return new Response('note envoyer', 201);
             }
-
-            return new Response('fraude suspecté ⛔', 403);
+  
+            return new Response('fraude suspecté ⛔' , 403);
         }
 
         return new Response('note non valide', 404);

@@ -2,20 +2,23 @@
 
 namespace App\Controller\Front;
 
-use App\Entity\Follow;
 use App\Entity\User;
-use App\Filter\SearchData;
+use App\Entity\Follow;
 use App\Form\SearchType;
+use App\Filter\SearchData;
 use App\Form\UserTypeEdit;
+use App\Repository\UserRepository;
 use App\Repository\FollowRepository;
 use App\Repository\SubjectRepository;
-use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\NoteSubjectRepository;
+use App\Repository\ArticleLikedRepository;
+use App\Repository\SubjectFavorisRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -52,79 +55,180 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/followed', name: 'app_user_followed', methods: ['GET'])]
-    public function followed(UserRepository $userRepository, FollowRepository $followRepository, Security $security, Request $request): Response
+    #[Route('/followed/{id}', name: 'app_user_followed', methods: ['GET', 'POST'])]
+    public function followed(
+        ?User $user,
+        UserRepository $userRepository, 
+        FollowRepository $followRepository, 
+        Security $security, 
+        Request $request
+        ): Response
     {
-        $user = $security->getUser();
-        
+        $data = new SearchData();
+        $data->setPage($request->get('page', 1));
+
+        $forms = $this->createForm(SearchType::class, $data);
+        $forms->handleRequest($request);
+        $followed =$followRepository->findAllFollowed($user,$data);
+
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('Components/_usersFollow.html.twig', [
+                    'follow' => $followed,
+                    'follower' => false
+                ]),
+                'pagination' => $this->renderView('Components/filter/_paginationUser.html.twig', [
+                    'users' => $followed,
+                ]),
+                'count' => $this->renderView('Components/filter/_countUser.html.twig', [
+                    'users' => $followed,
+                ]),
+                'pages' => ceil($followed->getTotalItemCount() / $followed->getItemNumberPerPage()),
+            ]);
+        }
+
         $form = $this->createForm(UserTypeEdit::class, $user);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->add($user, true);
-
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
-        $followed =$followRepository->findAllFollowed($security->getUser()->getId());
       
         return $this->renderForm('user/_followed.html.twig', [
             'follow' => $followed,
             'user' => $user,
             'form' => $form,
+            'forms' => $forms,
         ]);
     }
 
-    #[Route('/followers', name: 'app_user_followers', methods: ['GET'])]
-    public function followers(UserRepository $userRepository, FollowRepository $followRepository, Security $security, Request $request): Response
+    #[Route('/followers/{id}', name: 'app_user_followers', methods: ['GET','POST'])]
+    public function followers(
+            ?User $user,
+            UserRepository $userRepository, 
+            FollowRepository $followRepository, 
+            Security $security, 
+            Request $request
+            ): Response
     {
-        $user = $security->getUser();
+        $data = new SearchData();
+        $data->setPage($request->get('page', 1));
+
+        $forms = $this->createForm(SearchType::class, $data);
+        $forms->handleRequest($request);
+
+        $follower =$followRepository->findAllFollowers($user,$data);
+
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('Components/_usersFollow.html.twig', [
+                    'follow' => $follower,
+                    'follower' => true
+                ]),
+                'pagination' => $this->renderView('Components/filter/_paginationUser.html.twig', [
+                    'users' => $follower,
+                ]),
+                'count' => $this->renderView('Components/filter/_countUser.html.twig', [
+                    'users' => $follower,
+                ]),
+                'pages' => ceil($follower->getTotalItemCount() / $follower->getItemNumberPerPage()),
+            ]);
+        }
 
         $form = $this->createForm(UserTypeEdit::class, $user);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->add($user, true);
-
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        $follower =$followRepository->findAllFollowers($security->getUser()->getId());
         
         return $this->renderForm('user/_followers.html.twig', [
             'follow' => $follower,
             'user' => $user,
             'form' => $form,
+            'forms' => $forms
         ]);
     }
 
-    #[Route('/sujet-favoris', name: 'app_user_subject-favoris', methods: ['GET'])]
-    public function sujetFavoris(UserRepository $userRepo, Security $security, Request $request): Response
+    #[Route('/sujet-favoris/{id}', name: 'app_user_subject-favoris', methods: ['GET','POST'])]
+    public function sujetFavoris(
+        ?User $user,
+        UserRepository $userRepo, 
+        SubjectFavorisRepository $subjectRepository,
+        Security $security, 
+        Request $request
+        ): Response
     {
-        $user = $security->getUser();
+        $data = new SearchData();
+        $data->setPage($request->get('page', 1));
+
+        $forms = $this->createForm(SearchType::class, $data);
+        $forms->handleRequest($request);
+
+        $subjects = $subjectRepository->getSubjectFavoris($user->getId(),$data);
+        
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('Components/_subjectSwipers.html.twig', [
+                    'subjects' => $subjects,
+                ]),
+                'pagination' => $this->renderView('Components/filter/_paginationSubject.html.twig', [
+                    'subjects' => $subjects,
+                ]),
+                'count' => $this->renderView('Components/filter/_countSubject.html.twig', [
+                    'subjects' => $subjects,
+                ]),
+                'pages' => ceil($subjects->getTotalItemCount() / $subjects->getItemNumberPerPage()),
+            ]);
+        }
 
         $form = $this->createForm(UserTypeEdit::class, $user);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepo->add($user, true);
-
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/_subjectFavoris.html.twig', [
             'user' => $user,
             'form' => $form,
+            'forms' => $forms,
+            'subjects' => $subjects
         ]);
     }
 
-    #[Route('/sujet-noter', name: 'app_user_subject-noter', methods: ['GET'])]
-    public function sujetNoter(UserRepository $userRepository, Security $security, Request $request): Response
+    #[Route('/sujet-noter/{id}', name: 'app_user_subject-noter', methods: ['GET','POST'])]
+    public function sujetNoter(
+        ?User $user,
+        UserRepository $userRepository, 
+        NoteSubjectRepository $noteSubjectRepository,
+        Security $security, 
+        Request $request
+        ): Response
     {
-        $user = $security->getUser();
+        $data = new SearchData();
+        $data->setPage($request->get('page', 1));
 
+        $forms = $this->createForm(SearchType::class, $data);
+        $forms->handleRequest($request);
+
+        $subjects = $noteSubjectRepository->getSubjectNoter($user->getId(),$data);
+        
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('Components/_subjectSwipers.html.twig', [
+                    'subjects' => $subjects,
+                ]),
+                'pagination' => $this->renderView('Components/filter/_paginationSubject.html.twig', [
+                    'subjects' => $subjects,
+                ]),
+                'count' => $this->renderView('Components/filter/_countSubject.html.twig', [
+                    'subjects' => $subjects,
+                ]),
+                'pages' => ceil($subjects->getTotalItemCount() / $subjects->getItemNumberPerPage()),
+            ]);
+        }
         $form = $this->createForm(UserTypeEdit::class, $user);
 
         $form->handleRequest($request);
@@ -138,39 +242,93 @@ class UserController extends AbstractController
         return $this->renderForm('user/_subjectNoter.html.twig', [
             'user' => $user,
             'form' => $form,
+            'subjects' => $subjects,
+            'forms' => $forms,
         ]);
     }
 
-    #[Route('/article-favoris', name: 'app_user_article-favoris', methods: ['GET'])]
-    public function articleFavoris(UserRepository $userRepository, Security $security, Request $request): Response
+    #[Route('/article-favoris/{id}', name: 'app_user_article-favoris', methods: ['GET','POST'])]
+    public function articleFavoris(
+        ?User $user,
+        UserRepository $userRepository, 
+        ArticleLikedRepository $articleLikedRepository,
+        Security $security, 
+        Request $request): Response
     {
-        $user = $security->getUser();
+
+        $data = new SearchData();
+        $data->setPage($request->get('page', 1));
+
+        $forms = $this->createForm(SearchType::class, $data);
+        $forms->handleRequest($request);
+
+        $articles = $articleLikedRepository->getArticleFavoris($user->getId(),$data);
+        
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('Components/_articlesLiked.html.twig', [
+                    'articles' => $articles,
+                ]),
+                'pagination' => $this->renderView('Components/filter/_pagination.html.twig', [
+                    'articles' => $articles,
+                ]),
+                'count' => $this->renderView('Components/filter/_count.html.twig', [
+                    'articles' => $articles,
+                ]),
+                'pages' => ceil($articles->getTotalItemCount() / $articles->getItemNumberPerPage()),
+            ]);
+        }
 
         $form = $this->createForm(UserTypeEdit::class, $user);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->add($user, true);
-
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/_articleFavoris.html.twig', [
             'user' => $user,
             'form' => $form,
+            'articles' => $articles,
+            'forms' => $forms,
         ]);
     }
 
-    #[Route('/sujet', name: 'app_user_subject', methods: ['GET'])]
-    public function sujet(UserRepository $userRepository, SubjectRepository $subjectRepository, Security $security, Request $request): Response
+    #[Route('/sujet/{id}', name: 'app_user_subject', methods: ['GET','POST'])]
+    public function sujet(
+        ?User $user,
+        UserRepository $userRepository,
+        SubjectRepository $subjectRepository, 
+        Security $security, 
+        Request $request
+        ): Response
     {
-        $user = $security->getUser();
+
+        $data = new SearchData();
+        $data->setPage($request->get('page', 1));
+
+        $forms = $this->createForm(SearchType::class, $data);
+        $forms->handleRequest($request);
+
+        $subjects = $subjectRepository->findAllSubjectPosted($user,$data);
+        
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('Components/_subjects.html.twig', [
+                    'subjects' => $subjects,
+                ]),
+                'pagination' => $this->renderView('Components/filter/_paginationSubject.html.twig', [
+                    'subjects' => $subjects,
+                ]),
+                'count' => $this->renderView('Components/filter/_countSubject.html.twig', [
+                    'subjects' => $subjects,
+                ]),
+                'pages' => ceil($subjects->getTotalItemCount() / $subjects->getItemNumberPerPage()),
+            ]);
+        }
 
         $form = $this->createForm(UserTypeEdit::class, $user);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->add($user, true);
 
@@ -178,9 +336,10 @@ class UserController extends AbstractController
         }
 
         return $this->renderForm('user/_subjectPosted.html.twig', [
-            'subjects' => $subjectRepository->findAllSubjectPosted($security->getUser()->getId()),
+            'subjects' => $subjects,
             'user' => $user,
             'form' => $form,
+            'forms' => $forms
         ]);
     }
 

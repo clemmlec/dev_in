@@ -14,12 +14,28 @@
 {% block mainProfil %}
     <hr>
     <h1>subjects postés {{user.subjects | length}}</h1>
-    <div class="d-flex">
-        {% for subject in subjects %}
-            <div class="swiper-slide overflow-y card">
-                {% include "Components/_subjectSwiper.html.twig" with { subject: subject} %}
+    <div class="js-filter">
+        {{ form_start(forms, { 'attr' : { 'class' : 'formSearch js-filter-form'} }) }}
+            <div class="loader">
+                <div class="js-loading" role="status" aria-hidden="true" style="display: none">
+                    <span class=""><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>
+                </div>
             </div>
-        {% endfor %}
-    </div>    
+            <h1>Filter par catégories</h1>
+            {{ form_row(forms.forum) }}
+            {# <button class="btn-vierge" type="submit">Rechercher</button> #}
+        {{ form_end(forms, {'render_rest': false }) }}
+        <div class="js-filter-count">
+            {% include "Components/filter/_countSubject.html.twig" %}
+        </div>
+
+        <div class="d-flex js-filter-content">
+            {% include "Components/_subjects.html.twig" with { subjects: subjects} %}
+        </div>
+
+        <div class="d-flex  js-filter-pagination">
+            {% include "Components/filter/_paginationSubject.html.twig" %}
+        </div>
+    </div>   
 
 {% endblock %}

@@ -117,34 +117,34 @@
     
         {% if user.follows | length > 0 %}
         <button class="btn-vierge bleu btnProfil">
-            <a href="{{ path('app_user_followed' ) }}#includeProfil">abonnements ({{user.follows | length}})</a>
+            <a href="{{ path('app_user_followed', {'id': user.id} ) }}#includeProfil">abonnements ({{user.follows | length}})</a>
         </button>
 
         {% endif %}
         {% if user.followers | length > 0 %}
          <button class="btn-vierge bleu btnProfil">
-            <a href="{{ path('app_user_followers' ) }}#includeProfil">abonnés({{user.followers | length}})</a>
+            <a href="{{ path('app_user_followers' , {'id': user.id}) }}#includeProfil">abonnés({{user.followers | length}})</a>
         </button>
         {% endif %}
         {% if user.subjects | length > 0 %}
          <button class="btn-vierge bleu btnProfil">
-            <a href="{{ path('app_user_subject' ) }}#includeProfil">sujets postés({{user.subjects | length}})</a>
+            <a href="{{ path('app_user_subject', {'id': user.id} ) }}#includeProfil">sujets postés({{user.subjects | length}})</a>
         </button>
         {% endif %}
 
         {% if user.subjectFavoris | length > 0 %}
          <button class="btn-vierge bleu btnProfil">
-            <a href="{{ path('app_user_subject-favoris' ) }}#includeProfil">sujets favoris({{user.subjectFavoris | length}})</a>
+            <a href="{{ path('app_user_subject-favoris', {'id': user.id} ) }}#includeProfil">sujets favoris({{user.subjectFavoris | length}})</a>
         </button>
         {% endif %}
         {% if user.noteSubjects | length > 0 %}
          <button class="btn-vierge bleu btnProfil">
-            <a href="{{ path('app_user_subject-noter' ) }}#includeProfil">sujets noter({{user.noteSubjects | length}})</a>
+            <a href="{{ path('app_user_subject-noter', {'id': user.id} ) }}#includeProfil">sujets noter({{user.noteSubjects | length}})</a>
          </button>
         {% endif %}
         {% if user.articleLikeds | length > 0 %}
          <button class="btn-vierge bleu btnProfil">
-            <a href="{{ path('app_user_article-favoris' ) }}#includeProfil">article favoris({{user.articleLikeds | length}})</a>
+            <a href="{{ path('app_user_article-favoris', {'id': user.id} ) }}#includeProfil">article favoris({{user.articleLikeds | length}})</a>
          </button>
         {% endif %}
         {% block mainProfil %}

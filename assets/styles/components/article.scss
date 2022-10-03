@@ -7,7 +7,7 @@
     margin-top: 10px;
     max-width: 100%;
     position: relative;
-
+    margin: 5px auto;
     .iconArticle{
         position: absolute;
         font-size: 25px;
@@ -49,7 +49,10 @@
     .couper{
         height: 300px;
         overflow-y: hidden;
+        max-width: 300px !important;
+       
     }
+    
 
     .footer{
         // background-color: black;
@@ -117,4 +120,7 @@
         }
       
     }
+}
+.couper{
+    width: 400px;
 }
