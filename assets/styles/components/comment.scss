@@ -26,13 +26,14 @@
         .envoiComment{
             margin: 0;
             width: inherit;
-            height: inherit;
+            height: 55px;
             background-color: rgb(4, 56, 100);
+            align-self: end;
         }
         .envoieCommentInput{
             text-decoration: none;
             margin: 0;
-            height: inherit;
+            height: 50px;
             width: inherit;
             // min-width: 300px;
             position: relative;
@@ -42,8 +43,12 @@
                 0 0 5px purple;
               
         }
-      
+        // .envoieCommentInput:focus{
+        //     background-color: antiquewhite;
+        //     height: 200px !important;
+        // }
     }
+
     
     .top{
         position: relative;

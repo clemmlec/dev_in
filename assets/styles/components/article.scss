@@ -7,12 +7,12 @@
     margin-top: 10px;
     max-width: 100%;
     position: relative;
-
+    margin: 5px auto;
     .iconArticle{
         position: absolute;
         font-size: 25px;
         right: 10px;
-        top: 25px;
+        top: 15px;
         .redd{
             color: red;
         }
@@ -27,6 +27,8 @@
     }
     .right{
         float: right;
+        position: relative;
+        z-index: 10000;
     }
     .left{
         float:left;
@@ -47,7 +49,10 @@
     .couper{
         height: 300px;
         overflow-y: hidden;
+        max-width: 300px !important;
+       
     }
+    
 
     .footer{
         // background-color: black;
@@ -115,4 +120,7 @@
         }
       
     }
+}
+.couper{
+    width: 400px;
 }

@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Filter\SearchData;
 use App\Entity\ArticleLiked;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<ArticleLiked>
@@ -16,7 +19,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ArticleLikedRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        ManagerRegistry $registry,
+        private PaginatorInterface $paginator
+        )
     {
         parent::__construct($registry, ArticleLiked::class);
     }
@@ -38,6 +44,33 @@ class ArticleLikedRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    
+   /**
+    * @return ArticleLiked[] Returns an array of SubjectFavoris objects
+    */
+   public function getArticleFavoris($id,SearchData $search): PaginationInterface
+   {
+       $query = $this->createQueryBuilder('a')
+            ->select('a', 'u', 'c')
+            ->andWhere('a.user = :val')
+            ->setParameter('val', $id)
+            ->leftjoin('a.article', 'u')
+            ->leftjoin('u.tags', 'c')
+            ->orderBy('a.id', 'DESC')
+        ;
+        if (!empty($search->getQuery())) {
+            $query->andWhere('u.content LIKE :name')
+                ->setParameter('name', "%{$search->getQuery()}%")
+            ;
+        }
+
+        return $this->paginator->paginate(
+            $query->getQuery(),
+            $search->getPage(),
+            5
+        );
+   }
 
 //    /**
 //     * @return ArticleLiked[] Returns an array of ArticleLiked objects

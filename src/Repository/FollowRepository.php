@@ -3,7 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Follow;
+use App\Filter\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
@@ -18,6 +21,7 @@ class FollowRepository extends ServiceEntityRepository
 {
     public function __construct(
         ManagerRegistry $registry,
+        private PaginatorInterface $paginator
         )
     {
         parent::__construct($registry, Follow::class);
@@ -44,16 +48,65 @@ class FollowRepository extends ServiceEntityRepository
    /**
     * @return Follow[] Returns an array of Follow objects
     */
-   public function findAllFollowed($id): array
+   public function findAllFollowed($id,SearchData $search): PaginationInterface
    {
-       return $this->createQueryBuilder('f')
+       $query =  $this->createQueryBuilder('f')
+            ->select('f','c')
            ->andWhere('f.user = :val')
            ->setParameter('val', $id)
+           ->leftjoin('f.friend', 'c')
            ->orderBy('f.id', 'DESC')
-           ->getQuery()
-           ->getResult()
        ;
+       if (!empty($search->getQuery())) {
+        $query->andWhere('c.name LIKE :name')
+            ->setParameter('name', "%{$search->getQuery()}%")
+        ;
+        }
+
+        return $this->paginator->paginate(
+            $query->getQuery(),
+            $search->getPage(),
+            5
+        );
    }
+
+
+
+    /**
+     * @return Follow[] Returns an array of Follow objects
+     */
+    public function findAllFollowers($id,SearchData $search): PaginationInterface
+    {
+        $query= $this->createQueryBuilder('f')
+            ->select('f','c')
+            ->andWhere('f.friend = :val')
+            ->setParameter('val', $id)
+            ->leftjoin('f.user', 'c')
+            ->orderBy('f.id', 'DESC')
+        ;
+        if (!empty($search->getQuery())) {
+            $query->andWhere('c.name LIKE :name')
+                ->setParameter('name', "%{$search->getQuery()}%")
+        ;
+        }
+
+        return $this->paginator->paginate(
+            $query->getQuery(),
+            $search->getPage(),
+            5
+        );
+    }
+
+    
+//    public function findOneBySomeField($value): ?Follow
+//    {
+//        return $this->createQueryBuilder('f')
+//            ->andWhere('f.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->getQuery()
+//            ->getOneOrNullResult()
+//        ;
+//    }
 
 //    public function findAllGreaterThanPrice(int $id): array
 //    {
@@ -72,29 +125,6 @@ class FollowRepository extends ServiceEntityRepository
 //     return $resultSet->fetchAllAssociative();
 //    }
 
-    /**
-     * @return Follow[] Returns an array of Follow objects
-     */
-    public function findAllFollowers($id): array
-    {
-        return $this->createQueryBuilder('f')
-            ->select('f')
-            ->andWhere('f.friend = :val')
-            ->setParameter('val', $id)
-            ->orderBy('f.id', 'DESC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
 
-    
-//    public function findOneBySomeField($value): ?Follow
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
+

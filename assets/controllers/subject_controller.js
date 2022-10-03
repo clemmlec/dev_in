@@ -39,6 +39,7 @@ export default class extends Controller {
         }else{
             div.style.display = 'none';
         }
+
     }
     submitReport(event) {
         let elem = event.target
@@ -62,13 +63,30 @@ export default class extends Controller {
         let elem = event.target
         // console.log(elem)
         if (elem.type != "button" ){
-            console.log("merde")
             elem = event.target.parentNode
         }
         // console.log(elem)
         let value = elem.value.split('-');
         let note = value[0];
         let subjectId = value[1];
+        let commentId = elem.parentNode.parentNode.parentNode.id
+        commentId = commentId.split('t')[1];
+        if(commentId != subjectId || note > 5 || note < 0){
+            window.setTimeout(function(){
+                elem.parentNode.style.display = "none";
+                },700);   
+            let btn= elem.parentElement.childNodes;
+            btn.forEach(elements => {
+                if(elements.nodeType == 1 ){
+                    elements.style.display = "none";
+                }
+            });
+            let newDiv = document.createElement("div");
+            let newContent = document.createTextNode('Fraude detectée ⛔');
+            newDiv.appendChild(newContent);
+            elem.parentNode.insertBefore(newDiv, elem);
+            return ;
+        }
         // console.log(elem.parentElement.childNodes , '😴');
         axios.get(`/subject/note/${note}/${subjectId}`);
         

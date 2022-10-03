@@ -44,11 +44,12 @@ class SubjectRepository extends ServiceEntityRepository
         }
     }
 
-    public function findRandSubject(): ?array
+    public function findLastSubject(): ?array
     {
         $query = $this->createQueryBuilder('a')
             ->andWhere('a.active = :active')
             ->setParameter('active', true)
+            ->orderBy('a.created_at', 'DESC')
             // ->orderBy('RAND()')
             ->setMaxResults(4)
             ->getQuery()
@@ -88,15 +89,25 @@ class SubjectRepository extends ServiceEntityRepository
    /**
     * @return Subject[] Returns an array of Subject objects
     */
-   public function findAllSubjectPosted($id): array
+   public function findAllSubjectPosted($id,SearchData $search): PaginationInterface
    {
-       return $this->createQueryBuilder('a')
-           ->andWhere('a.user = :val')
-           ->setParameter('val', $id)
-           ->orderBy('a.id', 'DESC')
-           ->getQuery()
-           ->getResult()
-       ;
+       $query = $this->createQueryBuilder('a')
+            ->select('a', 'c',)
+            ->andWhere('a.user = :val')
+            ->setParameter('val', $id)
+            ->leftjoin('a.forum', 'c')
+            ->orderBy('a.id', 'DESC')
+        ;
+        if (!empty($search->getForum())) {
+            $query->andWhere('c.id IN (:cat)')
+            ->setParameter('cat', $search->getForum());
+        }
+        // dd($query->getQuery()->getResult());
+        return $this->paginator->paginate(
+            $query->getQuery(),
+            $search->getPage(),
+            5
+        );
    }
 
       /**

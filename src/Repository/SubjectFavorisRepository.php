@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Filter\SearchData;
 use App\Entity\SubjectFavoris;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<SubjectFavoris>
@@ -16,7 +19,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class SubjectFavorisRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        ManagerRegistry $registry,
+        private PaginatorInterface $paginator
+        )
     {
         parent::__construct($registry, SubjectFavoris::class);
     }
@@ -39,20 +45,30 @@ class SubjectFavorisRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return SubjectFavoris[] Returns an array of SubjectFavoris objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return SubjectFavoris[] Returns an array of SubjectFavoris objects
+    */
+   public function getSubjectFavoris($id,SearchData $search): PaginationInterface
+   {
+       $query = $this->createQueryBuilder('a')
+            ->select('a', 'u', 'c')
+            ->andWhere('a.user = :val')
+            ->setParameter('val', $id)
+            ->leftjoin('a.subject', 'u')
+            ->leftjoin('u.forum', 'c')
+            ->orderBy('a.id', 'DESC')
+        ;
+       if (!empty($search->getForum())) {
+            $query->andWhere('c.id IN (:cat)')
+            ->setParameter('cat', $search->getForum());
+        }
+
+        return $this->paginator->paginate(
+            $query->getQuery(),
+            $search->getPage(),
+            5
+        );
+   }
 
 //    public function findOneBySomeField($value): ?SubjectFavoris
 //    {

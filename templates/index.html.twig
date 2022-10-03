@@ -12,7 +12,7 @@
     /> 
 {% endblock %}
 {% block body %}
-
+<section class="w-100">
     <div id="home">
         <div class="header bleu">
             <h1>Dev In</h1>
@@ -23,7 +23,7 @@
             {% endif %}
         </div>
     </div>
-
+</section>
     <section class="w-80">
 
         <p>Retrouve des <a href="{{ path('app_article_index') }}">articles sur le développement</a>  rédigé par nos administrateurs <br>
@@ -52,7 +52,7 @@
         </div>    
 
             <div class="swiper mySwiper">
-                <h2 class="titreHome purple">Les derniers sujets postées par les adhérents</h2>
+                <h2 class="titreHome bleu">Les derniers sujets postées par les adhérents</h2>
                 <div class="swiper-wrapper">
                 {% for subject in subjects %}
                     <div class="swiper-slide overflow-y card">
