@@ -23,6 +23,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/user')]
 class UserController extends AbstractController
 {
+    public function __construct(
+        private UserRepository $userRepository
+        ) {
+    }
+    
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository, Request $request): Response
     {
@@ -105,7 +110,6 @@ class UserController extends AbstractController
     #[Route('/followers/{id}', name: 'app_user_followers', methods: ['GET','POST'])]
     public function followers(
             ?User $user,
-            UserRepository $userRepository, 
             FollowRepository $followRepository, 
             Security $security, 
             Request $request
@@ -138,7 +142,7 @@ class UserController extends AbstractController
         $form = $this->createForm(UserTypeEdit::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user, true);
+            $this->userRepository->add($user, true);
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -154,7 +158,6 @@ class UserController extends AbstractController
     #[Route('/sujet-favoris/{id}', name: 'app_user_subject-favoris', methods: ['GET','POST'])]
     public function sujetFavoris(
         ?User $user,
-        UserRepository $userRepo, 
         SubjectFavorisRepository $subjectRepository,
         Security $security, 
         Request $request
@@ -186,7 +189,7 @@ class UserController extends AbstractController
         $form = $this->createForm(UserTypeEdit::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepo->add($user, true);
+            $this->userRepository->add($user, true);
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -201,7 +204,6 @@ class UserController extends AbstractController
     #[Route('/sujet-noter/{id}', name: 'app_user_subject-noter', methods: ['GET','POST'])]
     public function sujetNoter(
         ?User $user,
-        UserRepository $userRepository, 
         NoteSubjectRepository $noteSubjectRepository,
         Security $security, 
         Request $request
@@ -234,7 +236,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user, true);
+            $this->userRepository->add($user, true);
 
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -250,7 +252,6 @@ class UserController extends AbstractController
     #[Route('/article-favoris/{id}', name: 'app_user_article-favoris', methods: ['GET','POST'])]
     public function articleFavoris(
         ?User $user,
-        UserRepository $userRepository, 
         ArticleLikedRepository $articleLikedRepository,
         Security $security, 
         Request $request): Response
@@ -282,7 +283,7 @@ class UserController extends AbstractController
         $form = $this->createForm(UserTypeEdit::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user, true);
+            $this->userRepository->add($user, true);
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -297,7 +298,6 @@ class UserController extends AbstractController
     #[Route('/sujet/{id}', name: 'app_user_subject', methods: ['GET','POST'])]
     public function sujet(
         ?User $user,
-        UserRepository $userRepository,
         SubjectRepository $subjectRepository, 
         Security $security, 
         Request $request
@@ -330,7 +330,7 @@ class UserController extends AbstractController
         $form = $this->createForm(UserTypeEdit::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user, true);
+            $this->userRepository->add($user, true);
 
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -344,22 +344,27 @@ class UserController extends AbstractController
     }
 
     #[Route('/profil/{id}', name: 'app_user_profil', methods: ['GET', 'POST'])]
-    public function profil(Request $request, ?User $user, Security $security, UserRepository $userRepository, SubjectRepository $subRepo): Response
+    public function profil(
+        Request $request, 
+        ?User $user, 
+        Security $security, 
+        SubjectRepository $subRepo
+        ): Response
     {
-        if (!$user instanceof User || null === $user) {
+        if (!$user instanceof User ) {
             $this->addFlash('error', 'probleme d\'authentification');
 
             return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
 
-        $userCollection = $userRepository->findOneById($user->getId());
+        $userCollection = $this->userRepository->findOneById($user->getId());
 
         $form = $this->createForm(UserTypeEdit::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user, true);
+            $this->userRepository->add($user, true);
 
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -371,9 +376,9 @@ class UserController extends AbstractController
     }
 
     #[Route('/follow/{id}', name: 'app_user_follow', methods: ['GET'])]
-    public function followUser(?User $follow, UserRepository $userRepository, FollowRepository $friendsRepo, Security $security)
+    public function followUser(?User $follow, FollowRepository $friendsRepo, Security $security)
     {
-        $user = $security->getUser();
+        $user = $this->userRepository->find($security->getUser());
 
         // dd($follow);
         // dd($user, $follow);
@@ -398,13 +403,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/style/{style}', name: 'app_user_style', methods: ['GET'])]
-    public function styleUser(string $style, UserRepository $userRepository, Security $security)
+    public function styleUser(string $style, Security $security)
     {
-        $user = $security->getUser();
+        $user = $this->userRepository->find($security->getUser());
 
         if ($style && $user) {
             $user->setStyle($style);
-            $userRepository->add($user, true);
+            $this->userRepository->add($user, true);
 
             return new Response('style changé', 201);
         }

@@ -20,7 +20,7 @@ use Knp\Component\Pager\PaginatorInterface;
 class SubjectRepository extends ServiceEntityRepository
 {
     public function __construct(
-        private ManagerRegistry $registry,
+        protected ManagerRegistry $registry,
         private PaginatorInterface $paginator
     ) {
         parent::__construct($registry, Subject::class);
@@ -86,9 +86,7 @@ class SubjectRepository extends ServiceEntityRepository
         // dd($queryBuilder);
     }
 
-   /**
-    * @return Subject[] Returns an array of Subject objects
-    */
+
    public function findAllSubjectPosted($id,SearchData $search): PaginationInterface
    {
        $query = $this->createQueryBuilder('a')

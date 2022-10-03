@@ -19,8 +19,9 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  */
 class ArticleLikedRepository extends ServiceEntityRepository
 {
+
     public function __construct(
-        ManagerRegistry $registry,
+        protected ManagerRegistry $registry,
         private PaginatorInterface $paginator
         )
     {
@@ -46,9 +47,6 @@ class ArticleLikedRepository extends ServiceEntityRepository
     }
 
     
-   /**
-    * @return ArticleLiked[] Returns an array of SubjectFavoris objects
-    */
    public function getArticleFavoris($id,SearchData $search): PaginationInterface
    {
        $query = $this->createQueryBuilder('a')

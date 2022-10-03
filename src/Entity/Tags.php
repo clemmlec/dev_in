@@ -52,24 +52,24 @@ class Tags
         return $this->article;
     }
 
-    public function addArticle(Article $article): self
-    {
-        if (!$this->article->contains($article)) {
-            $this->article->add($article);
-            $article->addArticle($this);
-        }
+    // public function addArticle(Article $article): self
+    // {
+    //     if (!$this->article->contains($article)) {
+    //         $this->article->add($article);
+    //         $article->addArticle($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeArticle(Article $article): self
-    {
-        if ($this->article->removeElement($article)) {
-            $article->removeArticle($this);
-        }
+    // public function removeArticle(Article $article): self
+    // {
+    //     if ($this->article->removeElement($article)) {
+    //         $article->removeArticle($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function __toString()
     {
