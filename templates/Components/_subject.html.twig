@@ -1,5 +1,6 @@
 <div class="card-subject" id="subject{{subject.id}}">
     <h2 class="toptitre left {{subject.forum.style}}">
+    {# POSTER PAR #}
     <a class="btn-vierge" href="{{ subject.user ? path('app_user_profil', {'id': subject.user.id }) : "" }}">
         - Posté par :  {{subject.user ? subject.user.name | slice(0,10) : "utilisateur supprimé"}}
             <img 
@@ -9,6 +10,7 @@
             >
         </a>
     </h2> 
+    {# DANS #}
     <h2 class="toptitre2 right {{subject.forum.style}}">
         dans {{subject.forum.nom}}
         <img 
@@ -18,10 +20,13 @@
             >
         <span class="mute">{{subject.createdAt | ago}}</span>
     </h2>
+
     <div class="iconSubject" {{ stimulus_controller('subject') }}>
+    {# FOLLOWS #}
         <button {{ stimulus_action('subject', 'follows') }}
                 type="button" 
                 class="btn-vierge rightFloat" 
+                title="Ajouter aux favoris"
                 value="{{subject.id}}" 
                 >
                 {# {{ dump(subject) }}
@@ -46,11 +51,13 @@
                 
                 
         </button>
-                <button {{ stimulus_action('subject', 'report') }}
-                value="{{subject.id}}" 
-                class="btn-vierge color-red rightFloat" 
-                type="button" 
-                >
+    {# REPORT #}
+        <button {{ stimulus_action('subject', 'report') }}
+            value="{{subject.id}}" 
+            class="btn-vierge color-red rightFloat" 
+            type="button" 
+            title="Signaler"
+            >
             <i class="fa-solid fa-triangle-exclamation"></i>
         </button>
         <div class="suggest" id="suggestSubject{{subject.id}}">
@@ -64,26 +71,21 @@
                 </button>
             </div>
         </div>
-        
+    {# EDIT #}
         {% if app.user and subject.user and app.user.id == subject.user.id %}
             <button
                 value="{{subject.id}}" 
                 class="btn-vierge" 
                 type="button" 
+                title="Modifier"
                 >
             <a href="{{ path('user_subject_edit', {'id': subject.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
         </button>
         {% endif %}
     </div>
-    <div>
-        {# {% if app.user and app.user.id == subject.user.id %}
-        <button data-btnEdit-subjectName value="{{subject.id}}">Modifer le titre</button>
-        <div class="suggest" id="editSubject{{subject.id}}">
-            <input id="subjectName" type="text" value="{{subject.nom}}">
-            <button class="btnVierge" value="{{subject.id}}" data-edit-subjectName >modifier</button>
-        </div>
-        {% endif %} #}
 
+    <div>
+    {# NOTE DU SUJET #}
         <h1 class="title"><span>{{subject.nom}}</span>
         {% if  subject.noteSubjects | length > 0 %}
             
@@ -109,10 +111,9 @@
         {% endif %}
         </h1>
     </div>
-    {# {{ dump(app.user) }} #}
-    <div class="d-flex-image">
-        {# noter l subject #}
 
+    <div class="d-flex-image">  
+    {# DESCRITPION #}
         <div>
             {# <img class="subjectImage" src="{{ subject ? vich_uploader_asset(subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.nom}}"> #}
             <div class="d-subject">
@@ -121,11 +122,12 @@
                 </div>
             </div>
         </div>  
+    {# COMMENTAIRE #}
         <div class="commentaire">
             {# form new comment #}
             {% if app.user %} 
-                {# <form action="" id="commentPost{{subject.id}}"> #}
-                    <div class="comment"  
+            {# ENVOIE COMMENT #}
+                <div class="comment"  
                     {{ stimulus_controller('comment') }}
                     >
                     <textarea id="commentPost{{subject.id}}" 
@@ -134,19 +136,20 @@
                         onblur="quitTextarea(this)"
                         name="" id="" cols="1" rows="1"></textarea>
                         {# <input id="commentPost{{subject.id}}" class="envoieCommentInput" placeholder="écrit ton commentaire"> #}
-                        <button 
-                            type="button" 
-                            class="btn-vierge envoiComment" 
-                            value="{{subject.id}}|{{app.user.id}}"
-                            {{ stimulus_action('comment', 'newComment') }}
-                            ><i class="fa-solid fa-paper-plane"></i>
-                        </button>
-                    </div>
-                {# </form> #}
+                    <button 
+                        type="button" 
+                        class="btn-vierge envoiComment" 
+                        value="{{subject.id}}|{{app.user.id}}"
+                        title="Envoyer le commentaire"
+                        {{ stimulus_action('comment', 'newComment') }}
+                        ><i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
             {% endif %}
             
             <div class="top" id="com{{subject.id}}">
             {% for commen in subject.comments |sort((a, b) => a.createdAt <= b.createdAt) %}
+            {# LISTE COMMENT #}
                 {% if commen.active %}     
                 <div {{ stimulus_controller('comment') }}
                     class="comment3" 
@@ -154,7 +157,9 @@
                     >           
                     <div class="jaime" >
                         <span class="floatRight">
+                            {# LIKE #}
                             <button 
+                                title="Liker ce commentaire"
                                 value="{{commen.id}}" 
                                 class="btn-vierge jaimee rightFloat" 
                                 type="button" 
@@ -178,7 +183,9 @@
                                 <span id="like{{commen.id}}">({{commen.commentLikes | length }})</span> 
 
                             </button>
+                            {# REPORT #}
                             <button 
+                                title="Signaler ce commentaire"
                                 value="{{commen.id}}" 
                                 class="btn-vierge color-red rightFloat" 
                                 type="button" 
@@ -187,13 +194,13 @@
                                 <i class="fa-solid fa-triangle-exclamation"></i>
                             </button>
                             {% if app.user and app.user.id == commen.user.id %}
+                            {# MODIF #}
                                 <button 
+                                    title="Supprimer mon commentaire"
                                     value="{{commen.id}}"
                                     class="btn-vierge rightFloat" 
                                     {{ stimulus_action('comment', 'delete') }}
-                                >
-                                    <i class="fa-solid fa-trash-can"></i>
-                                    
+                                ><i class="fa-solid fa-trash-can"></i>
                                 </button>
                             {% endif %}
                         </span>
@@ -224,7 +231,7 @@
             {% endfor %}
             </div>
         </div>
-
+    {# NOTER #}
         {% if ( app.user and subject.user and app.user.id != subject.user.id ) or subject.user== null %}
         {% if  app.user %}
             
@@ -244,6 +251,7 @@
                     class="btn-vierge"  
                     value="{{i}}-{{subject.id}}" 
                     type="button"
+                    title="Noter {{i}} étoile{{i>1?'s'}}"
                     >
                         <i class="far fa-star stars" ></i>
                 </button>
@@ -257,16 +265,16 @@
 
 </div>
 <script>
-function updateTextareaHeight(input) {
-    input.style.height = 'auto';
-    input.style.height = input.scrollHeight+'px';
-}
-function quitTextarea(input){
-    e = window.event;
-    
-   if (!e.relatedTarget){
-        input.style.height = '50px';
-   }
-    
-}
+    function updateTextareaHeight(input) {
+        input.style.height = 'auto';
+        input.style.height = input.scrollHeight+'px';
+    }
+    function quitTextarea(input){
+        e = window.event;
+        
+    if (!e.relatedTarget){
+            input.style.height = '50px';
+    }
+        
+    }
 </script>

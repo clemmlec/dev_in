@@ -8,7 +8,9 @@ import {debounce} from 'lodash';
  * @property {HTMLElement} count        -- the element with number of posts on the content
  * @property {number} page              -- the number of page search
  */
+
 export default class Filter {
+   
     /**
      * Constructor the Filter class
      * 
@@ -28,10 +30,13 @@ export default class Filter {
         this.moreNav = this.page == 1;
         this.bindEvents();
 
+
         /**
          * Add the action to the elements of the filter bundle
          */
     }
+
+
 
     /**
      * add actions to the elements of the filter bundle
@@ -46,8 +51,11 @@ export default class Filter {
         }
 
         if(this.moreNav){
-            this.pagination.innerHTML = '<button class="btn btn-primary btn-show-more mt-2">Voir plus</button>';
+            this.pagination.innerHTML = '<button id="refreshScroll" class="btn btn-primary btn-show-more mt-2">Voir plus</button>';
             this.pagination.querySelector('button').addEventListener('click', this.loadMore.bind(this));
+            window.addEventListener('scroll', 
+                this.reload.bind(this)
+          );
         }else {
             this.pagination.addEventListener('click', linkClickListener);
         };
@@ -57,10 +65,12 @@ export default class Filter {
         });
 
         this.form.querySelectorAll('input[type="text"]').forEach(input => {
-            input.addEventListener('keyup', debounce(this.loadForm.bind(this),500));
+            input.addEventListener('keyup', debounce(this.loadForm.bind(),500));
         });
 
     }
+
+
 
     /**
      * Load thee url in ajax
@@ -133,15 +143,32 @@ export default class Filter {
      * 
      * @param {HTMLElement} button -- button show more 
      */
-    async loadMore(button){
+    async reload()
+    {
+    
+        var rect = refreshScroll.getBoundingClientRect(), 
+        offset = rect.bottom - window.innerHeight;
+        if(offset < -20 ){
+            this.loadMore(refreshScroll)
+        }
+    }
 
-        button.target.setAttribute('disabled','disabled');
+    /**
+     *  Load more content on the page
+     * 
+     * @param {HTMLElement} button -- button show more 
+     */
+    async loadMore(button){
+        if(button.target){
+            button = button.target
+        }
+        button.setAttribute('disabled','disabled');
         this.page++;
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);
         params.set('page', this.page);
         await this.loadUrl(`${url.pathname}?${params.toString()}`, true);
-        button.target.removeAttribute('disabled');
+        button.removeAttribute('disabled');
 
     }
 
