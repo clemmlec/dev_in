@@ -157,7 +157,7 @@ export default class Filter {
         var rect = refreshScroll.getBoundingClientRect(), 
         offset = rect.bottom - window.innerHeight;
 
-        if(offset < -20 && this.reload == false){
+        if(offset < 40 && this.reload == false){
             this.loadMore(refreshScroll)
             this.reload = true
         }

@@ -128,6 +128,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ArticleSuggestion::class, orphanRemoval: true)]
     private Collection $articleSuggestions;
 
+    #[ORM\Column(nullable: false, options: ['default' => 0])]
+    private ?int $credibility = null;
+
     public function __construct()
     {
         $this->followers = new ArrayCollection();
@@ -720,5 +723,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getCredibility(): ?int
+    {
+        return $this->credibility;
+    }
+
+    public function setCredibility(int $credibility): self
+    {
+        $this->credibility = $credibility;
+
+        return $this;
     }
 }

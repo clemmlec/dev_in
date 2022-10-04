@@ -3,15 +3,19 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Entity\Subject;
-use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityDeletedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 
 class AdminSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private Security $security
+        private Security $security,
+        private UserRepository $userRepository
     ) {
     }
 
@@ -19,6 +23,7 @@ class AdminSubscriber implements EventSubscriberInterface
     {
         return [
             BeforeEntityPersistedEvent::class => ['setUser'],
+            BeforeEntityDeletedEvent::class => ['setCredibility'],
         ];
     }
 
@@ -31,6 +36,26 @@ class AdminSubscriber implements EventSubscriberInterface
         }
 
         $entityInstance->setUser($this->security->getUser());
+        // dd($entityInstance);
+    }
+
+    public function setCredibility(BeforeEntityDeletedEvent $event)
+    {
+        $entityInstance = $event->getEntityInstance();
+
+        if (!$entityInstance instanceof Comment) {
+            return;
+        }
+
+        $entityInstance->getCommentReports();
+        // dd( $entityInstance->getCommentReports());
+        foreach ($entityInstance->getCommentReports() as $report) {
+            // $report->getUser();
+            $user = $this->userRepository->find($report->getUser());
+            $user -> setCredibility( $user->getCredibility()+1);
+            $this->userRepository->add($user,true);
+        }
+        
         // dd($entityInstance);
     }
 }

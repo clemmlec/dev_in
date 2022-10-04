@@ -49,7 +49,8 @@ class SecurityController extends AbstractController
                     $form->get('password')->getData()
                 )
             )
-            ->setActive(true);
+            ->setActive(true)
+            ->setCredibility(0);
 
             $em->persist($user);
             $em->flush();
