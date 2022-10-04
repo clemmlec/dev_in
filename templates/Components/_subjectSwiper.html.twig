@@ -52,4 +52,4 @@
     <li>{{subject.noteSubjects | length}} notes reçus</li>
     {# <li>{{subject.comments | length}} ajouter subject favoris</li> #}
 </ul>
-<a href="{{ path('user_subject_show', {'id': subject.id}) }}">voir le sujet</a>
+<a href="{{ path('user_subject_show', {'id': subject.id , 'slug': subject.slug}) }}">voir le sujet</a>

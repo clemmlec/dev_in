@@ -61,7 +61,7 @@
 
         {% if couper == "couper" %}
             <div class="footer">
-                <button class="btn-vierge bleu"><a href="{{ path('article_show', {'id': article.id}) }}">voir plus</a></button>
+                <button class="btn-vierge bleu"><a href="{{ path('article_show', {'id': article.id , 'slug': article.slug}) }}">voir plus</a></button>
             </div>
         {% endif %}
         

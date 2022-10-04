@@ -7,5 +7,5 @@ App\Entity\Subject:
     nom: "<words(4, true)>"
     description: "<generateLoremDesct()>"
     user: "@userAdmin"
-    forum: "<randomElements(@forum_{1..10})>"
+    forum: "<randomElement(@forum_{1..10})>"
     createdAt: "<generateDate()>"

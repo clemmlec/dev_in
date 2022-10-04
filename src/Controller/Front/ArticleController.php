@@ -52,8 +52,8 @@ class ArticleController extends AbstractController
         ]);
     }
 
-        #[Route('/{id}', name: 'article_show', methods: ['GET', 'POST'])]
-    public function show(?Article $article, ArticleRepository $articleRepository): Response
+        #[Route('/{id}/{slug}', name: 'article_show', methods: ['GET', 'POST'])]
+    public function show(?Article $article,string $slug, ArticleRepository $articleRepository): Response
     {
         if(!$article instanceof Article) {
             $this->addFlash('error', 'Nous ne trouvons pas l\'article demandé');
