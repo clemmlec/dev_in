@@ -11,8 +11,8 @@
 {% endblock %}
 {% block body %}
     <section class="register">
-        <form class="form" action="{{path('login')}}"  method="POST" >
-            <h1 class="Lobster">Se connecter</h1>
+        <form class="form large" action="{{path('login')}}"  method="POST" >
+            <h1 class="Lobster">Connexion</h1>
             {% if error %}
                 <div class="" >
                     <h1>{{ error.messageKey|trans(error.messageData, 'security')}}</h1>
