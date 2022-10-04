@@ -4,6 +4,7 @@ App\Entity\User:
     password: "<hashPassword('123456')>"
     name: "Clem"
     rgpd: true
+    credibility: 50
     roles: ["ROLE_ADMIN"]
 
 
@@ -12,10 +13,12 @@ App\Entity\User:
     password: "<hashPassword('123456')>"
     name: "edit"
     rgpd: true
+    credibility: 10
     roles: ["ROLE_EDITOR"]
 
   user{1..5}: 
     email (unique): user<current()>\@domain.fr
     password: "<hashPassword('123456')>"
     rgpd: true
+    credibility: 0
     name: "lastName()"
