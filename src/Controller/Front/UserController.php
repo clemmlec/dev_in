@@ -373,7 +373,7 @@ class UserController extends AbstractController
     #[Route('/follow/{id}', name: 'app_user_follow', methods: ['GET'])]
     public function followUser(?User $follow, FollowRepository $friendsRepo, Security $security)
     {
-        $user = $security->getUser();
+        $user = $this->getUser();
 
         // dd($follow);
         // dd($user, $follow);
@@ -400,7 +400,7 @@ class UserController extends AbstractController
     #[Route('/style/{style}', name: 'app_user_style', methods: ['GET'])]
     public function styleUser(string $style, Security $security)
     {
-        $user = $security->getUser();
+        $user = $this->getUser();
 
         if ($style && $user) {
             $user->setStyle($style);
