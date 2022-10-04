@@ -24,6 +24,9 @@ class ArticleSuggestion
     #[ORM\Column(length: 255)]
     private ?string $message = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $util = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,5 +71,17 @@ class ArticleSuggestion
     public function __toString()
     {
         return $this->message;
+    }
+
+    public function isUtil(): ?bool
+    {
+        return $this->util;
+    }
+
+    public function setUtil(?bool $util): self
+    {
+        $this->util = $util;
+
+        return $this;
     }
 }

@@ -76,15 +76,24 @@ class CommentController extends AbstractController
     public function signalerComment(?Comment $com, string $message, Security $security, CommentRepository $comRepo, CommentReportRepository $comSignalRepo)
     {
         $user = $security->getUser();
-
+        // if deja signaler -> modifier
         if ($com && $user) {
-            $newSignal = new CommentReport();
-            $newSignal->setUser($user)
-            ->setComment($com)
-            ->setMessage($message);
-            $comSignalRepo->add($newSignal, true);
+            $dejaReport = $comSignalRepo->findOneBy(['user' => $user, 'comment' => $com]);
+            if(!$dejaReport){
+                $newSignal = new CommentReport();
+                $newSignal->setUser($user)
+                ->setComment($com)
+                ->setMessage($message);
+                $comSignalRepo->add($newSignal, true);
+                return new Response('commantaire signaler', 201);
+            }else{
+                $dejaReport->setUser($user)
+                ->setComment($com)
+                ->setMessage($message);
+                $comSignalRepo->add($dejaReport, true);
+                return new Response('Signalement modifié', 201);
+            }
 
-            return new Response('commantaire signaler', 201);
         }
 
         return new Response('commentaire non trouvé', 404);

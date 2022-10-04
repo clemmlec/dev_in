@@ -9,9 +9,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[UniqueEntity(
+    fields: ['name'],
+    message: 'ce titre est déjà utilisé'
+)]
 class Article
 {
     #[ORM\Id]
@@ -24,8 +29,12 @@ class Article
         maxMessage: 'Le titre ne doit pas dépasser {{ limit }} caracteres'
     )]
     #[Assert\NotBlank]
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, unique: true)]
     private ?string $name = null;
+
+    #[ORM\Column(length: 100, unique: true)]
+    #[Gedmo\Slug(fields: ['name'])]
+    private $slug;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
@@ -73,6 +82,11 @@ class Article
         $this->name = $name;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
     }
 
     public function getContent(): ?string

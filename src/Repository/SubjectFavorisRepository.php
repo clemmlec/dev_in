@@ -45,9 +45,7 @@ class SubjectFavorisRepository extends ServiceEntityRepository
         }
     }
 
-   /**
-    * @return SubjectFavoris[] Returns an array of SubjectFavoris objects
-    */
+
    public function getSubjectFavoris($id,SearchData $search): PaginationInterface
    {
        $query = $this->createQueryBuilder('a')

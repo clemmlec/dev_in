@@ -24,6 +24,9 @@
     padding: 10px;
     border-radius: 5px;
 }
+.lobster{
+    font-family: 'Lobster', cursive;
+}
 #profilCard{
     margin: 100px auto 0 auto;
 }
@@ -32,7 +35,7 @@
 }
 .suggest{
     position: relative;
-    z-index: 200;
+    z-index: 80;
 }
 h1{
     font-size: 40px;

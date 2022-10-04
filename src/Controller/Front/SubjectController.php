@@ -232,13 +232,23 @@ class SubjectController extends AbstractController
         $user = $security->getUser();
 
         if ($subject && $user) {
-            $newSignal = new SubjectReport();
-            $newSignal->setUser($user)
+            $dejaReport = $artSignalRepo->findOneBy(['user' => $user, 'subject' => $subject]);
+            if(!$dejaReport){
+                $newSignal = new SubjectReport();
+                $newSignal->setUser($user)
+                    ->setSubject($subject)
+                    ->setMessage($message);
+                $artSignalRepo->add($newSignal, true);
+
+                return new Response('subject signaler', 201);
+            }else{
+                $dejaReport->setUser($user)
                 ->setSubject($subject)
                 ->setMessage($message);
-            $artSignalRepo->add($newSignal, true);
-
-            return new Response('subject signaler', 201);
+                $artSignalRepo->add($dejaReport, true);
+                return new Response('signalement modifié', 201);
+            }
+            
         }
 
         return new Response('subject non trouvé', 404);

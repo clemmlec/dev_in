@@ -8,9 +8,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SubjectRepository::class)]
+#[UniqueEntity(
+    fields: ['nom'],
+    message: 'ce titre est déjà utilisé'
+)]
 class Subject
 {
     #[ORM\Id]
@@ -18,13 +23,17 @@ class Subject
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Length(
         max: 100,
         maxMessage: 'Votre titre ne dois pas dépasser {{ limit }} caracteres'
     )]
     private ?string $nom = null;
+
+    #[ORM\Column(length: 100, unique: true)]
+    #[Gedmo\Slug(fields: ['nom'])]
+    private $slug;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
@@ -74,6 +83,7 @@ class Subject
         return serialize([
             $this->id,
             $this->nom,
+            $this->slug,
             $this->description,
             $this->user,
             $this->forum,
@@ -88,6 +98,7 @@ class Subject
         list(
             $this->id,
             $this->nom,
+            $this->slug,
             $this->description,
             $this->user,
             $this->forum,
@@ -112,6 +123,11 @@ class Subject
         $this->nom = $nom;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
     }
 
     public function getDescription(): ?string

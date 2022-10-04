@@ -4,16 +4,18 @@ namespace App\Controller\Security;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\ContactType;
 use App\Form\UserTypeEdit;
+use App\Services\MailerService;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
@@ -49,7 +51,8 @@ class SecurityController extends AbstractController
                     $form->get('password')->getData()
                 )
             )
-            ->setActive(true);
+            ->setActive(true)
+            ->setCredibility(0);
 
             $em->persist($user);
             $em->flush();
@@ -75,29 +78,28 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-    // #[Route('/edit/{id}', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    // public function edit(Request $request, User $user, UserRepository $userRepository, Security $security): Response
-    // {
-    //     if ($user != $security->getUser()){
+    #[Route('/contact', name: 'contact')]
+    public function contact(Request $request, MailerService $mailer): Response
+    {
+        $form = $this->createForm(ContactType::class);
+        $form->handleRequest($request);
 
-    //         $this->addFlash('error', 'probleme d\'authentification');
-    //         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
-    //     }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contactFormData = $form->getData();
+            $subject = 'Demande de contact sur votre site de '.$contactFormData['email'];
+            $content = $contactFormData['nom']
+                .' vous a envoyé le message suivant: '
+                .$contactFormData['message'];
+            $from = $contactFormData['email'];
+            $mailer->sendEmail(subject: $subject, content: $content, from:$from);
+            $this->addFlash('success', 'Votre message a été envoyé');
 
-    //     $form = $this->createForm(UserTypeEdit::class, $user);
+            return $this->redirectToRoute('contact');
+        }
 
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-
-    //         $userRepository->add($user, true);
-
-    //         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->renderForm('Security/edit.html.twig', [
-    //         'user' => $user,
-    //         'form' => $form,
-    //     ]);
-    // }
+        return $this->renderForm('Security/contact.html.twig', [
+            'form' => $form,
+        ]);
+    }
+    
 }

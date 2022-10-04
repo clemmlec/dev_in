@@ -4,17 +4,14 @@
         <h1>{{article.name}}</h1>
         <hr>
         <div class="iconArticle"  {{ stimulus_controller('article') }}>
-
+        {# FOLLOWS #}
             <button 
                 type="button" 
                 class="btn-vierge right" 
                 value="{{article.id}}" 
+                title="Ajouter aux favoris"
                 {{ stimulus_action('article', 'follows') }} 
                 >
-                {# {{ dump(article) }}
-                {{ dump(app.user.getarticleFavoris()) }} #}
-                {# {{ dump(article) }}
-                {{ dump(app.user.articleFavoris) }} #}
                 {% set fav = false %}
                 {% if app.user %}
                     {% for row in app.user.articleLikeds %}
@@ -31,10 +28,12 @@
                     
                 {% endif %}
             </button>
+        {# SUGGEST #}
             <button
                 value="{{article.id}}" 
                 class="btn-vierge color-red right" 
                 type="button" 
+                title="Faire une suggestion"
                 {{ stimulus_action('article', 'report') }} 
                 >
                 <i class="fa-solid fa-clipboard-question"></i>
@@ -62,7 +61,7 @@
 
         {% if couper == "couper" %}
             <div class="footer">
-                <button class="btn-vierge bleu"><a href="{{ path('article_show', {'id': article.id}) }}">voir plus</a></button>
+                <button class="btn-vierge bleu"><a href="{{ path('article_show', {'id': article.id , 'slug': article.slug}) }}">voir plus</a></button>
             </div>
         {% endif %}
         

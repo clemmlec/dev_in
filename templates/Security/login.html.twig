@@ -11,8 +11,8 @@
 {% endblock %}
 {% block body %}
     <section class="register">
-        <form class="form" action="{{path('login')}}"  method="POST" >
-            <h1 class="Lobster">Se connecter</h1>
+        <form class="form large" action="{{path('login')}}"  method="POST" >
+            <h1 class="Lobster">Connexion</h1>
             {% if error %}
                 <div class="" >
                     <h1>{{ error.messageKey|trans(error.messageData, 'security')}}</h1>
@@ -23,7 +23,7 @@
                 <input type="text" id="username" class="form-control" name="_username" value="{{ lastUsername }}" placeholder="email"/>
             </div>
             <div class="form-ligne">
-                <input type="password" id="password" class="form-control" name="_password" placeholder="password" value="123456"/>
+                <input type="password" id="password" class="form-control" name="_password" placeholder="password" value="1234"/>
             </div>
             <hr>
             <div class="mb-4">

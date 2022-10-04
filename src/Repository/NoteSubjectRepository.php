@@ -45,9 +45,7 @@ class NoteSubjectRepository extends ServiceEntityRepository
         }
     }
 
-   /**
-    * @return NoteSubject[] Returns an array of NoteSubject objects
-    */
+
    public function getSubjectNoter($id,SearchData $search): PaginationInterface
    {
         $query = $this->createQueryBuilder('n')

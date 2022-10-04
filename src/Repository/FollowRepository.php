@@ -45,9 +45,7 @@ class FollowRepository extends ServiceEntityRepository
         }
     }
 
-   /**
-    * @return Follow[] Returns an array of Follow objects
-    */
+
    public function findAllFollowed($id,SearchData $search): PaginationInterface
    {
        $query =  $this->createQueryBuilder('f')
@@ -71,10 +69,6 @@ class FollowRepository extends ServiceEntityRepository
    }
 
 
-
-    /**
-     * @return Follow[] Returns an array of Follow objects
-     */
     public function findAllFollowers($id,SearchData $search): PaginationInterface
     {
         $query= $this->createQueryBuilder('f')

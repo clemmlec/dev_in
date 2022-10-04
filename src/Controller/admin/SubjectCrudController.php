@@ -24,7 +24,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 class SubjectCrudController extends AbstractCrudController
 {
     public function __construct(
-        private Security $security
+        // private Security $security
     ) {
     }
 

@@ -136,8 +136,8 @@ select {
     padding: 20px;
     background-color: rgb(166, 218, 200);
     // background: linear-gradient(120deg, rgb(170, 206, 193), rgb(31, 115, 122));
-    background: linear-gradient(120deg, rgb(170, 193, 206), rgb(31, 81, 122));
-    border: 1px inset;
+    background: linear-gradient(120deg, rgb(114, 156, 181), rgb(31, 81, 122));
+    // border: 1px inset;
     border-radius: 15px;
     // width: 50%;
     box-shadow: inset 5px 5px 5px rgba(200, 199, 199, 0.392),
@@ -155,12 +155,15 @@ select {
 .Lobster {
     font-family: 'Lobster', cursive;
     color: rgb(27, 8, 77);
-    text-shadow: 5px -5px rgb(0, 172, 149),
-                 10px -10px rgb(111, 209, 108),
-                 15px -15px rgb(198, 228, 180);
-    transform: skewY(-5deg);
-    margin-top: 25px;
-    margin-bottom: 25px;
+    // text-shadow: 5px -5px rgb(0, 172, 149),
+    //              10px -10px rgb(111, 209, 108),
+    //              15px -15px rgb(198, 228, 180);
+    // transform: skewY(-5deg);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.large{
+    min-width: 400px;
 }
 .Righteous {
     font-family: 'Righteous', cursive;

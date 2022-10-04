@@ -23,6 +23,7 @@ class AppFixtures extends Fixture
         $user->setEmail('clem@gmail.com')
             ->setName('clem')
             ->setRgpd('true')
+            ->setCredibility(10)
             ->setRoles(['ROLE_ADMIN']);
 
         $password = $this->hasher->hashPassword($user, '1234');
