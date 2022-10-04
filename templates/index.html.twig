@@ -15,7 +15,7 @@
 <section class="w-100">
     <div id="home">
         <div class="header bleu">
-            <h1>Dev In</h1>
+            <h1 class="lobster">Dev In</h1>
             <h2><em>Entre dans une communauté <br> d'entraide et de partage</em></h2>
             {% if app.user %}
             {% else %}
@@ -53,7 +53,7 @@
             
 
             <div class="swiper mySwiper">
-                <h2 class="titreHome bleu">Les derniers sujets postées par les adhérents</h2>
+                <h2 class="titreHome bleu">Les derniers sujets postées</h2>
                 <div class="swiper-wrapper">
                 {% for subject in subjects %}
                     <div class="swiper-slide overflow-y card">
