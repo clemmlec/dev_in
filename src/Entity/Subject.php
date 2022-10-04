@@ -12,6 +12,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SubjectRepository::class)]
+#[UniqueEntity(
+    fields: ['nom'],
+    message: 'ce titre est déjà utilisé'
+)]
 class Subject
 {
     #[ORM\Id]
