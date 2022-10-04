@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}doc | {{ parent() }}{% endblock %}
+
+{% block body %}
+    <section class="w-80">
+       <h1>Contactez notre équipe</h1>
+
+    {{ form_start(form,{'attr': { 'class': 'form' }}) }}
+        {{ form_widget(form.nom, {'attr': { 'placeholder': 'Nom', 'autofocus': true}}) }}
+        {{ form_widget(form.email, {'attr': {'placeholder': 'Email' }}) }}
+        {{ form_widget(form.message, {'attr': { 'placeholder': 'Message'}}) }}
+        <button class="btn input">{{ button_label|default('Envoyer') }}</button>
+    {{ form_end(form) }}
+
+
+    </section>
+{% endblock %}
