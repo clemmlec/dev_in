@@ -169,7 +169,7 @@ class UserController extends AbstractController
         $forms = $this->createForm(SearchType::class, $data);
         $forms->handleRequest($request);
 
-        $subjects = $subjectRepository->getSubjectFavoris($user->getId(),$data);
+        $subjects = $subjectRepository->getSubjectFavoris($user,$data);
         
         if ($request->get('ajax')) {
             return new JsonResponse([
@@ -215,7 +215,7 @@ class UserController extends AbstractController
         $forms = $this->createForm(SearchType::class, $data);
         $forms->handleRequest($request);
 
-        $subjects = $noteSubjectRepository->getSubjectNoter($user->getId(),$data);
+        $subjects = $noteSubjectRepository->getSubjectNoter($user,$data);
         
         if ($request->get('ajax')) {
             return new JsonResponse([
@@ -263,7 +263,7 @@ class UserController extends AbstractController
         $forms = $this->createForm(SearchType::class, $data);
         $forms->handleRequest($request);
 
-        $articles = $articleLikedRepository->getArticleFavoris($user->getId(),$data);
+        $articles = $articleLikedRepository->getArticleFavoris($user,$data);
         
         if ($request->get('ajax')) {
             return new JsonResponse([
@@ -314,7 +314,7 @@ class UserController extends AbstractController
         
         if ($request->get('ajax')) {
             return new JsonResponse([
-                'content' => $this->renderView('Components/_subjects.html.twig', [
+                'content' => $this->renderView('Components/_subjectsNoters.html.twig', [
                     'subjects' => $subjects,
                 ]),
                 'pagination' => $this->renderView('Components/filter/_paginationSubject.html.twig', [
@@ -348,7 +348,6 @@ class UserController extends AbstractController
         Request $request, 
         ?User $user, 
         Security $security, 
-        SubjectRepository $subRepo
         ): Response
     {
         if (!$user instanceof User ) {
@@ -357,12 +356,8 @@ class UserController extends AbstractController
             return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
 
-        $userCollection = $this->userRepository->findOneById($user->getId());
-
         $form = $this->createForm(UserTypeEdit::class, $user);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->userRepository->add($user, true);
 
@@ -378,7 +373,7 @@ class UserController extends AbstractController
     #[Route('/follow/{id}', name: 'app_user_follow', methods: ['GET'])]
     public function followUser(?User $follow, FollowRepository $friendsRepo, Security $security)
     {
-        $user = $this->userRepository->find($security->getUser());
+        $user = $security->getUser();
 
         // dd($follow);
         // dd($user, $follow);
@@ -405,7 +400,7 @@ class UserController extends AbstractController
     #[Route('/style/{style}', name: 'app_user_style', methods: ['GET'])]
     public function styleUser(string $style, Security $security)
     {
-        $user = $this->userRepository->find($security->getUser());
+        $user = $security->getUser();
 
         if ($style && $user) {
             $user->setStyle($style);
