@@ -39,20 +39,18 @@ class SubjectReportRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return SubjectReport[] Returns an array of SubjectReport objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * 
+    */
+    public function countSubjectReport(): int
+    {
+
+        return $this->createQueryBuilder('c')
+             ->select('count(c.id)')
+             ->getQuery()
+             ->getSingleScalarResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?SubjectReport
 //    {

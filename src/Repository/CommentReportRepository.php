@@ -40,15 +40,23 @@ class CommentReportRepository extends ServiceEntityRepository
     }
 
    /**
-    * @return CommentReport[] Returns an array of CommentReport objects
+    * 
     */
-   public function findByExampleField(): array
+   public function countComReport(): int
    {
+        // $date =date("Y-(m-1)-d H:i:s")('c', mktime(1, 2, 3, 4, 5, 2006));
+        // $date =date("Y-m-d H:i:s",mktime(0, 0, 0, date("m")-1, date("d"),   date("Y")));
+        // $date =date_format($date, 'Y-m-d H:i:s');
+       
+        // dd($date);
+
        return $this->createQueryBuilder('c')
-           ->orderBy('c.id', 'DESC')
-           ->groupBy('c.comment')
-           ->getQuery()
-           ->getResult()
+            ->select('count(c.id)')
+            // ->where('c.created_at', ':date')
+            // ->setParameter(':date',  $date)
+        //  ->groupBy('c.comment')
+            ->getQuery()
+            ->getSingleScalarResult()
        ;
    }
 

@@ -50,10 +50,9 @@ export default class Filter {
                 this.loadUrl(e.target.getAttribute('href'));
             }
         }
-
         if(this.moreNav){
       
-            this.pagination.innerHTML = '<button id="refreshScroll" class="btn btn-primary btn-show-more mt-2">Voir plus</button>';
+            this.pagination.innerHTML = '<button id="refreshScroll" class="btn-vierge"><i class="fa-solid fa-spinner fa-spin-pulse"></i></button>';
             this.pagination.querySelector('button').addEventListener('click', this.loadMore.bind(this));
             window.addEventListener('scroll', this.reload.bind(this));
             
@@ -91,9 +90,14 @@ export default class Filter {
         });
 
         if(response.status >= 200 && response.status < 300) {
-            
             const data = await response.json();
+            if(data.pages==1){
+                this.pagination.style.display = 'none';
+                stopReload = true
+                this.hideLoader(stopReload);
+                return
 
+            }
             this.count.innerHTML = data.count;
 
             if(append){
@@ -104,15 +108,13 @@ export default class Filter {
 
             if(!this.moreNav){
                 this.pagination.innerHTML = data.pagination;
-
+                console.log('null 👲👱‍♂️')
             }else if(this.page === data.pages){
                 console.log('none')
-                stopReload =true
+                stopReload = true
                 this.pagination.style.display = 'none';
             }else{
-                this.pagination.style.display = null;
-                console.log('null')
-
+                this.pagination.style.display = 'none';
             }
 
             if(data.pages==0){
@@ -135,7 +137,7 @@ export default class Filter {
      * 
      */
     async loadForm() {
-        console.log(this)
+        // console.log(this)
         this.page = 1;
         const data = new FormData(this.form);
         const url = new URL(this.form.getAttribute('action') ||window.location.href );
