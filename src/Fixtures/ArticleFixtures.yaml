@@ -3,9 +3,9 @@ include:
   - TagsFixtures.yaml
 
 App\Entity\Article:
-  article_{1..20}:
+  article_{1..2}:
     name: "<words(4, true)>"
     content: "<generateLoremDesct()>"
-    user: "@userAdmin"
+    user: "@user"
     tags: "<randomElements(@tags_{1..10})>"
     createdAt: "<generateDate()>"

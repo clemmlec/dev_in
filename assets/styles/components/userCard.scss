@@ -24,7 +24,6 @@
     height: max-content;
     padding: 5px;
     margin:  50px auto 20px auto;
-
     .toptitre{
 
         position: relative;
@@ -34,6 +33,10 @@
         // background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.2));
         margin: 0;
     
+    }
+    h3{
+        font-family: 'arial';
+
     }
     h1{
         overflow-x: hidden;

@@ -1,0 +1,11 @@
+include:
+  - UserFixtures.yaml
+  - SubjectFixtures.yaml
+  
+App\Entity\Comment:
+  comment_{1..100}:
+    subject: "<randomElement(@subject_{1..20})>"
+    user: "@user"
+    active: true
+    message: "<words(25, true)>"
+    createdAt: "<generateDate()>"
