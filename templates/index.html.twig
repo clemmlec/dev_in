@@ -16,7 +16,7 @@
     <div id="home">
         <div class="header bleu">
             <h1 class="lobster">Dev In</h1>
-            <h2><em>Entre dans une communauté <br> d'entraide et de partage</em></h2>
+            <h2><em>Entraide entre devs</em></h2>
             {% if app.user %}
             {% else %}
                 <button class="btn-inscription"><a  href="{{ path('register') }}">Incription</a></button>
@@ -25,6 +25,7 @@
         </div>
     </div>
 </section>
+
 
     <section class="w-100 paralax">
         {% for subject in subjects %}

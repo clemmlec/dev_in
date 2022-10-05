@@ -10,10 +10,13 @@
     align-items: center;
     
     .header{
-        padding: 50px 150px;
+        padding: 8px 150px;
         border-radius: 20px;
         h1{
            color: whitesmoke;
+           font-size: 4em;
+           font-weight: 400;
+           white-space: nowrap;
         }
     }
 }

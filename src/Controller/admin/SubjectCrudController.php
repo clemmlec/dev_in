@@ -31,10 +31,12 @@ class SubjectCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         $duplicate = Action::new('duplicate')
-            ->linkToCrudAction('duplicateSubject');
+            ->linkToCrudAction('duplicateSubject')
+            ;
 
         return $actions
-            ->add(Crud::PAGE_EDIT, $duplicate);
+            ->add(Crud::PAGE_EDIT, $duplicate)
+            ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 
     public static function getEntityFqcn(): string
@@ -47,10 +49,10 @@ class SubjectCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('nom'),
+            AssociationField::new('forum'),
             TextEditorField::new('description'),
             ArrayField::new('subjectReports')->hideOnForm()->setSortable(false),
             BooleanField::new('active'),
-            AssociationField::new('forum'),
             AssociationField::new('user')->hideOnForm(),
             DateTimeField::new('created_at')->hideOnForm(),
             DateTimeField::new('updated_at')->hideOnForm(),
@@ -61,24 +63,12 @@ class SubjectCrudController extends AbstractCrudController
         ];
     }
 
-    // public function persistEntity(EntityManagerInterface $em, $entityInstance): void
-    // {
-    //     if(!$entityInstance instanceof Subject)return;
-
-    //     $entityInstance->setCreatedAt(new \DateTimeImmutable())
-    //         ->setUserId($this->security->getUser());
-
-    //     parent::persistEntity($em, $entityInstance);
-    // }
-
-    // public function updateEntity(EntityManagerInterface $em, $entityInstance): void
-    // {
-    //     if(!$entityInstance instanceof Subject)return;
-
-    //     $entityInstance->setUpdatedAt(new \DateTimeImmutable());
-
-    //     parent::persistEntity($em, $entityInstance);
-    // }
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setDefaultSort(['created_at' => 'DESC'])
+        ;
+    }
 
     public function duplicateSubject(
         EntityManagerInterface $em,

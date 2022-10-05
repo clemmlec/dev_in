@@ -3,10 +3,11 @@
 namespace App\Controller\admin;
 
 use App\Entity\CommentReport;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class CommentReportCrudController extends AbstractCrudController
 {
@@ -23,5 +24,12 @@ class CommentReportCrudController extends AbstractCrudController
             AssociationField::new('user'),
             AssociationField::new('comment'),
         ];
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setDefaultSort(['id' => 'DESC'])
+        ;
     }
 }
