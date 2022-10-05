@@ -66,7 +66,7 @@ export default class Filter {
         });
 
         this.form.querySelectorAll('input[type="text"]').forEach(input => {
-            input.addEventListener('keyup', debounce(this.loadForm.bind(),500));
+            input.addEventListener('keyup', debounce(this.loadForm.bind(this),500));
         });
 
     }
@@ -117,7 +117,7 @@ export default class Filter {
 
             if(data.pages==0){
                 this.pagination.style.display = 'none';
-
+                
             }
 
             params.delete('ajax');
@@ -135,6 +135,7 @@ export default class Filter {
      * 
      */
     async loadForm() {
+        console.log(this)
         this.page = 1;
         const data = new FormData(this.form);
         const url = new URL(this.form.getAttribute('action') ||window.location.href );
@@ -156,7 +157,7 @@ export default class Filter {
         
         var rect = refreshScroll.getBoundingClientRect(), 
         offset = rect.bottom - window.innerHeight;
-        console.log(offset)
+        // console.log(offset)
         if(offset < 940 && this.reload == false){
             this.loadMore(refreshScroll)
             this.reload = true
@@ -172,7 +173,6 @@ export default class Filter {
         if(button.target){
             button = button.target
         }
-        console.log(this.page)
         button.setAttribute('disabled','disabled');
         this.page++;
         const url = new URL(window.location.href);

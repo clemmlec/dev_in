@@ -39,20 +39,18 @@ class CommentReportRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return CommentReport[] Returns an array of CommentReport objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return CommentReport[] Returns an array of CommentReport objects
+    */
+   public function findByExampleField(): array
+   {
+       return $this->createQueryBuilder('c')
+           ->orderBy('c.id', 'DESC')
+           ->groupBy('c.comment')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?CommentReport
 //    {

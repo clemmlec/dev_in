@@ -2,38 +2,82 @@
 
 namespace App\Controller\admin;
 
-use App\Entity\Article;
-use App\Entity\ArticleSuggestion;
-use App\Entity\Comment;
-use App\Entity\CommentReport;
-use App\Entity\Forum;
-use App\Entity\Subject;
-use App\Entity\SubjectReport;
 use App\Entity\Tags;
 use App\Entity\User;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use App\Entity\Forum;
+use App\Entity\Article;
+use App\Entity\Comment;
+use App\Entity\Subject;
+use App\Entity\CommentReport;
+use App\Entity\SubjectReport;
+use App\Entity\ArticleSuggestion;
+use Symfony\UX\Chartjs\Model\Chart;
+use App\Repository\CommentReportRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use App\Controller\admin\CommentReportCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
     public function __construct(
-        private AdminUrlGenerator $adminUrlGenerator
+        private AdminUrlGenerator $adminUrlGenerator,
+        private CommentReportRepository $em
     ) {
     }
 
-    #[Route('/admin', name: 'admin')]
-    public function index(): Response
-    {
-        $url = $this->adminUrlGenerator
-            ->setController(ForumCrudController::class)
-            ->generateUrl();
+    // #[Route('/admin', name: 'admin')]
+    // public function index(): Response
+    // {
+    //     $url = $this->adminUrlGenerator
+    //         ->setController(CommentReportCrudController::class)
+    //         ->generateUrl();
 
-        return $this->redirect($url);
+    //     return $this->redirect($url);
+    // }
+    #[Route('/admin', name: 'admin')]
+    public function index(ChartBuilderInterface $chartBuilder,): Response
+    {
+        $x=$this->em->findByExampleField();
+        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $chart->setData([
+            'labels' => [ ],
+            'datasets' => [
+                [
+                    'label' => 'My First dataset',
+                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'borderColor' => 'rgb(255, 99, 132)',
+                    'data' => [0, 10, 5, 2, 20, 30, 45],
+                    'backgroundColor' => ['#FFFF55','#FF55FF','#8FF55F','#55FFFF','#453264']
+                ],
+            ],
+        ]);
+
+        $chart->setOptions([
+            'scales' => [
+                'y' => [
+                    'suggestedMin' => 0,
+                    'suggestedMax' => 100,
+                    'beginAtZero'=> true
+                ],
+            ],
+            'elements' => [
+                'backgroundColor' => '#FFFFFF',
+                'backgroundColor' => '#FFF55F',
+                'backgroundColor' => '#55FFFF',
+                'backgroundColor' => '#FFFF55',
+            ]
+        ]);
+
+        return $this->render('admin/dashboard.html.twig', [
+            'chart' => $chart,
+            'x' => $x
+        ]);
     }
 
     public function configureDashboard(): Dashboard
