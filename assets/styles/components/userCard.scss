@@ -11,7 +11,7 @@
     min-width: 300px;
     position: relative;
     /* z-index: 1; */
-    background: linear-gradient(to right bottom, rgba(98, 98, 98,0.7), rgba(0,0,0,0.7));
+    background: linear-gradient(to right bottom, rgb(98, 98, 98), rgba(0,0,0));
     color: white;
     font-family: 'Righteous', cursive;
     border-radius: 15px;
@@ -24,7 +24,6 @@
     height: max-content;
     padding: 5px;
     margin:  50px auto 20px auto;
-
     .toptitre{
 
         position: relative;
@@ -34,6 +33,10 @@
         // background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.2));
         margin: 0;
     
+    }
+    h3{
+        font-family: 'arial';
+
     }
     h1{
         overflow-x: hidden;

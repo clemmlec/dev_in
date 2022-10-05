@@ -1,10 +1,8 @@
 # On définit le namespace
 App\Entity\User:
-  userAdmin:
-    email: "addfgmin@example.com"
-    password: "<hashPassword('Test1234')>"
-    name: "Alice"
+  user:
+    email: "e@e.com"
+    password: "<hashPassword('Test12345')>"
+    name: "Bob"
     rgpd: true
     credibility: 0
-
-    

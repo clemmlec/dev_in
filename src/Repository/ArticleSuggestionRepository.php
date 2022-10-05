@@ -39,6 +39,16 @@ class ArticleSuggestionRepository extends ServiceEntityRepository
         }
     }
 
+    public function countArticleReport(): int
+    {
+
+        return $this->createQueryBuilder('c')
+             ->select('count(c.id)')
+             ->getQuery()
+             ->getSingleScalarResult()
+        ;
+    }
+
 //    /**
 //     * @return ArticleSuggestion[] Returns an array of ArticleSuggestion objects
 //     */

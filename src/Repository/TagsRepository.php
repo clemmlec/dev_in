@@ -39,6 +39,15 @@ class TagsRepository extends ServiceEntityRepository
         }
     }
 
+    public function countArticles(): array
+    {
+        return $this->createQueryBuilder('a')
+            //  ->groupBy('a.article')
+             ->getQuery()
+             ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Tags[] Returns an array of Tags objects
 //     */

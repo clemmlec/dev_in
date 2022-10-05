@@ -2,7 +2,7 @@
     background-image: url('../../images/home2.jpg');
     background-size: cover;
     background-position: center;
-    height: 70vh;
+    height: 80vh;
     display: flex;
     position: relative;
     justify-content: center;
@@ -10,21 +10,43 @@
     align-items: center;
     
     .header{
-        padding: 50px 150px;
+        padding: 8px 150px;
         border-radius: 20px;
         h1{
            color: whitesmoke;
+           font-size: 4em;
+           font-weight: 400;
+           white-space: nowrap;
         }
     }
 }
-.titreHome{
-    text-align: center;
-    margin : 35px auto;
-    padding: 30px;
-    border-radius: 10px;
-    width:fit-content;
+.titre{
+    position: relative;
+    margin-top: 200px;
 
+    .titreHome{
+        position: absolute;
+        text-align: center;
+        border-radius: 10px;
+        width:fit-content;
+        top:0px;
+        left: 30%;
+        transform: translate(-50%,-180%);
+        z-index: 2;
+        font-family: "Righteous", cursive;
+    }
+
+    .backround{
+        position: absolute;
+        border-radius:64% 36% 60% 40% / 59% 47% 53% 41%  ;
+        height: 250px;
+        width: 250px;
+        top:-20px;
+        left: 30%;
+        transform: translate(-50%,-50%);
+    }
 }
+
 .btn-inscription{
     margin: auto;
     text-align: center;

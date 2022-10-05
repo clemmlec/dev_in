@@ -51,7 +51,7 @@ class SubjectRepository extends ServiceEntityRepository
             ->setParameter('active', true)
             ->orderBy('a.created_at', 'DESC')
             // ->orderBy('RAND()')
-            ->setMaxResults(4)
+            ->setMaxResults(10)
             ->getQuery()
             ->getResult();
 
@@ -118,7 +118,7 @@ class SubjectRepository extends ServiceEntityRepository
             ->andWhere('t.id = :forum')
             ->setParameter('forum', $forum)
             ->orderBy('a.created_at', 'DESC')
-            ->setMaxResults(5)
+            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;

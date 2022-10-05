@@ -3,6 +3,7 @@
 namespace App\Controller\admin;
 
 use App\Entity\ArticleSuggestion;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -25,5 +26,12 @@ class ArticleSuggestionCrudController extends AbstractCrudController
             AssociationField::new('article'),
             BooleanField::new('util'),
         ];
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setDefaultSort(['id' => 'DESC'])
+        ;
     }
 }

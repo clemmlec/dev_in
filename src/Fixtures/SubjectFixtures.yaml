@@ -4,8 +4,8 @@ include:
 
 App\Entity\Subject:
   subject_{1..20}:
-    nom: "<words(4, true)>"
+    nom: "<words(3, true)>"
     description: "<generateLoremDesct()>"
-    user: "@userAdmin"
+    user: "@user"
     forum: "<randomElement(@forum_{1..10})>"
     createdAt: "<generateDate()>"

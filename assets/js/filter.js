@@ -50,10 +50,9 @@ export default class Filter {
                 this.loadUrl(e.target.getAttribute('href'));
             }
         }
-
         if(this.moreNav){
       
-            this.pagination.innerHTML = '<button id="refreshScroll" class="btn btn-primary btn-show-more mt-2">Voir plus</button>';
+            this.pagination.innerHTML = '<button id="refreshScroll" class="btn-vierge"><i class="fa-solid fa-spinner fa-spin-pulse"></i></button>';
             this.pagination.querySelector('button').addEventListener('click', this.loadMore.bind(this));
             window.addEventListener('scroll', this.reload.bind(this));
             
@@ -66,7 +65,7 @@ export default class Filter {
         });
 
         this.form.querySelectorAll('input[type="text"]').forEach(input => {
-            input.addEventListener('keyup', debounce(this.loadForm.bind(),500));
+            input.addEventListener('keyup', debounce(this.loadForm.bind(this),500));
         });
 
     }
@@ -91,9 +90,14 @@ export default class Filter {
         });
 
         if(response.status >= 200 && response.status < 300) {
-            
             const data = await response.json();
+            if(data.pages==1){
+                this.pagination.style.display = 'none';
+                stopReload = true
+                this.hideLoader(stopReload);
+                return
 
+            }
             this.count.innerHTML = data.count;
 
             if(append){
@@ -104,20 +108,18 @@ export default class Filter {
 
             if(!this.moreNav){
                 this.pagination.innerHTML = data.pagination;
-
+                console.log('null 👲👱‍♂️')
             }else if(this.page === data.pages){
                 console.log('none')
-                stopReload =true
+                stopReload = true
                 this.pagination.style.display = 'none';
             }else{
-                this.pagination.style.display = null;
-                console.log('null')
-
+                this.pagination.style.display = 'none';
             }
 
             if(data.pages==0){
                 this.pagination.style.display = 'none';
-
+                
             }
 
             params.delete('ajax');
@@ -135,6 +137,7 @@ export default class Filter {
      * 
      */
     async loadForm() {
+        // console.log(this)
         this.page = 1;
         const data = new FormData(this.form);
         const url = new URL(this.form.getAttribute('action') ||window.location.href );
@@ -156,7 +159,7 @@ export default class Filter {
         
         var rect = refreshScroll.getBoundingClientRect(), 
         offset = rect.bottom - window.innerHeight;
-        console.log(offset)
+        // console.log(offset)
         if(offset < 940 && this.reload == false){
             this.loadMore(refreshScroll)
             this.reload = true
@@ -172,7 +175,6 @@ export default class Filter {
         if(button.target){
             button = button.target
         }
-        console.log(this.page)
         button.setAttribute('disabled','disabled');
         this.page++;
         const url = new URL(window.location.href);

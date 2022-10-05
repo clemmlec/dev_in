@@ -2,38 +2,128 @@
 
 namespace App\Controller\admin;
 
-use App\Entity\Article;
-use App\Entity\ArticleSuggestion;
-use App\Entity\Comment;
-use App\Entity\CommentReport;
-use App\Entity\Forum;
-use App\Entity\Subject;
-use App\Entity\SubjectReport;
 use App\Entity\Tags;
 use App\Entity\User;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use App\Entity\Forum;
+use App\Entity\Article;
+use App\Entity\Comment;
+use App\Entity\Subject;
+use App\Entity\CommentReport;
+use App\Entity\SubjectReport;
+use App\Entity\ArticleSuggestion;
+use App\Repository\TagsRepository;
+use Symfony\UX\Chartjs\Model\Chart;
+use App\Repository\ArticleRepository;
+use App\Repository\CommentReportRepository;
+use App\Repository\SubjectReportRepository;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\ArticleSuggestionRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use App\Controller\admin\CommentReportCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
     public function __construct(
-        private AdminUrlGenerator $adminUrlGenerator
+        private AdminUrlGenerator $adminUrlGenerator,
+        private CommentReportRepository $comRepo,
+        private SubjectReportRepository $subRepo,
+        private ArticleSuggestionRepository $artRepo,
+        private TagsRepository $tagsRepo,
     ) {
     }
 
-    #[Route('/admin', name: 'admin')]
-    public function index(): Response
-    {
-        $url = $this->adminUrlGenerator
-            ->setController(ForumCrudController::class)
-            ->generateUrl();
+    // #[Route('/admin', name: 'admin')]
+    // public function index(): Response
+    // {
+    //     $url = $this->adminUrlGenerator
+    //         ->setController(CommentReportCrudController::class)
+    //         ->generateUrl();
 
-        return $this->redirect($url);
+    //     return $this->redirect($url);
+    // }
+    #[Route('/admin', name: 'admin')]
+    public function index(ChartBuilderInterface $chartBuilder,): Response
+    {
+        $comReport=$this->comRepo->countComReport();
+        $subReport=$this->subRepo->countSubjectReport();
+        $artReport=$this->artRepo->countArticleReport();
+        // dd($subReport);
+        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $chart->setData([
+            'labels' => [ 'Comment Report', 'Sujet Report', 'Suggest Article',  ],
+            'datasets' => [
+                [
+                    'label' => 'Total',
+                    'backgroundColor' => 'rgb(0, 99, 132)',
+                    'borderColor' => 'rgb(255, 99, 132)',
+                    'data' => [$comReport, $subReport, $artReport, 2, 20, 30, 45],
+                    'backgroundColor' => ['#FFFF55','#FF55FF','#8FF55F','#55FFFF','#453264']
+                ],
+            ],
+
+        ]);
+
+        $chart->setOptions([
+            'scales' => [
+                'y' => [
+                    'suggestedMin' => 0,
+                    'suggestedMax' => 50,
+                    'beginAtZero'=> true
+                ],
+            ],
+            // 'indexAxis' => 'y'
+
+           
+        ]);
+
+
+
+        $articleReport=$this->tagsRepo->countArticles();
+        // dd($articleReport);
+        $tableau=[];
+        $tableauNom=[];
+        foreach($articleReport as $article){
+            // dd($article->getName());
+            array_push($tableau, count($article->getArticle())) ;
+            array_push($tableauNom, $article->getName()) ;
+        }
+        // dd($tableau);
+        $chart2 = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
+        $chart2->setData([
+            'labels' => $tableauNom,
+            'datasets' => [
+                [
+                    'label' => 'Total',
+                    'backgroundColor' => 'rgb(0, 99, 132)',
+                    'borderColor' => 'rgb(255, 99, 132)',
+                    'data' => $tableau,
+                    'backgroundColor' => ['#FFFF55','#FF55FF','#8FF55F','#55FFFF','#453264','#2735FF','#8FF599','#122340','#410264']
+                ],
+            ],
+
+        ]);
+
+        $chart2->setOptions([
+            'scales' => [
+                'y' => [
+                    'beginAtZero'=> true
+                ],
+            ],
+            // 'indexAxis' => 'y'
+
+           
+        ]);
+
+        return $this->render('admin/dashboard.html.twig', [
+            'chart' => $chart,
+            'chart2' => $chart2,
+        ]);
     }
 
     public function configureDashboard(): Dashboard

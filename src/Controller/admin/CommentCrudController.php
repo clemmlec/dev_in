@@ -37,9 +37,11 @@ class CommentCrudController extends AbstractCrudController
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
-    // public function configureFilters(Filters $filters): Filters
-    // {
-    //     return $filters
-    //         ->add('commentReports');
-    // }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setDefaultSort(['createdAt' => 'DESC'])
+        ;
+    }
 }
