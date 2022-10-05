@@ -1,0 +1,70 @@
+.paralax{
+    height: 50vh;
+    position: relative;
+    z-index: -2;
+    text-align: center;
+    justify-content: center;
+    .paralaxCard{
+        position: absolute;
+    }
+    .paralaxCard:nth-child(1) {
+        bottom: -200px;
+        right: 50px;
+    }
+    .paralaxCard:nth-child(2) {
+        bottom: -400px;
+        left: 50px;
+    }
+    .paralaxCard:nth-child(3) {
+        bottom: -300px;
+        right: 450px;
+    }
+    .paralaxCard:nth-child(4) {
+        bottom: -100px;
+        left: 450px;
+    }
+    .paralaxCard:nth-child(5) {
+        bottom: -1000px;
+        right: 100px;
+    }
+    .paralaxCard:nth-child(6) {
+        bottom: -1200px;
+        left: 100px;
+    }
+    .paralaxCard:nth-child(7) {
+        bottom: -1400px;
+        right: 500px;
+    }
+    .paralaxCard:nth-child(8) {
+        bottom: -1100px;
+        left: 500px;
+    }
+    .paralaxCard:nth-child(9) {
+        bottom: -2000px;
+        right: 550px;
+    }
+    .paralaxCard:nth-child(10) {
+        bottom: -2100px;
+        left: 550px;
+    }
+    
+}
+.bottom{
+    position: absolute;
+    top:-90px;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    
+}
+.background{
+    top:0px;
+    width: 850px;
+    height: 200px;
+    z-index: -1;
+    border-radius: 83% 17% 80% 20% / 100% 0% 100% 0% ;
+    transform: rotate(10deg) translate(-50%,-50%);
+}
+.h2{
+    height: 200px;
+}

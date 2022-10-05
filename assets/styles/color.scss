@@ -1,11 +1,17 @@
 .purple{
-    background-color:#b03595
+    background-color:#b03595;
+}
+.purpleGradient{
+    background: linear-gradient(to right, #b03595ed, #36082cec) !important;
 }
 .yellow{
     color: yellow;
 }
 .bleu{
     background:#21a6eddb !important;
+}
+.bleuGradient{
+    background: linear-gradient(to right, #21a6eddb, #051d2adb) !important;
 }
 .green{
     background: linear-gradient(to right, #2e6432bc, #368261de, #2f5b32bc) !important;

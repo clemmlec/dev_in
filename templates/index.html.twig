@@ -25,17 +25,28 @@
         </div>
     </div>
 </section>
-    <section class="w-80">
 
-        <p>Retrouve des <a href="{{ path('app_article_index') }}">articles sur le développement</a>  rédigé par nos administrateurs <br>
+    <section class="w-100 paralax">
+        {% for subject in subjects %}
+            <div class="swiper-slide overflow-y card paralaxCard">
+                {{ include('Components/_subjectSwiper.html.twig' )}}   
+            </div>
+        {% endfor %}
+        
+    </section>
+    <section class="w-80 h2">
+        <p class="bottom">Retrouve des <a href="{{ path('app_article_index') }}">articles sur le développement</a>  rédigé par nos administrateurs <br>
             Ansi que des <a href="{{ path('app_subject_index') }}">sujets postés</a> pas nos adhérents
         </p>
-
-        
-        <h2 class="titreHome purple">Derniers articles postés</h2>
+        <div class="bottom background purpleGradient"></div>
     </section>
 
-    <section class="w-100">
+    
+        <div class="titre">
+            <h2 class="titreHome"> Derniers articles</h2>
+            <div class="backround bleuGradient"></div>
+        </div>
+    <section class="w-100 mt-10">   
         {# {% include "Components/_article.html.twig" with { couper: "couper" } %} #}
         <div class="swip ">
             <div class="swiper mySwiper">
@@ -50,10 +61,12 @@
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
             </div>
-            
 
-            <div class="swiper mySwiper">
-                <h2 class="titreHome bleu">Les derniers sujets postées</h2>
+            <div class="titre">
+                <h2 class="titreHome">Derniers sujets</h2>
+                <div class="backround bleuGradient"></div>
+            </div>
+            <div class="swiper mySwiper mt-5">
                 <div class="swiper-wrapper">
                 {% for subject in subjects %}
                     <div class="swiper-slide overflow-y card">

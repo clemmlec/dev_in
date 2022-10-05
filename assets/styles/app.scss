@@ -14,6 +14,7 @@
 @import "./components/home.scss";
 @import "./components/pagination.scss";
 @import "./components/includProfil.scss";
+@import "./components/paralax.scss";
 @import "./color.scss";
 
 #alertDelete{
@@ -44,6 +45,7 @@ h1{
     margin-top: 100px;
     min-height: 88vh;
 }
+
 .main{
     min-height: 100vh;
 }
@@ -51,6 +53,7 @@ h1{
     width: 70%;
     margin: auto;
     text-align: center;
+    position: relative;
 }
 .w-80Left{
     width: 70%;
@@ -141,6 +144,9 @@ a{
 .mt-5{
     margin-top: 50px;
 }
+.mt-10{
+    margin-top: 300px;
+}
 .w-100{
     max-width: 100%;
     white-space: normal !important;
@@ -162,7 +168,9 @@ p{
 }
 @media all and (max-device-width: 491px)
 {
-
+    .paralax{
+        display: none;
+    }
     .commentaire .comment .envoieCommentInput {
         font-size: 30px;
     }
