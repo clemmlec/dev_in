@@ -52,21 +52,7 @@ class ArticleController extends AbstractController
         ]);
     }
 
-        #[Route('/{id}/{slug}', name: 'article_show', methods: ['GET', 'POST'])]
-    public function show(?Article $article,string $slug, ArticleRepository $articleRepository): Response
-    {
-        if(!$article instanceof Article) {
-            $this->addFlash('error', 'Nous ne trouvons pas l\'article demandé');
 
-            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
-        }
-        $articles = $articleRepository->findArticleWithSameTags($article->getTags());
-
-        return $this->renderForm('article/show.html.twig', [
-            'article' => $article,
-            'articles' => $articles,
-        ]);
-    }
 
     #[Route('/liked/{id}', name: 'app_article_liked', methods: ['GET'])]
     public function likedArticle(?Article $article, ArticleLikedRepository $articleFavRepo, ArticleRepository $articleRepo, Security $security): Response
@@ -97,7 +83,21 @@ class ArticleController extends AbstractController
 
         return new Response('demande de favoris non valide', 404);
     }
+    #[Route('/{id}/{slug}', name: 'article_show', methods: ['GET', 'POST'])]
+    public function show(?Article $article,string $slug, ArticleRepository $articleRepository): Response
+    {
+        if(!$article instanceof Article) {
+            $this->addFlash('error', 'Nous ne trouvons pas l\'article demandé');
 
+            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+        }
+        $articles = $articleRepository->findArticleWithSameTags($article->getTags());
+
+        return $this->renderForm('article/show.html.twig', [
+            'article' => $article,
+            'articles' => $articles,
+        ]);
+    }
     #[Route('/suggest/{id}/{message}', name: 'user.article.suggest', methods: ['GET'])]
     public function signalerarticle(?Article $article, string $message, Security $security, ArticleRepository $artRepo, ArticleSuggestionRepository $artSignalRepo): Response
     {

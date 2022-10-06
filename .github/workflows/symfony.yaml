@@ -43,13 +43,13 @@ jobs:
         run: php -v
 
       ## —— Yarn 🐱 ————————————————————————————————————————————————————————————
-      - name: Yarn install
+      - name: Yarn install 
         uses: actions/setup-node@v2
         with:
           node-version: "18"
           #registry-url: npm.fontawesome.com
       - run:
-          yarn install
+          yarn install --force
           #env:
         #NODE_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
 
