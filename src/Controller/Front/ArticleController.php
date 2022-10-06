@@ -35,6 +35,7 @@ class ArticleController extends AbstractController
             return new JsonResponse([
                 'content' => $this->renderView('Components/_articles.html.twig', [
                     'articles' => $selectArticle,
+                    'couper' => "couper"
                 ]),
                 'pagination' => $this->renderView('Components/filter/_pagination.html.twig', [
                     'articles' => $selectArticle,

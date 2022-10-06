@@ -39,7 +39,7 @@ class SubjectController extends AbstractController
 
         if ($request->get('ajax')) {
             return new JsonResponse([
-                'content' => $this->renderView('Components/_subjects.html.twig', [
+                'content' => $this->renderView('Components/_subjectsNoters.html.twig', [
                     'subjects' => $selectSubject,
                 ]),
                 'pagination' => $this->renderView('Components/filter/_paginationSubject.html.twig', [
