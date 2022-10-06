@@ -19,16 +19,15 @@ nav .icon_nav{
     top: 50px;
     align-items: center;
     i{
-        color:#b03595;
+        color:$purple;
     }
 }
 
 nav a {
     text-decoration: none;
-    font-family: Arial;
     font-weight: 600;
     font-size: 25px;
-    color: #b03595;
+    color: $purple;
     margin-right: 20px;
 }
 nav .main_pages a 

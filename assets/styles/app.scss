@@ -39,6 +39,9 @@
     position: relative;
     z-index: 80;
 }
+.p-10{
+    padding: 20px;
+}
 h1{
     font-size: 40px;
 }
@@ -66,9 +69,15 @@ body{
     background-color: rgb(67, 114, 136);
     color: rgb(255, 239, 190);
     background: linear-gradient(to right,rgb(15, 61, 82),rgb(67, 114, 136));
+    background: rgb(162, 163, 176);
+    font-family: 'Righteous', cursive;;
     padding: 0;
     margin: 0;
     overflow-x: hidden;
+}
+.tags{
+    padding: 5px;
+    border-radius: 5px;
 }
 .site {
     display: grid;
@@ -133,8 +142,19 @@ body{
 }
 a{
     text-decoration: none;
-    color: #cfe621;
+    color: $purple;
     font-weight: bolder;
+}
+a:hover{
+    color: $bleu;
+}
+.btnLien{
+    padding: 10px;
+    border-radius: $borderRadius;
+    color: white !important;
+}
+.btnLien:hover{
+    background: #a85f98 !important;
 }
 .b-50{
     height: 110px;

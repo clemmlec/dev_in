@@ -13,7 +13,7 @@
 {% endblock %}
 {% block mainProfil %}
 
-    <hr>
+    <hr class="mt-5">
     <h1>abonnements {{user.follows | length}}</h1>
     <div class="js-filter w-80">
         {{ form_start(forms, { 'attr' : { 'class' : ' js-filter-form formEdit'} }) }}

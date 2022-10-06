@@ -1,5 +1,6 @@
 .register {
     color: rgb(70, 69, 69);
+    color: $white;
     text-align: center;
     font-family: 'Righteous', cursive;
     text-align: center;
@@ -14,7 +15,6 @@ label {
     margin-left: 5px;
 }
 .form-ligne{
-    justify-content: center;
     text-align: left;
 }
 
@@ -58,8 +58,11 @@ button {
     color: #fff;
     text-shadow: 1px 1px 1px #000;
     cursor: pointer;
-    background: linear-gradient(120deg, rgb(170, 185, 206), rgb(26, 66, 84));
+    background: $purple;
     border-radius: 5px;
+}
+.purple:hover{
+    background: #a85f98 !important;
 }
 
 select {
@@ -136,13 +139,12 @@ select {
     background-color: rgb(166, 218, 200);
     // background: linear-gradient(120deg, rgb(170, 206, 193), rgb(31, 115, 122));
     background: linear-gradient(120deg, rgb(114, 156, 181), rgb(31, 81, 122));
+    background: $silver;
     // border: 1px inset;
     border-radius: $borderRadius;
     // width: 50%;
-    box-shadow: inset 5px 5px 5px rgba(200, 199, 199, 0.392),
-                inset -5px -5px 5px rgba(80, 79, 79, 0.471),
-                     3px 3px 5px rgba(31, 30, 30, 0.582),
-                    -5px -5px 5px rgba(124, 124, 124, 0.356);
+    box-shadow: 3px 3px 5px rgba(31, 30, 30, 0.582),
+            -5px -5px 5px rgba(124, 124, 124, 0.356);
 }
 .hr {
     width: 345px;
@@ -153,7 +155,7 @@ select {
 }
 .Lobster {
     font-family: 'Lobster', cursive;
-    color: rgb(27, 8, 77);
+    color: $white;
     // text-shadow: 5px -5px rgb(0, 172, 149),
     //              10px -10px rgb(111, 209, 108),
     //              15px -15px rgb(198, 228, 180);

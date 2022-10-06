@@ -1,6 +1,6 @@
 .article{
     padding: 20px;
-    background-color: rgb(23, 22, 33);
+    background-color: $silver;
     text-align: center;
     color: antiquewhite;
     margin-bottom: 10px;
@@ -59,18 +59,22 @@
         text-align: center;
         justify-content: center;
         padding: 5px;
-        margin: 0;
+        margin: 10px auto;
+        position: absolute;
+        bottom: 0;
+        right: 30%;
+        left: 30%;
     }
 }
 .articleCard{
     min-width: 500px;
     position: relative;
-    background-color: rgb(23, 22, 33);
+    background-color: $silver;
+
+
     margin: auto 25px auto 25px ;
     // border: solid 2px rgb(114, 114, 114);
     border-radius: $borderRadius;
-    box-shadow: 0 0 5px rgba(231, 231, 231, 0.341),
-        0 0 25px rgba(102, 102, 102, 0.26);
     justify-content: center;
     align-items: center;
     height: max-content;
@@ -122,4 +126,5 @@
 }
 .couper{
     width: 400px;
+    height: 700px;
 }

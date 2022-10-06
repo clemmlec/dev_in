@@ -77,8 +77,8 @@
     }
     .title{      
         position: relative;
-        color: rgb(37, 37, 37);
-        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+        color: $white;
+        // background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
         padding: 10px 50px 10px 50px;
         margin-top: 0;
         margin-bottom: 0;
@@ -106,6 +106,7 @@
     display: none !important;
 }
 .avatarVrai{
+    border-radius: 50%;
     width: 30px;
     display: inline;
     vertical-align: middle;

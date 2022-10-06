@@ -1,20 +1,21 @@
-<h6 class="toptitre left {{subject.forum.style}}">&nbsp;
-    <button class="btn-vierge">
-        <a class="btn-vierge" href="{{ subject.user ? path('app_user_profil', {'id': subject.user.id }) : "" }}">
-            - Posté par :   {{subject.user ? subject.user.name | slice(0,10) : "utilisateur supprimé"}}
-            <img 
-                class="avatarVrai" 
-                src="{{subject.user ? vich_uploader_asset(subject.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                alt="{{ subject.user ? subject.user.name : 'utilisateur supprimé' }}"
-            >
-        </a>
-    </button>
-</h6>
-<h3 class="toptitre2 right {{subject.forum.style}}">
-    dans {{subject.forum.nom}} <span class="mute">{{subject.createdAt | ago}}</span>
-</h3>
-<h1 class="toptitre2 {{subject.forum.style}}">{{subject.nom}}</h1>
-
+<div class="black">
+    <h6 class="toptitre left">&nbsp;
+        <button class="btn-vierge">
+            <a class="btn-vierge" href="{{ subject.user ? path('app_user_profil', {'id': subject.user.id }) : "" }}">
+                - Posté par :   {{subject.user ? subject.user.name | slice(0,10) : "utilisateur supprimé"}}
+                <img 
+                    class="avatarVrai" 
+                    src="{{subject.user ? vich_uploader_asset(subject.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                    alt="{{ subject.user ? subject.user.name : 'utilisateur supprimé' }}"
+                >
+            </a>
+        </button>
+    </h6>
+    <h3 class="toptitre2 right ">
+        dans <span class="tags {{subject.forum.style}}">{{subject.forum.nom}}</span> <span class="mute">{{subject.createdAt | ago}}</span>
+    </h3>
+    <h1 class="toptitre2">{{subject.nom}}</h1>
+</div> 
 <h3 class="title">                
 {% if  subject.getNoteSubjects() | length > 0 %}
 
@@ -52,4 +53,6 @@
     <li>{{subject.noteSubjects | length}} notes reçus</li>
     {# <li>{{subject.comments | length}} ajouter subject favoris</li> #}
 </ul>
-<a href="{{ path('user_subject_show', {'id': subject.id , 'slug': subject.slug}) }}">voir le sujet</a>
+
+<a class="btn-vierge purple btnLien btnProfil" href="{{ path('user_subject_show', {'id': subject.id , 'slug': subject.slug}) }}">voir le sujet</a>
+<br><span class="gray">.</span>

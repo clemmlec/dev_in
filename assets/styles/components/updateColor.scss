@@ -7,9 +7,9 @@
     height: min-content;
     position: relative;
     background: linear-gradient(to right bottom, rgba(3, 1, 45, 0.7), rgba(0,0,0,0.7));
+    background: $silver;
     text-align: left;
     color: white;
-    font-family: arial;
 
     border: solid 2px rgb(114, 114, 114);
     /* padding: 20px; */
