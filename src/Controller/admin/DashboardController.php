@@ -84,11 +84,11 @@ class DashboardController extends AbstractDashboardController
 
 
 
-        $articleReport=$this->tagsRepo->countArticles();
-        // dd($articleReport);
+        $TagsArticles=$this->tagsRepo->countArticles();
+        // dd($TagsArticles);
         $tableau=[];
         $tableauNom=[];
-        foreach($articleReport as $article){
+        foreach($TagsArticles as $article){
             // dd($article->getName());
             array_push($tableau, count($article->getArticle())) ;
             array_push($tableauNom, $article->getName()) ;
@@ -120,9 +120,47 @@ class DashboardController extends AbstractDashboardController
            
         ]);
 
+
+        $articleReport=$this->tagsRepo->countArticles();
+        // dd($articleReport);
+        $tableau=[];
+        $tableauNom=[];
+        foreach($articleReport as $article){
+            // dd($article->getName());
+            array_push($tableau, count($article->getArticle())) ;
+            array_push($tableauNom, $article->getName()) ;
+        }
+        // dd($tableau);
+        $chart3 = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
+        $chart3->setData([
+            'labels' => $tableauNom,
+            'datasets' => [
+                [
+                    'label' => 'Total',
+                    'backgroundColor' => 'rgb(0, 99, 132)',
+                    'borderColor' => 'rgb(255, 99, 132)',
+                    'data' => $tableau,
+                    'backgroundColor' => ['#FFFF55','#FF55FF','#8FF55F','#55FFFF','#453264','#2735FF','#8FF599','#122340','#410264']
+                ],
+            ],
+
+        ]);
+
+        $chart3->setOptions([
+            'scales' => [
+                'y' => [
+                    'beginAtZero'=> true
+                ],
+            ],
+            // 'indexAxis' => 'y'
+
+           
+        ]);
+
         return $this->render('admin/dashboard.html.twig', [
             'chart' => $chart,
             'chart2' => $chart2,
+            'chart3' => $chart3,
         ]);
     }
 

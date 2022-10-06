@@ -13,6 +13,7 @@ export default class extends Controller {
     connect() {
     }    
     follows(event) {
+        
         let elem = event.target;
         if (event.target.type == "button" ){
             elem = event.target.childNodes[1]

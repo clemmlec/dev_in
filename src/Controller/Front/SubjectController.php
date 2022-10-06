@@ -107,16 +107,6 @@ class SubjectController extends AbstractController
         return new Response('note non valide', 404);
     }
 
-    #[Route('/{id}', name: 'user_subject_show', methods: ['GET', 'POST'])]
-    public function show(?Subject $subject, Security $security, Request $request, SubjectRepository $subjectRepository): Response
-    {
-        $subjects = $subjectRepository->findArticleWithSameForum($subject->getForum());
-
-        return $this->renderForm('subject/show.html.twig', [
-            'subject' => $subject,
-           'subjects' => $subjects,
-        ]);
-    }
 
     #[Route('/edit/{id}', name: 'user_subject_edit', methods: ['GET','POST'])]
     public function edit(int $id, SubjectRepository $subjectRepository, Security $security, Request $request): Response
@@ -148,42 +138,6 @@ class SubjectController extends AbstractController
             'form' => $form,
         ]);
     }
-
-    // #[Route('/edit/content/{id}/{content}', name: 'user_subjectContent_edit', methods: ['GET'])]
-    // public function editContent(int $id, string $content, SubjectRepository $subjectRepository, Security $security): Response
-    // {
-    //     $user = $security->getUser();
-    //     $subject = $subjectRepository->find($id);
-    //     if ($subject->getUser() !== $user) {
-    //         return new Response('vous n\avez pas le droit de modifier cet subject', 404);
-    //     }
-    //     if ($subject) {
-    //         $subject->setDescription($content);
-    //         $subjectRepository->add($subject, true);
-
-    //         return new Response('la description de l\'subject à bien été modifié', 201);
-    //     }
-
-    //     return new Response('l\subject n\'est pas disponible', 404);
-    // }
-
-    // #[Route('/{id}/edit', name: 'user_subject_edit', methods: ['GET', 'POST'])]
-    // public function edit(Request $request, Subject $subject, SubjectRepository $subjectRepository): Response
-    // {
-        //     $form = $this->createForm(SubjectType::class, $subject);
-        //     $form->handleRequest($request);
-
-        //     if ($form->isSubmitted() && $form->isValid()) {
-        //         $subjectRepository->add($subject, true);
-
-        //         return $this->redirectToRoute('user_subject_index', [], Response::HTTP_SEE_OTHER);
-        //     }
-
-        //     return $this->renderForm('subject/edit.html.twig', [
-        //         'subject' => $subject,
-        //         'form' => $form,
-        //     ]);
-    // }
 
     #[Route('/delete/{id}', name: 'user_subject_delete', methods: ['POST'])]
     public function delete( ?Subject $subject, Request $request, SubjectRepository $subjectRepository): Response
@@ -224,6 +178,18 @@ class SubjectController extends AbstractController
         }
 
         return new Response('demande de favoris non valide', 404);
+    }
+
+    
+    #[Route('/{id}/{slug}', name: 'user_subject_show', methods: ['GET', 'POST'])]
+    public function show(?Subject $subject, string $slug, Security $security, Request $request, SubjectRepository $subjectRepository): Response
+    {
+        $subjects = $subjectRepository->findArticleWithSameForum($subject->getForum());
+
+        return $this->renderForm('subject/show.html.twig', [
+            'subject' => $subject,
+           'subjects' => $subjects,
+        ]);
     }
 
     #[Route('/signaler/{id}/{message}', name: 'user.subject.signaler', methods: ['GET'])]
