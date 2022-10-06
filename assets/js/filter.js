@@ -91,10 +91,13 @@ export default class Filter {
 
         if(response.status >= 200 && response.status < 300) {
             const data = await response.json();
+
+
             if(data.pages==1){
                 this.pagination.style.display = 'none';
                 stopReload = true
                 this.hideLoader(stopReload);
+                console.log('crash pages=1 👱‍♂️👱‍♀️')
                 return
 
             }
@@ -108,13 +111,14 @@ export default class Filter {
 
             if(!this.moreNav){
                 this.pagination.innerHTML = data.pagination;
-                console.log('null 👲👱‍♂️')
+                // console.log('null 👲👱‍♂️')
             }else if(this.page === data.pages){
-                console.log('none')
+                // console.log('none')
                 stopReload = true
                 this.pagination.style.display = 'none';
             }else{
-                this.pagination.style.display = 'none';
+                this.pagination.style.display = null;
+                // console.log('esle 👲👱‍♂️')
             }
 
             if(data.pages==0){
@@ -160,7 +164,10 @@ export default class Filter {
         var rect = refreshScroll.getBoundingClientRect(), 
         offset = rect.bottom - window.innerHeight;
         // console.log(offset)
-        if(offset < 940 && this.reload == false){
+        // console.log(refreshScroll )
+
+        if(offset < 940 && this.reload == false && rect.width!=0){
+            console.log(offset, rect,window.innerHeight )
             this.loadMore(refreshScroll)
             this.reload = true
         }
