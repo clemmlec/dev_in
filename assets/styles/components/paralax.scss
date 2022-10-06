@@ -1,5 +1,5 @@
 .paralax{
-    height: 50vh;
+    height: 60vh;
     position: relative;
     z-index: -2;
     text-align: center;
@@ -39,19 +39,19 @@
         bottom: -1100px;
         left: 500px;
     }
-    .paralaxCard:nth-child(9) {
-        bottom: -2000px;
-        right: 550px;
-    }
-    .paralaxCard:nth-child(10) {
-        bottom: -2100px;
-        left: 550px;
-    }
+    // .paralaxCard:nth-child(9) {
+    //     bottom: -2000px;
+    //     right: 550px;
+    // }
+    // .paralaxCard:nth-child(10) {
+    //     bottom: -2100px;
+    //     left: 550px;
+    // }
     
 }
 .bottom{
     position: absolute;
-    top:-90px;
+    top:-20px;
     left: 50%;
     transform: translate(-50%,-50%);
     width: 100%;
@@ -62,8 +62,8 @@
     width: 850px;
     height: 200px;
     z-index: -1;
-    border-radius: 83% 17% 80% 20% / 100% 0% 100% 0% ;
-    transform: rotate(10deg) translate(-50%,-50%);
+    border-radius: $borderRadius;
+    transform: translate(-50%,-50%);
 }
 .h2{
     height: 200px;

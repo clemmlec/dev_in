@@ -13,7 +13,7 @@
     background: linear-gradient(to right bottom, rgb(98, 98, 98), rgba(0,0,0));
     color: white;
     font-family: 'Righteous', cursive;
-    border-radius: 10px;
+    border-radius: $borderRadius;
     box-shadow: 0 0 5px rgba(76, 76, 76, 0.39),
         0 0 25px rgba(56, 56, 56, 0.475);
     justify-content: center;
@@ -24,7 +24,7 @@
     .toptitre{
         position: relative;
         top: 0px;
-        border-radius: 10px 10px 0 0 ;
+        border-radius: $borderRadius $borderRadius 0 0 ;
         margin: 0;
     }
     h3{
