@@ -1,11 +1,14 @@
 .purple{
-    background-color:#b03595;
+    background:#b03595 !important;
 }
 .purpleGradient{
     background: linear-gradient(to right, #b03595ed, #36082cec) !important;
 }
 .yellow{
     color: yellow;
+}
+.gray{
+    color: $silver;
 }
 .bleu{
     background:#21a6eddb !important;

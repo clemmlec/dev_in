@@ -7,13 +7,13 @@
     height: min-content;
     position: relative;
     background: linear-gradient(to right bottom, rgba(3, 1, 45, 0.7), rgba(0,0,0,0.7));
+    background: $silver;
     text-align: left;
     color: white;
-    font-family: arial;
 
     border: solid 2px rgb(114, 114, 114);
     /* padding: 20px; */
-    border-radius: 20px;
+    border-radius:$borderRadius;
     box-shadow: 0 0 5px rgba(231, 231, 231, 0.456),
         0 0 25px rgba(102, 102, 102, 0.397),
         inset 0 4px 15px rgba(0, 0, 0, 0.322);

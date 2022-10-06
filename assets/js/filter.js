@@ -93,14 +93,6 @@ export default class Filter {
             const data = await response.json();
 
 
-            if(data.pages==1){
-                this.pagination.style.display = 'none';
-                stopReload = true
-                this.hideLoader(stopReload);
-                console.log('crash pages=1 👱‍♂️👱‍♀️')
-                return
-
-            }
             this.count.innerHTML = data.count;
 
             if(append){
@@ -128,10 +120,17 @@ export default class Filter {
 
             params.delete('ajax');
             history.replaceState({},'', `${url.split('?')[0]}?${params.toString()}`);
-
+            if(data.pages==1){
+                this.pagination.style.display = 'none';
+                stopReload = true
+                console.log('crash pages=1 👱‍♂️👱‍♀️')
+            }else{
+                stopReload = false
+            }
         }else{
-            console.log(response);
+            console.log(response,'response');
         }
+       
         this.hideLoader(stopReload);
         
     }
@@ -150,7 +149,7 @@ export default class Filter {
         data.forEach((value, key) => {
             params.append(key, value);
         });
-
+        console.log(params);
         return this.loadUrl(`${url.pathname}?${params.toString()}`);
     }
 

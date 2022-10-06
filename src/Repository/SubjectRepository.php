@@ -51,7 +51,7 @@ class SubjectRepository extends ServiceEntityRepository
             ->setParameter('active', true)
             ->orderBy('a.created_at', 'DESC')
             // ->orderBy('RAND()')
-            ->setMaxResults(10)
+            ->setMaxResults(8)
             ->getQuery()
             ->getResult();
 

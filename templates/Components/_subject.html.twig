@@ -1,120 +1,151 @@
 <div class="card-subject" id="subject{{subject.id}}">
-    <h2 class="toptitre left {{subject.forum.style}}">
-    {# POSTER PAR #}
-    <a class="btn-vierge" 
-        href="{{ subject.user ? path('app_user_profil', {'id': subject.user.id }) : "" }}"
-        title="Voir le profil" 
-    >
-        - Posté par :  {{subject.user ? subject.user.name | slice(0,10) : "utilisateur supprimé"}}
-            <img 
-                class="avatar" 
-                src="{{ subject.user ? vich_uploader_asset(subject.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                alt="{{ subject.user ? subject.user.name : 'utilisateur supprimé' }}"
-            >
-        </a>
-    </h2> 
-    {# DANS #}
-    <h2 class="toptitre2 right {{subject.forum.style}}">
-        dans {{subject.forum.nom}}
-        <img 
-                class="avatar" 
-                src="{{ subject.forum ? vich_uploader_asset(subject.forum, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                alt="{{subject.forum.nom}}"
-            >
-        <span class="mute">{{subject.createdAt | ago}}</span>
-    </h2>
-
-    <div class="iconSubject" {{ stimulus_controller('subject') }}>
-    {# FOLLOWS #}
-        <button {{ stimulus_action('subject', 'follows') }}
-                type="button" 
-                class="btn-vierge rightFloat" 
-                title="Ajouter aux favoris"
-                value="{{subject.id}}" 
+    <div class="black">
+        <h2 class="toptitre left">
+        {# POSTER PAR #}
+        <a class="btn-vierge" 
+            href="{{ subject.user ? path('app_user_profil', {'id': subject.user.id }) : "" }}"
+            title="Voir le profil" 
+        >
+            - Posté par :  {{subject.user ? subject.user.name | slice(0,10) : "utilisateur supprimé"}}
+                <img 
+                    class="avatar" 
+                    src="{{ subject.user ? vich_uploader_asset(subject.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                    alt="{{ subject.user ? subject.user.name : 'utilisateur supprimé' }}"
                 >
-                {# {{ dump(subject) }}
-                {{ dump(app.user.getSubjectFavoris()) }} #}
-                {# {{ dump(subject) }}
-                {{ dump(app.user.subjectFavoris) }} #}
-                {% set fav = false %}
-                {% if app.user %}
-                    {% for row in app.user.subjectFavoris %}
-                        {% if row.subject.id == subject.id %}
-                            {% set fav = true %}
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-                
-                {% if fav %}
-                    <i class="fa fa-star pointer yellow"></i>
-                {% else %}
-                    <i class="far fa-star pointer yellow"></i>
-                    
-                {% endif %}
-                
-                
-        </button>
-    {# REPORT #}
-        <button {{ stimulus_action('subject', 'report') }}
-            value="{{subject.id}}" 
-            class="btn-vierge color-red rightFloat" 
-            type="button" 
-            title="Signaler"
-            >
-            <i class="fa-solid fa-triangle-exclamation"></i>
-        </button>
-        <div class="suggest" id="suggestSubject{{subject.id}}">
-            <div class="suggestGrid">
-                <input class="plus grande envoieSuggestInput" type="text" placeholder="Un probleme ?">
-                <button {{ stimulus_action('subject', 'submitReport') }}
+            </a>
+        </h2> 
+        {# DANS #}
+        <h2 class="toptitre2 right">
+            dans <span class="tags {{subject.forum.style}}">{{subject.forum.nom}}
+                    <img 
+                        class="avatar" 
+                        src="{{ subject.forum ? vich_uploader_asset(subject.forum, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                        alt="{{subject.forum.nom}}"
+                    >
+                </span>
+            <span class="mute">{{subject.createdAt | ago}}</span>
+        </h2>
+
+        <div class="iconSubject" {{ stimulus_controller('subject') }}>
+        {# FOLLOWS #}
+            <button {{ stimulus_action('subject', 'follows') }}
+                    type="button" 
+                    class="btn-vierge rightFloat" 
+                    title="Ajouter aux favoris"
                     value="{{subject.id}}" 
-                    class="btn-vierge bleu envoiSuggest" 
-                    type="button"
-                    ><i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
-    {# EDIT #}
-        {% if app.user and subject.user and app.user.id == subject.user.id %}
-            <button
-                value="{{subject.id}}" 
-                class="btn-vierge" 
-                type="button" 
-                title="Modifier"
-                >
-            <a href="{{ path('user_subject_edit', {'id': subject.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
-        </button>
-        {% endif %}
-    </div>
-
-    <div>
-    {# NOTE DU SUJET #}
-        <h1 class="title"><span>{{subject.nom}}</span>
-        {% if  subject.noteSubjects | length > 0 %}
-            
-            {# {{dump(subject.getNoteSubjects())}} #}
-            {% set somme = 0 %}
-            {% for row in subject.getNoteSubjects() %}
-            {% set somme = somme + row.note
-                %}
-                
-            {% endfor %}
-                {% set somme = somme / (subject.getNoteSubjects()| length) %}
-                <div class="note">
-                {% for i in 1..10 %}
-                    {# {% if i <= somme * 2 %} #}
-                    {% if i is odd %}
-                    <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
-                    {% else %}
-                    <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
+                    >
+                    {# {{ dump(subject) }}
+                    {{ dump(app.user.getSubjectFavoris()) }} #}
+                    {# {{ dump(subject) }}
+                    {{ dump(app.user.subjectFavoris) }} #}
+                    {% set fav = false %}
+                    {% if app.user %}
+                        {% for row in app.user.subjectFavoris %}
+                            {% if row.subject.id == subject.id %}
+                                {% set fav = true %}
+                            {% endif %}
+                        {% endfor %}
                     {% endif %}
-                    {# {% endif %} #}
+                    
+                    {% if fav %}
+                        <i class="fa fa-star pointer yellow"></i>
+                    {% else %}
+                        <i class="far fa-star pointer yellow"></i>
+                        
+                    {% endif %}
+                    
+                    
+            </button>
+        {# REPORT #}
+            <button {{ stimulus_action('subject', 'report') }}
+                value="{{subject.id}}" 
+                class="btn-vierge color-red rightFloat" 
+                type="button" 
+                title="Signaler"
+                >
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </button>
+            <div class="suggest" id="suggestSubject{{subject.id}}">
+                <div class="suggestGrid">
+                    <input class="plus grande envoieSuggestInput" type="text" placeholder="Un probleme ?">
+                    <button {{ stimulus_action('subject', 'submitReport') }}
+                        value="{{subject.id}}" 
+                        class="btn-vierge bleu envoiSuggest" 
+                        type="button"
+                        ><i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        {# EDIT #}
+            {% if app.user and subject.user and app.user.id == subject.user.id %}
+                <button
+                    value="{{subject.id}}" 
+                    class="btn-vierge" 
+                    type="button" 
+                    title="Modifier"
+                    >
+                <a href="{{ path('user_subject_edit', {'id': subject.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+            </button>
+            {% endif %}
+        </div>
+
+        <div>
+        {# NOTE DU SUJET #}
+            <h1 class="title"><span>{{subject.nom}}</span>
+            {% if  subject.noteSubjects | length > 0 %}
+                
+                {# {{dump(subject.getNoteSubjects())}} #}
+                {% set somme = 0 %}
+                {% for row in subject.getNoteSubjects() %}
+                {% set somme = somme + row.note
+                    %}
+                    
+                {% endfor %}
+                    {% set somme = somme / (subject.getNoteSubjects()| length) %}
+                    <div class="note">
+                    {% for i in 1..10 %}
+                        {# {% if i <= somme * 2 %} #}
+                        {% if i is odd %}
+                        <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
+                        {% else %}
+                        <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
+                        {% endif %}
+                        {# {% endif %} #}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            </h1>
+        </div>
+            {# NOTER #}
+        {% if ( app.user and subject.user and app.user.id != subject.user.id ) or subject.user== null %}
+        {% if  app.user %}
+            
+        
+            {% set noter = false %}
+            {% for row in app.user.noteSubjects %}
+                {% if row.subject.id == subject.id %}
+                {% set noter = true %}
+                {% endif %}
+            {% endfor %}
+            {% if not noter %}
+            <div {{ stimulus_controller('subject') }}
+                class="note">
+                {% for i in 1..5 %}
+                <button 
+                    {{ stimulus_action('subject', 'noter') }}
+                    class="btn-vierge"  
+                    value="{{i}}-{{subject.id}}" 
+                    type="button"
+                    title="Noter {{i}} étoile{{i>1?'s'}}"
+                    >
+                        <i class="far fa-star stars" ></i>
+                </button>
                 {% endfor %}
             </div>
+            {% endif %}
         {% endif %}
-        </h1>
+        {% endif %}
     </div>
-
     <div class="d-flex-image">  
     {# DESCRITPION #}
         <div>
@@ -230,39 +261,11 @@
                 </div>
                 {% endif %}
             {% else %}
-                <p>pas encore de commantaires</p>
+                <p>pas encore de commentaires</p>
             {% endfor %}
             </div>
         </div>
-    {# NOTER #}
-        {% if ( app.user and subject.user and app.user.id != subject.user.id ) or subject.user== null %}
-        {% if  app.user %}
-            
-        
-            {% set noter = false %}
-            {% for row in app.user.noteSubjects %}
-                {% if row.subject.id == subject.id %}
-                {% set noter = true %}
-                {% endif %}
-            {% endfor %}
-            {% if not noter %}
-            <div {{ stimulus_controller('subject') }}
-                class="note">
-                {% for i in 1..5 %}
-                <button 
-                    {{ stimulus_action('subject', 'noter') }}
-                    class="btn-vierge"  
-                    value="{{i}}-{{subject.id}}" 
-                    type="button"
-                    title="Noter {{i}} étoile{{i>1?'s'}}"
-                    >
-                        <i class="far fa-star stars" ></i>
-                </button>
-                {% endfor %}
-            </div>
-            {% endif %}
-        {% endif %}
-        {% endif %}
+
     </div>
     
 

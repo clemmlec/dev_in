@@ -10,29 +10,20 @@
 .card{
     min-width: 300px;
     position: relative;
-    /* z-index: 1; */
-    background: linear-gradient(to right bottom, rgb(98, 98, 98), rgba(0,0,0));
+    background: $silver;
     color: white;
     font-family: 'Righteous', cursive;
-    border-radius: 15px;
-    box-shadow: 0 0 5px rgba(231, 231, 231, 0.39),
-        0 0 25px rgba(102, 102, 102, 0.475),
-        inset 0 4px 15px rgba(0, 0, 0, 0.234);
-
+    border-radius: $borderRadius;
     justify-content: center;
     align-items: center;
     height: max-content;
-    padding: 5px;
     margin:  50px auto 20px auto;
-    .toptitre{
 
+    .toptitre{
         position: relative;
         top: 0px;
-        border-radius: 15px 15px 0 0 ;
-        
-        // background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.2));
+        border-radius: $borderRadius $borderRadius 0 0 ;
         margin: 0;
-    
     }
     h3{
         font-family: 'arial';

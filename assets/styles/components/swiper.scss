@@ -6,6 +6,13 @@
     display: grid;
     justify-content: center;
     height: fit-content;
+    .titreHome{
+        border-radius: $borderRadius;
+        width:fit-content;
+        z-index: 2;
+        font-family: "Righteous", cursive;
+        padding: 10px;
+    }
 }
 
 .swiper {
@@ -60,17 +67,18 @@
     
 }
 .swiper-slide{
+    
 
     h3{
         font-size: 16px;
     }
     h1{
-        font-size: 26px;
+        font-size: 20px;
     }
     .title{      
         position: relative;
-        color: rgb(37, 37, 37);
-        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
+        color: $white;
+        // background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
         padding: 10px 50px 10px 50px;
         margin-top: 0;
         margin-bottom: 0;
@@ -98,6 +106,7 @@
     display: none !important;
 }
 .avatarVrai{
+    border-radius: 50%;
     width: 30px;
     display: inline;
     vertical-align: middle;
