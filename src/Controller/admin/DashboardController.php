@@ -35,6 +35,7 @@ class DashboardController extends AbstractDashboardController
         private SubjectReportRepository $subRepo,
         private ArticleSuggestionRepository $artRepo,
         private TagsRepository $tagsRepo,
+        private ChartBuilderInterface $chartBuilder
     ) {
     }
 
@@ -48,13 +49,13 @@ class DashboardController extends AbstractDashboardController
     //     return $this->redirect($url);
     // }
     #[Route('/admin', name: 'admin')]
-    public function index(ChartBuilderInterface $chartBuilder,): Response
+    public function index(): Response
     {
         $comReport=$this->comRepo->countComReport();
         $subReport=$this->subRepo->countSubjectReport();
         $artReport=$this->artRepo->countArticleReport();
         // dd($subReport);
-        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $chart = $this->chartBuilder->createChart(Chart::TYPE_BAR);
         $chart->setData([
             'labels' => [ 'Comment Report', 'Sujet Report', 'Suggest Article',  ],
             'datasets' => [
@@ -94,7 +95,7 @@ class DashboardController extends AbstractDashboardController
             array_push($tableauNom, $article->getName()) ;
         }
         // dd($tableau);
-        $chart2 = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
+        $chart2 = $this->chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $chart2->setData([
             'labels' => $tableauNom,
             'datasets' => [
@@ -131,7 +132,7 @@ class DashboardController extends AbstractDashboardController
             array_push($tableauNom, $article->getName()) ;
         }
         // dd($tableau);
-        $chart3 = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
+        $chart3 = $this->chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
         $chart3->setData([
             'labels' => $tableauNom,
             'datasets' => [
