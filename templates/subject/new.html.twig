@@ -1,5 +1,5 @@
 
-{{ form_start(form,{'attr': {'id':'formpost'}} ) }}
+{{ form_start(form,{'attr': {'id':'formpost'} } ) }}
     <h1 class="toptitre left ">
         - Posté par : {{ app.user ? app.user.name : '' }}  
         <img 
@@ -12,7 +12,11 @@
     <div class="toptitre2 right inlineRuby">
         Forum : 
         {{ form_widget( form.forum ) }}
-        <span class="color-red">{{ form_errors(form.forum) }}</span>
+        {% if form_errors(form.forum) %}
+        <div class="alert alert-danger w-80" >
+            <span> {{ form_errors(form.forum) }}</span>
+        </div>
+        {% endif %}
     </div>
     <div class="iconSubject">
         <button 
@@ -24,18 +28,26 @@
         </button>
     </div>
     <h1 class="title"> 
-        {{ form_widget( form.nom,{'attr': {'placeholder': 'titre'}} ) }}
-        <span class="color-red">{{ form_errors(form.nom) }}</span>
+        {{ form_widget( form.nom,{'attr': {'placeholder': 'titre'} } ) }}
+        {% if form_errors(form.nom) %}
+        <div class="alert alert-danger w-80" >
+            <span> {{ form_errors(form.nom) }}</span>
+        </div>
+        {% endif %}
     </h1>
     <div class="form-ligne">
-        {{ form_widget( form.description,{'attr': {'placeholder': 'description'}} ) }}
-        <span class="color-red">{{ form_errors(form.description) }}</span>
+        {{ form_widget( form.description,{'attr': {'placeholder': 'description'} } ) }}
+        {% if form_errors(form.description) %}
+        <div class="alert alert-danger w-80" >
+            <span> {{ form_errors(form.description) }}</span>
+        </div>
+        {% endif %}
     </div>
     {# <div class="form-ligne">
         {{ form_widget( form.imageFile ) }}
     </div> #}
     <hr>
-    <button class="mb-4" data-new-subject>{{ button_label|default('Save') }}</button>
+    <button class="mb-4" data-new-subject>{{ button_label|default('Poster') }}</button>
     
     {{ form_widget( form._token)}}
 {{ form_end(form,{render_rest: false}) }}

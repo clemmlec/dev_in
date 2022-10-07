@@ -10,7 +10,7 @@
         justify-content: center;
         align-items: center;
         height: max-content;
-        padding: 0px;
+        padding: 0;
         overflow-x: hidden;
         // margin: 15px;
         
@@ -106,7 +106,10 @@
             display: grid;
             padding :10px;
             justify-content: center;
-         
+            img{
+                margin: auto;
+                display: flex;
+            }
             
             // .w300{
             //     width: 200px;

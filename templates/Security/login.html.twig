@@ -10,11 +10,11 @@
     /> 
 {% endblock %}
 {% block body %}
-    <section class="register">
-        <form class="form large" action="{{path('login')}}"  method="POST" >
+    <section class="register vh100">
+        <form class="form large centrer" action="{{path('login')}}"  method="POST" >
             <h1 class="Lobster">Connexion</h1>
             {% if error %}
-                <div class="" >
+                <div class="alert alert-danger w-80" >
                     <h1>{{ error.messageKey|trans(error.messageData, 'security')}}</h1>
                 </div>
             {% endif %}
@@ -27,7 +27,7 @@
             </div>
             <hr>
             <div class="mb-4">
-                <button type="submit" class="btn btn-primary">Se connecter</button> <br>
+                <button type="submit" class="btn buttonEmpty">Se connecter</button> <br>
                 <a class="mb-4" href="{{path('app_forgot_password_request')}}">mot de passe oublié ?</a>
             </div>
         </form>

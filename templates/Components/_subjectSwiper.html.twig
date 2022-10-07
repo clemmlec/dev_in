@@ -11,10 +11,11 @@
             </a>
         </button>
     </h6>
+
+    <h1 class="toptitre2">{{subject.nom}}</h1>
     <h3 class="toptitre2 right ">
         dans <span class="tags {{subject.forum.style}}">{{subject.forum.nom}}</span> <span class="mute">{{subject.createdAt | ago}}</span>
     </h3>
-    <h1 class="toptitre2">{{subject.nom}}</h1>
 </div> 
 <h3 class="title">                
 {% if  subject.getNoteSubjects() | length > 0 %}
@@ -54,5 +55,5 @@
     {# <li>{{subject.comments | length}} ajouter subject favoris</li> #}
 </ul>
 
-<a class="btn-vierge purple btnLien btnProfil" href="{{ path('user_subject_show', {'id': subject.id , 'slug': subject.slug}) }}">voir le sujet</a>
+<a class="btn-vierge btnLien2 btnProfil" href="{{ path('user_subject_show', {'id': subject.id , 'slug': subject.slug}) }}">voir le sujet</a>
 <br><span class="gray">.</span>

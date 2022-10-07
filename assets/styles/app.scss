@@ -21,7 +21,7 @@
 #alertDelete{
     display: none;
     width: fit-content;
-    background-color: #0b0420ca;
+    background-color: $black;
     margin: auto;
     padding: 10px;
     border-radius: $borderRadius;
@@ -69,7 +69,7 @@ body{
     background-color: rgb(67, 114, 136);
     color: rgb(255, 239, 190);
     background: linear-gradient(to right,rgb(15, 61, 82),rgb(67, 114, 136));
-    background: rgb(162, 163, 176);
+    background: $grayClair;
     font-family: 'Righteous', cursive;;
     padding: 0;
     margin: 0;
@@ -77,7 +77,7 @@ body{
 }
 .tags{
     padding: 5px;
-    border-radius: 5px;
+    border-radius: $borderRadius;
 }
 .site {
     display: grid;
@@ -146,15 +146,34 @@ a{
     font-weight: bolder;
 }
 a:hover{
-    color: $bleu;
+    color: $purple2;
+}
+.bottom{
+    a{
+        color: $purple2 !important;
+    }
+    a:hover{
+        color: #c771b5 !important;
+    }
 }
 .btnLien{
     padding: 10px;
     border-radius: $borderRadius;
     color: white !important;
+    display: inline-block;
 }
 .btnLien:hover{
-    background: #a85f98 !important;
+    background: $purpleClair!important;
+}
+.btnLien2{
+    padding: 10px;
+    border-radius: $borderRadius;
+    border: solid 1px $purple !important;
+    white-space: nowrap;
+}
+.btnLien2:hover{
+    background: $purpleClair !important;
+    color: $purple !important;
 }
 .b-50{
     height: 110px;
@@ -190,6 +209,22 @@ p{
 }
 @media all and (max-device-width: 491px)
 {
+
+    .dropbtn {
+        margin-top: 0px;
+      }
+    .inlineRuby{
+        display: block;
+    }
+    .couper{
+        width: 90% !important;
+    }
+    .article{
+        .couper{
+            height: 200px;
+            overflow-y: hidden;
+        }
+    }
     .paralax{
         display: none;
     }
@@ -218,7 +253,7 @@ p{
     {
         display: none;
         // flex-direction: column;
-        background: #0b0420;
+        background: $black;
         
     }
     nav .icon_nav{
@@ -286,8 +321,11 @@ p{
         max-width: 90% !important;
     }
     #btnProfil{
-        top: 250px !important;
+        top: 350px !important;
   
+    }
+    .btnProfil1{
+        width: 230px !important;
     }
     .nav-logo{
         height: 50px;
@@ -301,7 +339,6 @@ p{
     .avatar{
         position: relative;
         width: 100px;
-        top: 50px;
     }
     .dropdown-content{
         top: 120px;
@@ -309,11 +346,14 @@ p{
 
     .form{
         width: 90%;
-        margin: 20vh auto 20px auto;
+        margin: 10vh auto 20px auto;
     }
     .formEdit{
         margin: 20px auto 20px auto !important;
 
+    }
+    .buttonEmpty, .btnLien2{
+        border: solid 2px $purple !important;
     }
     .card-subject .deg90 {
         margin-left: -49px;
@@ -321,7 +361,23 @@ p{
     .swiper-slide  .deg90 {
         margin-left: -43px;
     }
-    .swiper-slide {
+    .card {
         width: 80%;
+    }
+
+    .background{
+        width: 100% !important;
+    }
+    .swiper-slide .description {
+        max-width: inherit
       }
+    .card2{
+        margin: 100px auto 150px auto !important;
+        .toptitre{
+            height: 200px;
+            img{
+                top: -120px !important;
+            }
+        }
+    }
 }

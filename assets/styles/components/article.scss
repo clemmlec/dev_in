@@ -47,10 +47,14 @@
         margin: 2px;
     }
     .couper{
-        height: 300px;
+        height: 200px;
         overflow-y: hidden;
-        max-width: 300px !important;
-       
+        h1{
+            font-size: 1.1em;
+        }
+        p{
+            font-size: 1em;
+        }
     }
     
 
@@ -59,9 +63,9 @@
         text-align: center;
         justify-content: center;
         padding: 5px;
-        margin: 10px auto;
+        margin: 0px auto;
         position: absolute;
-        bottom: 0;
+        bottom: 20px;
         right: 30%;
         left: 30%;
     }
@@ -126,5 +130,5 @@
 }
 .couper{
     width: 400px;
-    height: 700px;
+    height: 600px;
 }
