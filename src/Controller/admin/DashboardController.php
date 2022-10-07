@@ -29,6 +29,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
+    
+     
+
     public function __construct(
         private AdminUrlGenerator $adminUrlGenerator,
         private CommentReportRepository $comRepo,
@@ -38,6 +41,9 @@ class DashboardController extends AbstractDashboardController
         private ChartBuilderInterface $chartBuilder
     ) {
     }
+
+
+
 
     // #[Route('/admin', name: 'admin')]
     // public function index(): Response
@@ -49,7 +55,64 @@ class DashboardController extends AbstractDashboardController
     //     return $this->redirect($url);
     // }
     #[Route('/admin', name: 'admin')]
-    public function index(): Response
+    public function dashBoard(): Response
+    {
+
+        $charts = $this->charts();
+        return $this->render('admin/dashboard.html.twig', [
+            'chart' => $charts[0],
+            'chart2' => $charts[1],
+            'chart3' => $charts[2],
+        ]);
+    }
+
+    public function configureDashboard(): Dashboard
+    {
+        return Dashboard::new()
+            ->setTitle('Dev In')
+            ->setFaviconPath('images/logos.png');
+    }
+
+    public function configureMenuItems(): iterable
+    {
+        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::section('Forum');
+        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+            MenuItem::linkToCrud('Add Forum', 'fas fa-plus', Forum::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show Forum', 'fas fa-eye', Forum::class),
+        ]);
+
+        yield MenuItem::section('Subject');
+        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+            MenuItem::linkToCrud('Add Subject', 'fas fa-plus', Subject::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show Subject', 'fas fa-eye', Subject::class),
+            MenuItem::linkToCrud('Show Report', 'fas fa-eye', SubjectReport::class),
+        ]);
+
+        yield MenuItem::section('Tags');
+        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+            MenuItem::linkToCrud('Add Tags', 'fas fa-plus', Tags::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show Tags', 'fas fa-eye', Tags::class),
+        ]);
+
+        yield MenuItem::section('Article');
+        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+            MenuItem::linkToCrud('Add Article', 'fas fa-plus', Article::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show Article', 'fas fa-eye', Article::class),
+            MenuItem::linkToCrud('Show suggest', 'fas fa-eye', ArticleSuggestion::class),
+        ]);
+
+        yield MenuItem::section('User');
+        yield MenuItem::linkToCrud('Show User', 'fas fa-eye', User::class);
+
+        yield MenuItem::section('Comment');
+        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
+            MenuItem::linkToCrud('Show Comment', 'fas fa-eye', Comment::class),
+            MenuItem::linkToCrud('Show Report', 'fas fa-eye', CommentReport::class),
+        ]);
+    }
+
+    public function charts(): array
     {
         $comReport=$this->comRepo->countComReport();
         $subReport=$this->subRepo->countSubjectReport();
@@ -158,56 +221,6 @@ class DashboardController extends AbstractDashboardController
            
         ]);
 
-        return $this->render('admin/dashboard.html.twig', [
-            'chart' => $chart,
-            'chart2' => $chart2,
-            'chart3' => $chart3,
-        ]);
-    }
-
-    public function configureDashboard(): Dashboard
-    {
-        return Dashboard::new()
-            ->setTitle('Dev In')
-            ->setFaviconPath('images/logos.png');
-    }
-
-    public function configureMenuItems(): iterable
-    {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::section('Forum');
-        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
-            MenuItem::linkToCrud('Add Forum', 'fas fa-plus', Forum::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show Forum', 'fas fa-eye', Forum::class),
-        ]);
-
-        yield MenuItem::section('Subject');
-        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
-            MenuItem::linkToCrud('Add Subject', 'fas fa-plus', Subject::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show Subject', 'fas fa-eye', Subject::class),
-            MenuItem::linkToCrud('Show Report', 'fas fa-eye', SubjectReport::class),
-        ]);
-
-        yield MenuItem::section('Tags');
-        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
-            MenuItem::linkToCrud('Add Tags', 'fas fa-plus', Tags::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show Tags', 'fas fa-eye', Tags::class),
-        ]);
-
-        yield MenuItem::section('Article');
-        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
-            MenuItem::linkToCrud('Add Article', 'fas fa-plus', Article::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show Article', 'fas fa-eye', Article::class),
-            MenuItem::linkToCrud('Show suggest', 'fas fa-eye', ArticleSuggestion::class),
-        ]);
-
-        yield MenuItem::section('User');
-        yield MenuItem::linkToCrud('Show User', 'fas fa-eye', User::class);
-
-        yield MenuItem::section('Comment');
-        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
-            MenuItem::linkToCrud('Show Comment', 'fas fa-eye', Comment::class),
-            MenuItem::linkToCrud('Show Report', 'fas fa-eye', CommentReport::class),
-        ]);
+        return [$chart, $chart2, $chart3];
     }
 }

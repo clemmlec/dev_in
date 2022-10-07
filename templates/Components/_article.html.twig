@@ -56,12 +56,12 @@
             <span class="left tag-name">{{tag.name}} <i class="fa-solid fa-tags"></i> </span>
         {% endfor %}
         <span class="right">ecrit {{article.createdAt | ago}}</span>
-
+        
         <div class="w-100 content {{couper}}">{{article.content | raw }}</div>
 
         {% if couper == "couper" %}
             <div class="footer">
-                <a class="btn-vierge purple btnLien btnProfil" href="{{ path('article_show', {'id': article.id , 'slug': article.slug}) }}">voir plus</a>
+                <a class="btn-vierge btnLien2 btnProfil" href="{{ path('article_show', {'id': article.id , 'slug': article.slug}) }}">voir plus</a>
             </div>
         {% endif %}
         

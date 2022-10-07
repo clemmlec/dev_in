@@ -8,6 +8,15 @@
     justify-content: center;
     height: fit-content;
 }
+.vh100{
+    height: 80vh !important;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
 label {
     cursor: pointer;
     text-align: left;
@@ -23,6 +32,9 @@ input{
     margin: auto;
     margin-top: 10px;
     margin-bottom: 30px;
+}
+input:focus{
+    outline: none;
 }
 
 input[type=text],
@@ -56,13 +68,27 @@ button {
     font-size: 1rem;
     text-align: center;
     color: #fff;
-    text-shadow: 1px 1px 1px #000;
+
     cursor: pointer;
     background: $purple;
     border-radius: 5px;
 }
+button:hover{
+    background: $purpleClair !important;
+}
+.buttonEmpty{
+    color: $purple !important;
+    border-radius: $borderRadius;
+    border: solid 1px $purple !important;
+    background: none !important;
+
+}
+.buttonEmpty:hover{
+    background: $purpleClair !important;
+    color: $purple !important;
+}
 .purple:hover{
-    background: #a85f98 !important;
+    background: $purpleClair !important;
 }
 
 select {
@@ -156,15 +182,14 @@ select {
 .Lobster {
     font-family: 'Lobster', cursive;
     color: $white;
-    // text-shadow: 5px -5px rgb(0, 172, 149),
-    //              10px -10px rgb(111, 209, 108),
-    //              15px -15px rgb(198, 228, 180);
-    // transform: skewY(-5deg);
     margin-top: 20px;
     margin-bottom: 20px;
 }
 .large{
     min-width: 400px;
+}
+.large2{
+    width: 500px;
 }
 .Righteous {
     font-family: 'Righteous', cursive;

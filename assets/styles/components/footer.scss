@@ -2,7 +2,7 @@ footer
 {
     width: 100%;
     height: 70px;
-    background: #0b0420;
+    background: $black;
     align-items: center;
     text-align: center;
     .div-nav{
@@ -10,9 +10,7 @@ footer
         grid: auto-flow / 1fr 1fr 1fr;
         padding-top: 20px;
     }
-    a{
-        color: rgb(204, 255, 190);
-    }
+
 
 }
 
