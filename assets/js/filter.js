@@ -123,7 +123,7 @@ export default class Filter {
                 this.pagination.style.display = 'none';
                 stopReload = true
                 this.page=1;
-                console.log('crash pages=1 👱‍♂️👱‍♀️',this.page)
+                // console.log('crash pages=1 👱‍♂️👱‍♀️',this.page)
                 
             }else{
                 history.replaceState({},'', `${url.split('?')[0]}?${params.toString()}`);

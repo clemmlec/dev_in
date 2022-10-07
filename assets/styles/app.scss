@@ -17,7 +17,9 @@
 @import "./components/includProfil.scss";
 @import "./components/paralax.scss";
 @import "./color.scss";
-
+.center{
+    text-align: center;
+}
 #alertDelete{
     display: none;
     width: fit-content;

@@ -12,8 +12,8 @@
 {% endblock %}
 
 {% block body %}
-    <div class="w-80 js-filter">
-        
+    <div class="js-filter">
+        <div class="w-100 center">
         {{ form_start(forms, { 'attr' : { 'class' : 'formSearch js-filter-form'} }) }}
         <div class="loader">
             <div class="js-loading" role="status" aria-hidden="true" style="display: none">
@@ -24,7 +24,8 @@
             {{ form_row(forms.forum) }}
             {# <button class="btn-vierge" type="submit">Rechercher</button> #}
         {{ form_end(forms, {'render_rest': false }) }}
-        
+        </div>
+        <div class="w-80">
         {# button nouvel subject #}
         {% if app.user %}
             <span class="color-red">{{ form_errors(form.nom) }}</span>
@@ -98,6 +99,6 @@
             <hr style="margin:2px"> 
         </div>
     </div>
- 
+    </div>
 
 {% endblock %}
