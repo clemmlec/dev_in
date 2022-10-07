@@ -39,6 +39,9 @@
     position: relative;
     z-index: 80;
 }
+.sombre{
+    background: $gray;
+}
 .p-10{
     padding: 20px;
 }
@@ -66,9 +69,7 @@ h1{
     color: azure;
 }
 body{
-    background-color: rgb(67, 114, 136);
-    color: rgb(255, 239, 190);
-    background: linear-gradient(to right,rgb(15, 61, 82),rgb(67, 114, 136));
+    color: $white;
     background: $grayClair;
     font-family: 'Righteous', cursive;;
     padding: 0;

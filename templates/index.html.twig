@@ -12,44 +12,24 @@
     /> 
 {% endblock %}
 {% block body %}
-<section class="w-100">
-    <div id="home">
-        <div class="header bleu">
-            <h1 class="lobster">Dev In</h1>
-            <h2><em>Entraide entre devs</em></h2>
-            {% if app.user %}
-            {% else %}
-                <button class="btn-inscription"><a  href="{{ path('register') }}">Incription</a></button>
-                <button class="btn-inscription"><a  href="{{ path('login') }}">Connexion</a></button>
-            {% endif %}
-        </div>
-    </div>
-</section>
-
-
-    <section class="w-100 paralax">
-        {% for subject in subjects %}
-            <div class="swiper-slide overflow-y card paralaxCard">
-                {{ include('Components/_subjectSwiper.html.twig' )}}   
+    <section class="w-100">
+        <div id="home">
+            <div class="header black">
+                <h1 class="lobster">Dev In</h1>
+                <h2><em>Entraide entre devs</em></h2>
+                {% if app.user %}
+                {% else %}
+                    <button class="btn-inscription"><a  href="{{ path('register') }}">Incription</a></button>
+                    <button class="btn-inscription secondary"><a  href="{{ path('login') }}">Connexion</a></button>
+                {% endif %}
             </div>
-        {% endfor %}
-        
-    </section>
-    <section class="w-80 h2">
-        <p class="bottom">Retrouve des <a href="{{ path('app_article_index') }}">articles sur le développement</a> <br>  rédigé par nos administrateurs <br>
-            Ansi que des <a href="{{ path('app_subject_index') }}">sujets postés</a> pas nos adhérents
-        </p>
-        <div class="bottom background bleu"></div>
-    </section>
-
-    
-
-    <section class="w-100 mt-10">   
-        <div class="titre">
-            <h2 class="titreHome bleuGradient"> Derniers articles</h2>
         </div>
+    </section>
+
+    <section class="w-100  sombre">   
         {# {% include "Components/_article.html.twig" with { couper: "couper" } %} #}
         <div class="swip ">
+        <h2 class="titreHome bleuGradient"> Derniers articles</h2>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
                 {% for article in articles %}
@@ -63,9 +43,28 @@
                 <div class="swiper-button-next"></div>
             </div>
 
-            <div class="titre">
-                <h2 class="titreHome bleuGradient">Derniers sujets</h2>
+            
+        </div>
+           
+    </section>
+    <section class="w-100 paralax">
+        {% for subject in subjects %}
+            <div class="swiper-slide overflow-y card paralaxCard">
+                {{ include('Components/_subjectSwiper.html.twig' )}}   
             </div>
+        {% endfor %}
+        
+    </section>
+    <section class="w-80 h2">
+        <p class="bottom">Retrouve des <a href="{{ path('app_article_index') }}">articles sur le développement</a> <br>  rédigé par nos administrateurs <br>
+            Ansi que des <a href="{{ path('app_subject_index') }}">sujets postés</a> pas nos adhérents
+        </p>
+        <div class="bottom background black"></div>
+    </section>
+    <section class="w-100 mt-5 sombre">
+        <div class="swip">
+            
+            <h2 class="titreHome bleuGradient">Derniers sujets</h2>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
                 {% for subject in subjects %}

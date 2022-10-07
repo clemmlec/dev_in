@@ -19,7 +19,13 @@ export default class extends Controller {
         }
         let button = elem.parentNode
         let id = button.value;
-        axios.get(`/subject/follow/${id}`);
+        axios.get(`/subject/follow/${id}`)
+        .catch(function (erreur) {
+            if(erreur.response.data == "authentification requise"){
+                window.location.href= "https://127.0.0.1:8000/login";
+            }
+            console.log(erreur.response.data , '👼');
+        });
         if(elem.classList.contains("far")){
             elem.classList.replace('far','fa' );
         }else{
@@ -56,6 +62,12 @@ export default class extends Controller {
         .then(function (reponse) {
             document.getElementById('suggestSubject'+id).style.display ="none"
             document.getElementById('subject'+id).style.display ="none"
+        })
+        .catch(function (erreur) {
+            if(erreur.response.data == "authentification requise"){
+                window.location.href= "https://127.0.0.1:8000/login";
+            }
+            console.log(erreur.response.data , '👼');
         });
     }
 

@@ -13,6 +13,19 @@ if(btnLien){
         });
     }))
 }
+const btn = document.querySelectorAll('.btn-inscription');
+if(btn){
+    btn.forEach((element=>{
+        element.addEventListener('click', (event) =>  {
+
+            if( event.target.childNodes[1]){
+                window.location.href = event.target.childNodes[1].href
+            }else{
+                window.location.href = event.target.childNodes[0].href
+            }
+        });
+    }))
+}
 
 const styleUser = document.querySelectorAll('[data-style-user]');
 if(styleUser){

@@ -162,8 +162,12 @@ class SubjectController extends AbstractController
         $follow = $subjectRepo->find($subject);
 
         $user = $security->getUser();
+        if(!$user) {
+            $this->addFlash('error', 'Veuillez vous connecter pour faire une suggestion');
 
-        if ($follow && $user) {
+            return new Response('authentification requise', 403);
+        }
+        if ($follow) {
             $dejaAmis = $subjectFavRepo->findOneBy(['user' => $user, 'subject' => $subject]);
             if (!$dejaAmis) {
                 $subjectFav->setUser($user)
@@ -196,8 +200,13 @@ class SubjectController extends AbstractController
     public function signalerSubject(?Subject $subject, string $message, Security $security, SubjectRepository $artRepo, SubjectReportRepository $artSignalRepo)
     {
         $user = $security->getUser();
+        if(!$user) {
+            $this->addFlash('error', 'Veuillez vous connecter pour faire une suggestion');
 
-        if ($subject && $user) {
+            return new Response('authentification requise', 403);
+        }
+
+        if ($subject) {
             $dejaReport = $artSignalRepo->findOneBy(['user' => $user, 'subject' => $subject]);
             if(!$dejaReport){
                 $newSignal = new SubjectReport();

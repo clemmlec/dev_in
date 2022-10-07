@@ -21,13 +21,13 @@
         display: none;
     }
     .paralaxCard:nth-child(6) {
-        bottom: -1700px !important;
+        bottom: -2700px !important;
         left: 80px !important;
     }
 
 }
 .paralax{
-    height: 60vh;
+    height: 40vh;
     position: relative;
     z-index: -2;
     text-align: center;
@@ -36,35 +36,35 @@
         position: absolute;
     }
     .paralaxCard:nth-child(1) {
-        bottom: -200px;
+        bottom: -1200px;
         right: 5%;
     }
     .paralaxCard:nth-child(2) {
-        bottom: -400px;
+        bottom: -1400px;
         left: 5%;
     }
     .paralaxCard:nth-child(3) {
-        bottom: -300px;
+        bottom: -800px;
         right: 30%;
     }
     .paralaxCard:nth-child(4) {
-        bottom: -100px;
+        bottom: -800px;
         left: 30%;
     }
     .paralaxCard:nth-child(5) {
-        bottom: -1000px;
+        bottom: -2000px;
         right: 10%;
     }
     .paralaxCard:nth-child(6) {
-        bottom: -1200px;
+        bottom: -2200px;
         left: 10%;
     }
     .paralaxCard:nth-child(7) {
-        bottom: -1400px;
+        bottom: -2400px;
         right: 35%;
     }
     .paralaxCard:nth-child(8) {
-        bottom: -1100px;
+        bottom: -2100px;
         left: 35%;
     }
     // .paralaxCard:nth-child(9) {
@@ -95,5 +95,5 @@
 }
 .h2{
     height: 200px;
-    margin-top: 200px !important;
+    // margin-top: 200px !important;
 }

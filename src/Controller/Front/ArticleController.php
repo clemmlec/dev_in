@@ -104,7 +104,7 @@ class ArticleController extends AbstractController
     {
         $user = $security->getUser();
         if(!$user) {
-            $this->addFlash('error', 'Veuillez vous connecter pour liker un article');
+            $this->addFlash('error', 'Veuillez vous connecter pour faire une suggestion');
 
             return new Response('authentification requise', 403);
         }

@@ -10,40 +10,26 @@
     align-items: center;
     
     .header{
-        padding: 8px 150px;
+        padding: 0 180px 50px 180px;
         border-radius: $borderRadius;
         h1{
-           color: whitesmoke;
-           font-size: 4em;
-           font-weight: 400;
+           color: $purple2;
+           font-size: 5em;
+           font-weight: 700;
            white-space: nowrap;
         }
     }
 }
-.titre{
-    position: relative;
-    margin-top: 200px;
 
-    .titreHome{
-        position: absolute;
-        text-align: center;
-        border-radius: $borderRadius;
-        width:fit-content;
-        top:0px;
-        left: 30%;
-        transform: translate(-50%,-180%);
-        z-index: 2;
-        font-family: "Righteous", cursive;
-        padding: 10px;
-    }
-
-
-}
 
 .btn-inscription{
     margin: auto;
     text-align: center;
+    padding: 10px 20px;
     a{
         color: antiquewhite;
     }
+}
+.titreHome{
+    font-size: 2.5em;
 }

@@ -8,10 +8,11 @@
     height: fit-content;
     .titreHome{
         border-radius: $borderRadius;
-        width:fit-content;
+        width:50%;
         z-index: 2;
         font-family: "Righteous", cursive;
         padding: 10px;
+        margin: 50px auto;
     }
 }
 
