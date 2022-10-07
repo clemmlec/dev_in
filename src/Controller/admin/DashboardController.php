@@ -124,7 +124,6 @@ class DashboardController extends AbstractDashboardController
             'datasets' => [
                 [
                     'label' => 'Total',
-                    'backgroundColor' => 'rgb(0, 99, 132)',
                     'borderColor' => 'rgb(255, 99, 132)',
                     'data' => [$comReport, $subReport, $artReport, 2, 20, 30, 45],
                     'backgroundColor' => ['#FFFF55','#FF55FF','#8FF55F','#55FFFF','#453264']
@@ -164,7 +163,6 @@ class DashboardController extends AbstractDashboardController
             'datasets' => [
                 [
                     'label' => 'Total',
-                    'backgroundColor' => 'rgb(0, 99, 132)',
                     'borderColor' => 'rgb(255, 99, 132)',
                     'data' => $tableau,
                     'backgroundColor' => ['#FFFF55','#FF55FF','#8FF55F','#55FFFF','#453264','#2735FF','#8FF599','#122340','#410264']
@@ -201,7 +199,6 @@ class DashboardController extends AbstractDashboardController
             'datasets' => [
                 [
                     'label' => 'Total',
-                    'backgroundColor' => 'rgb(0, 99, 132)',
                     'borderColor' => 'rgb(255, 99, 132)',
                     'data' => $tableau,
                     'backgroundColor' => ['#FFFF55','#FF55FF','#8FF55F','#55FFFF','#453264','#2735FF','#8FF599','#122340','#410264']
