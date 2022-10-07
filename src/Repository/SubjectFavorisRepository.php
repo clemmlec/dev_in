@@ -64,7 +64,7 @@ class SubjectFavorisRepository extends ServiceEntityRepository
         return $this->paginator->paginate(
             $query->getQuery(),
             $search->getPage(),
-            5
+            10
         );
    }
 

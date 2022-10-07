@@ -1,3 +1,31 @@
+@media only screen and (max-width: 1400px) {
+    .paralaxCard:nth-child(3) {
+        display: none;
+    }
+    .paralaxCard:nth-child(7) {
+        display: none;
+    }
+
+}
+@media only screen and (max-width: 1100px) {
+    .paralaxCard:nth-child(4) {
+        display: none;
+    }
+    .paralaxCard:nth-child(8) {
+        display: none;
+    }
+
+}
+@media only screen and (max-width: 700px) {
+    .paralaxCard:nth-child(1) {
+        display: none;
+    }
+    .paralaxCard:nth-child(6) {
+        bottom: -1700px !important;
+        left: 80px !important;
+    }
+
+}
 .paralax{
     height: 60vh;
     position: relative;
@@ -9,35 +37,35 @@
     }
     .paralaxCard:nth-child(1) {
         bottom: -200px;
-        right: 50px;
+        right: 5%;
     }
     .paralaxCard:nth-child(2) {
         bottom: -400px;
-        left: 50px;
+        left: 5%;
     }
     .paralaxCard:nth-child(3) {
         bottom: -300px;
-        right: 450px;
+        right: 30%;
     }
     .paralaxCard:nth-child(4) {
         bottom: -100px;
-        left: 450px;
+        left: 30%;
     }
     .paralaxCard:nth-child(5) {
         bottom: -1000px;
-        right: 100px;
+        right: 10%;
     }
     .paralaxCard:nth-child(6) {
         bottom: -1200px;
-        left: 100px;
+        left: 10%;
     }
     .paralaxCard:nth-child(7) {
         bottom: -1400px;
-        right: 500px;
+        right: 35%;
     }
     .paralaxCard:nth-child(8) {
         bottom: -1100px;
-        left: 500px;
+        left: 35%;
     }
     // .paralaxCard:nth-child(9) {
     //     bottom: -2000px;

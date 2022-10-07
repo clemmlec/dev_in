@@ -1,18 +1,18 @@
 import axios from 'axios';
 
-// const btnLien = document.querySelectorAll('.btnLien');
-// if(btnLien){
-//     btnLien.forEach((element=>{
-//         element.addEventListener('click', (event) =>  {
+const btnLien = document.querySelectorAll('.page');
+if(btnLien){
+    btnLien.forEach((element=>{
+        element.addEventListener('click', (event) =>  {
 
-//             if( event.target.childNodes[1]){
-//                 window.location.href = event.target.childNodes[1].href
-//             }else{
-//                 window.location.href = event.target.childNodes[0].href
-//             }
-//         });
-//     }))
-// }
+            if( event.target.childNodes[1]){
+                window.location.href = event.target.childNodes[1].href
+            }else{
+                window.location.href = event.target.childNodes[0].href
+            }
+        });
+    }))
+}
 
 const styleUser = document.querySelectorAll('[data-style-user]');
 if(styleUser){

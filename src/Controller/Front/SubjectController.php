@@ -116,7 +116,7 @@ class SubjectController extends AbstractController
         
         if ($subject->getUser() !== $user) {
             $this->addFlash('error', 'Vous n\'êtes pas autorisé à modifier ce sujet');
-            return $this->redirectToRoute('user_subject_show', ['id' => $subject->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_subject_show', ['id' => $subject->getId(), 'slug' => $subject->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
         $form = $this->createForm(Subject1Type::class, $subject);
@@ -131,7 +131,7 @@ class SubjectController extends AbstractController
             
             $this->addFlash('succes', 'Sujet modifié avec succes');
             
-            return $this->redirectToRoute('user_subject_show', ['id' => $subject->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_subject_show', ['id' => $subject->getId(), 'slug' => $subject->getSlug()], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('subject/edit.html.twig', [
             'subject' => $subject,

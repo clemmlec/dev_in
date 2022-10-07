@@ -80,7 +80,7 @@ class SubjectRepository extends ServiceEntityRepository
         return $this->paginator->paginate(
             $query->getQuery(),
             $search->getPage(),
-            5
+            10
         );
 
         // dd($queryBuilder);

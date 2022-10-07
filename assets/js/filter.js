@@ -166,7 +166,7 @@ export default class Filter {
         // console.log(refreshScroll )
 
         if(offset < 940 && this.reload == false && rect.width!=0){
-            console.log(offset, rect,window.innerHeight )
+            // console.log(offset, rect,window.innerHeight )
             this.loadMore(refreshScroll)
             this.reload = true
         }

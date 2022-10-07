@@ -2,10 +2,26 @@
     margin-top: 10px;
     margin-bottom: 10px;
     span{
-        background-color: beige;
-        color: black;
+        background-color: $purple;
         padding: 15px;
         border-radius: 5px;
         margin: 3px;
+    }
+    .current{
+        background-color: $purpleClair;
+    }
+    .page, .last, .previous, .first, .next{
+       
+        cursor: pointer;
+        a{
+            color: $white;
+        }
+        a:hover{
+            color: $purple2;
+        }
+
+    }
+    .page:hover, .last:hover, .previous:hover, .first:hover, .next:hover{
+        background-color: $purpleClair !important;
     }
 }
