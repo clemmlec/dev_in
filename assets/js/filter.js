@@ -119,12 +119,15 @@ export default class Filter {
             }
 
             params.delete('ajax');
-            history.replaceState({},'', `${url.split('?')[0]}?${params.toString()}`);
             if(data.pages==1){
                 this.pagination.style.display = 'none';
                 stopReload = true
-                console.log('crash pages=1 👱‍♂️👱‍♀️')
+                this.page=1;
+                console.log('crash pages=1 👱‍♂️👱‍♀️',this.page)
+                
             }else{
+                history.replaceState({},'', `${url.split('?')[0]}?${params.toString()}`);
+
                 stopReload = false
             }
         }else{
@@ -149,7 +152,7 @@ export default class Filter {
         data.forEach((value, key) => {
             params.append(key, value);
         });
-        console.log(params);
+        // console.log(params);
         return this.loadUrl(`${url.pathname}?${params.toString()}`);
     }
 
@@ -186,7 +189,7 @@ export default class Filter {
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);
         params.set('page', this.page);
-        console.log(this.page)
+        // console.log(this.page)
 
         await this.loadUrl(`${url.pathname}?${params.toString()}`, true);
         button.removeAttribute('disabled');
