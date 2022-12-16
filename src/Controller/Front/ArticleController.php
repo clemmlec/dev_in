@@ -53,8 +53,6 @@ class ArticleController extends AbstractController
         ]);
     }
 
-
-
     #[Route('/liked/{id}', name: 'app_article_liked', methods: ['GET'])]
     public function likedArticle(?Article $article, ArticleLikedRepository $articleFavRepo, ArticleRepository $articleRepo, Security $security): Response
     {
@@ -84,6 +82,7 @@ class ArticleController extends AbstractController
 
         return new Response('demande de favoris non valide', 404);
     }
+
     #[Route('/{id}/{slug}', name: 'article_show', methods: ['GET', 'POST'])]
     public function show(?Article $article,string $slug, ArticleRepository $articleRepository): Response
     {
@@ -99,6 +98,7 @@ class ArticleController extends AbstractController
             'articles' => $articles,
         ]);
     }
+    
     #[Route('/suggest/{id}/{message}', name: 'user.article.suggest', methods: ['GET'])]
     public function signalerarticle(?Article $article, string $message, Security $security, ArticleRepository $artRepo, ArticleSuggestionRepository $artSignalRepo): Response
     {

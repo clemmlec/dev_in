@@ -107,7 +107,6 @@ class SubjectController extends AbstractController
         return new Response('note non valide', 404);
     }
 
-
     #[Route('/edit/{id}', name: 'user_subject_edit', methods: ['GET','POST'])]
     public function edit(int $id, SubjectRepository $subjectRepository, Security $security, Request $request): Response
     {
@@ -184,7 +183,6 @@ class SubjectController extends AbstractController
         return new Response('demande de favoris non valide', 404);
     }
 
-    
     #[Route('/{id}/{slug}', name: 'user_subject_show', methods: ['GET', 'POST'])]
     public function show(?Subject $subject, string $slug, Security $security, Request $request, SubjectRepository $subjectRepository): Response
     {

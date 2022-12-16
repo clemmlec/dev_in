@@ -67,7 +67,10 @@ class AdminSubscriber implements EventSubscriberInterface
                     $user -> setCredibility( $user->getCredibility()+1);
                     $this->userRepository->add($user,true);
                 }
+                $user = $entityInstance->getUser();
+                $user -> setCredibility( $user->getCredibility()-1);
                 break;
+                
             case $entityInstance instanceof CommentReport:
                 $user = $entityInstance->getUser();
                 $user -> setCredibility( $user->getCredibility()-1);

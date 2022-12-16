@@ -22,12 +22,12 @@ class ArticleCrudController extends AbstractCrudController
         return Article::class;
     }
 
-    // public function configureCrud(Crud $crud): Crud
-    // {
-    //     return $crud
-    //         ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig')
-    //     ;
-    // }
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig')
+        ;
+    }
 
     public function configureFields(string $pageName): iterable
     {
@@ -53,10 +53,10 @@ class ArticleCrudController extends AbstractCrudController
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 
-    public function configureCrud(Crud $crud): Crud
-    {
-        return $crud
-            ->setDefaultSort(['createdAt' => 'DESC'])
-        ;
-    }
+    // public function configureCrud(Crud $crud): Crud
+    // {
+    //     return $crud
+    //         ->setDefaultSort(['createdAt' => 'DESC'])
+    //     ;
+    // }
 }

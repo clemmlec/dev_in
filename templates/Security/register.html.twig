@@ -32,15 +32,17 @@
                 </div>
                 {% endif %}
             </div>
+            {% if form_errors(form.password.first) %}
+            <div class="alert alert-danger" >
+            {% endif %}
             <div class="form-ligne">
                 {{ form_widget( form.password,{'attr': {'placeholder': 'mots de passe'} } ) }}
-                {% if form_errors(form.password.first) %}
-                <div class="alert alert-danger w-80" >
-                    <span>{{ form_errors(form.password.first) }}</span>
-                </div>
-                {% endif %}
+ 
                 {# <span class="color-red">{{ form_errors(form.password.second) }}</span> #}
             </div>
+            {% if form_errors(form.password.first) %}
+            </div>
+            {% endif %}
             {# <div class="form-ligne">
                 {% if is_granted('ROLE_ADMIN') %}
                 

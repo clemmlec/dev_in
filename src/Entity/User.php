@@ -83,8 +83,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         maxMessage: 'Votre mots de passe ne dois pas dépasser {{ limit }} caracteres'
     )]
     #[Assert\Regex(
-        pattern: '/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/',
-        message: 'Votre mot de passe doit comporter au moins 6 caractères, une lettre majuscule, une lettre miniscule et 1 chiffre sans espace blanc'
+        pattern: '/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{8,})\S$/',
+        message: 'Votre mot de passe doit comporter au moins 8 caractères, une lettre majuscule, une lettre miniscule et 1 chiffre sans espace blanc'
     )]
     private ?string $password = null;
 

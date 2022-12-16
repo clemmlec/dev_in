@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="d-flex w-80">
+        <h1>La page demandé ne vous est pas autorisé</h1>
+
+        <p>
+            Vous n'avez pas les droits pour consulter cette page
+            <a href="{{ path('home') }}">retour à la page d'accueil</a>.
+        </p>
+    </div>
+{% endblock %}

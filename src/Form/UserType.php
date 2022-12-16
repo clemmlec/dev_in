@@ -46,9 +46,10 @@ class UserType extends AbstractType
 
                         // ]),
                         new Regex('/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/',
-                            'Votre mot de passe doit comporter au moins 6 caractères,
-                        une lettre majuscule, une lettre miniscule
-                        et 1 chiffre sans espace blanc'),
+                            'Votre mot de passe doit comporter au moins 8 caractères,
+                            une lettre majuscule, une lettre miniscule
+                            et 1 chiffre sans espace blanc'
+                        ),
                     ],
                     'label' => 'Mots de passe',
                 ],

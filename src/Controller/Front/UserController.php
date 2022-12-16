@@ -109,11 +109,11 @@ class UserController extends AbstractController
 
     #[Route('/followers/{id}', name: 'app_user_followers', methods: ['GET','POST'])]
     public function followers(
-            ?User $user,
-            FollowRepository $followRepository, 
-            Security $security, 
-            Request $request
-            ): Response
+        ?User $user,
+        FollowRepository $followRepository, 
+        Security $security, 
+        Request $request
+        ): Response
     {
         $data = new SearchData();
         $data->setPage($request->get('page', 1));
