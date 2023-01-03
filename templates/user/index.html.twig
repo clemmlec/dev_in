@@ -30,7 +30,7 @@
                     <span class=""><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>
                 </div>
             </div>
-            {{ form_row(forms.query, { 'attr' : { 'class' : 'formSearch'} }) }}
+            {{ form_row(forms.query, { 'attr' : { 'class' : 'formSearch', 'autofocus' : 'autofocus'} }) }}
             {# <button class="btn-vierge" type="submit">Rechercher</button> #}
         {{ form_end(forms, {'render_rest': false }) }}
         <div class="js-filter-count">

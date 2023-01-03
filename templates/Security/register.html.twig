@@ -16,7 +16,7 @@
             <hr>
             <div class="form-ligne">
                 {{ form_label(form.name) }} 
-                {{ form_widget( form.name,{'attr': {'placeholder': 'nom'} } ) }}
+                {{ form_widget( form.name,{'attr': {'autofocus': 'autofocus'} } ) }}
                 {% if form_errors(form.name) %}
                 <div class="alert alert-danger w-80" >
                     <span> {{ form_errors(form.name) }}</span>
@@ -25,7 +25,7 @@
             </div>
             <div class="form-ligne">
                 {{ form_label(form.email) }} 
-                {{ form_widget( form.email,{'attr': {'placeholder': 'e-mail' } } ) }}
+                {{ form_widget( form.email) }}
                 {% if form_errors(form.email) %}
                 <div class="alert alert-danger w-80" >
                     <span>{{ form_errors(form.email) }}</span>
@@ -51,6 +51,9 @@
                 {% endif %}
             </div> #}
             <div class="form-ligne">
+                {{ form_row( form.imageFile ) }}
+            </div>
+            <div class="form-ligne">
                 {{ form_row( form.rgpd ) }}
                 <a href="{{ path('mentionslegal') }}">voir les mentions légales</a>
                 {% if form_errors(form.rgpd) %}
@@ -59,9 +62,7 @@
                     </div>
                 {% endif %}
             </div>
-            <div class="form-ligne">
-            {{ form_row( form.imageFile ) }}
-            </div>
+
             <hr>
             <button class="buttonEmpty">{{ button_label|default('S\'inscrire') }}</button>
             

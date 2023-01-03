@@ -24,20 +24,24 @@
 <section class="w-80">
     {% include "Components/_article.html.twig"  with { couper: "" } %}
 </section>
-
-<div class="swip">
-    <div class="swiper mySwiper">
-        <h2 class="titreHome bleuGradient">Les derniers articles avec les mêmes tags</h2>
-        <div class="swiper-wrapper">
-        {% for article in articles %}
-            <div class="swiper-slide overflow-y articleCard">
-                {% include "Components/_article.html.twig" with { couper: 'couper' } %}
+<section class="w-100">   
+    <div class="swip ">
+    <h2 class="titreHome bleuGradient">Les derniers articles avec les mêmes tags</h2>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+            {% for article in articles %}
+                <div class="swiper-slide overflow-y articleCard">
+                    {% include "Components/_article.html.twig" with { couper: 'couper'} %}
+                </div>
+            {% endfor %}
             </div>
-        {% endfor %}
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+
+        
     </div>
-</div>
+        
+</section>
 {% endblock %}

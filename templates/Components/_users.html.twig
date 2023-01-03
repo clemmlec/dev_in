@@ -1,3 +1,5 @@
 {% for user in users %}
-     {{ include('Components/_user.html.twig')}}
+     {# {% if user.active %} #}
+          {{ include('Components/_user.html.twig')}}
+     {# {% endif %} #}
 {% endfor %}

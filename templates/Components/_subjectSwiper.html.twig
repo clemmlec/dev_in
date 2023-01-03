@@ -39,14 +39,12 @@
             {# {% endif %} #}
         {% endfor %}
     </div>
-{% else %}
-    <span class="muted">pas encore de note</span> 
 {% endif %}
 </h3>
 {# <div class="img">
     <img class="subjectImage" src="{{ subject.subject ? vich_uploader_asset(subject.subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.subject.nom}}">
 </div> #}
-<div class="description">
+<div class="description content">
     {{subject.description | raw }}
 </div>
 <ul>
@@ -54,6 +52,6 @@
     <li>{{subject.noteSubjects | length}} notes reçus</li>
     {# <li>{{subject.comments | length}} ajouter subject favoris</li> #}
 </ul>
-
+<br>
 <a class="btn-vierge btnLien2 btnProfil" href="{{ path('user_subject_show', {'id': subject.id , 'slug': subject.slug}) }}">voir le sujet</a>
 <br><span class="gray">.</span>

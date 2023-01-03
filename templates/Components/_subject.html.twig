@@ -152,7 +152,7 @@
             {# <img class="subjectImage" src="{{ subject ? vich_uploader_asset(subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.nom}}"> #}
             <div class="d-subject">
                 <div class="w-100 description">
-                    <div class="left">{{subject.description | raw}}</div>
+                    <div class="left content">{{subject.description | raw}}</div>
                 </div>
             </div>
         </div>  
@@ -168,7 +168,8 @@
                         class="envoieCommentInput "
                         oninput="updateTextareaHeight(this)"  
                         onblur="quitTextarea(this)"
-                        name="" id="" cols="1" rows="1"></textarea>
+                        name="" id="" cols="1" rows="1"
+                        autofocus></textarea>
                         {# <input id="commentPost{{subject.id}}" class="envoieCommentInput" placeholder="écrit ton commentaire"> #}
                     <button 
                         type="button" 
@@ -261,7 +262,7 @@
                 </div>
                 {% endif %}
             {% else %}
-                <p>pas encore de commentaires</p>
+                <p>Sois le premier commenter !</p>
             {% endfor %}
             </div>
         </div>

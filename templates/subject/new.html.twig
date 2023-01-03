@@ -28,7 +28,7 @@
         </button>
     </div>
     <h1 class="title"> 
-        {{ form_widget( form.nom,{'attr': {'placeholder': 'titre'} } ) }}
+        {{ form_widget( form.nom,{'attr': {'placeholder': 'titre','autofocus': 'autofocus'} } ) }}
         {% if form_errors(form.nom) %}
         <div class="alert alert-danger w-80" >
             <span> {{ form_errors(form.nom) }}</span>

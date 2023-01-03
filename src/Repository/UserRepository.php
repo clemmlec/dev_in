@@ -48,6 +48,7 @@ class UserRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('u')
             ->select('u', 'a', 'n', 'c')
+            ->where('u.active = true')
             // ->select('u', 'f', 'r','a','n','c')
             // ->leftjoin('u.follows', 'f')
             // ->leftjoin('u.followers', 'r')

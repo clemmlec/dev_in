@@ -123,13 +123,16 @@ body{
     // overflow: auto; /* Enable scroll if needed */
 
 }
-
+.js-filter-count{
+    color: $black;
+    text-align: center;
+}
 .modele{
     display: none;
 }
 
 .alert{
-    z-index: 1000;
+    z-index: 99;
     text-align: center;
     margin: 10px auto;
     padding:10px 0 ;
@@ -188,6 +191,12 @@ a:hover{
 .mt-5{
     margin-top: 50px;
 }
+.mt-2{
+    margin-top: 20px;
+}
+.mt-8{
+    margin-top: 100px;
+}
 .mt-10{
     margin-top: 300px;
 }
@@ -221,6 +230,7 @@ p{
     }
     .couper{
         width: 90% !important;
+        margin: 20px;
     }
     .article{
         .couper{
@@ -324,11 +334,12 @@ p{
         max-width: 90% !important;
     }
     #btnProfil{
-        top: 350px !important;
+        top: 170px !important;
   
     }
     .btnProfil1{
         width: 230px !important;
+        font-size: 25px !important;
     }
     .nav-logo{
         height: 50px;
@@ -339,9 +350,9 @@ p{
     .head{
         height: 50px;
     }
-    .avatar{
-        position: relative;
-        width: 100px;
+
+    .swiper-slide .avatar {
+         width: 150px !important;
     }
     .dropdown-content{
         top: 120px;
@@ -382,5 +393,13 @@ p{
                 top: -120px !important;
             }
         }
+    }
+    .h2{
+
+        margin-top: 200px !important;
+    }
+    .titreHome{
+        font-size: 1.5em;
+        width: 70% !important;
     }
 }

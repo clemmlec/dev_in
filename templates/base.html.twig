@@ -2,12 +2,12 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Dev In{% endblock %}</title>
-        {% block meta %}{% endblock %}
         <meta name="viewport" content="width=device-width, initial-scale=0.5">
         <meta name="creator" content="Clément Canale">
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block meta %}{% endblock %}
+
+        <title>{% block title %}Dev In{% endblock %}</title>
+        <link rel="icon" href="{{asset('images/logos.png')}}">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -15,7 +15,6 @@
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
-        
     </head>
     <body>
         <div class="main">
@@ -23,10 +22,10 @@
 
                 <main class="site">
                     <section class="mainSite">
-                    {% include "Layout/flash.html.twig" %}
-                    {% block body %}
-                
-                    {% endblock %}
+                        {% include "Layout/flash.html.twig" %}
+
+                        {% block body %}{% endblock %}
+                        
                     </section>
                 </main>
 
@@ -44,33 +43,29 @@
             let currentModal = document.getElementById(id);
 
             if (currentModal.style.display == "block"){
-                currentModal.style.display = "none";
+                
                 if(id=='modal1'){
                     bouton.innerHTML = 'nouvel subject';
-                }else if(id=='modal2'){
-                    bouton.innerHTML = 'modifier le profil';
-                }else if(id=='modal3'){
-                    bouton.innerHTML = 'couleur de profil';
-                }else if(id=='modal4'){
-                    bouton.innerHTML = 'infos';
+                    currentModal.style.display = "none";
                 }
                 
             }else{
                 
                 currentModal.style.display = "block";
-                bouton.innerHTML = 'quitter';
+                if(id=='modal1'){
+                    bouton.innerHTML = 'quitter';
+                }else{
+                    bouton.classList.add('purpleGradient');
+                }
+                
                 let i
                 for ( i=0; i< mod.length; i++) {
                     if(mod[i].id!=id){
                         mod[i].style.display = 'none';
                         let btnID = mod[i].id.split('l')[1];
                         let btn = document.getElementById('myBtn'+btnID);
-                        if(mod[i].id=='modal1'){
-                            btn.innerHTML = 'nouvel subject';
-                        }else if(mod[i].id=='modal2'){
-                            btn.innerHTML = 'modifier le profil';
-                        }else if(mod[i].id=='modal3'){
-                            btn.innerHTML = 'couleur de profil';
+                        if(mod[i].id!='modal1'){
+                            btn.classList.remove('purpleGradient');
                         }
                     }
                 }

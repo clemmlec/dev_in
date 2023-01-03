@@ -206,3 +206,15 @@ select {
 .mb-4 {
     margin-bottom: 15px;
 }
+.vich-image{
+    a{
+        img{
+            position: relative;
+            top: -20px;
+            left: 0;
+        }
+    }
+    div{
+        text-align: center;
+    }
+}

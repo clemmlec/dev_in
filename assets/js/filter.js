@@ -31,10 +31,6 @@ export default class Filter {
         this.bindEvents();
         this.reload = false;
 
-
-        /**
-         * Add the action to the elements of the filter bundle
-         */
     }
 
 
@@ -73,7 +69,7 @@ export default class Filter {
 
 
     /**
-     * Load thee url in ajax
+     * Load the url in ajax
      * 
      * @param {URL} url -- url to load
      */
