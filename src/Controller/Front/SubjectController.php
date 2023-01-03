@@ -162,7 +162,7 @@ class SubjectController extends AbstractController
 
         $user = $security->getUser();
         if(!$user) {
-            $this->addFlash('error', 'Veuillez vous connecter pour faire une suggestion');
+            $this->addFlash('error', 'Veuillez vous connecter pour ajouter un sujet en favoris');
 
             return new Response('authentification requise', 403);
         }

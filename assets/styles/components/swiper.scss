@@ -89,7 +89,7 @@
         overflow-y: hidden;
     }
     .description{
-        height: 150px;
+        height: 250px;
         overflow-y: hidden;
         overflow: hidden;
     }
@@ -111,4 +111,9 @@
     width: 30px;
     display: inline;
     vertical-align: middle;
+}
+.paralax{
+    .description{
+        height: 150px !important;
+    }
 }

@@ -374,7 +374,11 @@ class UserController extends AbstractController
     public function followUser(?User $follow, FollowRepository $friendsRepo, Security $security)
     {
         $user = $this->getUser();
+        if(!$user) {
+            $this->addFlash('error', 'Veuillez vous connecter pour ajouter un amis');
 
+            return new Response('authentification requise', 403);
+        }
         // dd($follow);
         // dd($user, $follow);
 

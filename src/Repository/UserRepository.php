@@ -55,7 +55,7 @@ class UserRepository extends ServiceEntityRepository
             ->leftjoin('u.subjects', 'a')
             ->leftjoin('a.noteSubjects', 'n')
             ->leftjoin('u.comments', 'c')
-
+            ->orderBy('u.credibility', 'desc')
         ;
         if (!empty($search->getQuery())) {
             $query->andWhere('u.name LIKE :name')
