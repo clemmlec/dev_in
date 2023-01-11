@@ -4,16 +4,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=0.5">
         <meta name="creator" content="Clément Canale">
-
         {% block meta %}{% endblock %}
 
         <title>{% block title %}Dev In{% endblock %}</title>
-        
         <link rel="icon" href="{{asset('images/logos.png')}}">
+
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
-
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
@@ -34,10 +32,12 @@
             {% include "Layout/footer.html.twig" %}
         </div>
     </body>
-        <script src="https://kit.fontawesome.com/8b5299c4a2.js" crossorigin="anonymous"></script>
 
-            {# script modal nouvel subject #}
-        <script>function modal(bouton){
+    <script src="https://kit.fontawesome.com/8b5299c4a2.js" crossorigin="anonymous"></script>
+
+    <script>
+        function modal(bouton){
+            
             var mod = document.getElementsByClassName("modal");
             
             id=bouton.id.split('n')[1];
@@ -72,11 +72,6 @@
                     }
                 }
             }
-
-
-
-
-            }
-        </script>
-
+        }
+    </script>
 </html>

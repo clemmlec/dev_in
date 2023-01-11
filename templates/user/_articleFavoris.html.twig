@@ -11,11 +11,12 @@
         content="index,follow" 
     /> 
 {% endblock %}
+
 {% block mainProfil %}
     <hr class="mt-5">
     <h1>articles likés {{user.articleLikeds | length}}</h1>
     <section class="js-filter">
-
+        {# formulaire de recherche #}
         {{ form_start(forms, { 'attr' : { 'class' : 'js-filter-form formEdit'} }) }}
             <div class="loader">
                 <div class="js-loading" role="status" aria-hidden="true" style="display: none">
@@ -23,10 +24,9 @@
                 </div>
             </div>
             {{ form_row(forms.query, { 'attr' : { 'class' : 'formSearch', 'placeholder' : 'Rechercher dans l\'article' } }) }}
-
-            {# <button class="btn-vierge" type="submit">Rechercher</button> #}
         {{ form_end(forms, {'render_rest': false }) }}
 
+        {# pagination #}
         <div class="js-filter-count">
             {% include "Components/filter/_count.html.twig" %}
         </div>

@@ -11,19 +11,22 @@
         content="index,follow" 
     /> 
 {% endblock %}
+
 {% block mainProfil %}
     <hr class="mt-5">
     <h1>abonnés {{user.followers | length}}</h1>
     <div class="js-filter w-80">
+        {# formulaire de recherche #}
         {{ form_start(forms, { 'attr' : { 'class' : ' js-filter-form formEdit'} }) }}
-        <div class="loader">
-            <div class="js-loading" role="status" aria-hidden="true" style="display: none">
-                <span class=""><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>
+            <div class="loader">
+                <div class="js-loading" role="status" aria-hidden="true" style="display: none">
+                    <span class=""><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>
+                </div>
             </div>
-        </div>
             {{ form_row(forms.query, { 'attr' : { 'class' : 'formSearch'} }) }}
-            {# <button class="btn-vierge" type="submit">Rechercher</button> #}
         {{ form_end(forms, {'render_rest': false }) }}
+
+        {# pagination #}
         <div class="js-filter-count">
             {% include "Components/filter/_countUser.html.twig" with { users : follow } %}
         </div>

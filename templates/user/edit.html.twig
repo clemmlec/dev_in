@@ -1,229 +1,189 @@
 
+{# Formulaire modifier le profil #}
+<div class="couleur modal" id="modal2">
+    {{ form_start(form,{'attr': {'class': 'form large formEdit'}}) }}
+        <h2 class="Lobster">Modifier le profil</h2>
+        <hr>
+        <div class="form-ligne">
+            {{ form_row( form.name,{'attr': {'placeholder': 'nom'}} ) }}
+            {{ form_row( form.imageFile ) }}
+        </div>
+        <hr>
+        <button class="mb-4">{{ button_label|default('Enregistrer') }}</button>
+        
+        {{ form_widget( form._token)}}
+    {{ form_end(form,{render_rest: false}) }}
+</div>
 
-
-    <div class="couleur modal" id="modal2">
-        {{ form_start(form,{'attr': {'class': 'form large formEdit'}}) }}
-            <h2 class="Lobster">Modifier le profil</h2>
-            <hr>
-            <div class="form-ligne">
-                {{ form_row( form.name,{'attr': {'placeholder': 'nom'}} ) }}
-                {{ form_row( form.imageFile ) }}
-            </div>
-            <hr>
-            <button class="mb-4">{{ button_label|default('Enregistrer') }}</button>
-            
-            {{ form_widget( form._token)}}
-        {{ form_end(form,{render_rest: false}) }}
-    </div>
-
-    <div class="couleur modal" id="modal3">
-        <section class="color mt-5">
-            <h2>Personalisations couleurs</h2>
-            <hr>
-            <div class="coupe2 d-flex">
-                <!-- formulaire couleur -->
-                    <div class="outils">
-                        <h4>direction du dégradé <br>
-                            <button class="dire green" onclick="direct('left bottom',this)" type="button"><i style="transform:rotate(-45deg);" class="fa-solid fa-arrow-right"></i></button>
-                            <button class="dire" onclick="direct('left',this)" type="button"><i class="fa-solid fa-arrow-right"></i></button>
-                            <button class="dire" onclick="direct('left top',this)" type="button"><i style="transform:rotate(45deg);" class="fa-solid fa-arrow-right"></i></button>
-                            <button class="dire" onclick="direct('top',this)" type="button"><i class="fa-solid fa-arrow-down"></i></button>
-                        </h4>
-                        <hr>
-
-                        <h4>couleur du dégradé
-                            <button id="btn0" onclick="changeClick(0)" class="carreForm greenColor">1</button>
-                            <button id="btn1" onclick="changeClick(1)" class="carreForm">2</button>
-                        </h4>
-                        <input type="hidden" name="color1" id="1">
-                        <input type="hidden" name="color2" id="2">
-                        <hr>
-                        
-                        <h4>couleur de la bordure
-                            <button id="btn2" onclick="changeClick(2)" class="carreForm">3</button>
-                        </h4>
-                        <input type="hidden" name="color3" id="3">
-                        <hr>
-
-                        <h4>couleur de l'ombre
-                            <button id="btn3" onclick="changeClick(3)" class="carreForm">4</button>
-                        </h4>
-                        <input type="hidden" name="color4" id="4">
-                        <hr>
-                    </div>
-                <!-- formulaire couleur -->
-
-                <!-- panel de couleur -->
-                    <div class="sectionColor">
-                        {% set bleu = 0 %}
-                        {% set rouge = 0 %}
-                        {% set vert = 0 %}
-                        {% for i in 0..53 %}
-                        {% set bleu=random(1,255) %}
-                        {% set rouge=random(1,255) %}
-                        {% set vert=random(1,255) %}
-                        <div onclick="envoieCouleur(this)"  class="carre jeu" style="background-color:rgb({{rouge}},{{vert}},{{bleu}})"></div>
-
-                        {% endfor %}
-
-                    </div>
-
-
-                <!-- panel de couleur -->
-            </div>
-            <div class="button">
-                <button type="button" onclick="changeCouleur()">reload color</button>
-                <button id="go" type="button" data-style-user >valider ces couleurs</button>
-            </div>
-        </section>
-    </div>
-
-
-   
-
- <script>
-    direction="left bottom";
-    // changement de direction du degradé
-        function direct(dir,what){
-            direction=dir;
-            btndire=document.getElementsByClassName('dire');
-            for (let index = 0; index < btndire.length; index++) {
-                btndire[index].classList.remove("green");
-                what.classList.add('green');
-            }
-        }
-    // changement de direction du degradé
-
-    //reload color
-        function changeCouleur(step){
-
-            var icone = document.getElementsByClassName("carre");
-            var i;
-            for (i = 0; i < icone.length; i++) {
-                bleu=Math.floor(Math.random() * 255) + 1;
-                rouge=Math.floor(Math.random() * 255) + 1;
-                vert=Math.floor(Math.random() * 255) + 1;
-                if (icone[i].innerHTML==""){
-                    icone[i].style.backgroundColor='rgb('+rouge+','+vert+','+bleu+')' ;
-                }
-            
-            }
-        }
-    //reload color
-
-     click=0;
-    // change le chifre de click
-        function changeClick(x){
-            click=x;
-            btnClick=document.getElementsByClassName('carreForm');
-            for (let index = 0; index < btnClick.length; index++) {
-                // console.log(click+1);
-                // console.log(btnClick[index].id);
-                if (btnClick[index].id=='btn'+click){
-                    btnClick[index].classList.add("greenColor");
-                }else{
-                    btnClick[index].classList.remove('greenColor');
-                }
-            }
-        }
-    // change le chifre de click
-    
-    // pour changer le step
-        function envoieCouleur(what){
-            // console.log(what.style.background);
-            click++;
-            if(click>4){
-                click=1;
-            }
-            // efface la valeur des anciens elements selectionné
-                div=document.getElementsByClassName('carre');
-                for (let index = 0; index < div.length; index++) {
-
-                    if(div[index].title==click){
-                        div[index].innerHTML="";
-                    }
-                }
-            c=click;
-            d='btn'+(click-1);
-            document.getElementById(c).value=what.style.backgroundColor; 
-            document.getElementById(c).style.backgroundColor=what.style.backgroundColor; 
-            document.getElementById(d).style.backgroundColor=what.style.backgroundColor; 
-            
-            //what.innerHTML=click;
-            //what.title=click;
-            test()
-            // echange le bg du btn selectionné
-            btnClick=document.getElementsByClassName('carreForm');
+{# Section changer les couleurs de la banière de profil #}
+<div class="couleur modal" id="modal3">
+    <section class="color mt-5">
+        <h2>Personalisations couleurs</h2>
+        <hr>
+        <div class="coupe2 d-flex">
+            {# direction et style #}
+            <div class="outils">
+                <h4>direction du dégradé <br>
+                    <button class="dire green" onclick="direct('left bottom',this)" type="button">
+                        <i style="transform:rotate(-45deg);" class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <button class="dire" onclick="direct('left',this)" type="button">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <button class="dire" onclick="direct('left top',this)" type="button">
+                        <i style="transform:rotate(45deg);" class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <button class="dire" onclick="direct('top',this)" type="button">
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </button>
+                </h4>
+                <hr>
+                <h4>couleur du dégradé
+                    <button id="btn0" onclick="changeClick(0)" class="carreForm greenColor">1</button>
+                    <button id="btn1" onclick="changeClick(1)" class="carreForm">2</button>
+                </h4>
+                <hr>
                 
-            for (let index = 0; index < btnClick.length; index++) {
-                if (btnClick[index].id=='btn'+(click) || btnClick[index].id=='btn'+0 && click==4 ){
-                    btnClick[index].classList.add("greenColor");
-                }else{
-                    btnClick[index].classList.remove("greenColor");
-                }
-            }
-            
+                <h4>couleur de la bordure
+                    <button id="btn2" onclick="changeClick(2)" class="carreForm">3</button>
+                </h4>
+                <hr>
+
+                <h4>couleur de l'ombre
+                    <button id="btn3" onclick="changeClick(3)" class="carreForm">4</button>
+                </h4>
+                <hr>
+            </div>
+
+            {# carrés de couleurs #}
+            <div class="sectionColor">
+                {% set bleu = 0 %}
+                {% set rouge = 0 %}
+                {% set vert = 0 %}
+                {% for i in 0..53 %}
+                    {% set bleu=random(1,255) %}
+                    {% set rouge=random(1,255) %}
+                    {% set vert=random(1,255) %}
+                    <div onclick="envoieCouleur(this)"  
+                        class="carre jeu" 
+                        style="background-color:rgb({{rouge}},{{vert}},{{bleu}})">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="button">
+            <button type="button" onclick="changeCouleur()">reload color</button>
+            <button id="go" type="button" data-style-user >valider ces couleurs</button>
+        </div>
+    </section>
+</div>
+
+
+
+
+<script>
+
+direction="left bottom";
+// changement de direction du degradé
+    function direct(dir,what){
+        direction=dir;
+        btnDirection=document.getElementsByClassName('dire');
+        for (let index = 0; index < btnDirection.length; index++) {
+            btnDirection[index].classList.remove("green");
+            what.classList.add('green');
         }
-    // pour changer le step
+        test()
+    }
+// changement de direction du degradé
 
-    // pour envoyer les couleurs 
-        function test(){
-            a=document.getElementById('1');
-            z=document.getElementById('2');
-            e=document.getElementById('3');
-            r=document.getElementById('4');
-         //   bg=document.getElementById('5');
-         //   bor=document.getElementById('6');
-         //   box=document.getElementById('7');
-         
-            function transparence(color){
-                console.log(color.style.backgroundColor);
-                x=color.style.backgroundColor;
-                x=x.split(")");
-                // console.log(x[0]);
-                x2=x[0].split("(");
-                // console.log(x2[0]);
-                x3=x2[0]+"("+x2[1]+")";
-                // console.log(x3);
-                return x3;
+// recharger les couleurs
+    function changeCouleur(step){
+
+        var icone = document.getElementsByClassName("carre");
+        var i;
+        for (i = 0; i < icone.length; i++) {
+            bleu=Math.floor(Math.random() * 255) + 1;
+            rouge=Math.floor(Math.random() * 255) + 1;
+            vert=Math.floor(Math.random() * 255) + 1;
+            if (icone[i].innerHTML==""){
+                icone[i].style.backgroundColor='rgb('+ rouge +','+ vert +','+ bleu +')' ;
             }
-            color1=transparence(a);
-            color2=transparence(z);
-            
-           btn0.style.background = color1;
-           btn1.style.background = color2;
-           btn2.style.background = e.style.backgroundColor;
-           btn3.style.background = r.style.backgroundColor;
-            
-            profilCardTitre.style.background= "linear-gradient( to "+direction+", "+ color1 +", "+ color2+")";
-           // "10px 20px 30px blue"; 
-            if(r.style.backgroundColor){
-                profilCardTitre.style.boxShadow ="0px 0px 5px "+r.style.backgroundColor+", 0px 0px 25px "+e.style.backgroundColor+", inset 0px 4px 15px "+r.style.backgroundColor;
-            }
-            if(e.style.backgroundColor){
-                profilCardTitre.style.border=" solid 2px "+ e.style.backgroundColor;
-            }
-           // bg.value="linear-gradient( to "+direction+", "+ color1+", "+ color2+")";
-          //  bor.value=" solid 2px "+e.style.backgroundColor;
-          //  box.value="0px 0px 5px "+r.style.backgroundColor+", 0px 0px 25px "+e.style.backgroundColor+", inset 0px 4px 15px "+r.style.backgroundColor;
-            go.value="background:linear-gradient( to "+direction+", "+ color1+", "+ color2+"); border: solid 2px "+e.style.backgroundColor + " ; box-shadow: 0px 0px 5px "+r.style.backgroundColor+", 0px 0px 25px "+e.style.backgroundColor+", inset 0px 4px 15px "+r.style.backgroundColor+";";
+        
         }
-    // pour envoyer les couleurs 
+    }
+// recharger les couleurs
 
-    // pour le changement du drapeau
-        function changeImg(what){
-
-            console.log(what);// image à changer
-
-            id=document.getElementById('img'+what.name);
-            console.log(id);
-            id.src=what.src;
-            console.log(id.src);
-            input=document.getElementById('input'+what.name);
-            console.log(what.title);
-            input.value=what.title;
+    click=0;
+// change le chifre de click en valeur x
+    function changeClick(x){
+        click=x;
+        btnClick=document.getElementsByClassName('carreForm');
+        for (let index = 0; index < btnClick.length; index++) {
+            if (btnClick[index].id=='btn'+click){
+                btnClick[index].classList.add("greenColor");
+            }else{
+                btnClick[index].classList.remove('greenColor');
+            }
         }
-    // pour le changement du drapeau
+    }
+// change le chifre de click x
+
+// pour envoyer la couleur
+    function envoieCouleur(what){
+        // cahnge le step
+        click++;
+        if(click>4){
+            click=1;
+        }
+        
+        // envoie la couleur selectionné au bouton associé
+        currentBouton='btn'+(click-1);
+        document.getElementById(currentBouton).style.backgroundColor=what.style.backgroundColor; 
+        
+        // envoie les couleur à la carte
+        test()
+
+        // replace la bordure sur le bouton suivant
+        btnClick=document.getElementsByClassName('carreForm');
+        for (let index = 0; index < btnClick.length; index++) {
+            if (btnClick[index].id=='btn'+(click) || btnClick[index].id=='btn'+0 && click==4 ){
+                btnClick[index].classList.add("greenColor");
+            }else{
+                btnClick[index].classList.remove("greenColor");
+            }
+        }
+        
+    }
+// pour envoyer la couleur
+
+// pour envoyer les couleurs à la carte
+    function test(){
+        a=document.getElementById('btn0');
+        z=document.getElementById('btn1');
+        e=document.getElementById('btn2');
+        r=document.getElementById('btn3');
+        
+        color1=a.style.backgroundColor;
+        color2=z.style.backgroundColor;
+        
+        // dégrader de couleur
+        profilCardTitre.style.background= "linear-gradient( to "+direction+", "+ color1 +", "+ color2+")";
+
+        // ombre de la box
+        if(r.style.backgroundColor){
+            profilCardTitre.style.boxShadow ="0px 0px 5px " + r.style.backgroundColor + ", 0px 0px 25px "+ e.style.backgroundColor +", inset 0px 4px 15px "+r.style.backgroundColor;
+        }
+
+        // bordure
+        if(e.style.backgroundColor){
+            profilCardTitre.style.border=" solid 2px "+ e.style.backgroundColor;
+        }
+     
+        // envoie la valeur au bouton 'valider couleur'
+        go.value="background:linear-gradient( to "+direction+", "+ color1+", "+ color2+"); border: solid 2px "+e.style.backgroundColor + " ; box-shadow: 0px 0px 5px "+r.style.backgroundColor+", 0px 0px 25px "+e.style.backgroundColor+", inset 0px 4px 15px "+r.style.backgroundColor+";";
+    }
+// pour envoyer les couleurs à la carte
 
 
- </script>
+</script>

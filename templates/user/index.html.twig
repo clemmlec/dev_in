@@ -10,20 +10,12 @@
         content="index,follow" 
     /> 
 {% endblock %}
-{% block stylesheets %}
-    {{ encore_entry_link_tags('app') }}
-    {{ parent()}}
-{% endblock %}
 
-{% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
-    {{ parent()}}
-{% endblock %}
 
 {% block body %}
-    {# {{ dump(users) }} #}
         
     <div class="js-filter w-80">
+        {# form search #}
         {{ form_start(forms, { 'attr' : { 'class' : ' js-filter-form formEdit'} }) }}
             <div class="loader">
                 <div class="js-loading" role="status" aria-hidden="true" style="display: none">
@@ -31,16 +23,19 @@
                 </div>
             </div>
             {{ form_row(forms.query, { 'attr' : { 'class' : 'formSearch', 'autofocus' : 'autofocus'} }) }}
-            {# <button class="btn-vierge" type="submit">Rechercher</button> #}
         {{ form_end(forms, {'render_rest': false }) }}
+
+        {# compteur des résultats #}
         <div class="js-filter-count">
             {% include "Components/filter/_countUser.html.twig" %}
         </div>
 
+        {# résultats #}
         <div class="js-filter-content w-100 d-flex stretch">
             {% include "Components/_users.html.twig" %}
         </div>
 
+        {# pagination (bouton scroll infinie) #}
         <div class="d-flex js-filter-pagination">
             {% include "Components/filter/_paginationUser.html.twig" %}
         </div>

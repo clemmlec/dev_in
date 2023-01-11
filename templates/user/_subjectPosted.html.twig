@@ -11,10 +11,12 @@
         content="index,follow" 
     /> 
 {% endblock %}
+
 {% block mainProfil %}
     <hr class="mt-5">
     <h1>subjects postés {{user.subjects | length}}</h1>
     <div class="js-filter">
+        {# formulaire de recherche #}
         {{ form_start(forms, { 'attr' : { 'class' : 'formSearch js-filter-form'} }) }}
             <div class="loader">
                 <div class="js-loading" role="status" aria-hidden="true" style="display: none">
@@ -23,8 +25,9 @@
             </div>
             <h1>Filtrer par catégories</h1>
             {{ form_row(forms.forum) }}
-            {# <button class="btn-vierge" type="submit">Rechercher</button> #}
         {{ form_end(forms, {'render_rest': false }) }}
+
+        {# pagination #}
         <div class="js-filter-count">
             {% include "Components/filter/_countSubject.html.twig" %}
         </div>
