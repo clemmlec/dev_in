@@ -8,12 +8,7 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.scss';
 
-// start the Stimulus application
-
-import './js/collapse.js';
-// import './js/modal.js';
 import './js/swiper.js';
-import './js/dropdown.js';
 import './js/user.js';
 import './js/paralax.js';
 import './bootstrap.js';

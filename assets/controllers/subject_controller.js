@@ -1,14 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 import axios from 'axios';
-/*
- * This is an example Stimulus controller!
- *
- * Any element with a data-controller="hello" attribute will cause
- * this controller to be executed. The name "hello" comes from the filename:
- * hello_controller.js -> "hello"
- *
- * Delete this file or adapt it for your use!
- */
+
 export default class extends Controller {
     connect() {
     }    
@@ -25,12 +17,15 @@ export default class extends Controller {
                 window.location.href= "https://127.0.0.1:8000/login";
             }
             console.log(erreur.response.data , '👼');
+        })
+        .then(function (reponse) {
+            if(elem.classList.contains("far")){
+                elem.classList.replace('far','fa' );
+            }else{
+                elem.classList.replace('fa','far' );
+            }
         });
-        if(elem.classList.contains("far")){
-            elem.classList.replace('far','fa' );
-        }else{
-            elem.classList.replace('fa','far' );
-        }
+        
     }
     report(event) {
         let elem = event.target;

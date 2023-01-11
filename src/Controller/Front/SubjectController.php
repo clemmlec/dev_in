@@ -205,7 +205,7 @@ class SubjectController extends AbstractController
     {
         $user = $security->getUser();
         if(!$user) {
-            $this->addFlash('error', 'Veuillez vous connecter pour faire une suggestion');
+            $this->addFlash('error', 'Veuillez vous connecter pour faire un signalement');
 
             return new Response('authentification requise', 403);
         }

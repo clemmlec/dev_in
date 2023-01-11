@@ -13,6 +13,7 @@ if(btnLien){
         });
     }))
 }
+
 const btn = document.querySelectorAll('.btn-inscription');
 if(btn){
     btn.forEach((element=>{
