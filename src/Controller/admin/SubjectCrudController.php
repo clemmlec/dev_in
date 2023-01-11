@@ -57,9 +57,6 @@ class SubjectCrudController extends AbstractCrudController
             DateTimeField::new('created_at')->hideOnForm(),
             DateTimeField::new('updated_at')->hideOnForm(),
 
-            // AssociationField::new('forum')->setQueryBuilder(function (QueryBuilder $qb) {
-            //     $qb->where('entity.active = true');
-            // }),
         ];
     }
 

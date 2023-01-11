@@ -9,11 +9,14 @@
         content="index,follow"
     /> 
 {% endblock %}
+
 {% block body %}
     <section class="register ">
         {{ form_start(form, { 'attr': { 'class': 'form large2' } } ) }}
             <h1 class="Lobster">Inscription</h1>
             <hr>
+            
+            {# nom #}
             <div class="form-ligne">
                 {{ form_label(form.name) }} 
                 {{ form_widget( form.name,{'attr': {'autofocus': 'autofocus'} } ) }}
@@ -23,6 +26,8 @@
                 </div>
                 {% endif %}
             </div>
+
+            {# email #}
             <div class="form-ligne">
                 {{ form_label(form.email) }} 
                 {{ form_widget( form.email) }}
@@ -32,27 +37,25 @@
                 </div>
                 {% endif %}
             </div>
-            {% if form_errors(form.password.first) %}
-            <div class="alert alert-danger" >
-            {% endif %}
-            <div class="form-ligne">
-                {{ form_widget( form.password,{'attr': {'placeholder': 'mots de passe'} } ) }}
- 
-                {# <span class="color-red">{{ form_errors(form.password.second) }}</span> #}
-            </div>
-            {% if form_errors(form.password.first) %}
-            </div>
-            {% endif %}
-            {# <div class="form-ligne">
-                {% if is_granted('ROLE_ADMIN') %}
-                
-                        {{ form_row( form.roles ) }}
-                
+
+            {# password #}
+                {% if form_errors(form.password.first) %}
+                <div class="alert alert-danger" >
                 {% endif %}
-            </div> #}
+                <div class="form-ligne">
+                    {{ form_widget( form.password,{'attr': {'placeholder': 'mots de passe'} } ) }}
+                </div>
+                {% if form_errors(form.password.first) %}
+                </div>
+                {% endif %}
+            {# password #}
+
+            {# avatar #}
             <div class="form-ligne">
                 {{ form_row( form.imageFile ) }}
             </div>
+
+            {# rgpd #}
             <div class="form-ligne">
                 {{ form_row( form.rgpd ) }}
                 <a href="{{ path('mentionslegal') }}">voir les mentions légales</a>
@@ -65,7 +68,6 @@
 
             <hr>
             <button class="buttonEmpty">{{ button_label|default('S\'inscrire') }}</button>
-            
             {{ form_widget( form._token)}}
         {{ form_end(form,{render_rest: false}) }}
     </section>

@@ -68,13 +68,4 @@ class SubjectFavorisRepository extends ServiceEntityRepository
         );
    }
 
-//    public function findOneBySomeField($value): ?SubjectFavoris
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

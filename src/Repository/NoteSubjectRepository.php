@@ -68,13 +68,4 @@ class NoteSubjectRepository extends ServiceEntityRepository
         );
    }
 
-//    public function findOneBySomeField($value): ?NoteSubject
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

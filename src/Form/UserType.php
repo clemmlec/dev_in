@@ -51,8 +51,6 @@ class UserType extends AbstractType
                     'label' => 'Repeter le mots de passe',
                 ],
                 'invalid_message' => 'Les mots de passe doivent être identiques.',
-                // Instead of being set onto the object directly,
-                // this is read and encoded in the controller
                 'mapped' => false,
             ])
             ->add('imageFile', VichImageType::class, [

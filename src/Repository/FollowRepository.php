@@ -91,34 +91,6 @@ class FollowRepository extends ServiceEntityRepository
         );
     }
 
-    
-//    public function findOneBySomeField($value): ?Follow
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
-
-//    public function findAllGreaterThanPrice(int $id): array
-//    {
-//     $conn = $this->getEntityManager()->getConnection();
-
-//     $sql = '
-//         SELECT f.friend_id, u.* FROM follow f
-//         INNER JOIN user u ON f.user_id = u.id
-//         WHERE f.user_id = :id
-//         ORDER BY f.id DESC
-//         ';
-//     $stmt = $conn->prepare($sql);
-//     $resultSet = $stmt->executeQuery(['id' => $id]);
-
-//     // returns an array of arrays (i.e. a raw data set)
-//     return $resultSet->fetchAllAssociative();
-//    }
-
 
 }
 

@@ -20,8 +20,13 @@ use Symfony\Component\Security\Core\Security;
 #[Route('/article')]
 class ArticleController extends AbstractController
 {
+    public function __construct(
+        private ArticleRepository $articleRepository
+        ) {
+    }
+
     #[Route('/', name: 'app_article_index')]
-    public function index(Request $request, ArticleRepository $articleRepository): Response
+    public function index(Request $request): Response
     {
         $data = new SearchData();
         $data->setPage($request->get('page', 1));
@@ -29,7 +34,7 @@ class ArticleController extends AbstractController
         $form = $this->createForm(SearchType::class, $data);
         $form->handleRequest($request);
 
-        $selectArticle = $articleRepository->findArticle($data);
+        $selectArticle = $this->articleRepository->findArticle($data);
 
         if ($request->get('ajax')) {
             return new JsonResponse([
@@ -57,12 +62,11 @@ class ArticleController extends AbstractController
     public function likedArticle(
         ?Article $article, 
         ArticleLikedRepository $articleFavRepo, 
-        ArticleRepository $articleRepo, 
         Security $security
     ): Response
     {
         $articleFav = new ArticleLiked();
-        $articleExist = $articleRepo->find($article);
+        $articleExist = $this->articleRepository->find($article);
 
         $user = $security->getUser();
         if(!$user) {
@@ -89,7 +93,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/{id}/{slug}', name: 'article_show', methods: ['GET'])]
-    public function show(?Article $article,string $slug, ArticleRepository $articleRepository): Response
+    public function show(?Article $article,string $slug): Response
     {
         if(!$article instanceof Article) {
             $this->addFlash('error', 'Nous ne trouvons pas l\'article demandé');
@@ -97,7 +101,7 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $articles = $articleRepository->findArticleWithSameTags($article->getTags());
+        $articles = $this->articleRepository->findArticleWithSameTags($article->getTags());
 
         return $this->render('article/show.html.twig', [
             'article' => $article,
@@ -106,7 +110,7 @@ class ArticleController extends AbstractController
     }
     
     #[Route('/suggest/{id}/{message}', name: 'user.article.suggest', methods: ['GET'])]
-    public function signalerarticle(?Article $article, string $message, Security $security, ArticleRepository $artRepo, ArticleSuggestionRepository $artSignalRepo): Response
+    public function signalerarticle(?Article $article, string $message, Security $security, ArticleSuggestionRepository $artSignalRepo): Response
     {
         $user = $security->getUser();
         if(!$user) {

@@ -26,8 +26,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/subject')]
 class SubjectController extends AbstractController
 {
+    public function __construct(
+        private SubjectRepository $subjectRepository
+        ) {
+    }
+
     #[Route('/', name: 'app_subject_index')]
-    public function index(Request $request, SubjectRepository $subjectRepository, Security $security): Response
+    public function index(Request $request, Security $security): Response
     {
         $data = new SearchData();
         $data->setPage($request->get('page', 1));
@@ -35,7 +40,7 @@ class SubjectController extends AbstractController
         $forms = $this->createForm(SearchType::class, $data);
         $forms->handleRequest($request);
 
-        $selectSubject = $subjectRepository->findActiveSubject($data);
+        $selectSubject = $this->subjectRepository->findActiveSubject($data);
 
         if ($request->get('ajax')) {
             return new JsonResponse([
@@ -58,7 +63,7 @@ class SubjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $subject->setUser($security->getUser());
-            $subjectRepository->add($subject, true);
+            $this->subjectRepository->add($subject, true);
 
             $this->addFlash('success', 'Sujet créer avec success');
 
@@ -76,7 +81,6 @@ class SubjectController extends AbstractController
     public function noteSubject(
         int $note, 
         Subject $subjectId, 
-        SubjectRepository $subjectRepository, 
         NoteSubjectRepository $noteRepo, 
         Security $security)
     {
@@ -92,7 +96,7 @@ class SubjectController extends AbstractController
         }
 
         $dejaNoter = $noteRepo->findOneBy(['user' => $user, 'subject' => $subjectId->getId()]);
-        $isUserSubject = $subjectRepository->findOneBy(['user' => $user,'id' => $subjectId->getId()]);
+        $isUserSubject = $this->subjectRepository->findOneBy(['user' => $user,'id' => $subjectId->getId()]);
 
         if ($dejaNoter || $isUserSubject ) {
             return new Response('fraude suspecté ⛔' , 403);
@@ -110,10 +114,10 @@ class SubjectController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'user_subject_edit', methods: ['GET','POST'])]
-    public function edit(int $id, SubjectRepository $subjectRepository, Security $security, Request $request): Response
+    public function edit(int $id, Security $security, Request $request): Response
     {
         $user = $security->getUser();
-        $subject = $subjectRepository->find($id);
+        $subject = $this->subjectRepository->find($id);
         
         if ($subject->getUser() !== $user) {
             $this->addFlash('error', 'Vous n\'êtes pas autorisé à modifier ce sujet');
@@ -125,7 +129,7 @@ class SubjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $subjectRepository->add($subject, true);
+                $this->subjectRepository->add($subject, true);
             } catch (Exception $e) {
                 return new Response('maximum 255 caracteres', 500);
             }
@@ -141,11 +145,11 @@ class SubjectController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'user_subject_delete', methods: ['POST'])]
-    public function delete( ?Subject $subject, Request $request, SubjectRepository $subjectRepository): Response
+    public function delete( ?Subject $subject, Request $request): Response
     {
         
         if ($this->isCsrfTokenValid('delete'.$subject->getId(), $request->request->get('_token'))) {
-            $subjectRepository->remove($subject, true);
+            $this->subjectRepository->remove($subject, true);
         }else{
             $this->addFlash('error', 'Vous n\'etes pas autorisé à supprimer ce sujet');
             return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
@@ -157,10 +161,10 @@ class SubjectController extends AbstractController
     }
 
     #[Route('/follow/{id}', name: 'app_subject_follow', methods: ['GET'])]
-    public function followSubject(?Subject $subject, SubjectFavorisRepository $subjectFavRepo, SubjectRepository $subjectRepo, Security $security)
+    public function followSubject(?Subject $subject, SubjectFavorisRepository $subjectFavRepo, Security $security)
     {
         $subjectFav = new SubjectFavoris();
-        $follow = $subjectRepo->find($subject);
+        $follow = $this->subjectRepository->find($subject);
 
         $user = $security->getUser();
         if(!$user) {
@@ -186,9 +190,9 @@ class SubjectController extends AbstractController
     }
 
     #[Route('/{id}/{slug}', name: 'user_subject_show', methods: ['GET', 'POST'])]
-    public function show(?Subject $subject, string $slug, Security $security, Request $request, SubjectRepository $subjectRepository): Response
+    public function show(?Subject $subject, string $slug, Security $security, Request $request): Response
     {
-        $subjects = $subjectRepository->findArticleWithSameForum($subject->getForum());
+        $subjects = $this->subjectRepository->findArticleWithSameForum($subject->getForum());
 
         return $this->renderForm('subject/show.html.twig', [
             'subject' => $subject,
@@ -197,7 +201,7 @@ class SubjectController extends AbstractController
     }
 
     #[Route('/signaler/{id}/{message}', name: 'user.subject.signaler', methods: ['GET'])]
-    public function signalerSubject(?Subject $subject, string $message, Security $security, SubjectRepository $subjectRepository, SubjectReportRepository $subjectReportRepository)
+    public function signalerSubject(?Subject $subject, string $message, Security $security, SubjectReportRepository $subjectReportRepository)
     {
         $user = $security->getUser();
         if(!$user) {
@@ -216,7 +220,7 @@ class SubjectController extends AbstractController
                 $subjectReportRepository->add($newSignal, true);
                 if($user->getCredibility() > 20 ){
                     $subject->setActive(0);
-                    $subjectRepository->add($subject, true);
+                    $this->subjectRepository->add($subject, true);
                 }
                 return new Response('subject signaler', 201);
             }else{

@@ -21,36 +21,6 @@ class UserTypeEdit extends AbstractType
                 'label' => 'Nom',
                 'required' => true,
             ])
-            // ->add('email', EmailType::class, [
-            //     'label' => 'Email :',
-            //     'required' => true
-            // ])
-
-            // ->add('roles', ChoiceType::class, [
-            //     'choices' => [
-            //         'Utilisateur' => 'ROLE_USER',
-            //         'Editeur' => 'ROLE_EDITEUR',
-            //         'Administrateur' => 'ROLE_ADMIN',
-            //     ],
-            //     'label' => 'Roles :',
-            //     'required' => false,
-            //     'expanded' => true,
-            //     'multiple' => true,
-            // ])
-            // ->add('style', ChoiceType::class, [
-            //     'choices' => [
-            //         'bleu' => 'bleu',
-            //         'vert' => 'vert',
-            //         'jaune' => 'jaune',
-            //     ],
-            //     'label' => 'Style :',
-            //     'required' => false,
-            //     'expanded' => true,
-            // ])
-            // ->add('active', CheckboxType::class, [
-            //     'help' => 'actif/mute',
-            // ])
-
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Image File :',
                 'required' => false,

@@ -34,14 +34,4 @@ class ForumCrudController extends AbstractCrudController
         ];
     }
 
-    // public function deleteEntity(EntityManagerInterface $em, $entityInstance): void
-    // {
-    //      if (!$entityInstance instanceof Forum) return;
-
-    //      foreach ($entityInstance->getSubjects() as $subject){
-    //         $em->remove($subject);
-    //      }
-
-    //      parent::deleteEntity($em,$entityInstance);
-    // }
 }

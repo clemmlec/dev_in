@@ -1,69 +1,69 @@
 
-    <article class="article {{couper}}">
-        
-        <h2 class="topTitre">{{article.name | slice(0,23) }}</h2>
-        <div class="iconArticle"  {{ stimulus_controller('article') }}>
-        {# FOLLOWS #}
-            <button 
-                type="button" 
-                class="btn-vierge right" 
-                value="{{article.id}}" 
-                title="Ajouter aux favoris"
-                {{ stimulus_action('article', 'follows') }} 
-                >
-                {% set fav = false %}
-                {% if app.user %}
-                    {% for row in app.user.articleLikeds %}
-                        {% if row.article.id == article.id %}
-                            {% set fav = true %}
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
+<article class="article {{couper}}">
+    <h2 class="topTitre">{{article.name | slice(0,23) }}</h2>
+    <div class="iconArticle"  {{ stimulus_controller('article') }}>
+    {# FOLLOWS #}
+        <button 
+            type="button" 
+            class="btn-vierge right" 
+            value="{{article.id}}" 
+            title="Ajouter aux favoris"
+            {{ stimulus_action('article', 'follows') }} 
+            >
+            {% set fav = false %}
+            {% if app.user %}
+                {% for row in app.user.articleLikeds %}
+                    {% if row.article.id == article.id %}
+                        {% set fav = true %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            
+            {% if fav %}
+                <i class="fa fa-star pointer yellow"></i>
+            {% else %}
+                <i class="far fa-star pointer yellow"></i>
                 
-                {% if fav %}
-                    <i class="fa fa-star pointer yellow"></i>
-                {% else %}
-                    <i class="far fa-star pointer yellow"></i>
-                    
-                {% endif %}
-                {{article.articleLikeds|length}}
-            </button>
-            
-        {# SUGGEST #}
-            <button
-                value="{{article.id}}" 
-                class="btn-vierge color-red right" 
-                type="button" 
-                title="Faire une suggestion"
-                {{ stimulus_action('article', 'report') }} 
-                >
-                <i class="fa-solid fa-question"></i>
-            </button>
-             <div class="suggest" id="suggest{{article.id}}">
-                <div class="suggestGrid">
-                    <input class="plus grande envoieSuggestInput" type="text" placeholder="Une suggestion ?">
-                    <button 
-                        value="{{article.id}}" 
-                        class="btn-vierge bleu envoiSuggest" 
-                        type="button"
-                        {{ stimulus_action('article', 'submitReport') }} 
-                        ><i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
-            
-        </div>
-        {% for tag in article.tags %}
-            <span class="left tag-name">{{tag.name}} <i class="fa-solid fa-tags"></i> </span>
-        {% endfor %}
-        <span class="right">ecrit {{article.createdAt | ago}}</span>
+            {% endif %}
+            {{article.articleLikeds|length}}
+        </button>
         
-        <div class="w-100 content {{couper}}">{{article.content | raw }}</div>
-
-        {% if couper == "couper" %}
-            <div class="footer">
-                <a class="btn-vierge btnLien2 btnProfil" href="{{ path('article_show', {'id': article.id , 'slug': article.slug}) }}">voir plus</a>
+    {# SUGGEST #}
+        <button
+            value="{{article.id}}" 
+            class="btn-vierge color-red right" 
+            type="button" 
+            title="Faire une suggestion"
+            {{ stimulus_action('article', 'report') }} 
+            >
+            <i class="fa-solid fa-question"></i>
+        </button>
+            <div class="suggest" id="suggest{{article.id}}">
+            <div class="suggestGrid">
+                <input class="plus grande envoieSuggestInput" type="text" placeholder="Une suggestion ?">
+                <button 
+                    value="{{article.id}}" 
+                    class="btn-vierge bleu envoiSuggest" 
+                    type="button"
+                    {{ stimulus_action('article', 'submitReport') }} 
+                    ><i class="fa-solid fa-paper-plane"></i>
+                </button>
             </div>
-        {% endif %}
+        </div>
+        
+    </div>
+    {% for tag in article.tags %}
+        <span class="left tag-name">{{tag.name}} <i class="fa-solid fa-tags"></i> </span>
+    {% endfor %}
+    
+    <span class="right">ecrit {{article.createdAt | ago}}</span>
+    
+    <div class="w-100 content {{couper}}">{{article.content | raw }}</div>
+
+    {% if couper == "couper" %}
+        <div class="footer">
+            <a class="btn-vierge btnLien2 btnProfil" href="{{ path('article_show', {'id': article.id , 'slug': article.slug}) }}">voir plus</a>
+        </div>
+    {% endif %}
         
 </article>

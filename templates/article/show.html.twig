@@ -10,23 +10,17 @@
         content="index,follow"
     /> 
 {% endblock %}
-{% block stylesheets %}
-    {{ encore_entry_link_tags('app') }}
-    {{ parent()}}
-{% endblock %}
-
-{% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
-    {{ parent()}}
-{% endblock %}
 
 {% block body %}
+
 <section class="w-80">
     {% include "Components/_article.html.twig"  with { couper: "" } %}
 </section>
+
+{# swipper articles avec les mêmes tags #}
 <section class="w-100">   
     <div class="swip ">
-    <h2 class="titreHome bleuGradient">Les derniers articles avec les mêmes tags</h2>
+        <h2 class="titreHome bleuGradient">Les derniers articles avec les mêmes tags</h2>
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
             {% for article in articles %}
@@ -39,9 +33,6 @@
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
         </div>
-
-        
     </div>
-        
 </section>
 {% endblock %}

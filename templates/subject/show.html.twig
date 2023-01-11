@@ -22,6 +22,7 @@
 
 {% block body %}
 <section class="d-flex w-80">
+
     {{ include('Components/_subject.html.twig')}}   
     
     {# clone commentaire #}
@@ -37,7 +38,7 @@
                     class="btn-vierge color-red" 
                     type="button" 
                     {{ stimulus_action('comment', 'report') }}
-                    >
+                >
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </button>
 
@@ -46,7 +47,7 @@
                     class="btn-vierge jaimee" 
                     type="button" 
                     {{ stimulus_action('comment', 'follows') }}
-                    >
+                >
                     <i class="far fa-thumbs-up yellow"></i>
                     <span id="like">(0)</span> 
 
@@ -59,7 +60,8 @@
                     value="" 
                     class="btn-vierge bleu" 
                     {{ stimulus_action('comment', 'submitReport') }} 
-                    >envoyer</button>
+                >envoyer
+                </button>
             </div>
             
         </div>
@@ -68,6 +70,8 @@
         <span class="date">à l'instant</span>
         <hr style="margin:2px"> 
     </div>
+
+    {# swipper sujets de la même catégorie #}
     <section class="w-100 mt-5">
         <div class="swip">
             
@@ -86,5 +90,6 @@
             </div>
         </div>
     </section>
+
 </section>
 {% endblock %}

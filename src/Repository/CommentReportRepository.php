@@ -60,13 +60,4 @@ class CommentReportRepository extends ServiceEntityRepository
        ;
    }
 
-//    public function findOneBySomeField($value): ?CommentReport
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
