@@ -72,14 +72,13 @@ class ArticleController extends AbstractController
         }
 
         if (!$articleExist) {
-        return new Response('demande de favoris non valide', 404);
-              
+            return new Response('demande de favoris non valide', 404);
         }
 
         $follow = $articleFavRepo->findOneBy(['user' => $user, 'article' => $article]);
         if (!$follow) {
             $articleFav->setUser($user)
-            ->setarticle($articleExist);
+                ->setarticle($articleExist);
             $articleFavRepo->add($articleFav, true);
 
             return new Response('article ajouté', 201);
@@ -97,6 +96,7 @@ class ArticleController extends AbstractController
 
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
         }
+
         $articles = $articleRepository->findArticleWithSameTags($article->getTags());
 
         return $this->render('article/show.html.twig', [
@@ -114,11 +114,12 @@ class ArticleController extends AbstractController
 
             return new Response('authentification requise', 403);
         }
+
         if ($article) {
             $newSignal = new ArticleSuggestion();
             $newSignal->setUser($user)
-            ->setarticle($article)
-            ->setMessage($message);
+                ->setarticle($article)
+                ->setMessage($message);
             $artSignalRepo->add($newSignal, true);
 
             return new Response('article signaler', 201);

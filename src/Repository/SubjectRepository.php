@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Subject;
+use App\Entity\NoteSubject;
 use App\Filter\SearchData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -62,6 +63,7 @@ class SubjectRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('a')
             ->select('a', 'u', 'c', 'n', 'm', 'k')
+            // ->select('a', 'u', 'c', 'n', 'm', 'k','(SELECT AVG(t.note) FROM App:NoteSubject t WHERE t.subject = a) AS avg_note')
             ->andWhere('a.active = :active')
             ->orderBy('a.created_at', 'DESC')
             ->setParameter('active', true)
@@ -70,6 +72,7 @@ class SubjectRepository extends ServiceEntityRepository
             ->leftjoin('a.noteSubjects', 'n')
             ->leftjoin('a.comments', 'm')
             ->leftjoin('m.commentLikes', 'k')
+            // ->orderBy('avg_note', 'DESC')
         ;
 
         if (!empty($search->getForum())) {
@@ -108,14 +111,16 @@ class SubjectRepository extends ServiceEntityRepository
         );
    }
 
-      /**
+    /**
     * @return Subject[] Returns an array of Subject with same tags
     */
     public function findArticleWithSameForum($forum): array
     {
         return $this->createQueryBuilder('a')
             ->leftJoin('a.forum', 't')
+            ->andWhere('a.active = :active')
             ->andWhere('t.id = :forum')
+            ->setParameter('active', true)
             ->setParameter('forum', $forum)
             ->orderBy('a.created_at', 'DESC')
             ->setMaxResults(10)

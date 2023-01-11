@@ -28,10 +28,11 @@
      
             </button>
             {% else %}
-            {% if app.user %}
-               <button class="btn-vierge yellow">😉</button>
-            {% endif %}
-                <button class="btn-vierge yellow" value="1" {{ stimulus_controller('user') }} {{ stimulus_action('user', 'follows') }}><i class="far fa-user pointer yellow"></i></button>
+                {% if app.user %}
+                    <button class="btn-vierge yellow">😉</button>
+                {% else %}
+                    <button class="btn-vierge yellow" value="1" {{ stimulus_controller('user') }} {{ stimulus_action('user', 'follows') }}><i class="far fa-user pointer yellow"></i></button>
+                {% endif %}
             {% endif %}
         </h1>
         <h3 class="{{user.credibility > 0 ? "green" : user.credibility < 0 ? "red" : "" }} p-10">Crédibilitée : {{user.credibility }}</h3>

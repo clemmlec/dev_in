@@ -13,7 +13,7 @@ class MailerService
     }
 
     public function sendEmail(
-        $to = 'siteadmin@hotmail.fr',
+        $to = 'clement.canale@gmail.com',
         $subject = 'This is the Mail subject !',
         $from='',
         $content = '',

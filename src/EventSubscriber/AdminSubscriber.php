@@ -58,11 +58,12 @@ class AdminSubscriber implements EventSubscriberInterface
             ) {
             return;
         }
+
+
         switch(true) {  
             case $entityInstance instanceof Comment:
                 $entityInstance->getCommentReports();
                 foreach ($entityInstance->getCommentReports() as $report) {
-                    // $report->getUser();
                     $user = $this->userRepository->find($report->getUser());
                     $user -> setCredibility( $user->getCredibility()+1);
                     $this->userRepository->add($user,true);
@@ -95,15 +96,13 @@ class AdminSubscriber implements EventSubscriberInterface
 
             case $entityInstance instanceof ArticleSuggestion:
                 $user = $entityInstance->getUser();
-    
-                if ($entityInstance->isUtil() == true ){
+                if ($entityInstance->isUtil()){
                     $user -> setCredibility( $user->getCredibility()+1);
                     $this->userRepository->add($user,true);
                 }else{
                     $user -> setCredibility( $user->getCredibility()-1);
                     $this->userRepository->add($user,true);
                 }
-                
                 break;
         }
         

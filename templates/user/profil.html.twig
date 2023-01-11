@@ -1,7 +1,9 @@
 {% extends "base.html.twig"  %}
+
 {% block title %}
-    profil {{user.name}} | {{ parent() }}
+    Profil de {{user.name}} | {{ parent() }}
 {% endblock %}
+
 {% block meta %} 
     <meta name="description" 
         content="La page de profil de {{user.name}} sue Dev In, le site d'entraide entre devs" 
@@ -62,7 +64,7 @@
     
         <div id="profilCard" class="swiper-slide card mt-5">
             <h3 id="profilCardTitre" class="toptitre photo b-50"  style="{{user.style}}">
-                <img class="avatar" src="{{ user.imageName ? vich_uploader_asset(user, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{user.name}}">
+                <img class="avatare" src="{{ user.imageName ? vich_uploader_asset(user, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{user.name}}">
             </h3>
             <h3 class="{{user.credibility > 0 ? "green" : user.credibility < 0 ? "red" : "" }} mt-2 p-10">Crédibilitée : {{user.credibility }}</h3>
             <h3 class="date">inscrit {{user.createdAt | ago}}

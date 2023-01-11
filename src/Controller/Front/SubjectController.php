@@ -73,38 +73,40 @@ class SubjectController extends AbstractController
     }
 
     #[Route('/note/{note}/{subjectId}', name: 'app_subject_note', methods: ['GET'])]
-    public function noteSubject(int $note, int $subjectId, SubjectRepository $subjectRepository, NoteSubjectRepository $noteRepo, Security $security)
+    public function noteSubject(
+        int $note, 
+        Subject $subjectId, 
+        SubjectRepository $subjectRepository, 
+        NoteSubjectRepository $noteRepo, 
+        Security $security)
     {
-        $newNote = new NoteSubject();
-        // $note = explode('-', $id)[0];
-        // $subjectId = explode('-', $id)[1];
 
-        $subject = $subjectRepository->find($subjectId);
-
+        if( !$subjectId instanceOf Subject){
+            return new Response('Ce sujet n\'existe pas', 404);
+        }
+    
         $user = $security->getUser();
 
-        // dd($follow);
-        // dd($user, $follow);
-        if ($note < 0 || $note > 5) {
-            return new Response('La note rentré n\est pas valide', 201);
+        if (!$user) {
+            return new Response('utilisateur non connecté', 403);
         }
-        if ($subject && $user) {
-            $dejaNoter = $noteRepo->findOneBy(['user' => $user, 'subject' => $subjectId]);
-            $isUserSubject = $subjectRepository->findOneBy(['user' => $user,'id' => $subjectId]);
-            if (!$dejaNoter && !$isUserSubject ) {
-                $newNote->setUser($user)
-                ->setSubject($subject)
-                ->setNote($note);
 
-                $noteRepo->add($newNote, true);
+        $dejaNoter = $noteRepo->findOneBy(['user' => $user, 'subject' => $subjectId->getId()]);
+        $isUserSubject = $subjectRepository->findOneBy(['user' => $user,'id' => $subjectId->getId()]);
 
-                return new Response('note envoyer', 201);
-            }
-  
+        if ($dejaNoter || $isUserSubject ) {
             return new Response('fraude suspecté ⛔' , 403);
         }
 
-        return new Response('note non valide', 404);
+        $newNote = new NoteSubject();
+        $newNote->setUser($user)
+            ->setSubject($subjectId)
+            ->setNote($note);
+
+        $noteRepo->add($newNote, true);
+
+        return new Response('note envoyer', 201);
+
     }
 
     #[Route('/edit/{id}', name: 'user_subject_edit', methods: ['GET','POST'])]
@@ -195,7 +197,7 @@ class SubjectController extends AbstractController
     }
 
     #[Route('/signaler/{id}/{message}', name: 'user.subject.signaler', methods: ['GET'])]
-    public function signalerSubject(?Subject $subject, string $message, Security $security, SubjectRepository $artRepo, SubjectReportRepository $artSignalRepo)
+    public function signalerSubject(?Subject $subject, string $message, Security $security, SubjectRepository $subjectRepository, SubjectReportRepository $subjectReportRepository)
     {
         $user = $security->getUser();
         if(!$user) {
@@ -205,20 +207,23 @@ class SubjectController extends AbstractController
         }
 
         if ($subject) {
-            $dejaReport = $artSignalRepo->findOneBy(['user' => $user, 'subject' => $subject]);
+            $dejaReport = $subjectReportRepository->findOneBy(['user' => $user, 'subject' => $subject]);
             if(!$dejaReport){
                 $newSignal = new SubjectReport();
                 $newSignal->setUser($user)
                     ->setSubject($subject)
                     ->setMessage($message);
-                $artSignalRepo->add($newSignal, true);
-
+                $subjectReportRepository->add($newSignal, true);
+                if($user->getCredibility() > 20 ){
+                    $subject->setActive(0);
+                    $subjectRepository->add($subject, true);
+                }
                 return new Response('subject signaler', 201);
             }else{
                 $dejaReport->setUser($user)
                 ->setSubject($subject)
                 ->setMessage($message);
-                $artSignalRepo->add($dejaReport, true);
+                $subjectReportRepository->add($dejaReport, true);
                 return new Response('signalement modifié', 201);
             }
             

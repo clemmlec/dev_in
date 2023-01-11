@@ -122,26 +122,27 @@
             
         
             {% set noter = false %}
-            {% for row in app.user.noteSubjects %}
-                {% if row.subject.id == subject.id %}
+            {% for subjectDejaNoter in app.user.noteSubjects %}
+                {% if subjectDejaNoter.subject.id == subject.id %}
                 {% set noter = true %}
                 {% endif %}
             {% endfor %}
             {% if not noter %}
-            <div {{ stimulus_controller('subject') }}
-                class="note">
-                {% for i in 1..5 %}
-                <button 
-                    {{ stimulus_action('subject', 'noter') }}
-                    class="btn-vierge"  
-                    value="{{i}}-{{subject.id}}" 
-                    type="button"
-                    title="Noter {{i}} étoile{{i>1?'s'}}"
-                    >
-                        <i class="far fa-star stars" ></i>
-                </button>
-                {% endfor %}
-            </div>
+
+                <div {{ stimulus_controller('subject') }} class="note">
+                    {% for i in 1..5 %}
+                        <button 
+                            {{ stimulus_action('subject', 'noter') }}
+                            class="btn-vierge"  
+                            value="{{i}}-{{subject.id}}" 
+                            
+                            type="button"
+                            title="Notez {{i}} étoile{{i>1?'s'}}">
+                            <i class="far fa-star stars" ></i>
+                        </button>
+                    {% endfor %}
+                </div>
+                
             {% endif %}
         {% endif %}
         {% endif %}

@@ -86,8 +86,6 @@ body{
     display: grid;
     grid: auto-flow/ 1fr;
     height: min-content;
-    
-
 }  
 .break{
     word-break: break-all;
@@ -142,10 +140,12 @@ body{
     color: greenyellow;
     background-color: rgba(168, 184, 168, 0.685);
 }
+
 .alert-danger{
     color: rgb(143, 0, 0);
     background-color: rgba(168, 145, 145, 0.685);
 }
+
 a{
     text-decoration: none;
     color: $purple;
@@ -352,8 +352,11 @@ p{
     }
 
     .swiper-slide .avatar {
-         width: 150px !important;
+         width: 250px !important;
     }
+    .swiper-slide .avatare {
+        width: 150px !important;
+   }
     .dropdown-content{
         top: 120px;
     }

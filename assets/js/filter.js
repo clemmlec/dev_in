@@ -99,19 +99,16 @@ export default class Filter {
 
             if(!this.moreNav){
                 this.pagination.innerHTML = data.pagination;
-                // console.log('null 👲👱‍♂️')
             }else if(this.page === data.pages){
-                // console.log('none')
+                // No more rersults
                 stopReload = true
                 this.pagination.style.display = 'none';
             }else{
                 this.pagination.style.display = null;
-                // console.log('esle 👲👱‍♂️')
             }
 
             if(data.pages==0){
                 this.pagination.style.display = 'none';
-                
             }
 
             params.delete('ajax');
@@ -119,11 +116,9 @@ export default class Filter {
                 this.pagination.style.display = 'none';
                 stopReload = true
                 this.page=1;
-                // console.log('crash pages=1 👱‍♂️👱‍♀️',this.page)
                 
             }else{
                 history.replaceState({},'', `${url.split('?')[0]}?${params.toString()}`);
-
                 stopReload = false
             }
         }else{

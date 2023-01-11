@@ -24,13 +24,11 @@ class CommentController extends AbstractController
     public function new(Request $request, SubjectRepository $subjectRepo, CommentRepository $commentRepository, Security $security): Response
     {
         $param = $request->request->all();
-        // dd($param ['subject']);
         $comment = new Comment();
 
         $subject = $subjectRepo->find($param['subject']);
 
         $user = $security->getUser();
-        // dd($follow);
 
         try {
             $comment->setUser($user)
@@ -38,15 +36,13 @@ class CommentController extends AbstractController
             ->setMessage($param['com']);
             $commentRepository->add($comment, true);
 
-            // return new JsonResponse($comment);
         } catch (Exception $e) {
             return new Response('maximum 255 caracteres', 500);
         }
         $id = $commentRepository->findLastProducts();
         
        
-        return new Response( strval($id[0]->getId())
-        , 201);
+        return new Response( strval($id[0]->getId()), 201);
     }
 
     #[Route('/jaime/{id}', name: 'user.comment.jaime', methods: ['GET'])]
@@ -82,9 +78,13 @@ class CommentController extends AbstractController
             if(!$dejaReport){
                 $newSignal = new CommentReport();
                 $newSignal->setUser($user)
-                ->setComment($com)
-                ->setMessage($message);
+                    ->setComment($com)
+                    ->setMessage($message);
                 $comSignalRepo->add($newSignal, true);
+                if($user->getCredibility() > 20 ){
+                    $com->setActive(0);
+                    $comRepo->add($com, true);
+                }
                 return new Response('commantaire signaler', 201);
             }else{
                 $dejaReport->setUser($user)

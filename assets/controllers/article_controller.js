@@ -21,7 +21,9 @@ export default class extends Controller {
 
         let button = elem.parentNode
         let id = button.value;
-        axios.get(`/article/liked/${id}`)            
+
+        axios.get(`/article/liked/${id}`)  
+                  
         .then(function (reponse) {
             if(elem.classList.contains("far")){
                 elem.classList.replace('far','fa' );

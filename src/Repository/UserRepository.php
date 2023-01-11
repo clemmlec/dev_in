@@ -66,7 +66,7 @@ class UserRepository extends ServiceEntityRepository
         return $this->paginator->paginate(
             $query->getQuery(),
             $search->getPage(),
-            10
+            6
         );
         // dd($queryBuilder);
     }
