@@ -1,7 +1,9 @@
 {% extends "base.html.twig"  %}
+
 {% block title %}
-    profil {{user.name}} | {{ parent() }}
+    Profil de {{user.name}} | {{ parent() }}
 {% endblock %}
+
 {% block meta %} 
     <meta name="description" 
         content="La page de profil de {{user.name}} sue Dev In, le site d'entraide entre devs" 
@@ -10,145 +12,153 @@
         content="index,follow" 
     /> 
 {% endblock %}
-{% block stylesheets %}
-    {{ encore_entry_link_tags('app') }}
-    {{ parent()}}
-{% endblock %}
-
-{% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
-    {{ parent()}}
-{% endblock %}
 
 {% block body %}
-<section class="w-100 d-flex">
-        <h1 class="break">Page de profil</h1>
+    {# Affiche les boutons de personalisation si profil de l'utilisateur connecté  #}
+    <section class="w-100 d-flex">
         {% if app.user and app.user.id == user.id %}
             <section id="btnProfil">
                 <button id="myBtn2" class="btnProfil1 purple" onclick="modal(this)">modifier le profil</button>
                 <button id="myBtn3" class="btnProfil1 purple" onclick="modal(this)">couleur de profil</button>
-                <button id="myBtn4" class="btnProfil1 purple" onclick="modal(this)">infos</button>
+                <button id="myBtn4" class="btnProfil1 purple purpleGradient" onclick="modal(this)">infos</button>
             </section>
         {% endif %}
-</section>
-<section class="w-80 mt-5">
-    <section class="d-flex reverse">
+    </section>
 
-        
-        {% if app.user and app.user.id == user.id %}
-                    
-            {% include "user/edit.html.twig" %}  
-            <div class="couleur modal" id="modal4">
-                <section class="card mt-5  p-10">
+    <section class="w-80 mt-5">
+
+        <section class="d-flex reverse">
+            {# Différent modal ( couleur, modifier et info) #}
+            {% if app.user and app.user.id == user.id %}
+                <section class="w-80 mt-5">  
+                    {% include "user/edit.html.twig" %}  
+                    <div class="couleur modal" id="modal4">
+                        <section class="card mt-5  p-10">
+                            <h1 class="break">Profil de {{user.name}}</h1>
+                            {% if user.subjects | length == 0 %}
+                            
+                                <h1>Viens poster tes idées </h1>
+                                <p> dans <a href="{{ path('app_subject_index') }}">Sujet</a> </p>
+                        
+                            {% elseif user.noteSubjects | length == 0 %}
                 
-                    <h1 class="break">Profil de {{user.name}}</h1>
-                    {% if user.subjects | length == 0 %}
-                    
-                        <h1>Viens poster tes idées </h1>
-                        <p> dans <a href="{{ path('app_subject_index') }}">Sujet</a> </p>
-                
-                    {% elseif user.noteSubjects | length == 0 %}
-        
-                        <h1>Pour noter un sujet</h1>
-                        <p>Clique sur une étoile correspondante à ta note situé en bas du sujet</p>
-                    
-                    {% else %}
-                        <h1>Content de te revoir</h1>
-                    {% endif %}
+                                <h1>Pour noter un sujet</h1>
+                                <p>Clique sur une étoile correspondante à ta note situé en bas du sujet</p>
+                            
+                            {% else %}
+                                <h1>Content de te revoir</h1>
+                            {% endif %}
+                        </section>
+                    </div>
                 </section>
-            </div>
-        {% else %}
-            <div class="couleur modal" id="modal4">
-                <section class="card p-10 mt-5">
-                    <h1 class="break">Profil de {{user.name}}</h1>
-                    
-                </section>
-            </div>
-        {% endif %}
-    
-        <div id="profilCard" class="swiper-slide card mt-5">
-            <h3 id="profilCardTitre" class="toptitre photo b-50"  style="{{user.style}}">
-                <img class="avatar" src="{{ user.imageName ? vich_uploader_asset(user, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{user.name}}">
-            </h3>
-            <h3 class="date">inscrit {{user.createdAt | ago}}
-            {% if app.user and app.user.id != user.id %}
-                <button type="button" class="btn-vierge yellow" value="{{user.id}}" data-follow-user >
-                    {% set fav = false %}
-                    
-                    {% for row in app.user.getFollows %}
-                
-                        {% if row.friend.id == user.id %}
-                            {% set fav = true %}
+            {% else %}
+                <div class="couleur modal" id="modal4">
+                    <section class="card p-10 mt-8">
+                        <h1 class="break">Profil de {{user.name}}</h1>
+                    </section>
+                </div>
+            {% endif %}
+        
+            {# Carte de profil #}
+            <div id="profilCard" class="swiper-slide card mt-5">
+                <h3 id="profilCardTitre" class="toptitre photo b-50"  style="{{user.style}}">
+                    <img class="avatare" 
+                        src="{{ user.imageName ? vich_uploader_asset(user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                        alt="{{user.name}}">
+                </h3>
+                <h3 class="{{user.credibility > 0 ? "green" : user.credibility < 0 ? "red" : "" }} mt-2 p-10">
+                    Crédibilitée : {{user.credibility }}
+                </h3>
+                <h3 class="date">inscrit {{user.createdAt | ago}}
+                {# Bouton suivre l'utilisateur #}
+                {% if app.user and app.user.id != user.id %}
+                    <button type="button" class="btn-vierge yellow" value="{{user.id}}" data-follow-user >
+                        {% set fav = false %}
+                        {% for row in app.user.getFollows %}
+                            {% if row.friend.id == user.id %}
+                                {% set fav = true %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if fav %}
+                            <i class="fa fa-user pointer yellow"></i>
+                        {% else %}
+                            <i class="far fa-user pointer yellow"></i>
                         {% endif %}
-                    {% endfor %}
-                    {% if fav %}
-                        <i class="fa fa-user pointer yellow"></i>
-                    {% else %}
-                        <i class="far fa-user pointer yellow"></i>
-                    {% endif %}
-
-                </button>
-            {% endif %}
-            </h3>
-            <h2>{{user.followers | length}} followers</h2>
-            {% if user.subjects %}
-                <h2>{{user.subjects | length }} subjects postés</h2>
-                {% set moyenne = 0 %}
-                {% set nbVote = 0 %}
-                {% for row in user.subjects %}
-                    {% for note in row.noteSubjects %}
-                        {% set moyenne = moyenne + note.note %}
-                        {% set nbVote = nbVote +1 %}
-                    {% endfor %}
-                {% endfor %}
-                {% if nbVote > 0 %}
-                    {% set moyenne = moyenne / nbVote %}
-                    <h2>Moyenne subjects {{ moyenne | round(2, 'floor') }}</h2>
+                    </button>
                 {% endif %}
-                <h2>{{user.comments | length }} commentaires</h2>
+                </h3>
+                <h2>{{user.followers | length}} followers</h2>
+                {% if user.subjects %}
+                    <h2>{{user.subjects | length }} subjects postés</h2>
+                    {% set moyenne = 0 %}
+                    {% set nbVote = 0 %}
+                    {% for row in user.subjects %}
+                        {% for note in row.noteSubjects %}
+                            {% set moyenne = moyenne + note.note %}
+                            {% set nbVote = nbVote +1 %}
+                        {% endfor %}
+                    {% endfor %}
+                    {% if nbVote > 0 %}
+                        {% set moyenne = moyenne / nbVote %}
+                        <h2>Moyenne subjects {{ moyenne | round(2, 'floor') }}</h2>
+                    {% endif %}
+                    <h2>{{user.comments | length }} commentaires</h2>
+                {% endif %}
+            </div>
+        </section>
 
+        {# Affiche les données de l'utilisateur #}
+        <section id="includeProfil">
+
+            {% if user.follows | length > 0 %}
+                <a class="btn-vierge purple btnLien btnProfil" 
+                    href="{{ path('app_user_followed', {'id': user.id} ) }}#includeProfil">
+                    abonnements ({{user.follows | length}})</a>
             {% endif %}
-            {# <button class="btn-vierge"><a href="{{ path('app_user_profil', {'id': follow.user.id}) }}">voir le profil</a></button> #}
-            {# <a href="bb">dfgff sdg s sg </a> #}
-        </div>
+            {% if user.followers | length > 0 %}
+                <a class="btn-vierge purple btnLien btnProfil" 
+                    href="{{ path('app_user_followers' , {'id': user.id}) }}#includeProfil">
+                    abonnés ({{user.followers | length}})</a>
+            {% endif %}
+            {% if user.subjects | length > 0 %}
+                <a class="btn-vierge purple btnLien btnProfil" 
+                    href="{{ path('app_user_subject', {'id': user.id} ) }}#includeProfil">
+                    sujets postés ({{user.subjects | length}})</a>
+            {% endif %}
+            {% if user.subjectFavoris | length > 0 %}
+                <a class="btn-vierge purple btnLien btnProfil" 
+                    href="{{ path('app_user_subject-favoris', {'id': user.id} ) }}#includeProfil">
+                    sujets favoris ({{user.subjectFavoris | length}})</a>
+            {% endif %}
+            {% if user.noteSubjects | length > 0 %}
+                <a class="btn-vierge purple btnLien btnProfil" 
+                    href="{{ path('app_user_subject-noter', {'id': user.id} ) }}#includeProfil">
+                    sujets noter ({{user.noteSubjects | length}})</a>
+            {% endif %}
+            {% if user.articleLikeds | length > 0 %}
+                <a class="btn-vierge purple btnLien btnProfil" 
+                    href="{{ path('app_user_article-favoris', {'id': user.id} ) }}#includeProfil">
+                    article favoris ({{user.articleLikeds | length}})</a>
+            {% endif %}
+
+            {% block mainProfil %}
+
+            {% endblock %}
+        </section>
+
+        {# Boutton de déconexion #}
+        {% if app.user and app.user.id == user.id %}
+            <button class="btn-vierge red mt-5" data-delete-compte>Supprimer mon compte</button>
+            <div id="alertDelete">
+                <h3>Vous êtes sur le point de supprimer votre compte</h3>
+                <p>Toutes vos données seront supprimées de manieres irémediable <br>
+                    Etes vous sur de vouloir supprimer votre compte de manière definitive ?
+                </p>
+                <button class="btn-vierge red" data-delete> 
+                    <a href=" {{path('delete')}}"> Oui je veux supprimer mon compte</a>
+                </button>
+                <button class="btn-vierge green" data-retour>Non je veux garder mon compte</button>
+            </div>
+        {% endif %}
     </section>
-
-    <section id="includeProfil">
-    
-        {% if user.follows | length > 0 %}
-            <a class="btn-vierge purple btnLien btnProfil" href="{{ path('app_user_followed', {'id': user.id} ) }}#includeProfil">abonnements ({{user.follows | length}})</a>
-        {% endif %}
-        {% if user.followers | length > 0 %}
-            <a class="btn-vierge purple btnLien btnProfil" href="{{ path('app_user_followers' , {'id': user.id}) }}#includeProfil">abonnés({{user.followers | length}})</a>
-        {% endif %}
-        {% if user.subjects | length > 0 %}
-            <a class="btn-vierge purple btnLien btnProfil" href="{{ path('app_user_subject', {'id': user.id} ) }}#includeProfil">sujets postés({{user.subjects | length}})</a>
-        {% endif %}
-
-        {% if user.subjectFavoris | length > 0 %}
-            <a class="btn-vierge purple btnLien btnProfil" href="{{ path('app_user_subject-favoris', {'id': user.id} ) }}#includeProfil">sujets favoris({{user.subjectFavoris | length}})</a>
-        {% endif %}
-        {% if user.noteSubjects | length > 0 %}
-            <a class="btn-vierge purple btnLien btnProfil" href="{{ path('app_user_subject-noter', {'id': user.id} ) }}#includeProfil">sujets noter({{user.noteSubjects | length}})</a>
-        {% endif %}
-        {% if user.articleLikeds | length > 0 %}
-            <a class="btn-vierge purple btnLien btnProfil" href="{{ path('app_user_article-favoris', {'id': user.id} ) }}#includeProfil">article favoris({{user.articleLikeds | length}})</a>
-        {% endif %}
-
-        {% block mainProfil %}
-
-        {% endblock %}
-    </section>
-    {% if app.user and app.user.id == user.id %}
-    <button class="btn-vierge red mt-5" data-delete-compte>Supprimer mon compte</button>
-    <div id="alertDelete">
-        <h3>Vous êtes sur le point de supprimer votre compte</h3>
-        <p>Toutes vos données seront supprimées de manieres irémediable <br>
-            Etes vous sur de vouloir supprimer votre compte de manière definitive ?
-        </p>
-        <button class="btn-vierge red" data-delete> <a href=" {{path('delete')}}"> Oui je veux supprimer mon compte</a></button>
-        <button class="btn-vierge green" data-retour>Non je veux garder mon compte</button>
-    </div>
-    {% endif %}
-</section>
 {% endblock %}

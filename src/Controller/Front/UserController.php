@@ -29,7 +29,7 @@ class UserController extends AbstractController
     }
     
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository, Request $request): Response
+    public function index( Request $request): Response
     {
         $data = new SearchData();
         $data->setPage($request->get('page', 1));
@@ -37,7 +37,7 @@ class UserController extends AbstractController
         $forms = $this->createForm(SearchType::class, $data);
         $forms->handleRequest($request);
 
-        $users = $userRepository->findUsers($data);
+        $users = $this->userRepository->findUsers($data);
 
         if ($request->get('ajax')) {
             return new JsonResponse([
@@ -63,7 +63,6 @@ class UserController extends AbstractController
     #[Route('/followed/{id}', name: 'app_user_followed', methods: ['GET', 'POST'])]
     public function followed(
         ?User $user,
-        UserRepository $userRepository, 
         FollowRepository $followRepository, 
         Security $security, 
         Request $request
@@ -95,7 +94,7 @@ class UserController extends AbstractController
         $form = $this->createForm(UserTypeEdit::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user, true);
+            $this->userRepository->add($user, true);
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
       
@@ -109,11 +108,11 @@ class UserController extends AbstractController
 
     #[Route('/followers/{id}', name: 'app_user_followers', methods: ['GET','POST'])]
     public function followers(
-            ?User $user,
-            FollowRepository $followRepository, 
-            Security $security, 
-            Request $request
-            ): Response
+        ?User $user,
+        FollowRepository $followRepository, 
+        Security $security, 
+        Request $request
+        ): Response
     {
         $data = new SearchData();
         $data->setPage($request->get('page', 1));
@@ -374,7 +373,11 @@ class UserController extends AbstractController
     public function followUser(?User $follow, FollowRepository $friendsRepo, Security $security)
     {
         $user = $this->getUser();
+        if(!$user) {
+            $this->addFlash('error', 'Veuillez vous connecter pour ajouter un amis');
 
+            return new Response('authentification requise', 403);
+        }
         // dd($follow);
         // dd($user, $follow);
 

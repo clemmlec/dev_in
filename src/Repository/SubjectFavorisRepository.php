@@ -64,17 +64,8 @@ class SubjectFavorisRepository extends ServiceEntityRepository
         return $this->paginator->paginate(
             $query->getQuery(),
             $search->getPage(),
-            5
+            10
         );
    }
 
-//    public function findOneBySomeField($value): ?SubjectFavoris
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

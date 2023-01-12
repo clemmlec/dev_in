@@ -1,5 +1,5 @@
 const dropbtn = document.querySelector('#dropbtn');
-    
+
 dropbtn.addEventListener('click', () =>  {
     const dropcontent = document.querySelector('#dropcontent');
 
@@ -10,4 +10,3 @@ dropbtn.addEventListener('click', () =>  {
     }
 
 });
-

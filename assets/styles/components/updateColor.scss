@@ -59,7 +59,7 @@
     }
 }
 .greenColor{
-    border: 2px solid green;
+    border: 8px solid green;
 }
 #myBtn2{
     white-space: nowrap;
@@ -70,5 +70,6 @@
 }
 #btnProfil{
     position: absolute;
-    top: 250px;
+    top: 150px;
+    z-index: 10;
 }

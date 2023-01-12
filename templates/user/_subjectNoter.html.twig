@@ -11,30 +11,33 @@
         content="index,follow" 
     /> 
 {% endblock %}
+
 {% block mainProfil %}
     <hr class="mt-5">
     <h1>subjects notés {{user.noteSubjects | length}}</h1>
     <div class="js-filter">
-            {{ form_start(forms, { 'attr' : { 'class' : 'formSearch js-filter-form'} }) }}
-                <div class="loader">
-                    <div class="js-loading" role="status" aria-hidden="true" style="display: none">
-                        <span class=""><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>
-                    </div>
+        {#  formulaire de recherche #}
+        {{ form_start(forms, { 'attr' : { 'class' : 'formSearch js-filter-form'} }) }}
+            <div class="loader">
+                <div class="js-loading" role="status" aria-hidden="true" style="display: none">
+                    <span class=""><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>
                 </div>
-                <h1>Filter par catégories</h1>
-                {{ form_row(forms.forum) }}
-                {# <button class="btn-vierge" type="submit">Rechercher</button> #}
-            {{ form_end(forms, {'render_rest': false }) }}
-            <div class="js-filter-count">
-                {% include "Components/filter/_countSubject.html.twig" %}
             </div>
+            <h1>Filtrer par catégories</h1>
+            {{ form_row(forms.forum) }}
+        {{ form_end(forms, {'render_rest': false }) }}
 
-            <div class="d-flex js-filter-content">
-                {% include "Components/_subjectSwipers.html.twig" with { subjects: subjects} %}
-            </div>
+        {# pagination #}
+        <div class="js-filter-count">
+            {% include "Components/filter/_countSubject.html.twig" %}
+        </div>
 
-            <div class="d-flex  js-filter-pagination">
-                {% include "Components/filter/_paginationSubject.html.twig" %}
-            </div>
+        <div class="d-flex js-filter-content">
+            {% include "Components/_subjectSwipers.html.twig" with { subjects: subjects} %}
+        </div>
+
+        <div class="d-flex  js-filter-pagination">
+            {% include "Components/filter/_paginationSubject.html.twig" %}
+        </div>
     </div>   
 {% endblock %}

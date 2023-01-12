@@ -3,12 +3,13 @@
 {% block title %}login | {{ parent() }}{% endblock %}
 {% block meta %} 
     <meta name="description" 
-        content="Connect toi à Dev In et rejoint la communautée !" 
+        content="Connecte toi à Dev In et rejoint la communautée !" 
     /> 
     <meta name="robots" 
         content="index,follow"
     /> 
 {% endblock %}
+
 {% block body %}
     <section class="register vh100">
         <form class="form large centrer" action="{{path('login')}}"  method="POST" >
@@ -19,9 +20,13 @@
                 </div>
             {% endif %}
             <hr>
+
+            {# email #}
             <div class="form-ligne">
-                <input type="text" id="username" class="form-control" name="_username" value="{{ lastUsername }}" placeholder="email"/>
+                <input type="text" id="username" class="form-control" name="_username" value="{{ lastUsername }}" autofocus placeholder="email"/>
             </div>
+
+            {# password #}
             <div class="form-ligne">
                 <input type="password" id="password" class="form-control" name="_password" placeholder="password" value="1234"/>
             </div>

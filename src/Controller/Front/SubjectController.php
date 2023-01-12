@@ -26,8 +26,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/subject')]
 class SubjectController extends AbstractController
 {
+    public function __construct(
+        private SubjectRepository $subjectRepository
+        ) {
+    }
+
     #[Route('/', name: 'app_subject_index')]
-    public function index(Request $request, SubjectRepository $subjectRepository, Security $security): Response
+    public function index(Request $request, Security $security): Response
     {
         $data = new SearchData();
         $data->setPage($request->get('page', 1));
@@ -35,7 +40,7 @@ class SubjectController extends AbstractController
         $forms = $this->createForm(SearchType::class, $data);
         $forms->handleRequest($request);
 
-        $selectSubject = $subjectRepository->findActiveSubject($data);
+        $selectSubject = $this->subjectRepository->findActiveSubject($data);
 
         if ($request->get('ajax')) {
             return new JsonResponse([
@@ -58,7 +63,7 @@ class SubjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $subject->setUser($security->getUser());
-            $subjectRepository->add($subject, true);
+            $this->subjectRepository->add($subject, true);
 
             $this->addFlash('success', 'Sujet créer avec success');
 
@@ -73,50 +78,50 @@ class SubjectController extends AbstractController
     }
 
     #[Route('/note/{note}/{subjectId}', name: 'app_subject_note', methods: ['GET'])]
-    public function noteSubject(int $note, int $subjectId, SubjectRepository $subjectRepository, NoteSubjectRepository $noteRepo, Security $security)
+    public function noteSubject(
+        int $note, 
+        Subject $subjectId, 
+        NoteSubjectRepository $noteRepo, 
+        Security $security)
     {
-        $newNote = new NoteSubject();
-        // $note = explode('-', $id)[0];
-        // $subjectId = explode('-', $id)[1];
 
-        $subject = $subjectRepository->find($subjectId);
-
+        if( !$subjectId instanceOf Subject){
+            return new Response('Ce sujet n\'existe pas', 404);
+        }
+    
         $user = $security->getUser();
 
-        // dd($follow);
-        // dd($user, $follow);
-        if ($note < 0 || $note > 5) {
-            return new Response('La note rentré n\est pas valide', 201);
+        if (!$user) {
+            return new Response('utilisateur non connecté', 403);
         }
-        if ($subject && $user) {
-            $dejaNoter = $noteRepo->findOneBy(['user' => $user, 'subject' => $subjectId]);
-            $isUserSubject = $subjectRepository->findOneBy(['user' => $user,'id' => $subjectId]);
-            if (!$dejaNoter && !$isUserSubject ) {
-                $newNote->setUser($user)
-                ->setSubject($subject)
-                ->setNote($note);
 
-                $noteRepo->add($newNote, true);
+        $dejaNoter = $noteRepo->findOneBy(['user' => $user, 'subject' => $subjectId->getId()]);
+        $isUserSubject = $this->subjectRepository->findOneBy(['user' => $user,'id' => $subjectId->getId()]);
 
-                return new Response('note envoyer', 201);
-            }
-  
+        if ($dejaNoter || $isUserSubject ) {
             return new Response('fraude suspecté ⛔' , 403);
         }
 
-        return new Response('note non valide', 404);
+        $newNote = new NoteSubject();
+        $newNote->setUser($user)
+            ->setSubject($subjectId)
+            ->setNote($note);
+
+        $noteRepo->add($newNote, true);
+
+        return new Response('note envoyer', 201);
+
     }
 
-
     #[Route('/edit/{id}', name: 'user_subject_edit', methods: ['GET','POST'])]
-    public function edit(int $id, SubjectRepository $subjectRepository, Security $security, Request $request): Response
+    public function edit(int $id, Security $security, Request $request): Response
     {
         $user = $security->getUser();
-        $subject = $subjectRepository->find($id);
+        $subject = $this->subjectRepository->find($id);
         
         if ($subject->getUser() !== $user) {
             $this->addFlash('error', 'Vous n\'êtes pas autorisé à modifier ce sujet');
-            return $this->redirectToRoute('user_subject_show', ['id' => $subject->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_subject_show', ['id' => $subject->getId(), 'slug' => $subject->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
         $form = $this->createForm(Subject1Type::class, $subject);
@@ -124,14 +129,14 @@ class SubjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $subjectRepository->add($subject, true);
+                $this->subjectRepository->add($subject, true);
             } catch (Exception $e) {
                 return new Response('maximum 255 caracteres', 500);
             }
             
             $this->addFlash('succes', 'Sujet modifié avec succes');
             
-            return $this->redirectToRoute('user_subject_show', ['id' => $subject->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('user_subject_show', ['id' => $subject->getId(), 'slug' => $subject->getSlug()], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('subject/edit.html.twig', [
             'subject' => $subject,
@@ -140,11 +145,11 @@ class SubjectController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'user_subject_delete', methods: ['POST'])]
-    public function delete( ?Subject $subject, Request $request, SubjectRepository $subjectRepository): Response
+    public function delete( ?Subject $subject, Request $request): Response
     {
         
         if ($this->isCsrfTokenValid('delete'.$subject->getId(), $request->request->get('_token'))) {
-            $subjectRepository->remove($subject, true);
+            $this->subjectRepository->remove($subject, true);
         }else{
             $this->addFlash('error', 'Vous n\'etes pas autorisé à supprimer ce sujet');
             return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
@@ -156,14 +161,18 @@ class SubjectController extends AbstractController
     }
 
     #[Route('/follow/{id}', name: 'app_subject_follow', methods: ['GET'])]
-    public function followSubject(?Subject $subject, SubjectFavorisRepository $subjectFavRepo, SubjectRepository $subjectRepo, Security $security)
+    public function followSubject(?Subject $subject, SubjectFavorisRepository $subjectFavRepo, Security $security)
     {
         $subjectFav = new SubjectFavoris();
-        $follow = $subjectRepo->find($subject);
+        $follow = $this->subjectRepository->find($subject);
 
         $user = $security->getUser();
+        if(!$user) {
+            $this->addFlash('error', 'Veuillez vous connecter pour ajouter un sujet en favoris');
 
-        if ($follow && $user) {
+            return new Response('authentification requise', 403);
+        }
+        if ($follow) {
             $dejaAmis = $subjectFavRepo->findOneBy(['user' => $user, 'subject' => $subject]);
             if (!$dejaAmis) {
                 $subjectFav->setUser($user)
@@ -180,11 +189,10 @@ class SubjectController extends AbstractController
         return new Response('demande de favoris non valide', 404);
     }
 
-    
     #[Route('/{id}/{slug}', name: 'user_subject_show', methods: ['GET', 'POST'])]
-    public function show(?Subject $subject, string $slug, Security $security, Request $request, SubjectRepository $subjectRepository): Response
+    public function show(?Subject $subject, string $slug, Security $security, Request $request): Response
     {
-        $subjects = $subjectRepository->findArticleWithSameForum($subject->getForum());
+        $subjects = $this->subjectRepository->findArticleWithSameForum($subject->getForum());
 
         return $this->renderForm('subject/show.html.twig', [
             'subject' => $subject,
@@ -193,25 +201,33 @@ class SubjectController extends AbstractController
     }
 
     #[Route('/signaler/{id}/{message}', name: 'user.subject.signaler', methods: ['GET'])]
-    public function signalerSubject(?Subject $subject, string $message, Security $security, SubjectRepository $artRepo, SubjectReportRepository $artSignalRepo)
+    public function signalerSubject(?Subject $subject, string $message, Security $security, SubjectReportRepository $subjectReportRepository)
     {
         $user = $security->getUser();
+        if(!$user) {
+            $this->addFlash('error', 'Veuillez vous connecter pour faire un signalement');
 
-        if ($subject && $user) {
-            $dejaReport = $artSignalRepo->findOneBy(['user' => $user, 'subject' => $subject]);
+            return new Response('authentification requise', 403);
+        }
+
+        if ($subject) {
+            $dejaReport = $subjectReportRepository->findOneBy(['user' => $user, 'subject' => $subject]);
             if(!$dejaReport){
                 $newSignal = new SubjectReport();
                 $newSignal->setUser($user)
                     ->setSubject($subject)
                     ->setMessage($message);
-                $artSignalRepo->add($newSignal, true);
-
+                $subjectReportRepository->add($newSignal, true);
+                if($user->getCredibility() > 20 ){
+                    $subject->setActive(0);
+                    $this->subjectRepository->add($subject, true);
+                }
                 return new Response('subject signaler', 201);
             }else{
                 $dejaReport->setUser($user)
                 ->setSubject($subject)
                 ->setMessage($message);
-                $artSignalRepo->add($dejaReport, true);
+                $subjectReportRepository->add($dejaReport, true);
                 return new Response('signalement modifié', 201);
             }
             

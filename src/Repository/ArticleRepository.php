@@ -47,8 +47,9 @@ class ArticleRepository extends ServiceEntityRepository
     public function findArticle(SearchData $search): PaginationInterface
     {
         $query = $this->createQueryBuilder('a')
-            ->select('a', 't')
+            ->select('a', 't','l')
             ->leftjoin('a.tags', 't')
+            ->leftjoin('a.articleLikeds', 'l')
             ->orderBy('a.createdAt', 'DESC')
         ;
 
@@ -61,7 +62,7 @@ class ArticleRepository extends ServiceEntityRepository
         return $this->paginator->paginate(
             $query->getQuery(),
             $search->getPage(),
-            5
+            10
         );
 
         // dd($queryBuilder);

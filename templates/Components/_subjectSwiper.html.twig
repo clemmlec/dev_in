@@ -1,4 +1,5 @@
 <div class="black">
+    {# nom et avatar auteur du sujet #}
     <h6 class="toptitre left">&nbsp;
         <button class="btn-vierge">
             <a class="btn-vierge" href="{{ subject.user ? path('app_user_profil', {'id': subject.user.id }) : "" }}">
@@ -14,46 +15,40 @@
 
     <h1 class="toptitre2">{{subject.nom}}</h1>
     <h3 class="toptitre2 right ">
-        dans <span class="tags {{subject.forum.style}}">{{subject.forum.nom}}</span> <span class="mute">{{subject.createdAt | ago}}</span>
+        dans <span class="tags {{subject.forum.style}}">{{subject.forum.nom}}</span> 
+        <span class="mute">{{subject.createdAt | ago}}</span>
     </h3>
 </div> 
-<h3 class="title">                
+<h3 class="title">   
+{# affiche les étoiles si le sujets à reçu des notes #}
 {% if  subject.getNoteSubjects() | length > 0 %}
-
-    {# {{dump(subject.getNoteSubjects())}} #}
     {% set somme = 0 %}
     {% for row in subject.getNoteSubjects() %}
-    {% set somme = somme + row.note
-    %}
-    
+        {% set somme = somme + row.note %}
     {% endfor %}
     {% set somme = somme / (subject.getNoteSubjects()| length) %}
     <div class="note">
         {% for i in 1..10 %}
-            {# {% if i <= somme * 2 %} #}
             {% if i is odd %}
             <i class="fa fa-star-half stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
             {% else %}
             <i class="fa fa-star-half deg90 stars {{(i <= somme * 2) ? 'yellow' }}" ></i>
             {% endif %}
-            {# {% endif %} #}
         {% endfor %}
     </div>
-{% else %}
-    <span class="muted">pas encore de note</span> 
 {% endif %}
 </h3>
-{# <div class="img">
-    <img class="subjectImage" src="{{ subject.subject ? vich_uploader_asset(subject.subject, 'imageFile') : "https://fakeimg.pl/200x100" }}" alt="{{subject.subject.nom}}">
-</div> #}
-<div class="description">
+
+<div class="description content">
     {{subject.description | raw }}
 </div>
 <ul>
     <li>{{subject.comments | length}} commentaires</li>
     <li>{{subject.noteSubjects | length}} notes reçus</li>
-    {# <li>{{subject.comments | length}} ajouter subject favoris</li> #}
 </ul>
-
-<a class="btn-vierge btnLien2 btnProfil" href="{{ path('user_subject_show', {'id': subject.id , 'slug': subject.slug}) }}">voir le sujet</a>
+<br>
+<a class="btn-vierge btnLien2 btnProfil" 
+    href="{{ path('user_subject_show', {'id': subject.id , 'slug': subject.slug}) }}"
+    >voir le sujet
+</a>
 <br><span class="gray">.</span>

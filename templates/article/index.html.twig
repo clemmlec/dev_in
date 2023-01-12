@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Page article | {{ parent()}}
+    Tous les articles | {{ parent()}}
 {% endblock %}
 {% block meta %} 
     <meta name="description" 
@@ -11,20 +11,22 @@
         content="index,follow"
     /> 
 {% endblock %}
-{% block body %}
-<section class="w-80 js-filter">
 
+{% block body %}
+
+<section class="w-100 js-filter">
+
+    {# formulaire de recherche #}
     {{ form_start(form, { 'attr' : { 'class' : 'js-filter-form formEdit'} }) }}
         <div class="loader">
             <div class="js-loading" role="status" aria-hidden="true" style="display: none">
                 <span class=""><i class="fa-solid fa-spinner fa-spin-pulse"></i></span>
             </div>
         </div>
-        {{ form_row(form.query, { 'attr' : { 'class' : 'formSearch', 'placeholder' : 'Rechercher dans l\'article' } }) }}
-
-        {# <button class="btn-vierge" type="submit">Rechercher</button> #}
+        {{ form_row(form.query, { 'attr' : { 'class' : 'formSearch', 'placeholder' : 'Rechercher dans l\'article' , 'autofocus' : 'autofocus'} }) }}
     {{ form_end(form, {'render_rest': false }) }}
 
+    {# pagination liste des articles #}
     <div class="js-filter-count">
         {% include "Components/filter/_count.html.twig" %}
     </div>
@@ -39,4 +41,5 @@
 
 
 </section>
+
 {% endblock %}

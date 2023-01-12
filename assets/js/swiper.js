@@ -10,8 +10,10 @@ var swiper = new Swiper(".swiper", {
     grabCursor: true,
     centeredSlides: true,
     slidesPerView: "auto",
+    spaceBetween: 40,
+    loop: true,
     coverflowEffect: {
-      rotate: 30,
+      rotate: 0,
       stretch: 0,
       depth: 100,
       modifier: 1,

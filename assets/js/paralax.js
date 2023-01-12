@@ -21,15 +21,6 @@ if(document.getElementsByClassName('paralax')[0]){
         document.getElementsByClassName('paralaxCard')[6].style=`transform: translate3d(0,-${p*14}px,0)`;
 
         document.getElementsByClassName('paralaxCard')[7].style=`transform: translate3d(0,-${p*15}px,0)`;
-    
-        // document.getElementsByClassName('paralaxCard')[8].style=`transform: translate3d(0,-${p*32}px,0)`;
-
-        // document.getElementsByClassName('paralaxCard')[9].style=`transform:  translate3d(0,-${p*37}px,0)`;
-
-        // document.getElementsByClassName('backround')[0].style=`transform: translate(-50%,-50%) rotate(${p}deg)`;
-        // document.getElementsByClassName('backround')[1].style=`transform: translate(-50%,-50%) rotate(${p}deg)`;
-        // console.log(document.getElementsByClassName('backround')[0].style.rotate)
-
 
     })
 }

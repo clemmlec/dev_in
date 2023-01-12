@@ -52,13 +52,5 @@ class SubjectReportRepository extends ServiceEntityRepository
         ;
     }
 
-//    public function findOneBySomeField($value): ?SubjectReport
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
 }

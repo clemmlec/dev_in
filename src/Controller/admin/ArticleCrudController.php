@@ -22,12 +22,13 @@ class ArticleCrudController extends AbstractCrudController
         return Article::class;
     }
 
-    // public function configureCrud(Crud $crud): Crud
-    // {
-    //     return $crud
-    //         ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig')
-    //     ;
-    // }
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig')
+            // ->setDefaultSort(['createdAt' => 'DESC'])
+        ;
+    }
 
     public function configureFields(string $pageName): iterable
     {
@@ -41,9 +42,6 @@ class ArticleCrudController extends AbstractCrudController
             DateTimeField::new('created_at')->hideOnForm()->setSortable(true),
             DateTimeField::new('updated_at')->hideOnForm()->setSortable(true),
 
-            // AssociationField::new('forum')->setQueryBuilder(function (QueryBuilder $qb) {
-            //     $qb->where('entity.active = true');
-            // }),
         ];
     }
     
@@ -53,10 +51,4 @@ class ArticleCrudController extends AbstractCrudController
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 
-    public function configureCrud(Crud $crud): Crud
-    {
-        return $crud
-            ->setDefaultSort(['createdAt' => 'DESC'])
-        ;
-    }
 }

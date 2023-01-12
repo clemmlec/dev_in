@@ -3,16 +3,25 @@
     background-color: $silver;
     text-align: center;
     color: antiquewhite;
-    margin-bottom: 10px;
-    margin-top: 10px;
     max-width: 100%;
     position: relative;
     margin: 5px auto;
+    
+    .topTitre{
+        background: $black;
+        position: relative;
+        top: 0px;
+        // border-radius: 10px 10px 0 0;
+        margin: -25px -20px 20px -20px;
+
+        padding-top: 55px;
+        padding-bottom: 25px;
+    }
     .iconArticle{
         position: absolute;
-        font-size: 25px;
+        font-size: 20px;
         right: 10px;
-        top: 15px;
+        top: 5px;
         .redd{
             color: red;
         }
@@ -36,6 +45,7 @@
     }
     .content{
         margin-top: 100px;
+        word-break: break-all;
     }
 
     .tag-name{
@@ -47,7 +57,7 @@
         margin: 2px;
     }
     .couper{
-        height: 200px;
+        height: 300px;
         overflow-y: hidden;
         h1{
             font-size: 1.1em;
@@ -71,19 +81,13 @@
     }
 }
 .articleCard{
-    min-width: 500px;
+    min-width: 440px;
     position: relative;
     background-color: $silver;
-
-
-    margin: auto 25px auto 25px ;
-    // border: solid 2px rgb(114, 114, 114);
-    border-radius: $borderRadius;
     justify-content: center;
     align-items: center;
     height: max-content;
-    padding: 5px;
-    margin: 15px;
+    border-radius: $borderRadius;
 }
 
 .suggest{

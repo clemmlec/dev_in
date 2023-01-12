@@ -17,7 +17,9 @@
 @import "./components/includProfil.scss";
 @import "./components/paralax.scss";
 @import "./color.scss";
-
+.center{
+    text-align: center;
+}
 #alertDelete{
     display: none;
     width: fit-content;
@@ -38,6 +40,9 @@
 .suggest{
     position: relative;
     z-index: 80;
+}
+.sombre{
+    background: $gray;
 }
 .p-10{
     padding: 20px;
@@ -66,9 +71,7 @@ h1{
     color: azure;
 }
 body{
-    background-color: rgb(67, 114, 136);
-    color: rgb(255, 239, 190);
-    background: linear-gradient(to right,rgb(15, 61, 82),rgb(67, 114, 136));
+    color: $white;
     background: $grayClair;
     font-family: 'Righteous', cursive;;
     padding: 0;
@@ -83,8 +86,6 @@ body{
     display: grid;
     grid: auto-flow/ 1fr;
     height: min-content;
-    
-
 }  
 .break{
     word-break: break-all;
@@ -120,13 +121,16 @@ body{
     // overflow: auto; /* Enable scroll if needed */
 
 }
-
+.js-filter-count{
+    color: $black;
+    text-align: center;
+}
 .modele{
     display: none;
 }
 
 .alert{
-    z-index: 1000;
+    z-index: 99;
     text-align: center;
     margin: 10px auto;
     padding:10px 0 ;
@@ -136,10 +140,12 @@ body{
     color: greenyellow;
     background-color: rgba(168, 184, 168, 0.685);
 }
+
 .alert-danger{
     color: rgb(143, 0, 0);
     background-color: rgba(168, 145, 145, 0.685);
 }
+
 a{
     text-decoration: none;
     color: $purple;
@@ -185,6 +191,12 @@ a:hover{
 .mt-5{
     margin-top: 50px;
 }
+.mt-2{
+    margin-top: 20px;
+}
+.mt-8{
+    margin-top: 100px;
+}
 .mt-10{
     margin-top: 300px;
 }
@@ -207,9 +219,9 @@ p{
     margin-right: 30px;
     margin-top: 70px;
 }
+
 @media all and (max-device-width: 491px)
 {
-
     .dropbtn {
         margin-top: 0px;
       }
@@ -218,6 +230,7 @@ p{
     }
     .couper{
         width: 90% !important;
+        margin: 20px;
     }
     .article{
         .couper{
@@ -321,11 +334,15 @@ p{
         max-width: 90% !important;
     }
     #btnProfil{
-        top: 350px !important;
+        top: 170px !important;
   
     }
     .btnProfil1{
         width: 230px !important;
+        font-size: 25px !important;
+    }
+    .btn-vierge{
+        font-size: 1em ;
     }
     .nav-logo{
         height: 50px;
@@ -336,14 +353,23 @@ p{
     .head{
         height: 50px;
     }
-    .avatar{
-        position: relative;
-        width: 100px;
+
+    .swiper-slide .avatar {
+         width: 250px !important;
+    }
+    .swiper-slide .avatare {
+        width: 150px !important;
+   }
+   .swiper-slide h3 {
+        font-size: 24px;
     }
     .dropdown-content{
         top: 120px;
     }
-
+    .commentaire .top .comment3 .date {
+        top: 10px;
+        right: 200px;
+      }
     .form{
         width: 90%;
         margin: 10vh auto 20px auto;
@@ -379,5 +405,13 @@ p{
                 top: -120px !important;
             }
         }
+    }
+    .h2{
+
+        margin-top: 200px !important;
+    }
+    .titreHome{
+        font-size: 1.5em;
+        width: 70% !important;
     }
 }

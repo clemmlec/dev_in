@@ -8,10 +8,11 @@
     height: fit-content;
     .titreHome{
         border-radius: $borderRadius;
-        width:fit-content;
+        width:50%;
         z-index: 2;
         font-family: "Righteous", cursive;
         padding: 10px;
+        margin: 50px auto;
     }
 }
 
@@ -40,6 +41,14 @@
 
 }
 .swiper-slide .avatar{
+    width: 50% !important;
+    border-radius: 50%;
+    margin: auto;
+    position: relative;
+    top: -50px;
+    margin-bottom: -50px;
+}
+.swiper-slide .avatare{
     width: 50% !important;
     border-radius: 50%;
     margin: auto;
@@ -88,7 +97,7 @@
         overflow-y: hidden;
     }
     .description{
-        height: 150px;
+        height: 250px;
         overflow-y: hidden;
         overflow: hidden;
     }
@@ -110,4 +119,9 @@
     width: 30px;
     display: inline;
     vertical-align: middle;
+}
+.paralax{
+    .description{
+        height: 150px !important;
+    }
 }

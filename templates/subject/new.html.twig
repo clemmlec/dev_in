@@ -7,7 +7,6 @@
             src="{{ app.user ? vich_uploader_asset(app.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
             alt=""
         >
-
     </h1> 
     <div class="toptitre2 right inlineRuby">
         Forum : 
@@ -19,16 +18,12 @@
         {% endif %}
     </div>
     <div class="iconSubject">
-        <button 
-            type="button" 
-            class="btn-vierge yellow" 
-            value="" 
-            data-follow-subject >
+        <button type="button" class="btn-vierge yellow">
             <i class="fa-solid fa-star pointer yellow"></i>
         </button>
     </div>
     <h1 class="title"> 
-        {{ form_widget( form.nom,{'attr': {'placeholder': 'titre'} } ) }}
+        {{ form_widget( form.nom,{'attr': {'placeholder': 'titre','autofocus': 'autofocus'} } ) }}
         {% if form_errors(form.nom) %}
         <div class="alert alert-danger w-80" >
             <span> {{ form_errors(form.nom) }}</span>
@@ -43,11 +38,7 @@
         </div>
         {% endif %}
     </div>
-    {# <div class="form-ligne">
-        {{ form_widget( form.imageFile ) }}
-    </div> #}
     <hr>
     <button class="mb-4" data-new-subject>{{ button_label|default('Poster') }}</button>
-    
     {{ form_widget( form._token)}}
 {{ form_end(form,{render_rest: false}) }}

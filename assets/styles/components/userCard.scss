@@ -7,6 +7,10 @@
     -webkit-align-items: center;
     align-items: inherit;
 }
+.stretch{
+    align-items: stretch;
+}
+
 .card{
     min-width: 300px;
     position: relative;
@@ -62,7 +66,9 @@
     }
     
 }
-
+.inerit{
+    height: inherit;
+}
 
 .user-subjects{
     border: 2px solid black;

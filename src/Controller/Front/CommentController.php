@@ -20,37 +20,37 @@ use Symfony\Component\Security\Core\Security;
 #[Route('/comment')]
 class CommentController extends AbstractController
 {
+    public function __construct(
+        private CommentRepository $commentRepository
+        ) {
+    }
     #[Route('/new', name: 'app_comment_new', methods: ['POST'])]
-    public function new(Request $request, SubjectRepository $subjectRepo, CommentRepository $commentRepository, Security $security): Response
+    public function new(Request $request, SubjectRepository $subjectRepo, Security $security): Response
     {
         $param = $request->request->all();
-        // dd($param ['subject']);
         $comment = new Comment();
 
         $subject = $subjectRepo->find($param['subject']);
 
         $user = $security->getUser();
-        // dd($follow);
 
         try {
             $comment->setUser($user)
             ->setSubject($subject)
             ->setMessage($param['com']);
-            $commentRepository->add($comment, true);
+            $this->commentRepository->add($comment, true);
 
-            // return new JsonResponse($comment);
         } catch (Exception $e) {
             return new Response('maximum 255 caracteres', 500);
         }
-        $id = $commentRepository->findLastProducts();
+        $id = $this->commentRepository->findLastProducts();
         
        
-        return new Response( strval($id[0]->getId())
-        , 201);
+        return new Response( strval($id[0]->getId()), 201);
     }
 
     #[Route('/jaime/{id}', name: 'user.comment.jaime', methods: ['GET'])]
-    public function switchVisibilitySubject(?Comment $com, Security $security, CommentRepository $comRepo, CommentLikeRepository $comLikeRepo)
+    public function switchVisibilitySubject(?Comment $com, Security $security, CommentLikeRepository $comLikeRepo)
     {
         $user = $security->getUser();
 
@@ -73,7 +73,7 @@ class CommentController extends AbstractController
     }
 
     #[Route('/signaler/{id}/{message}', name: 'user.comment.signaler', methods: ['GET'])]
-    public function signalerComment(?Comment $com, string $message, Security $security, CommentRepository $comRepo, CommentReportRepository $comSignalRepo)
+    public function signalerComment(?Comment $com, string $message, Security $security, CommentReportRepository $comSignalRepo)
     {
         $user = $security->getUser();
         // if deja signaler -> modifier
@@ -82,9 +82,13 @@ class CommentController extends AbstractController
             if(!$dejaReport){
                 $newSignal = new CommentReport();
                 $newSignal->setUser($user)
-                ->setComment($com)
-                ->setMessage($message);
+                    ->setComment($com)
+                    ->setMessage($message);
                 $comSignalRepo->add($newSignal, true);
+                if($user->getCredibility() > 20 ){
+                    $com->setActive(0);
+                    $this->commentRepository->add($com, true);
+                }
                 return new Response('commantaire signaler', 201);
             }else{
                 $dejaReport->setUser($user)
@@ -100,7 +104,7 @@ class CommentController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'user_comment_delete', methods: ['DELETE'])]
-    public function delete( ?Comment $comment, Security $security, Request $request, CommentRepository $commentRepository): Response
+    public function delete( ?Comment $comment, Security $security, Request $request): Response
     {
         $user = $security->getUser();
         
@@ -109,7 +113,7 @@ class CommentController extends AbstractController
         }
 
         try {
-            $commentRepository->remove($comment, true);
+            $this->commentRepository->remove($comment, true);
         } catch (\Throwable $th) {
             return new Response('commantaire non supprimé', 403);
         }

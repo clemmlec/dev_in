@@ -76,6 +76,10 @@ button {
 button:hover{
     background: $purpleClair !important;
 }
+.secondary{
+    background: $purple2 !important;
+
+}
 .buttonEmpty{
     color: $purple !important;
     border-radius: $borderRadius;
@@ -129,12 +133,10 @@ select {
 }
 .formSearch{
     padding: 5px;
-    background-color: black !important;
+    background-color: $white !important;
     border-radius: 5px !important;
-    color: aliceblue !important;
-    box-shadow: 0 0 5px rgba(68, 68, 68, 0.402),
-        0 0 25px rgba(8, 8, 8, 0.44),
-        inset 0 4px 15px rgba(48, 48, 48, 0.359);
+    color: $black !important;
+    box-shadow: 0 0 5px rgba(68, 68, 68, 0.402);
     position: relative;
 
     .loader{
@@ -203,4 +205,16 @@ select {
 }
 .mb-4 {
     margin-bottom: 15px;
+}
+.vich-image{
+    a{
+        img{
+            position: relative;
+            top: -20px;
+            left: 0;
+        }
+    }
+    div{
+        text-align: center;
+    }
 }

@@ -48,13 +48,14 @@ class UserRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('u')
             ->select('u', 'a', 'n', 'c')
+            ->where('u.active = true')
             // ->select('u', 'f', 'r','a','n','c')
             // ->leftjoin('u.follows', 'f')
             // ->leftjoin('u.followers', 'r')
             ->leftjoin('u.subjects', 'a')
             ->leftjoin('a.noteSubjects', 'n')
             ->leftjoin('u.comments', 'c')
-
+            ->orderBy('u.credibility', 'desc')
         ;
         if (!empty($search->getQuery())) {
             $query->andWhere('u.name LIKE :name')
@@ -65,7 +66,7 @@ class UserRepository extends ServiceEntityRepository
         return $this->paginator->paginate(
             $query->getQuery(),
             $search->getPage(),
-            5
+            6
         );
         // dd($queryBuilder);
     }
@@ -85,29 +86,5 @@ class UserRepository extends ServiceEntityRepository
         ;
         // dd($queryBuilder);
     }
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->setFirstResult(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

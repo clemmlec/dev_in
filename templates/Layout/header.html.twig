@@ -1,36 +1,42 @@
 <header>
     <nav>
-        
+
+        {# profil ou inscirption / connection #}
         <div class="icon_nav dropdown">
-            {# {{ dump(app.user) }} #}
             {% if app.user %}
-            <button id="dropbtn" class="dropbtn btn-vierge">
-                <img 
-                    class="avatar" 
-                    src="{{ app.user.imageName ? vich_uploader_asset(app.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
-                    alt="{{app.user.name}}"
-                >
-            </button>            
-            <div id="dropcontent" class="dropdown-content">
-                <a href="{{ path('app_user_profil', {'id': app.user.id}) }}" 
-                    class="btn btn-secondary">Profil <i class="fa-solid fa-user-gear"></i></a>
-                <a href="{{ path('logout') }}" 
-                    class="btn btn-secondary">Deconnection <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
-            </div>
-                
+                <button id="dropbtn" class="dropbtn btn-vierge">
+                    <img 
+                        class="avatar" 
+                        src="{{ app.user.imageName ? vich_uploader_asset(app.user, 'imageFile') : "https://fakeimg.pl/200x100" }}" 
+                        alt="{{app.user.name}}"
+                    >
+                </button>            
+                <div id="dropcontent" class="dropdown-content">
+                    <a href="{{ path('app_user_profil', {'id': app.user.id}) }}" 
+                        class="btn btn-secondary">Profil <i class="fa-solid fa-user-gear"></i>
+                    </a>
+                    <a href="{{ path('logout') }}" 
+                        class="btn btn-secondary">Deconnection <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('admin') }}">Admin</a>
+                    {% endif %}
+                </div>
             {% else %}
-            <button  id="dropbtn" class="dropbtn btn-vierge"><i class="fa-solid fa-right-to-bracket"></i>
-            </button> 
-            <div id="dropcontent" class="dropdown-content">
-                <a href="{{ path('login') }}" 
-                    class="btn btn-secondary">Se connecter <i class="fa-solid fa-user-check"></i></a>
-                <a href="{{ path('register') }}" 
-                    class="btn btn-secondary">Inscription <i class="fa-solid fa-user"></i></a>
-            </div>
+                <button  id="dropbtn" class="dropbtn btn-vierge"><i class="fa-solid fa-right-to-bracket"></i>
+                </button> 
+                <div id="dropcontent" class="dropdown-content">
+                    <a href="{{ path('login') }}" 
+                        class="btn btn-secondary">Se connecter <i class="fa-solid fa-user-check"></i></a>
+                    <a href="{{ path('register') }}" 
+                        class="btn btn-secondary">Inscription <i class="fa-solid fa-user"></i></a>
+                </div>
             {% endif %}
         </div>
     
+
         <div class="nav-logo">
+            {# logo du site #}
             <a class="Shadows logoSite" href="{{ path('home') }}">
                 <img 
                     class="logo" 
@@ -38,30 +44,19 @@
                     alt="logo"
                 >
             </a>
+            
+            {# menu de navigation #}
             <div class="div-nav">
                 <label class="label" for="toggle">☰</label>
                 <input type="checkbox" id="toggle">
                 <div class="main_pages">
                     <div class="left_nav">
-                        {% if app.user %}
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('admin') }}">admin</a>
-
-                            {% endif %}
-                        {% endif %}
-                        {# <a href="{{ path('user_subject_index') }}">Subject</a> #}
-                        <a href="{{ path('app_user_index') }}">User</a>
+                        <a href="{{ path('app_user_index') }}">Utilisateur</a>
                         <a href="{{ path('app_article_index') }}">Article</a>
                         <a href="{{ path('app_subject_index') }}">Sujet</a>
                     </div>
                 </div>
             </div>
         </div>
-
-        
-
-        
-      
-
     </nav>
 </header>

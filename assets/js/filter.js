@@ -31,10 +31,6 @@ export default class Filter {
         this.bindEvents();
         this.reload = false;
 
-
-        /**
-         * Add the action to the elements of the filter bundle
-         */
     }
 
 
@@ -73,7 +69,7 @@ export default class Filter {
 
 
     /**
-     * Load thee url in ajax
+     * Load the url in ajax
      * 
      * @param {URL} url -- url to load
      */
@@ -103,28 +99,26 @@ export default class Filter {
 
             if(!this.moreNav){
                 this.pagination.innerHTML = data.pagination;
-                // console.log('null 👲👱‍♂️')
             }else if(this.page === data.pages){
-                // console.log('none')
+                // No more rersults
                 stopReload = true
                 this.pagination.style.display = 'none';
             }else{
                 this.pagination.style.display = null;
-                // console.log('esle 👲👱‍♂️')
             }
 
             if(data.pages==0){
                 this.pagination.style.display = 'none';
-                
             }
 
             params.delete('ajax');
-            history.replaceState({},'', `${url.split('?')[0]}?${params.toString()}`);
             if(data.pages==1){
                 this.pagination.style.display = 'none';
                 stopReload = true
-                console.log('crash pages=1 👱‍♂️👱‍♀️')
+                this.page=1;
+                
             }else{
+                history.replaceState({},'', `${url.split('?')[0]}?${params.toString()}`);
                 stopReload = false
             }
         }else{
@@ -149,7 +143,7 @@ export default class Filter {
         data.forEach((value, key) => {
             params.append(key, value);
         });
-        console.log(params);
+        // console.log(params);
         return this.loadUrl(`${url.pathname}?${params.toString()}`);
     }
 
@@ -166,7 +160,7 @@ export default class Filter {
         // console.log(refreshScroll )
 
         if(offset < 940 && this.reload == false && rect.width!=0){
-            console.log(offset, rect,window.innerHeight )
+            // console.log(offset, rect,window.innerHeight )
             this.loadMore(refreshScroll)
             this.reload = true
         }
@@ -186,7 +180,7 @@ export default class Filter {
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);
         params.set('page', this.page);
-        console.log(this.page)
+        // console.log(this.page)
 
         await this.loadUrl(`${url.pathname}?${params.toString()}`, true);
         button.removeAttribute('disabled');
