@@ -12,6 +12,8 @@ import './js/swiper.js';
 import './js/user.js';
 import './js/paralax.js';
 import './bootstrap.js';
+import './js/dropdown.js';
 
 import Filter from './js/filter';
 new Filter(document.querySelector('.js-filter'));
+

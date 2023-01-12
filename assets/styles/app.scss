@@ -341,6 +341,9 @@ p{
         width: 230px !important;
         font-size: 25px !important;
     }
+    .btn-vierge{
+        font-size: 1em ;
+    }
     .nav-logo{
         height: 50px;
     }
@@ -357,10 +360,16 @@ p{
     .swiper-slide .avatare {
         width: 150px !important;
    }
+   .swiper-slide h3 {
+        font-size: 24px;
+    }
     .dropdown-content{
         top: 120px;
     }
-
+    .commentaire .top .comment3 .date {
+        top: 10px;
+        right: 200px;
+      }
     .form{
         width: 90%;
         margin: 10vh auto 20px auto;
