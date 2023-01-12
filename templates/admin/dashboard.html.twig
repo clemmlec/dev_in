@@ -7,14 +7,15 @@
 {% endblock %}
 
 {% block main %}
-<div style="display: flex ;">
-    <div style="height:80vh; width:40vw">
-        <h1>Report et suggest</h1>
+<div class="row">
+    <div class="p-5 col-sm">
+        <h1>Nouveaux utilisateurs cette semaine</h1>
+        {{ render_chart(chart3) }}
+        <h1>Signalements et suggestions</h1>
         {{ render_chart(chart) }}
-        <h1>Utilisateur</h1>
-        {{ render_chart(chart) }}
+        
     </div>
-    <div style="height:80vh; width:40vw">
+    <div class="p-5 col-sm">
         <h1>Articles par tags</h1>
         {{ render_chart(chart2) }}
     </div>
@@ -23,6 +24,6 @@
     {{ encore_entry_script_tags('admin') }}
 {% endblock %}
     
-{{ dump(chart) }}
+{# {{ dump(chart3) }} #}
 
 {% endblock %}

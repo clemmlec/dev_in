@@ -98,17 +98,17 @@ direction="left bottom";
 // changement de direction du degradé
 
 // recharger les couleurs
-    function changeCouleur(step){
-
+    function changeCouleur(){
+        
         var icone = document.getElementsByClassName("carre");
+        
         var i;
         for (i = 0; i < icone.length; i++) {
             bleu=Math.floor(Math.random() * 255) + 1;
             rouge=Math.floor(Math.random() * 255) + 1;
             vert=Math.floor(Math.random() * 255) + 1;
-            if (icone[i].innerHTML==""){
-                icone[i].style.backgroundColor='rgb('+ rouge +','+ vert +','+ bleu +')' ;
-            }
+        
+            icone[i].style.backgroundColor='rgb('+ rouge +','+ vert +','+ bleu +')' ;
         
         }
     }
