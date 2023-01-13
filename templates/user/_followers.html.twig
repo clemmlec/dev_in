@@ -15,7 +15,7 @@
 {% block mainProfil %}
     <hr class="mt-5">
     <h1>abonnés {{user.followers | length}}</h1>
-    <div class="js-filter w-80">
+    <div class="js-filter w-100">
         {# formulaire de recherche #}
         {{ form_start(forms, { 'attr' : { 'class' : ' js-filter-form formEdit'} }) }}
             <div class="loader">

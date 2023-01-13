@@ -1,7 +1,7 @@
 App\Entity\User:
   userAdmin: 
     email: 'clement@test.com'
-    password: "<hashPassword('123456')>"
+    password: "<hashPassword('Azerty8899')>"
     name: "Clem"
     rgpd: true
     credibility: 50

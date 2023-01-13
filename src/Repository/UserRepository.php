@@ -89,7 +89,7 @@ class UserRepository extends ServiceEntityRepository
 
     public function findAllUserLastWeek(): array
     {
-        $date =date("Y-m-d H:i:s",mktime(0, 0, 0, date("m"), date("d")-7,   date("Y")));
+        $date =date("Y-m-d H:i:s",mktime(0, 0, 0, date("m"), date("d")-6,   date("Y")));
         return $this->createQueryBuilder('u')
             ->andWhere('u.created_at >= :val')
             ->setParameter('val', $date)

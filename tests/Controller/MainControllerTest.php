@@ -30,11 +30,11 @@ class MainControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    // public function testHomePageHeadingOne()
-    // {
-    //     $this->client->request('GET', '/');
-    //     $this->assertSelectorTextContains('h1', 'Home', 'error -> pas le titre home sur cette page');
-    // }
+    public function testHomePageHeadingOne()
+    {
+        $this->client->request('GET', '/');
+        $this->assertSelectorTextContains('h1', 'Dev In', 'error -> pas le titre home sur cette page');
+    }
 
     // public function testHomePageCountain6Subjects()
     // {

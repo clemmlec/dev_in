@@ -76,16 +76,15 @@ class SecurityControllerTest extends WebTestCase
     //     $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     // }
 
-    // public function testAdminSubjectGoodLoggedIn()
-    // {
-    //     // $user = $this->userRepository->find(1);
-    //     $userAdmin = $this->userRepository->findOneByEmail('clement@test.com');
+    public function testAdminGoodLoggedIn()
+    {
+        $userAdmin = $this->userRepository->findOneByEmail('clement@test.com');
 
-    //     $this->client->loginUser($userAdmin);
+        $this->client->loginUser($userAdmin);
 
-    //     $this->client->request('GET', '/admin/subject');
-    //     $this->assertResponseIsSuccessful();
-    // }
+        $this->client->request('GET', '/admin');
+        $this->assertResponseIsSuccessful();
+    }
 
     // public function testAdminUserGoodLoggedIn()
     // {
@@ -98,15 +97,15 @@ class SecurityControllerTest extends WebTestCase
     //     $this->assertResponseIsSuccessful();
     // }
 
-    // public function testEditorUserBadLoggedIn()
-    // {
-    //     $user = $this->userRepository->find(2);
+    public function testEditorUserBadLoggedIn()
+    {
+        $user = $this->userRepository->find(2);
 
-    //     $this->client->loginUser($user);
+        $this->client->loginUser($user);
 
-    //     $this->client->request('GET', '/admin/user');
-    //     $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
-    // }
+        $this->client->request('GET', '/admin/user');
+        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
 
     // public function testEditorSubjectGoddLoggedIn()
     // {
