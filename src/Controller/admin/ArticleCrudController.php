@@ -40,7 +40,6 @@ class ArticleCrudController extends AbstractCrudController
             AssociationField::new('user')->hideOnForm(),
             ArrayField::new('articleSuggestions')->hideOnForm()->setSortable(false),
             DateTimeField::new('created_at')->hideOnForm()->setSortable(true),
-            DateTimeField::new('updated_at')->hideOnForm()->setSortable(true),
 
         ];
     }

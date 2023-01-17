@@ -10,20 +10,31 @@ export default class extends Controller {
         if (event.target.type == "button" ){
             elem = event.target.childNodes[1]
         }
-
+        if(elem.classList.contains("far")){
+            elem.classList.replace('far','fa' );
+            elem.parentNode.childNodes[3].childNodes[0].data  = +elem.parentNode.childNodes[3].childNodes[0].data +1
+        }else{
+            elem.classList.replace('fa','far' );
+            elem.parentNode.childNodes[3].childNodes[0].data  = +elem.parentNode.childNodes[3].childNodes[0].data -1
+        }
+        // console.log(+elem.parentNode.childNodes[3].childNodes[0].data +1 );
+        
         let button = elem.parentNode
         let id = button.value;
 
         axios.get(`/article/liked/${id}`)  
                   
         .then(function (reponse) {
-            if(elem.classList.contains("far")){
-                elem.classList.replace('far','fa' );
-            }else{
-                elem.classList.replace('fa','far' );
-            }
+
         })
         .catch(function (erreur) {
+            if(elem.classList.contains("far")){
+                elem.classList.replace('far','fa' );
+                elem.parentNode.childNodes[3].childNodes[0].data  = +elem.parentNode.childNodes[3].childNodes[0].data +1
+            }else{
+                elem.classList.replace('fa','far' );
+                elem.parentNode.childNodes[3].childNodes[0].data  = +elem.parentNode.childNodes[3].childNodes[0].data -1
+            }
             if(erreur.response.data == "authentification requise"){
                 window.location.href= "https://127.0.0.1:8000/login";
             }

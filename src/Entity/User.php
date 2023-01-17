@@ -515,7 +515,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getComments(): Collection
     {
-        return $this->comments;
+        return $this->comments->filter(function (Comment $comment) {
+            return $comment->isActive();
+        });
     }
 
     public function addComment(Comment $comment): self

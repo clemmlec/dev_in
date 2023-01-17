@@ -43,12 +43,10 @@
                     <button id="btn1" onclick="changeClick(1)" class="carreForm">2</button>
                 </h4>
                 <hr>
-                
                 <h4>couleur de la bordure
                     <button id="btn2" onclick="changeClick(2)" class="carreForm">3</button>
                 </h4>
                 <hr>
-
                 <h4>couleur de l'ombre
                     <button id="btn3" onclick="changeClick(3)" class="carreForm">4</button>
                 </h4>
@@ -57,9 +55,6 @@
 
             {# carrés de couleurs #}
             <div class="sectionColor">
-                {% set bleu = 0 %}
-                {% set rouge = 0 %}
-                {% set vert = 0 %}
                 {% for i in 0..53 %}
                     {% set bleu=random(1,255) %}
                     {% set rouge=random(1,255) %}
@@ -131,11 +126,9 @@ direction="left bottom";
 
 // pour envoyer la couleur
     function envoieCouleur(what){
-        // cahnge le step
+        // canhge le step
         click++;
-        if(click>4){
-            click=1;
-        }
+        if(click>4){ click=1; }
         
         // envoie la couleur selectionné au bouton associé
         currentBouton='btn'+(click-1);
@@ -159,29 +152,34 @@ direction="left bottom";
 
 // pour envoyer les couleurs à la carte
     function test(){
-        a=document.getElementById('btn0');
-        z=document.getElementById('btn1');
-        e=document.getElementById('btn2');
-        r=document.getElementById('btn3');
         
-        color1=a.style.backgroundColor;
-        color2=z.style.backgroundColor;
+        color0=btn0.style.backgroundColor;
+        color1=btn1.style.backgroundColor;
+        color2=btn2.style.backgroundColor;
+        color3=btn3.style.backgroundColor;
         
         // dégrader de couleur
-        profilCardTitre.style.background= "linear-gradient( to "+direction+", "+ color1 +", "+ color2+")";
+        profilCardTitre.style.background = "linear-gradient( to "+direction+", "+ color0 +", "+ color1+")";
 
         // ombre de la box
-        if(r.style.backgroundColor){
-            profilCardTitre.style.boxShadow ="0px 0px 5px " + r.style.backgroundColor + ", 0px 0px 25px "+ e.style.backgroundColor +", inset 0px 4px 15px "+r.style.backgroundColor;
+        if(color3){
+            profilCardTitre.style.boxShadow ="0px 0px 5px " + 
+            color3 + ", 0px 0px 25px " + 
+            color2 +", inset 0px 4px 15px " +
+            color3 ;
         }
 
         // bordure
-        if(e.style.backgroundColor){
-            profilCardTitre.style.border=" solid 2px "+ e.style.backgroundColor;
+        if(color2){
+            profilCardTitre.style.border = " solid 2px " + color2;
         }
      
         // envoie la valeur au bouton 'valider couleur'
-        go.value="background:linear-gradient( to "+direction+", "+ color1+", "+ color2+"); border: solid 2px "+e.style.backgroundColor + " ; box-shadow: 0px 0px 5px "+r.style.backgroundColor+", 0px 0px 25px "+e.style.backgroundColor+", inset 0px 4px 15px "+r.style.backgroundColor+";";
+        go.value="background:linear-gradient( to "+ direction +", "+ color0 +", "+ color1 +"); border: solid 2px "+
+        color2 + " ; box-shadow: 0px 0px 5px "+
+        color3 +", 0px 0px 25px "+
+        color2 +", inset 0px 4px 15px "+
+        color3 +";";
     }
 // pour envoyer les couleurs à la carte
 

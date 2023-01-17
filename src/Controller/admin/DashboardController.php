@@ -111,31 +111,30 @@ class DashboardController extends AbstractDashboardController
         $comReport=$this->comRepo->countComReport();
         $subReport=$this->subRepo->countSubjectReport();
         $artReport=$this->artRepo->countArticleReport();
-        // dd($subReport);
+
         $chart = $this->chartBuilder->createChart(Chart::TYPE_BAR);
         $chart->setData([
-            'labels' => [ 'commentaires signalées', 'sujets signalés', 'suggestions d\'article',  ],
+            'labels' => [ 
+                'commentaires signalées', 
+                'sujets signalés', 
+                'suggestions d\'article'
+            ],
             'datasets' => [
                 [
                     'label' => 'Total ' . ($comReport+$subReport+$artReport),
                     'borderColor' => 'rgb(99, 99, 132)',
-                    'data' => [$comReport, $subReport, $artReport, 2, 20, 30, 45],
-                    'backgroundColor' => ['#FFFF55','#FF55FF','#8FF55F','#55FFFF','#453264']
+                    'data' => [$comReport, $subReport, $artReport],
+                    'backgroundColor' => ['#FFFF55','#FF55FF','#8FF55F']
                 ],
             ],
-
         ]);
 
         $chart->setOptions([
             'scales' => [
                 'y' => [
-
                     'beginAtZero'=> true
                 ],
             ],
-            // 'indexAxis' => 'y'
-
-           
         ]);
 
 

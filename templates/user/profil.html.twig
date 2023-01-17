@@ -72,7 +72,12 @@
                 <h3 class="date">inscrit {{user.createdAt | ago}}
                 {# Bouton suivre l'utilisateur #}
                 {% if app.user and app.user.id != user.id %}
-                    <button type="button" class="btn-vierge yellow" value="{{user.id}}" data-follow-user >
+                    <button {{ stimulus_controller('user') }} 
+                        type="button" 
+                        class="btn-vierge yellow" 
+                        value="{{user.id}}"
+                        {{ stimulus_action('user', 'follows') }}
+                        >
                         {% set fav = false %}
                         {% for row in app.user.getFollows %}
                             {% if row.friend.id == user.id %}
@@ -82,7 +87,7 @@
                         {% if fav %}
                             <i class="fa fa-user pointer yellow"></i>
                         {% else %}
-                            <i class="far fa-user pointer yellow"></i>
+                            <i class="fa-solid fa-user-plus"></i>
                         {% endif %}
                     </button>
                 {% endif %}

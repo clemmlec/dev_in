@@ -33,11 +33,8 @@ if(styleUser){
     styleUser.forEach((element=>{
         element.addEventListener('click', () =>  {
             let style = element.value;
-            console.log(style)
             axios.get(`/user/style/${style}`);
             element.innerHTML="✅";
-        
-            
         });
     }))
 }
@@ -47,7 +44,6 @@ if(deleteUser){
     deleteUser.forEach((element=>{
         element.addEventListener('click', () =>  {
             alertDelete.style.display = 'block';
-        
         });
     }))
 }
