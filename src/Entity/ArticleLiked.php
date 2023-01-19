@@ -49,4 +49,9 @@ class ArticleLiked
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return 1;
+    }
 }

@@ -398,34 +398,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->followers;
     }
 
-    // public function addFollower(Follow $follower): self
-    // {
-    //     if (!$this->followers->contains($follower)) {
-    //         $this->followers->add($follower);
-    //         $follower->setFriend($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeFollower(Follow $follower): self
-    // {
-    //     if ($this->followers->removeElement($follower)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($follower->getFriend() === $this) {
-    //             $follower->setFriend(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
-
     /**
      * @return Collection<int, Subject>
      */
     public function getSubjects(): Collection
     {
-        return $this->subjects;
+        return $this->subjects->filter(function (Subject $subjects) {
+            return $subjects->isActive();
+        });
     }
 
     public function addSubject(Subject $subject): self

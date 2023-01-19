@@ -37,6 +37,7 @@ class ArticleCrudController extends AbstractCrudController
             TextField::new('name'),
             TextEditorField::new('content')->setFormType(CKEditorType::class),
             AssociationField::new('tags')->setCrudController(TagsCrudController::class),
+            AssociationField::new('articleLikeds')->setCrudController(ArticleLikedCrudController::class)->setSortable(true),
             AssociationField::new('user')->hideOnForm(),
             ArrayField::new('articleSuggestions')->hideOnForm()->setSortable(false),
             DateTimeField::new('created_at')->hideOnForm()->setSortable(true),
@@ -49,5 +50,6 @@ class ArticleCrudController extends AbstractCrudController
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
+
 
 }

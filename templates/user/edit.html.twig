@@ -86,8 +86,9 @@ direction="left bottom";
         btnDirection=document.getElementsByClassName('dire');
         for (let index = 0; index < btnDirection.length; index++) {
             btnDirection[index].classList.remove("green");
-            what.classList.add('green');
         }
+        what.classList.add('green');
+
         test()
     }
 // changement de direction du degradé
@@ -96,15 +97,12 @@ direction="left bottom";
     function changeCouleur(){
         
         var icone = document.getElementsByClassName("carre");
-        
         var i;
         for (i = 0; i < icone.length; i++) {
             bleu=Math.floor(Math.random() * 255) + 1;
             rouge=Math.floor(Math.random() * 255) + 1;
             vert=Math.floor(Math.random() * 255) + 1;
-        
             icone[i].style.backgroundColor='rgb('+ rouge +','+ vert +','+ bleu +')' ;
-        
         }
     }
 // recharger les couleurs

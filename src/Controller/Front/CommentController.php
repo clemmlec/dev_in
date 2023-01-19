@@ -33,7 +33,10 @@ class CommentController extends AbstractController
         $subject = $subjectRepo->find($param['subject']);
 
         $user = $security->getUser();
-
+        if($user->getCredibility() < -10){
+            // $this->addFlash('error', 'Il semble que vous avez une mauvaise crédibilité, ameliorez la pour pouvoir de nouveau poster.');
+            return new Response('Il semble que vous avez une mauvaise crédibilité, ameliorez la pour pouvoir de nouveau poster.', 403);
+        }
         try {
             $comment->setUser($user)
             ->setSubject($subject)
