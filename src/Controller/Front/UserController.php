@@ -363,6 +363,12 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user_profil', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
+        $userConected = $security->getUser();
+        if($user != $userConected ){
+            $user->setPassword('');
+            $user->setEmail('');
+        }
+        
         return $this->renderForm('user/profil.html.twig', [
             'user' => $user,
             'form' => $form,

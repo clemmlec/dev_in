@@ -4,10 +4,11 @@ namespace App\Repository;
 
 use App\Entity\User;
 use App\Filter\SearchData;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Security\Core\Security;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -21,7 +22,8 @@ class UserRepository extends ServiceEntityRepository
 {
     public function __construct(
         protected ManagerRegistry $registry,
-        private PaginatorInterface $paginator
+        private PaginatorInterface $paginator,
+        private Security $security
         ) {
         parent::__construct($registry, User::class);
     }
@@ -57,22 +59,32 @@ class UserRepository extends ServiceEntityRepository
             ->leftjoin('u.comments', 'c')
             ->orderBy('u.credibility', 'desc')
         ;
+
         if (!empty($search->getQuery())) {
             $query->andWhere('u.name LIKE :name')
                 ->setParameter('name', "%{$search->getQuery()}%")
             ;
         }
-
-        return $this->paginator->paginate(
+        $result = $this->paginator->paginate(
             $query->getQuery(),
             $search->getPage(),
             6
         );
+        $userConected = $this->security->getUser();
+        foreach ($result as $user) {
+            if($user != $userConected ){
+                $user->setPassword('');
+                $user->setEmail('');
+            }
+            
+        }
+        return $result;
         // dd($queryBuilder);
     }
 
     public function findOneById($id): array
     {
+        
         return $this->createQueryBuilder('u')
             ->andWhere('u.id = :val')
             ->setParameter('val', $id)
@@ -84,6 +96,7 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+
         // dd($queryBuilder);
     }
 

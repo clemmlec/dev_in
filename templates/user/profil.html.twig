@@ -92,9 +92,9 @@
                     </button>
                 {% endif %}
                 </h3>
-                <h2>{{user.followers | length}} followers</h2>
+                <h2>{{user.followers | length}} abonné{{user.followers | length > 1 ? "s"}}</h2>
                 {% if user.subjects %}
-                    <h2>{{user.subjects | length }} subjects postés</h2>
+                    <h2>{{user.subjects | length }} sujet{{user.subjects | length > 1 ? "s"}} posté{{user.subjects | length > 1 ? "s"}}</h2>
                     {% set moyenne = 0 %}
                     {% set nbVote = 0 %}
                     {% for row in user.subjects %}
@@ -105,9 +105,9 @@
                     {% endfor %}
                     {% if nbVote > 0 %}
                         {% set moyenne = moyenne / nbVote %}
-                        <h2>Moyenne subjects {{ moyenne | round(2, 'floor') }}</h2>
+                        <h2>Moyenne {{user.subjects | length > 1 ? "des":"du"}} sujet{{user.subjects | length > 1 ? "s"}} {{ moyenne | round(2, 'floor') }}</h2>
                     {% endif %}
-                    <h2>{{user.comments | length }} commentaires</h2>
+                    <h2>{{user.comments | length }} commentaire{{user.comments | length > 1 ? "s"}}</h2>
                 {% endif %}
             </div>
         </section>
