@@ -7,9 +7,14 @@ export default class extends Controller {
     follows(event) {
         
         let elem = event.target;
+        
         if (event.target.type == "button" ){
             elem = event.target.childNodes[1]
         }
+        if (event.target.localName == "span" ){
+            elem = event.target.parentNode.childNodes[1]
+        }
+
         if(elem.classList.contains("far")){
             elem.classList.replace('far','fa' );
             elem.parentNode.childNodes[3].childNodes[0].data  = +elem.parentNode.childNodes[3].childNodes[0].data +1
