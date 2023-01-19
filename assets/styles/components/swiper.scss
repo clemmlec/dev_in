@@ -77,7 +77,14 @@
 }
 .swiper-slide{
     
-
+    .iconSubject{
+        position: absolute;
+        right: 8px;
+        top:0px;
+        .redd{
+            color: red;
+        }
+    }
     h3{
         font-size: 16px;
     }
