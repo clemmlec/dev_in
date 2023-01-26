@@ -15,7 +15,7 @@
 {% block mainProfil %}
     <hr class="mt-5">
     <h1>articles likés {{user.articleLikeds | length}}</h1>
-    <section class="js-filter">
+    <section class="js-filter w-100">
         {# formulaire de recherche #}
         {{ form_start(forms, { 'attr' : { 'class' : 'js-filter-form formEdit'} }) }}
             <div class="loader">

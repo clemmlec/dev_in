@@ -20,10 +20,13 @@ export default class extends Controller {
             }
 
         }).then(function (reponse) {
-            if(button.children[0].classList.contains("far")){
-                button.children[0].classList.replace('far','fa' );
+            if(button.children[0].classList.contains("fa-solid")){
+                button.children[0].classList.replace('fa-solid','fa' );
+                button.children[0].classList.replace('fa-user-plus','fa-user' );
             }else{
-                button.children[0].classList.replace('fa','far' );
+                button.children[0].classList.replace('fa','fa-solid' );
+                button.children[0].classList.replace('fa-user','fa-user-plus' );
+
             }
         });
         

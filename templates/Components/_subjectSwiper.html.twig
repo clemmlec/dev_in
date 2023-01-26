@@ -13,6 +13,42 @@
         </button>
     </h6>
 
+    <div class="iconSubject" {{ stimulus_controller('subject') }}>
+    {# FOLLOWS #}
+        <button {{ stimulus_action('subject', 'follows') }}
+                type="button" 
+                class="btn-vierge rightFloat" 
+                title="Ajouter aux favoris"
+                value="{{subject.id}}" 
+                >
+                {% set fav = false %}
+                {% if app.user %}
+                    {% for row in app.user.subjectFavoris %}
+                        {% if row.subject.id == subject.id %}
+                            {% set fav = true %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                
+                {% if fav %}
+                    <i class="fa fa-star pointer yellow"></i>
+                {% else %}
+                    <i class="far fa-star pointer yellow"></i>
+                {% endif %}
+        </button>
+    {# EDIT #}
+        {% if app.user and subject.user and app.user.id == subject.user.id %}
+            <button
+                value="{{subject.id}}" 
+                class="btn-vierge" 
+                type="button" 
+                title="Modifier"
+                >
+            <a href="{{ path('user_subject_edit', {'id': subject.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+        </button>
+        {% endif %}
+    </div>
+
     <h1 class="toptitre2">{{subject.nom}}</h1>
     <h3 class="toptitre2 right ">
         dans <span class="tags {{subject.forum.style}}">{{subject.forum.nom}}</span> 

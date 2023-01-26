@@ -137,6 +137,20 @@ export default class extends Controller {
                 divFraude.appendChild(responseFraude);
                 elem.parentNode.insertBefore(divFraude, elem);
                 return ;
+            }else if(erreur.response.data == "mauvaise crédibilité"){
+                let btn= elem.parentElement.childNodes;
+                btn.forEach(elements => {
+                    if(elements.nodeType == 1 ){
+                        elements.style.display = "none";
+                    }
+                });
+                let divFraude = document.createElement("div");
+                divFraude.classList.add('alert-danger');
+                divFraude.classList.add('alert');
+                let responseFraude = document.createTextNode('Il semble que vous avez une mauvaise crédibilité, ameliorez la pour pouvoir de nouveau noter.');
+                divFraude.appendChild(responseFraude);
+                elem.parentNode.insertBefore(divFraude, elem);
+                return ;
             }
             console.log(erreur.response);
         });

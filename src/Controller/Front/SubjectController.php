@@ -34,6 +34,7 @@ class SubjectController extends AbstractController
     #[Route('/', name: 'app_subject_index')]
     public function index(Request $request, Security $security): Response
     {
+
         $data = new SearchData();
         $data->setPage($request->get('page', 1));
 
@@ -61,8 +62,14 @@ class SubjectController extends AbstractController
         $form = $this->createForm(SubjectType::class, $subject);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $subject->setUser($security->getUser());
+            $user = $security->getUser();
+            if($user->getCredibility() < -10){
+                $this->addFlash('error', 'Il semble que vous avez une mauvaise crédibilité, ameliorez la pour pouvoir de nouveau poster.');
+                return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
+            }
+            $subject->setUser($user);
             $this->subjectRepository->add($subject, true);
 
             $this->addFlash('success', 'Sujet créer avec success');
@@ -93,6 +100,11 @@ class SubjectController extends AbstractController
 
         if (!$user) {
             return new Response('utilisateur non connecté', 403);
+        }
+
+        if($user->getCredibility() < -10){
+            // $this->addFlash('error', 'Il semble que vous avez une mauvaise crédibilité, ameliorez la pour pouvoir de nouveau poster.');
+            return new Response('mauvaise crédibilité', 403);
         }
 
         $dejaNoter = $noteRepo->findOneBy(['user' => $user, 'subject' => $subjectId->getId()]);

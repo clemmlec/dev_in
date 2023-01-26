@@ -1,6 +1,10 @@
 
 <article class="article {{couper}}">
-    <h2 class="topTitre">{{article.name | slice(0,23) }}</h2>
+    {% if couper %}
+        <h2 class="topTitre">{{article.name | slice(0,23) }}</h2>
+    {% else %}
+        <h2 class="topTitre">{{article.name}}</h2>
+    {% endif %}
     <div class="iconArticle"  {{ stimulus_controller('article') }}>
     {# FOLLOWS #}
         <button 
@@ -23,9 +27,8 @@
                 <i class="fa fa-star pointer yellow"></i>
             {% else %}
                 <i class="far fa-star pointer yellow"></i>
-                
             {% endif %}
-            {{article.articleLikeds|length}}
+            <span>{{article.articleLikeds|length}}</span>
         </button>
         
     {# SUGGEST #}

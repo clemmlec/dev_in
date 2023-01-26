@@ -2,7 +2,76 @@
     .commentaire {
         width: 100%;
     }
+    h2{
+        font-size: 0.8em !important;
+    }
+    .mainSite {
+        margin-top: 180px !important;
+    }
+    .title span{
+        font-size: 0.6em !important;
+    }
+    .stars{
+        font-size: 0.8em !important;
+    }
+    .deg90{
+        margin-left: -48px !important;
+    }
+    nav
+    {
+        height: 160px;
+    }
+    .logo{
+  
+        margin-top: -15px;
+    }
+    nav .main_pages 
+    {
+        display: none;
+        // flex-direction: column;
+        background: $black;
+        
+    }
+    nav .icon_nav{
 
+        top: 25px;
+    
+    }
+    nav .main_pages a {
+        width: 100%;
+        height: 50px;
+        justify-content:left;
+        margin-left: 20px;
+    }
+    nav .main_pages  {
+        width: 100%;
+        
+    }
+    .label 
+    {
+        width: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        font-size: 40px;
+        color: white;
+        cursor: pointer;
+    }
+    #toggle:checked + .main_pages {
+        display: flex;
+    }
+    nav .left_nav 
+    {
+        display: inline;
+        width: 100%;
+    }
+    .dropbtn{
+        margin-top: 0;
+    }
+    #home .header {
+        padding: 0 20px 50px 20px !important;
+      }
   }
 
 .commentaire{
