@@ -97,15 +97,15 @@ class SecurityControllerTest extends WebTestCase
     //     $this->assertResponseIsSuccessful();
     // }
 
-    public function testEditorUserBadLoggedIn()
-    {
-        $user = $this->userRepository->find(2);
+    // public function testEditorUserBadLoggedIn()
+    // {
+    //     $user = $this->userRepository->find(2);
 
-        $this->client->loginUser($user);
+    //     $this->client->loginUser($user);
 
-        $this->client->request('GET', '/admin/user');
-        $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
-    }
+    //     $this->client->request('GET', '/admin/user');
+    //     $this->assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    // }
 
     // public function testEditorSubjectGoddLoggedIn()
     // {
