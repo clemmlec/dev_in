@@ -56,9 +56,9 @@
             {# carrés de couleurs #}
             <div class="sectionColor">
                 {% for i in 0..53 %}
-                    {% set bleu=random(1,255) %}
-                    {% set rouge=random(1,255) %}
-                    {% set vert=random(1,255) %}
+                    {% set bleu=random(0,255) %}
+                    {% set rouge=random(0,255) %}
+                    {% set vert=random(0,255) %}
                     <div onclick="envoieCouleur(this)"  
                         class="carre jeu" 
                         style="background-color:rgb({{rouge}},{{vert}},{{bleu}})">
@@ -99,9 +99,9 @@ direction="left bottom";
         var icone = document.getElementsByClassName("carre");
         var i;
         for (i = 0; i < icone.length; i++) {
-            bleu=Math.floor(Math.random() * 255) + 1;
-            rouge=Math.floor(Math.random() * 255) + 1;
-            vert=Math.floor(Math.random() * 255) + 1;
+            bleu=Math.floor(Math.random() * 255);
+            rouge=Math.floor(Math.random() * 255);
+            vert=Math.floor(Math.random() * 255);
             icone[i].style.backgroundColor='rgb('+ rouge +','+ vert +','+ bleu +')' ;
         }
     }
