@@ -11,7 +11,7 @@ Dev In est un site d'information et d'échange pour les développeurs web et pr�
   - [Instalation](#instalation)
 
 ![Bannière](https://github.com/clemmlec/dev_in/blob/master/img/dev_in_home.png)
-
+<img src="https://github.com/clemmlec/dev_in/blob/master/img/dev_in_home.png">
 ## Présentation et fonctionalités
   - [Les articles](#les-articles) <br>
   - [Les sujets](#les-sujets) <br>
